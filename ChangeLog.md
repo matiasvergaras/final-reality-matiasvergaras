@@ -16,6 +16,7 @@ Version 1.0
 
 A note on the version naming
 ----------------------------
+- A.n Version ``x.y``_alpha x_, alternative to ``x.y-a.n`
 - B.n: Version ``x.y`` _beta x_, alternative to ``x.y-b.n``.
   For example: ``v1.0-b.3``.
 - RC.n: Release candidate x, alternative to ``x.y-rc.n``.
