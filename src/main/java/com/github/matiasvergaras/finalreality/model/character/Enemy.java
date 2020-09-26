@@ -3,7 +3,10 @@ package com.github.matiasvergaras.finalreality.model.character;
 import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
+import com.github.matiasvergaras.finalreality.model.character.player.PlayerCharacter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -21,7 +24,7 @@ public class Enemy extends AbstractCharacter {
    * play.
    */
   public Enemy(@NotNull final String name, final int weight,
-      @NotNull final BlockingQueue<ICharacter> turnsQueue) {
+               @NotNull final BlockingQueue<ICharacter> turnsQueue) {
     super(turnsQueue, name, CharacterClass.ENEMY);
     this.weight = weight;
   }
@@ -49,4 +52,14 @@ public class Enemy extends AbstractCharacter {
   public int hashCode() {
     return Objects.hash(getWeight());
   }
-}
+
+
+  @Override
+  public void waitTurn() {
+    scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+      scheduledExecutor
+              .schedule(super::addToQueue, this.getWeight() / 10, TimeUnit.SECONDS);
+    }
+  }
+
+
