@@ -8,7 +8,7 @@ import java.util.Objects;
  * @author Ignacio Slater Muñoz.
  * @author <Your name>
  */
-public class Weapon {
+public abstract class AbstractWeapon implements IWeapon{
 
   private final String name;
   private final int power; //Could be heal - power or damage - power
@@ -20,8 +20,8 @@ public class Weapon {
    *
    * @see WeaponType
    */
-  public Weapon(final String name, final int power, final int weight,
-      final WeaponType type) {
+  public AbstractWeapon(final String name, final int power, final int weight,
+                        final WeaponType type) {
     this.name = name;
     this.power = power;
     this.weight = weight;
@@ -49,10 +49,10 @@ public class Weapon {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Weapon)) {
+    if (!(o instanceof AbstractWeapon)) {
       return false;
     }
-    final Weapon weapon = (Weapon) o;
+    final AbstractWeapon weapon = (AbstractWeapon) o;
     return getPower() == weapon.getPower() &&
         getWeight() == weapon.getWeight() &&
         getName().equals(weapon.getName()) &&

@@ -2,8 +2,8 @@ package com.github.matiasvergaras;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
-import com.github.matiasvergaras.finalreality.model.character.player.PlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.Weapon;
+import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.WeaponType;
 
 import java.util.Random;
@@ -20,8 +20,8 @@ public class TimerExample {
     Random rng = new Random();
     for (int i = 0; i < 10; i++) {
       // Gives a random speed to each character to generate different waiting times
-      var weapon = new Weapon("", 0, rng.nextInt(50), WeaponType.KNIFE);
-      var character = new PlayerCharacter(Integer.toString(i), queue,
+      var weapon = new AbstractWeapon("", 0, rng.nextInt(50), WeaponType.KNIFE);
+      var character = new AbstractPlayerCharacter(Integer.toString(i), queue,
           CharacterClass.THIEF);
       character.equip(weapon);
       character.waitTurn();

@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
 import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
-import com.github.matiasvergaras.finalreality.model.weapon.Weapon;
 
 /**
  * This represents a character from the game.
@@ -27,4 +26,25 @@ public interface ICharacter {
    * Returns this character's class.
    */
   CharacterClass getCharacterClass();
+
+  public void setParalysed();
+
+  public void setPoisoned();
+
+  public void setBurned();
+
+  public void setHealed();
+
+  public void receiveFireAttack();
+
+  public void receiveHealAttack();
+
+  public void receiveParalysisAttack();
+
+  public void receivePoisonAttack();
+
+  public void receiveThunderAttack();
+
+  public void receiveNormalAttack();
+
 }

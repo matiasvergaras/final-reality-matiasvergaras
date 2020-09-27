@@ -1,13 +1,11 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
 import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
-import com.github.matiasvergaras.finalreality.model.character.player.PlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.Weapon;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
+import java.util.Objects;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ScheduledExecutorService;
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -29,6 +27,8 @@ public abstract class AbstractCharacter implements ICharacter {
     this.name = name;
     this.characterClass = characterClass;
   }
+
+
   /**
    * Adds this character to the turns queue.
    */
@@ -42,49 +42,64 @@ public abstract class AbstractCharacter implements ICharacter {
     return name;
   }
 
+  @Override
+  public int hashCode() {
+    return Objects.hash(getCharacterClass());
+  }
 
   @Override
   public CharacterClass getCharacterClass() {
     return characterClass;
   }
 
+
+  @Override
   public void setParalysed() {
     return;
   }
 
+  @Override
   public void setPoisoned() {
     return;
   }
 
+  @Override
   public void setBurned() {
     return;
   }
 
+  @Override
   public void setHealed() {
     return;
   }
 
 
+  @Override
   public void receiveFireAttack() {
     return;
   }
 
+  @Override
   public void receiveHealAttack() {
     return;
   }
 
+  @Override
   public void receiveParalysisAttack() {
     return;
   }
 
+  @Override
   public void receivePoisonAttack() {
     return;
   }
 
+  @Override
   public void receiveThunderAttack() {
     return;
   }
 
+  @Override
   public void receiveNormalAttack() {
     return;
   }

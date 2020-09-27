@@ -1,8 +1,8 @@
 package com.github.cc3002.finalreality.model.character;
 
-import com.github.matiasvergaras.finalreality.model.character.Enemy;
+import com.github.matiasvergaras.finalreality.model.character.CPU.Enemy;
 import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
-import com.github.matiasvergaras.finalreality.model.character.player.PlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,6 +21,6 @@ class EnemyTest extends AbstractCharacterTest {
     checkConstruction(new Enemy(ENEMY_NAME, 10, turns),
         testCharacters.get(0),
         new Enemy(ENEMY_NAME, 11, turns),
-        new PlayerCharacter(ENEMY_NAME, turns, CharacterClass.THIEF));
+        new AbstractPlayerCharacter(ENEMY_NAME, turns, CharacterClass.THIEF));
   }
 }

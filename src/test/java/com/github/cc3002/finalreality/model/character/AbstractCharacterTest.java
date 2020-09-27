@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.Weapon;
+import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.WeaponType;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public abstract class AbstractCharacterTest {
 
   protected BlockingQueue<ICharacter> turns;
   protected List<ICharacter> testCharacters;
-  protected Weapon testWeapon;
+  protected AbstractWeapon testWeapon;
 
   /**
    * Checks that the character waits the appropriate amount of time for it's turn.
@@ -64,7 +64,7 @@ public abstract class AbstractCharacterTest {
 
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
-    testWeapon = new Weapon("Test", 15, 10, WeaponType.AXE);
+    testWeapon = new AbstractWeapon("Test", 15, 10, WeaponType.AXE);
     testCharacters = new ArrayList<>();
   }
 }

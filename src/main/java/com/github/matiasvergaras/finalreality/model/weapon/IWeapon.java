@@ -1,4 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.weapon;
 
-public abstract class AbstractNormalWeapon {
+public interface IWeapon {
+
+    int getWeight();
 }
