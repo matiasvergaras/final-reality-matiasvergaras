@@ -48,7 +48,49 @@ public abstract class AbstractCharacter implements ICharacter {
     return characterClass;
   }
 
+  public void setParalysed() {
+    return;
+  }
+
+  public void setPoisoned() {
+    return;
+  }
+
+  public void setBurned() {
+    return;
+  }
+
+  public void setHealed() {
+    return;
+  }
+
+
+  public void receiveFireAttack() {
+    return;
+  }
+
+  public void receiveHealAttack() {
+    return;
+  }
+
+  public void receiveParalysisAttack() {
+    return;
+  }
+
+  public void receivePoisonAttack() {
+    return;
+  }
+
+  public void receiveThunderAttack() {
+    return;
+  }
+
+  public void receiveNormalAttack() {
+    return;
+  }
+
 
 }
+
 
 
