@@ -16,7 +16,7 @@ import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
  *
  */
 
-public class BlackWizard extends AbstractMagicCharacter {
+public class BlackMage extends AbstractMagicCharacter {
     /**
      * Creates a new Black Wizard Character with an Staff.
      *
@@ -27,8 +27,8 @@ public class BlackWizard extends AbstractMagicCharacter {
      * @param weapon
      *     it's weapon.
      */
-    public BlackWizard(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                       @NotNull String name, Staff weapon) {
+    public BlackMage(@NotNull BlockingQueue<ICharacter> turnsQueue,
+                     @NotNull String name, Staff weapon) {
         super(turnsQueue, name, CharacterClass.BLACK_MAGE);
         this.equippedWeapon = weapon;
     }
@@ -41,8 +41,8 @@ public class BlackWizard extends AbstractMagicCharacter {
      * @param turnsQueue
      *     the queue with the characters waiting for their turn
      */
-    public BlackWizard(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                       @NotNull String name) {
+    public BlackMage(@NotNull BlockingQueue<ICharacter> turnsQueue,
+                     @NotNull String name) {
         super(turnsQueue, name, CharacterClass.BLACK_MAGE);
     }
 
