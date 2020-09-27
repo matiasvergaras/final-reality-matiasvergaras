@@ -2,10 +2,15 @@
 # Semestral Project: Final Reality
 # CC3002 - Design and Programming Methodologies
 Section: 2
+
 Student: Matías Vergara Silva
+
 Github: matiasvergaras
+
 Lecture teacher: Mrs. Nancy Hitschfield
+
 Assistant teacher: Ignacio Slater M.
+
 Review assistant: Kevin Pinochet Hérnandez
 
 # #Homework 1 
