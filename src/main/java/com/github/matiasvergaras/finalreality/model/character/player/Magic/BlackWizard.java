@@ -24,13 +24,12 @@ public class BlackWizard extends AbstractMagicCharacter {
      *     the character's name
      * @param turnsQueue
      *     the queue with the characters waiting for their turn
-     * @param characterClass
-     *     the class of this character
+     * @param weapon
+     *     it's weapon.
      */
     public BlackWizard(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                       @NotNull String name,
-                       final CharacterClass characterClass, Staff weapon) {
-        super(turnsQueue, name, characterClass);
+                       @NotNull String name, Staff weapon) {
+        super(turnsQueue, name, CharacterClass.BLACK_MAGE);
         this.equippedWeapon = weapon;
     }
 
@@ -41,14 +40,10 @@ public class BlackWizard extends AbstractMagicCharacter {
      *     the character's name
      * @param turnsQueue
      *     the queue with the characters waiting for their turn
-     * @param characterClass
-     *     the class of this character
      */
     public BlackWizard(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                       @NotNull String name,
-                       final CharacterClass characterClass) {
-        super(turnsQueue, name, characterClass);
-        this.equippedWeapon = null;
+                       @NotNull String name) {
+        super(turnsQueue, name, CharacterClass.BLACK_MAGE);
     }
 
 

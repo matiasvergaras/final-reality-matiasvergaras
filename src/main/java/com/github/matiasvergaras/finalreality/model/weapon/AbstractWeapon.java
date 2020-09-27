@@ -47,6 +47,7 @@ public abstract class AbstractWeapon implements IWeapon{
     return type;
   }
 
+
   @Override
   public boolean equals(final Object o) {
     if (this == o) {

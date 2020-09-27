@@ -30,9 +30,8 @@ public class Engineer extends AbstractNormalCharacter {
      *     it's weapon.
      */
     public Engineer(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                       @NotNull String name,
-                       final CharacterClass characterClass, Axe weapon) {
-        super(turnsQueue, name, characterClass);
+                       @NotNull String name, Axe weapon) {
+        super(turnsQueue, name, CharacterClass.ENGINEER);
         this.equip(weapon);
     }
 
@@ -47,9 +46,8 @@ public class Engineer extends AbstractNormalCharacter {
      *     it's weapon.
      */
     public Engineer(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                    @NotNull String name,
-                    final CharacterClass characterClass, Bow weapon) {
-        super(turnsQueue, name, characterClass);
+                    @NotNull String name, Bow weapon) {
+        super(turnsQueue, name, CharacterClass.ENGINEER);
         this.equip(weapon);
     }
 
@@ -62,9 +60,8 @@ public class Engineer extends AbstractNormalCharacter {
      *     the queue with the characters waiting for their turn
      */
     public Engineer(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                    @NotNull String name,
-                    final CharacterClass characterClass) {
-        super(turnsQueue, name, characterClass);
+                    @NotNull String name) {
+        super(turnsQueue, name, CharacterClass.ENGINEER);
     }
 
 }

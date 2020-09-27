@@ -2,10 +2,8 @@ package com.github.matiasvergaras.finalreality.model.character.player.Magic;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
-import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.BlockingQueue;
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
 /**
  * An abstract class that holds the common behaviour of all the Magic Characters in the game.
@@ -30,7 +28,6 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter{
                                      @NotNull String name,
                                      final CharacterClass characterClass) {
         super(turnsQueue, name, characterClass);
-        this.mana = mana;
     }
 
 

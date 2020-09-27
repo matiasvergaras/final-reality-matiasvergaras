@@ -13,7 +13,6 @@ import java.util.concurrent.BlockingQueue;
  * @author Matias Vergara Silva.
  */
 public abstract class AbstractNormalCharacter extends AbstractPlayerCharacter {
-    private IWeapon weapon;
 
     /**
      * Creates a new Normal Character.

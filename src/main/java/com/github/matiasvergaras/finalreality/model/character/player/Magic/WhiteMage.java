@@ -4,7 +4,6 @@ import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
 import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import org.jetbrains.annotations.NotNull;
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -16,42 +15,36 @@ import java.util.concurrent.BlockingQueue;
  *
  */
 
-public class WhiteWizard extends AbstractMagicCharacter {
+public class WhiteMage extends AbstractMagicCharacter {
 
     /**
-     * Creates a new Black Wizard Character with a Staff.
+     * Creates a new White Wizard Character with a Staff.
      *
      * @param name
      *     the character's name
      * @param turnsQueue
      *     the queue with the characters waiting for their turn
-     * @param characterClass
-     *      the class of this character
      * @param weapon
      *     it's weapon.
      */
-    public WhiteWizard(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                       @NotNull String name,
-                       final CharacterClass characterClass, Staff weapon) {
-        super(turnsQueue, name, characterClass);
+    public WhiteMage(@NotNull BlockingQueue<ICharacter> turnsQueue,
+                     @NotNull String name, Staff weapon) {
+        super(turnsQueue, name, CharacterClass.WHITE_MAGE);
         this.equippedWeapon = weapon;
 
     }
 
     /**
-     * Creates a new unarmed Black Wizard Character.
+     * Creates a new unarmed White Wizard Character.
      *
      * @param name
      *     the character's name
      * @param turnsQueue
      *     the queue with the characters waiting for their turn
-     * @param characterClass
-     *      the class of this character
      */
-    public WhiteWizard(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                       @NotNull String name,
-                       final CharacterClass characterClass) {
-        super(turnsQueue, name, characterClass);
+    public WhiteMage(@NotNull BlockingQueue<ICharacter> turnsQueue,
+                     @NotNull String name) {
+        super(turnsQueue, name, CharacterClass.WHITE_MAGE);
 
     }
 

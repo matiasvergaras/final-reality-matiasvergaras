@@ -5,7 +5,8 @@ import com.github.matiasvergaras.finalreality.model.character.player.CharacterCl
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+
+import com.github.matiasvergaras.finalreality.model.weapon.WeaponType;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -16,11 +17,17 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class AbstractCharacter implements ICharacter {
 
-  protected final BlockingQueue<ICharacter> turnsQueue;
+  private final BlockingQueue<ICharacter> turnsQueue;
+  private final CharacterClass characterClass;
   protected final String name;
-  protected final CharacterClass characterClass;
   protected ScheduledExecutorService scheduledExecutor;
 
+
+  /**
+   * Creates a character with turns queue, name and class.
+   *
+   * @see CharacterClass
+   */
   protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                               @NotNull String name, CharacterClass characterClass) {
     this.turnsQueue = turnsQueue;

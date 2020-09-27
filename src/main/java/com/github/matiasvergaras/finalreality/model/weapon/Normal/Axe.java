@@ -1,5 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Normal;
 import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.WeaponType;
+
 /**
  * Class to represent an ''Axe'' weapon.
  * <p>
@@ -10,4 +12,17 @@ import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
  */
 
 public class Axe extends AbstractNormalWeapon{
+    /**
+     * Creates a Axe object with a name, a base damage, weight and type.
+     * @param name
+     *              the Axe name
+     * @param power
+     *              the Axe power
+     * @param weight
+     *              the Axe weight
+     */
+    public Axe(final String name, final int power, final int weight) {
+        super(name, power, weight, WeaponType.AXE);
+    }
 }
+

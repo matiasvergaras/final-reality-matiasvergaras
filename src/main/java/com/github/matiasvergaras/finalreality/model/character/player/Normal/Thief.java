@@ -29,8 +29,8 @@ public class Thief extends AbstractNormalCharacter{
      */
     public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
                  @NotNull String name,
-                 final CharacterClass characterClass, Sword weapon) {
-        super(turnsQueue, name, characterClass);
+                 Sword weapon) {
+        super(turnsQueue, name, CharacterClass.THIEF);
     }
     /**
      * Creates a new Thief Character with a Staff.
@@ -43,9 +43,8 @@ public class Thief extends AbstractNormalCharacter{
      *      it's weapon
      */
     public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                 @NotNull String name,
-                 final CharacterClass characterClass, Staff weapon) {
-        super(turnsQueue, name, characterClass);
+                 @NotNull String name, Staff weapon) {
+        super(turnsQueue, name, CharacterClass.THIEF);
     }
 
      /**
@@ -59,9 +58,8 @@ public class Thief extends AbstractNormalCharacter{
       *      it's weapon
       */
      public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                  @NotNull String name,
-                  final CharacterClass characterClass, Bow weapon) {
-         super(turnsQueue, name, characterClass);
+                  @NotNull String name, Bow weapon) {
+         super(turnsQueue, name, CharacterClass.THIEF);
      }
 
 

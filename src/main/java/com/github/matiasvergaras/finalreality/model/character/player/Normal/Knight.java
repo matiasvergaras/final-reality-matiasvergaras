@@ -31,9 +31,8 @@ public class Knight extends AbstractNormalCharacter{
      *      it's weapon
      */
     public Knight(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                    @NotNull String name,
-                    final CharacterClass characterClass, Sword weapon) {
-        super(turnsQueue, name, characterClass);
+                    @NotNull String name, Sword weapon) {
+        super(turnsQueue, name, CharacterClass.KNIGHT);
         this.equip(weapon);
     }
     /**
@@ -48,9 +47,8 @@ public class Knight extends AbstractNormalCharacter{
      *      it's weapon
      */
     public Knight(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                  @NotNull String name,
-                  final CharacterClass characterClass, Axe weapon) {
-        super(turnsQueue, name, characterClass);
+                  @NotNull String name, Axe weapon) {
+        super(turnsQueue, name, CharacterClass.KNIGHT);
         this.equip(weapon);
     }
     /**
@@ -65,8 +63,8 @@ public class Knight extends AbstractNormalCharacter{
      */
     public Knight(@NotNull BlockingQueue<ICharacter> turnsQueue,
                   @NotNull String name,
-                  final CharacterClass characterClass, Knife weapon) {
-        super(turnsQueue, name, characterClass);
+                  Knife weapon) {
+        super(turnsQueue, name, CharacterClass.KNIGHT);
         this.equip(weapon);
     }
     /**
@@ -79,9 +77,8 @@ public class Knight extends AbstractNormalCharacter{
      *     the queue with the characters waiting for their turn
      */
     public Knight(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                  @NotNull String name,
-                  final CharacterClass characterClass) {
-        super(turnsQueue, name, characterClass);
+                  @NotNull String name) {
+        super(turnsQueue, name, CharacterClass.KNIGHT);
     }
 
 
