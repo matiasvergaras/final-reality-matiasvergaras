@@ -27,8 +27,8 @@ public abstract class AbstractNormalCharacter extends AbstractPlayerCharacter {
      */
     public AbstractNormalCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                    @NotNull String name,
-                                   final CharacterClass characterClass, IWeapon weapon) {
-        super(turnsQueue, name, characterClass, weapon);
+                                   final CharacterClass characterClass) {
+        super(turnsQueue, name, characterClass);
     }
 
 }

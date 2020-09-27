@@ -10,5 +10,5 @@ import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
  */
 
 
-public class Bow extends AbstractWeapon {
+public class Bow extends AbstractNormalWeapon{
 }

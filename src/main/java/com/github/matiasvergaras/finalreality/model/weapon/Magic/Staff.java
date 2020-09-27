@@ -10,5 +10,5 @@ import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
  */
 
 
-public class Staff extends AbstractWeapon {
+public class Staff extends AbstractMagicWeapon {
 }

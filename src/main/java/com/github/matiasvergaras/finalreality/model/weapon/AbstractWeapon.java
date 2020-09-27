@@ -1,6 +1,9 @@
 package com.github.matiasvergaras.finalreality.model.weapon;
 
 import java.util.Objects;
+/** Esta clase puede servirnos, por ejemplo, si quisieramos agregar propiedades de
+ * ''durabilidad'', ''alcance'', ''precision'' a todas las armas.
+ */
 
 /**
  * A class that holds all the information of a weapon.

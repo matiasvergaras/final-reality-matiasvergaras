@@ -18,9 +18,28 @@ import java.util.concurrent.BlockingQueue;
 
 public class WhiteWizard extends AbstractMagicCharacter {
 
+    /**
+     * Creates a new Black Wizard Character with a Staff.
+     *
+     * @param name
+     *     the character's name
+     * @param turnsQueue
+     *     the queue with the characters waiting for their turn
+     * @param characterClass
+     *      the class of this character
+     * @param weapon
+     *     it's weapon.
+     */
+    public WhiteWizard(@NotNull BlockingQueue<ICharacter> turnsQueue,
+                       @NotNull String name,
+                       final CharacterClass characterClass, Staff weapon) {
+        super(turnsQueue, name, characterClass);
+        this.equippedWeapon = weapon;
+
+    }
 
     /**
-     * Creates a new Black Wizard Character.
+     * Creates a new unarmed Black Wizard Character.
      *
      * @param name
      *     the character's name
@@ -31,9 +50,10 @@ public class WhiteWizard extends AbstractMagicCharacter {
      */
     public WhiteWizard(@NotNull BlockingQueue<ICharacter> turnsQueue,
                        @NotNull String name,
-                       final CharacterClass characterClass, int mana, IWeapon weapon) {
-        super(turnsQueue, name, characterClass, mana, weapon);
+                       final CharacterClass characterClass) {
+        super(turnsQueue, name, characterClass);
 
     }
+
 
 }

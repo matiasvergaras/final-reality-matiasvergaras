@@ -9,5 +9,5 @@ package com.github.matiasvergaras.finalreality.model.spells;
  * @author Matías Vergara Silva
  *
  */
-public class Heal {
+public class Heal extends AbstractSpell{
 }

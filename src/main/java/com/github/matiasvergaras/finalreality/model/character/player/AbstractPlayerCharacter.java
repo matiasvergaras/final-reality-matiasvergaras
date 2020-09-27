@@ -19,8 +19,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Matias Vergara Silva.
  */
 public abstract class AbstractPlayerCharacter extends AbstractCharacter {
-
-  protected IWeapon equippedWeapon = null;
+   protected IWeapon equippedWeapon;
 
    /**
    * Creates a new Player Character
@@ -34,10 +33,9 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter {
    */
   protected AbstractPlayerCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                    @NotNull String name,
-                                   final CharacterClass characterClass,
-                                    IWeapon weapon) {
+                                   final CharacterClass characterClass) {
     super(turnsQueue, name, characterClass);
-    this.equippedWeapon = weapon;
+
   }
 
   @Override
@@ -53,9 +51,6 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter {
       return true;
     }
     if (!(o instanceof AbstractPlayerCharacter)) {
-      return false;
-    }
-    if (!(this.equippedWeapon == ((AbstractPlayerCharacter) o).equippedWeapon)){
       return false;
     }
     final AbstractPlayerCharacter that = (AbstractPlayerCharacter) o;

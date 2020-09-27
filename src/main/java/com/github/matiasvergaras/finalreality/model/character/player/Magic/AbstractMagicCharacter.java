@@ -2,6 +2,7 @@ package com.github.matiasvergaras.finalreality.model.character.player.Magic;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
+import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.BlockingQueue;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
@@ -12,7 +13,7 @@ import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
  * @author Matias Vergara Silva.
  */
 public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter{
-    private int mana;
+    private int mana = 100; //Default mana
 
 
     /**
@@ -27,8 +28,8 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter{
      */
     protected AbstractMagicCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                      @NotNull String name,
-                                     final CharacterClass characterClass, int mana, IWeapon weapon) {
-        super(turnsQueue, name, characterClass, weapon);
+                                     final CharacterClass characterClass) {
+        super(turnsQueue, name, characterClass);
         this.mana = mana;
     }
 

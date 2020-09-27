@@ -2,6 +2,7 @@ package com.github.matiasvergaras.finalreality.model.character.player.Magic;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
+import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.BlockingQueue;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
@@ -16,9 +17,8 @@ import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
  */
 
 public class BlackWizard extends AbstractMagicCharacter {
-
     /**
-     * Creates a new Black Wizard Character.
+     * Creates a new Black Wizard Character with an Staff.
      *
      * @param name
      *     the character's name
@@ -29,9 +29,27 @@ public class BlackWizard extends AbstractMagicCharacter {
      */
     public BlackWizard(@NotNull BlockingQueue<ICharacter> turnsQueue,
                        @NotNull String name,
-                       final CharacterClass characterClass, int mana, IWeapon weapon) {
-        super(turnsQueue, name, characterClass, mana,  weapon);
-
+                       final CharacterClass characterClass, Staff weapon) {
+        super(turnsQueue, name, characterClass);
+        this.equippedWeapon = weapon;
     }
+
+    /**
+     * Creates a new unarmed Black Wizard Character.
+     *
+     * @param name
+     *     the character's name
+     * @param turnsQueue
+     *     the queue with the characters waiting for their turn
+     * @param characterClass
+     *     the class of this character
+     */
+    public BlackWizard(@NotNull BlockingQueue<ICharacter> turnsQueue,
+                       @NotNull String name,
+                       final CharacterClass characterClass) {
+        super(turnsQueue, name, characterClass);
+        this.equippedWeapon = null;
+    }
+
 
 }

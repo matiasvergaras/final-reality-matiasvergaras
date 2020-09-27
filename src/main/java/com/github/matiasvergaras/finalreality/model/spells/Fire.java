@@ -11,5 +11,5 @@ package com.github.matiasvergaras.finalreality.model.spells;
  *
  */
 
-public class Fire {
+public class Fire extends AbstractSpell {
 }
