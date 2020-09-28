@@ -17,14 +17,21 @@ enemies controlled by the computer.
 ---
 
 # Semestral Project: Final Reality
-# CC3002 - Design and Programming Methodologies
+
+Course: *CC3002 - Design and Programming Methodologies*
+
 Section: 2
 
 Student: Matías Vergara Silva
+
 Github: matiasvergaras
+
 Lecture teacher: Mrs. Nancy Hitschfield
-Assistant teacher: Ignacio Slater M.
-Review assistant: Kevin Pinochet Hérnandez
+
+Assistant teachers: Ignacio Slater M. & Matías Ramírez
+
+Review assistant: Kevin Pinochet Hérnandez (?) (apparently GitHub says that)
+
 
 ** We will be writing updates of the work done in each pull request here, in '' Latest first '' format. Execution instructions will be added at the end of each task, once the program is fully developed and functional.**
 
