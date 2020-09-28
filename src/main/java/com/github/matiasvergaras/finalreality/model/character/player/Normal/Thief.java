@@ -18,6 +18,19 @@ import java.util.concurrent.BlockingQueue;
  */
 public class Thief extends AbstractNormalCharacter{
     /**
+     * Creates a new Thief Character unarmed.
+     *
+     * @param name
+     *     the character's name
+     * @param turnsQueue
+     *     the queue with the characters waiting for their turn
+
+     */
+    public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
+                 @NotNull String name) {
+        super(turnsQueue, name, CharacterClass.THIEF);
+    }
+    /**
      * Creates a new Thief Character with a Sword.
      *
      * @param name
@@ -28,9 +41,9 @@ public class Thief extends AbstractNormalCharacter{
      *      it's weapon
      */
     public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                 @NotNull String name,
-                 Sword weapon) {
+                 @NotNull String name, Sword weapon) {
         super(turnsQueue, name, CharacterClass.THIEF);
+        this.equip(weapon);
     }
     /**
      * Creates a new Thief Character with a Staff.
@@ -45,6 +58,7 @@ public class Thief extends AbstractNormalCharacter{
     public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
                  @NotNull String name, Staff weapon) {
         super(turnsQueue, name, CharacterClass.THIEF);
+        this.equip(weapon);
     }
 
      /**
@@ -60,6 +74,7 @@ public class Thief extends AbstractNormalCharacter{
      public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
                   @NotNull String name, Bow weapon) {
          super(turnsQueue, name, CharacterClass.THIEF);
+         this.equip(weapon);
      }
 
 

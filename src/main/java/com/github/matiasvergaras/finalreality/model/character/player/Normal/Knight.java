@@ -6,7 +6,6 @@ import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
 import org.jetbrains.annotations.NotNull;
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import java.util.concurrent.BlockingQueue;
 
 /**

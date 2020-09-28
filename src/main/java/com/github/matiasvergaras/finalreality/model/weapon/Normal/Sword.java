@@ -1,5 +1,4 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Normal;
-import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.WeaponType;
 
 /**

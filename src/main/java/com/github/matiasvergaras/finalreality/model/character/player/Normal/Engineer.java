@@ -5,7 +5,6 @@ import com.github.matiasvergaras.finalreality.model.character.player.CharacterCl
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
 import org.jetbrains.annotations.NotNull;
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import java.util.concurrent.BlockingQueue;
 
 /**

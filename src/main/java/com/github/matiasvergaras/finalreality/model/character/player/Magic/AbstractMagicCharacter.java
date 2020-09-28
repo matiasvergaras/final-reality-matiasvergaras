@@ -11,7 +11,7 @@ import java.util.concurrent.BlockingQueue;
  * @author Matias Vergara Silva.
  */
 public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter{
-    private int mana = 100; //Default mana
+    private int mana;
 
 
     /**
@@ -28,6 +28,7 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter{
                                      @NotNull String name,
                                      final CharacterClass characterClass) {
         super(turnsQueue, name, characterClass);
+        this.mana=mana;
     }
 
 

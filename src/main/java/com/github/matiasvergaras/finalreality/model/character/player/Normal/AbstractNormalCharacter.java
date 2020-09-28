@@ -3,7 +3,6 @@ import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
 import org.jetbrains.annotations.NotNull;
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
 import java.util.concurrent.BlockingQueue;
 

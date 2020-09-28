@@ -7,7 +7,7 @@ import com.github.matiasvergaras.finalreality.model.character.player.CharacterCl
  * A character can be controlled by the player or by the CPU (an enemy).
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author Matías Vergara Silva.
  */
 public interface ICharacter {
 
@@ -27,24 +27,33 @@ public interface ICharacter {
    */
   CharacterClass getCharacterClass();
 
-  public void setParalysed();
+  /**
+   * Sets this character in paralysed state.
+   */
+  void setParalysed();
 
-  public void setPoisoned();
+  /**
+   * Sets this character in poisoned state.
+   * @param damage
+   *              damage to apply in each turn (already divided by 3)
+   */
+  void setPoisoned(int damage);
 
-  public void setBurned();
+  /**
+   * Sets this character in burned state.
+   * @param damage
+   *               damage to apply in each turn (already divided by 2)
+   */
+  void setBurned(int damage);
 
-  public void setHealed();
+  /**
+   * Heals this unit
+   */
+  void setHealed();
 
-  public void receiveFireAttack();
-
-  public void receiveHealAttack();
-
-  public void receiveParalysisAttack();
-
-  public void receivePoisonAttack();
-
-  public void receiveThunderAttack();
-
-  public void receiveNormalAttack();
+  /**
+   * I can swear that I dont have any idea of wtf is this
+   */
+  int hashCode();
 
 }

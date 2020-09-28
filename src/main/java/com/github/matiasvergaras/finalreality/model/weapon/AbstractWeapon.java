@@ -1,9 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.weapon;
 
 import java.util.Objects;
-/** Esta clase puede servirnos, por ejemplo, si quisieramos agregar propiedades de
- * ''durabilidad'', ''alcance'', ''precision'' a todas las armas.
- */
 
 /**
  * A class that holds all the information of a weapon.
@@ -31,23 +28,46 @@ public abstract class AbstractWeapon implements IWeapon{
     this.type = type;
   }
 
-  private String getName() {
+  /**
+   * {@inheritDoc}
+   *
+   */
+  @Override
+  public String getName() {
     return name;
   }
 
-  private int getPower() {
+  /**
+   * {@inheritDoc}
+   *
+   */
+  @Override
+  public int getPower() {
     return power;
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   */
+  @Override
   public int getWeight() {
     return weight;
   }
 
-  private WeaponType getType() {
+  /**
+   * {@inheritDoc}
+   *
+   */
+  @Override
+  public WeaponType getType() {
     return type;
   }
 
-
+  /**
+   * {@inheritDoc}
+   *
+   */
   @Override
   public boolean equals(final Object o) {
     if (this == o) {
@@ -63,6 +83,10 @@ public abstract class AbstractWeapon implements IWeapon{
         getType() == weapon.getType();
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   */
   @Override
   public int hashCode() {
     return Objects.hash(getName(), getPower(), getWeight(), getType());

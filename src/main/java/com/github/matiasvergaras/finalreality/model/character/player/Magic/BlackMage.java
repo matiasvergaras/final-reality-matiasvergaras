@@ -5,7 +5,6 @@ import com.github.matiasvergaras.finalreality.model.character.player.CharacterCl
 import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.BlockingQueue;
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
 /**
  * Class to represent a ''Black Wizard'' unit.

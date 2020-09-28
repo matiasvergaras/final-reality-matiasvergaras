@@ -6,7 +6,6 @@ import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 
-import com.github.matiasvergaras.finalreality.model.weapon.WeaponType;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -19,8 +18,13 @@ public abstract class AbstractCharacter implements ICharacter {
 
   private final BlockingQueue<ICharacter> turnsQueue;
   private final CharacterClass characterClass;
-  protected final String name;
+  private final String name;
   protected ScheduledExecutorService scheduledExecutor;
+ /* protected final StateType state;
+  private final int currentHP;
+  private final int maxHP;
+  private final int currentDP;
+  private final int maxDP; */
 
 
   /**
@@ -29,11 +33,17 @@ public abstract class AbstractCharacter implements ICharacter {
    * @see CharacterClass
    */
   protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                              @NotNull String name, CharacterClass characterClass) {
+                              @NotNull String name, CharacterClass characterClass
+                              ) {
     this.turnsQueue = turnsQueue;
     this.name = name;
     this.characterClass = characterClass;
-  }
+    /*this.state = state;
+    this.maxHP = HP;
+    this.currentHP = HP ;
+    this.currentDP = DP;
+    this.maxDP = DP; */
+}
 
 
   /**
@@ -44,73 +54,71 @@ public abstract class AbstractCharacter implements ICharacter {
     scheduledExecutor.shutdown();
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   */
   @Override
   public String getName() {
     return name;
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   */
   @Override
   public int hashCode() {
     return Objects.hash(getCharacterClass());
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   */
   @Override
   public CharacterClass getCharacterClass() {
     return characterClass;
   }
 
 
+  /**
+   * {@inheritDoc}
+   *
+   */
   @Override
   public void setParalysed() {
-    return;
+
   }
 
+  /**
+   * {@inheritDoc}
+   * @param damage
+   *              damage to apply in each turn, already divided by 3.
+   */
   @Override
-  public void setPoisoned() {
-    return;
+  public void setPoisoned(int damage) {
+
   }
 
+  /**
+   * {@inheritDoc}
+   * @param damage
+   *              damage to apply in each turn, already divided by 2.
+   */
   @Override
-  public void setBurned() {
-    return;
+  public void setBurned(int damage) {
+
   }
 
+  /**
+   * {@inheritDoc}
+   *
+   */
   @Override
   public void setHealed() {
-    return;
+
   }
-
-
-  @Override
-  public void receiveFireAttack() {
-    return;
-  }
-
-  @Override
-  public void receiveHealAttack() {
-    return;
-  }
-
-  @Override
-  public void receiveParalysisAttack() {
-    return;
-  }
-
-  @Override
-  public void receivePoisonAttack() {
-    return;
-  }
-
-  @Override
-  public void receiveThunderAttack() {
-    return;
-  }
-
-  @Override
-  public void receiveNormalAttack() {
-    return;
-  }
-
 
 }
 

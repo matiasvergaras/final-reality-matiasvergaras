@@ -5,10 +5,7 @@ import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,6 +35,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter {
 
   }
 
+
   @Override
   public void waitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
@@ -45,18 +43,6 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter {
             .schedule(super::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
   }
 
-  @Override
-  public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof AbstractPlayerCharacter)) {
-      return false;
-    }
-    final AbstractPlayerCharacter that = (AbstractPlayerCharacter) o;
-    return getCharacterClass() == that.getCharacterClass()
-        && getName().equals(that.getName());
-  }
 
   /**
    * Equip a weapon to calling character.
@@ -76,7 +62,18 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter {
     return this.equippedWeapon;
   }
 
-
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof AbstractPlayerCharacter)) {
+      return false;
+    }
+    final AbstractPlayerCharacter that = (AbstractPlayerCharacter) o;
+    return getCharacterClass() == that.getCharacterClass()
+            && getName().equals(that.getName());
+  }
 }
 
 

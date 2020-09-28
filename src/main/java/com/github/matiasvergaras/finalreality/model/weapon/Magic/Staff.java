@@ -1,5 +1,4 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Magic;
-import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.WeaponType;
 
 /**
@@ -13,6 +12,8 @@ import com.github.matiasvergaras.finalreality.model.weapon.WeaponType;
 
 
 public class Staff extends AbstractMagicWeapon{
+    private final int magicDamage;
+
     /**
      * Creates a Staff object with a name, a base damage, weight and type.
      * @param name
@@ -21,8 +22,11 @@ public class Staff extends AbstractMagicWeapon{
      *              the Staff power
      * @param weight
      *              the Staff weight
+     * @param magicDamage
+     *              the Staff magic Damage
      */
-    public Staff(final String name, final int power, final int weight) {
+    public Staff(final String name, final int power, final int weight, final int magicDamage) {
         super(name, power, weight, WeaponType.STAFF);
+        this.magicDamage = magicDamage;
     }
 }
