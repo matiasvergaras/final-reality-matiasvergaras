@@ -33,7 +33,7 @@ Assistant teachers: Ignacio Slater M. & Matías Ramírez
 Review assistant: Kevin Pinochet Hérnandez (?) (apparently GitHub says that)
 
 
-** We will be writing updates of the work done in each pull request here, in '' Latest first '' format. Execution instructions will be added at the end of each task, once the program is fully developed and functional.**
+**We will be writing updates of the work done in each pull request here, in '' Latest first '' format. Execution instructions will be added at the end of each task, once the program is fully developed and functional.**
 
 ---
 
