@@ -13,7 +13,7 @@ public abstract class AbstractWeapon implements IWeapon{
   private final String name;
   private final int power; //Could be heal - power or damage - power
   private final int weight;
-  private final WeaponType type;
+  private final String type;
 
   /**
    * Creates a weapon with a name, a base damage, speed and it's type.
@@ -21,7 +21,7 @@ public abstract class AbstractWeapon implements IWeapon{
    * @see WeaponType
    */
   public AbstractWeapon(final String name, final int power, final int weight,
-                        final WeaponType type) {
+                        final String type) {
     this.name = name;
     this.power = power;
     this.weight = weight;
@@ -60,7 +60,7 @@ public abstract class AbstractWeapon implements IWeapon{
    *
    */
   @Override
-  public WeaponType getType() {
+  public String getType() {
     return type;
   }
 

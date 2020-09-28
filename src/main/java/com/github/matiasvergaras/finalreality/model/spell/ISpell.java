@@ -22,6 +22,6 @@ public interface ISpell {
     /**
      * Returns this spell type.
      */
-    SpellType getType();
+    String getType();
 
 }

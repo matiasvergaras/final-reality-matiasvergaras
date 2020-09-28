@@ -2,7 +2,7 @@ package com.github.matiasvergaras.finalreality.model.character.CPU;
 
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
+
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
@@ -26,7 +26,7 @@ public class Enemy extends AbstractCharacter {
    */
   public Enemy(@NotNull final String name, final int weight,
                @NotNull final BlockingQueue<ICharacter> turnsQueue) {
-    super(turnsQueue, name, CharacterClass.ENEMY);
+    super(turnsQueue, name, "ENEMY");
     this.weight = weight;
   }
 

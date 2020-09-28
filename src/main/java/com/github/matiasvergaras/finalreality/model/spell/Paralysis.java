@@ -22,6 +22,6 @@ public class Paralysis extends AbstractSpell{
      */
     protected Paralysis(@NotNull String name,
                    final int cost) {
-        super(name, cost, SpellType.PARALYSIS);
+        super(name, cost, "PARALYSIS");
     }
 }

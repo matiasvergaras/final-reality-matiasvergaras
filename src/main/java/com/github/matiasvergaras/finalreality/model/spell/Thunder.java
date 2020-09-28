@@ -22,6 +22,6 @@ public class Thunder extends AbstractSpell{
      */
     protected Thunder(@NotNull String name,
                    final int cost) {
-        super(name, cost, SpellType.THUNDER);
+        super(name, cost, "THUNDER");
     }
 }

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
  public abstract class AbstractSpell implements ISpell {
     private final String name;
     private final int cost;
-    private final SpellType type;
+    private final String type;
     /**
      * Creates a Spell with a name, cost and type
      * @param name
@@ -22,11 +22,10 @@ import org.jetbrains.annotations.NotNull;
      *     the cost of this spell (in mana)
      * @param type
      *     the type of this spell
-     * @see SpellType
      *  * @author Matías Vergara Silva.
      */
     protected AbstractSpell (@NotNull String name,
-                             final int cost, final SpellType type) {
+                             final int cost, final String type) {
         this.name = name;
         this.cost = cost;
         this.type = type;
@@ -55,7 +54,7 @@ import org.jetbrains.annotations.NotNull;
      *
      */
     @Override
-    public SpellType getType() {
+    public String getType() {
         return type;
     }
 }

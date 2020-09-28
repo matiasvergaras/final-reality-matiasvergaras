@@ -30,7 +30,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter {
    */
   protected AbstractPlayerCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                    @NotNull String name,
-                                   final CharacterClass characterClass) {
+                                   final String characterClass) {
     super(turnsQueue, name, characterClass);
 
   }

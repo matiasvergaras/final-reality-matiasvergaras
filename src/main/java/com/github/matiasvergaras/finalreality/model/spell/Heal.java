@@ -22,6 +22,6 @@ public class Heal extends AbstractSpell{
      */
     protected Heal(@NotNull String name,
                    final int cost) {
-        super(name, cost, SpellType.HEAL);
+        super(name, cost, "HEAL");
     }
 }

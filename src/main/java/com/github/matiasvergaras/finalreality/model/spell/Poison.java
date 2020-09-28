@@ -22,6 +22,6 @@ public class Poison extends AbstractSpell{
      */
     protected Poison(@NotNull String name,
                    final int cost) {
-        super(name, cost, SpellType.POISON);
+        super(name, cost, "POISON");
     }
 }

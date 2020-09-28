@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Magic;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
 import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.BlockingQueue;
@@ -28,7 +27,7 @@ public class BlackMage extends AbstractMagicCharacter {
      */
     public BlackMage(@NotNull BlockingQueue<ICharacter> turnsQueue,
                      @NotNull String name, Staff weapon) {
-        super(turnsQueue, name, CharacterClass.BLACK_MAGE);
+        super(turnsQueue, name, "BLACK_MAGE");
         this.equippedWeapon = weapon;
     }
 
@@ -42,7 +41,7 @@ public class BlackMage extends AbstractMagicCharacter {
      */
     public BlackMage(@NotNull BlockingQueue<ICharacter> turnsQueue,
                      @NotNull String name) {
-        super(turnsQueue, name, CharacterClass.BLACK_MAGE);
+        super(turnsQueue, name, "BLACK_MAGE");
     }
 
 

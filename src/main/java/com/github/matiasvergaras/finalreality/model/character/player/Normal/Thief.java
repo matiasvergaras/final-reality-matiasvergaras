@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
 import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
@@ -28,7 +27,7 @@ public class Thief extends AbstractNormalCharacter{
      */
     public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
                  @NotNull String name) {
-        super(turnsQueue, name, CharacterClass.THIEF);
+        super(turnsQueue, name, "THIEF");
     }
     /**
      * Creates a new Thief Character with a Sword.
@@ -42,7 +41,7 @@ public class Thief extends AbstractNormalCharacter{
      */
     public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
                  @NotNull String name, Sword weapon) {
-        super(turnsQueue, name, CharacterClass.THIEF);
+        super(turnsQueue, name, "THIEF");
         this.equip(weapon);
     }
     /**
@@ -57,7 +56,7 @@ public class Thief extends AbstractNormalCharacter{
      */
     public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
                  @NotNull String name, Staff weapon) {
-        super(turnsQueue, name, CharacterClass.THIEF);
+        super(turnsQueue, name, "THIEF");
         this.equip(weapon);
     }
 
@@ -73,7 +72,7 @@ public class Thief extends AbstractNormalCharacter{
       */
      public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
                   @NotNull String name, Bow weapon) {
-         super(turnsQueue, name, CharacterClass.THIEF);
+         super(turnsQueue, name, "THIEF");
          this.equip(weapon);
      }
 

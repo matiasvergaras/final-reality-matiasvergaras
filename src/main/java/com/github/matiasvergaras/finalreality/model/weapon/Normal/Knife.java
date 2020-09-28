@@ -1,5 +1,4 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Normal;
-import com.github.matiasvergaras.finalreality.model.weapon.WeaponType;
 
 /**
  * Class to represent a ''Knife'' weapon.
@@ -21,6 +20,6 @@ public class Knife extends AbstractNormalWeapon {
      *              the Knife weight
      */
     public Knife(final String name, final int power, final int weight) {
-        super(name, power, weight, WeaponType.KNIFE);
+        super(name, power, weight, "KNIFE");
     }
 }

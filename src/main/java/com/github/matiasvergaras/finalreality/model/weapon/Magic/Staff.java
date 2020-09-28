@@ -1,5 +1,4 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Magic;
-import com.github.matiasvergaras.finalreality.model.weapon.WeaponType;
 
 /**
  * Class to represent a ''Stick'' weapon.
@@ -26,7 +25,7 @@ public class Staff extends AbstractMagicWeapon{
      *              the Staff magic Damage
      */
     public Staff(final String name, final int power, final int weight, final int magicDamage) {
-        super(name, power, weight, WeaponType.STAFF);
+        super(name, power, weight, "STAFF");
         this.magicDamage = magicDamage;
     }
 }

@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Magic;
 
 import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.WeaponType;
 
 
 /**
@@ -24,10 +23,9 @@ public abstract class AbstractMagicWeapon extends AbstractWeapon {
      *     the weight of this weapon
      * @param type
      *      the type of this weapon.
-     * @see WeaponType
      */
     public AbstractMagicWeapon(final String name, final int power, final int weight,
-                          final WeaponType type) {
+                          final String type) {
         super(name, power, weight, type);
     }
 }

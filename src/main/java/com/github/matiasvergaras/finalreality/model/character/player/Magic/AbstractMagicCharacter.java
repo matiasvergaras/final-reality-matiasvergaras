@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Magic;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
 import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.BlockingQueue;
 
@@ -26,7 +25,7 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter{
      */
     protected AbstractMagicCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                      @NotNull String name,
-                                     final CharacterClass characterClass) {
+                                     final String characterClass) {
         super(turnsQueue, name, characterClass);
         this.mana=mana;
     }

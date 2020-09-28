@@ -20,7 +20,7 @@ public interface IWeapon {
     /**
      * Returns this weapon type.
      */
-    WeaponType getType();
+    String getType();
 
     /**
      * wtf is this bro?¿ serious question

@@ -1,7 +1,6 @@
 package com.github.cc3002.finalreality.model.character;
 
 import com.github.matiasvergaras.finalreality.model.character.CPU.Enemy;
-import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -23,7 +23,7 @@ public class Fire extends AbstractSpell {
      */
     protected Fire(@NotNull String name,
                              final int cost) {
-        super(name, cost, SpellType.FIRE);
+        super(name, cost, "FIRE");
     }
 
 }

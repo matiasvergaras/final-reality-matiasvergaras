@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
@@ -31,7 +30,7 @@ public class Knight extends AbstractNormalCharacter{
      */
     public Knight(@NotNull BlockingQueue<ICharacter> turnsQueue,
                     @NotNull String name, Sword weapon) {
-        super(turnsQueue, name, CharacterClass.KNIGHT);
+        super(turnsQueue, name, "KNIGHT");
         this.equip(weapon);
     }
     /**
@@ -47,7 +46,7 @@ public class Knight extends AbstractNormalCharacter{
      */
     public Knight(@NotNull BlockingQueue<ICharacter> turnsQueue,
                   @NotNull String name, Axe weapon) {
-        super(turnsQueue, name, CharacterClass.KNIGHT);
+        super(turnsQueue, name, "KNIGHT");
         this.equip(weapon);
     }
     /**
@@ -63,7 +62,7 @@ public class Knight extends AbstractNormalCharacter{
     public Knight(@NotNull BlockingQueue<ICharacter> turnsQueue,
                   @NotNull String name,
                   Knife weapon) {
-        super(turnsQueue, name, CharacterClass.KNIGHT);
+        super(turnsQueue, name, "KNIGHT");
         this.equip(weapon);
     }
     /**
@@ -77,7 +76,7 @@ public class Knight extends AbstractNormalCharacter{
      */
     public Knight(@NotNull BlockingQueue<ICharacter> turnsQueue,
                   @NotNull String name) {
-        super(turnsQueue, name, CharacterClass.KNIGHT);
+        super(turnsQueue, name, "KNIGHT");
     }
 
 

@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Normal;
 
 import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.WeaponType;
 
 /**
  * An abstract class that holds the common behaviour of all Normal Weapons in the game.
@@ -23,10 +22,9 @@ public abstract class AbstractNormalWeapon extends AbstractWeapon {
      *     the weight of this weapon
      * @param type
      *      the type of this weapon.
-     * @see WeaponType
      */
     public AbstractNormalWeapon(final String name, final int power, final int weight,
-                               final WeaponType type) {
+                               final String type) {
         super(name, power, weight, type);
     }
 }

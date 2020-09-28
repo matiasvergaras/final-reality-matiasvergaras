@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +29,7 @@ public class Engineer extends AbstractNormalCharacter {
      */
     public Engineer(@NotNull BlockingQueue<ICharacter> turnsQueue,
                        @NotNull String name, Axe weapon) {
-        super(turnsQueue, name, CharacterClass.ENGINEER);
+        super(turnsQueue, name, "ENGINEER");
         this.equip(weapon);
     }
 
@@ -46,7 +45,7 @@ public class Engineer extends AbstractNormalCharacter {
      */
     public Engineer(@NotNull BlockingQueue<ICharacter> turnsQueue,
                     @NotNull String name, Bow weapon) {
-        super(turnsQueue, name, CharacterClass.ENGINEER);
+        super(turnsQueue, name, "ENGINEER");
         this.equip(weapon);
     }
 
@@ -60,7 +59,7 @@ public class Engineer extends AbstractNormalCharacter {
      */
     public Engineer(@NotNull BlockingQueue<ICharacter> turnsQueue,
                     @NotNull String name) {
-        super(turnsQueue, name, CharacterClass.ENGINEER);
+        super(turnsQueue, name, "ENGINEER");
     }
 
 }

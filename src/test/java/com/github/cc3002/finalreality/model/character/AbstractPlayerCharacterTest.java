@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.github.matiasvergaras.finalreality.model.character.CPU.Enemy;
-import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import java.util.EnumMap;
 import java.util.Map;

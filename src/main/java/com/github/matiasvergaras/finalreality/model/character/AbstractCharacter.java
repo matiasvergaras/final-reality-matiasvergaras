@@ -1,7 +1,5 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
-import com.github.matiasvergaras.finalreality.model.character.player.CharacterClass;
-
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
@@ -17,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class AbstractCharacter implements ICharacter {
 
   private final BlockingQueue<ICharacter> turnsQueue;
-  private final CharacterClass characterClass;
+  private final String characterClass;
   private final String name;
   protected ScheduledExecutorService scheduledExecutor;
  /* protected final StateType state;
@@ -30,10 +28,9 @@ public abstract class AbstractCharacter implements ICharacter {
   /**
    * Creates a character with turns queue, name and class.
    *
-   * @see CharacterClass
    */
   protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                              @NotNull String name, CharacterClass characterClass
+                              @NotNull String name, @NotNull String characterClass
                               ) {
     this.turnsQueue = turnsQueue;
     this.name = name;
@@ -77,7 +74,7 @@ public abstract class AbstractCharacter implements ICharacter {
    *
    */
   @Override
-  public CharacterClass getCharacterClass() {
+  public String getCharacterClass() {
     return characterClass;
   }
 
