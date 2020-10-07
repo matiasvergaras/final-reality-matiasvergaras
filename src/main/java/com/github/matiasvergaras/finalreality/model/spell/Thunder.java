@@ -24,4 +24,18 @@ public class Thunder extends AbstractSpell{
                    final int cost) {
         super(name, cost, "THUNDER");
     }
+
+    /**
+     * Check if this is equal to a given object o.
+     * @param o The target object
+     * @return True if are equals, false otherwise
+     */
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Fire)) return false;
+        Fire that = (Fire) o;
+        return this.getName().equals(that.getName()) &&
+                this.getCost() == that.getCost() &&
+                this.getType() == that.getType();
+    }
 }

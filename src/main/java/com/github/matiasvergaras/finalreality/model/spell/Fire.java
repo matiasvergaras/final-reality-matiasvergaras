@@ -1,4 +1,5 @@
 package com.github.matiasvergaras.finalreality.model.spell;
+import com.github.matiasvergaras.finalreality.model.character.player.Normal.Engineer;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -24,6 +25,20 @@ public class Fire extends AbstractSpell {
     protected Fire(@NotNull String name,
                              final int cost) {
         super(name, cost, "FIRE");
+    }
+
+    /**
+     * Check if this is equal to a given object o.
+     * @param o The target object
+     * @return True if are equals, false otherwise
+     */
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Fire)) return false;
+        Fire that = (Fire) o;
+        return this.getName().equals(that.getName()) &&
+                this.getCost() == that.getCost() &&
+                this.getType() == that.getType();
     }
 
 }

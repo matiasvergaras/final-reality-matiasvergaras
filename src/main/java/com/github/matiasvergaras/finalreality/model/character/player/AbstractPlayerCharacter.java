@@ -24,14 +24,14 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter {
    * @param name
    *     the character's name
    * @param turnsQueue
-   *     the queue with the characters waiting for their turn
+   *     the queue with the characters ready to play
    * @param characterClass
    *     the class of this character
    */
   protected AbstractPlayerCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                    @NotNull String name,
-                                   final String characterClass) {
-    super(turnsQueue, name, characterClass);
+                                   final String characterClass, int HP, int DP) {
+    super(turnsQueue, name, characterClass, HP, DP);
 
   }
 
@@ -45,7 +45,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter {
 
 
   /**
-   * Equip a weapon to calling character.
+   * Sets the equipped weapon of this character.
    *
    * @param weapon
    *     the weapon
@@ -61,6 +61,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter {
   public IWeapon getEquippedWeapon() {
     return this.equippedWeapon;
   }
+
 
   @Override
   public boolean equals(final Object o) {

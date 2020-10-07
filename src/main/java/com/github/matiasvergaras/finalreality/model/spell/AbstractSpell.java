@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
      *     the cost of this spell (in mana)
      * @param type
      *     the type of this spell
-     *  * @author Matías Vergara Silva.
+     *
      */
     protected AbstractSpell (@NotNull String name,
                              final int cost, final String type) {

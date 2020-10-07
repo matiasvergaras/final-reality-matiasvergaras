@@ -19,7 +19,7 @@ public class TimerExample {
     for (int i = 0; i < 10; i++) {
       // Gives a random speed to each character to generate different waiting times
       var weapon = new Knife("", 0, rng.nextInt(50));
-      var character = new Thief(queue, Integer.toString(i));
+      var character = new Thief(queue, Integer.toString(i), 200, 200);
       character.equip(weapon);
       character.waitTurn();
     }

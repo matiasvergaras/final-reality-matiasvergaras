@@ -22,14 +22,4 @@ public interface IWeapon {
      */
     String getType();
 
-    /**
-     * wtf is this bro?¿ serious question
-     */
-    int hashCode();
-
-    /**
-     * check if an object is equal to this
-     */
-    boolean equals(final Object o);
-
 }

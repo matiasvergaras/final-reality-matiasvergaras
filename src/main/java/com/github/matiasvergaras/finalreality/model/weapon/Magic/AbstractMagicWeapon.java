@@ -13,6 +13,8 @@ import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
  * </p>
  */
 public abstract class AbstractMagicWeapon extends AbstractWeapon {
+    private final int magicDamage;
+
     /**
      * Creates a Magic Weapon with a name, a base damage, speed and it's type.
      * @param name
@@ -25,7 +27,12 @@ public abstract class AbstractMagicWeapon extends AbstractWeapon {
      *      the type of this weapon.
      */
     public AbstractMagicWeapon(final String name, final int power, final int weight,
-                          final String type) {
+                          final String type, int magicDamage) {
         super(name, power, weight, type);
+        this.magicDamage=magicDamage;
+    }
+
+    public int getMagicDamage(){
+        return magicDamage;
     }
 }

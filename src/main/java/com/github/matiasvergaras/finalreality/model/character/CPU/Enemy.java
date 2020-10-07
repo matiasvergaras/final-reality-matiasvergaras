@@ -21,15 +21,30 @@ public class Enemy extends AbstractCharacter {
   private final int weight;
 
   /**
-   * Creates a new enemy with a name, a weight and the queue with the characters ready to
-   * play.
+   * Creates a new Enemy Character.
+   * @param turnsQueue
+   *     the queue with the characters ready to play
+   * @param name
+   *     the character's name
+   * @param HP
+   *     the character's heal points
+   * @param DP
+   *     the character's defense points
    */
+
   public Enemy(@NotNull final String name, final int weight,
-               @NotNull final BlockingQueue<ICharacter> turnsQueue) {
-    super(turnsQueue, name, "ENEMY");
+               @NotNull final BlockingQueue<ICharacter> turnsQueue,
+               @NotNull int HP, @NotNull int DP) {
+    super(turnsQueue, name, "ENEMY", HP, DP);
     this.weight = weight;
   }
 
+
+  /**
+   * Check if this is equal to a given object o.
+   * @param o The target object
+   * @return True if are equals, false otherwise
+   */
   @Override
   public boolean equals(final Object o) {
     if (this == o) {
@@ -38,9 +53,15 @@ public class Enemy extends AbstractCharacter {
     if (!(o instanceof Enemy)) {
       return false;
     }
-    final Enemy enemy = (Enemy) o;
-    return getWeight() == enemy.getWeight();
+    final Enemy that = (Enemy) o;
+    return this.getWeight() == that.getWeight() &&
+            this.getName().equals(that.getName()) &&
+            this.getCharacterClass().equals(that.getCharacterClass()) &&
+            this.getDP() == that.getDP() &&
+            this.getHP() == that. getHP();
   }
+
+
 
   @Override
   public int hashCode() {

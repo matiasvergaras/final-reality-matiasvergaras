@@ -17,64 +17,37 @@ import java.util.concurrent.BlockingQueue;
  */
 public class Thief extends AbstractNormalCharacter{
     /**
-     * Creates a new Thief Character unarmed.
-     *
+     * Creates a new Thief Character.
+     * @param turnsQueue
+     *     the queue with the characters ready to play
      * @param name
      *     the character's name
-     * @param turnsQueue
-     *     the queue with the characters waiting for their turn
-
+     * @param HP
+     *     the character's heal points
+     * @param DP
+     *     the character's defense points
      */
     public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                 @NotNull String name) {
-        super(turnsQueue, name, "THIEF");
+                 @NotNull String name, int HP, int DP) {
+        super(turnsQueue, name, "THIEF", HP, DP);
     }
+
+
     /**
-     * Creates a new Thief Character with a Sword.
-     *
-     * @param name
-     *     the character's name
-     * @param turnsQueue
-     *     the queue with the characters waiting for their turn
-     * @param weapon
-     *      it's weapon
+     * Check if this is equal to a given object o.
+     * @param o The target object
+     * @return True if are equals, false otherwise
      */
-    public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                 @NotNull String name, Sword weapon) {
-        super(turnsQueue, name, "THIEF");
-        this.equip(weapon);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Thief)) return false;
+        Thief that = (Thief) o;
+        return this.getCharacterClass().equals(that.getCharacterClass()) &&
+                this.getEquippedWeapon().equals(that.getEquippedWeapon()) &&
+                this.getName().equals(that.getName()) &&
+                this.getHP()==that.getHP() &&
+                this.getDP()==that.getDP();
     }
-    /**
-     * Creates a new Thief Character with a Staff.
-     *
-     * @param name
-     *     the character's name
-     * @param turnsQueue
-     *     the queue with the characters waiting for their turn
-     * @param weapon
-     *      it's weapon
-     */
-    public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                 @NotNull String name, Staff weapon) {
-        super(turnsQueue, name, "THIEF");
-        this.equip(weapon);
-    }
-
-     /**
-      * Creates a new Thief Character with a Bow.
-      *
-      * @param name
-      *     the character's name
-      * @param turnsQueue
-      *     the queue with the characters waiting for their turn
-      * @param weapon
-      *      it's weapon
-      */
-     public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                  @NotNull String name, Bow weapon) {
-         super(turnsQueue, name, "THIEF");
-         this.equip(weapon);
-     }
-
 
 }

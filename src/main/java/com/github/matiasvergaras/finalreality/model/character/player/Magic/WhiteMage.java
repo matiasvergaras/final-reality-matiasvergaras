@@ -15,36 +15,35 @@ import java.util.concurrent.BlockingQueue;
  */
 
 public class WhiteMage extends AbstractMagicCharacter {
-
     /**
-     * Creates a new White Wizard Character with a Staff.
-     *
+     * Creates a new White Wizard Character.
+     * @param turnsQueue
+     *     the queue with the characters ready to play.
      * @param name
      *     the character's name
-     * @param turnsQueue
-     *     the queue with the characters waiting for their turn
-     * @param weapon
-     *     it's weapon.
+     * @param HP
+     *     the character's heal points
+     * @param DP
+     *     the character's defense points
+     * @param mana
+     *     the character's mana points
      */
     public WhiteMage(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                     @NotNull String name, Staff weapon) {
-        super(turnsQueue, name, "WHITE_MAGE");
-        this.equippedWeapon = weapon;
-
+                     @NotNull String name,
+                     int HP, int DP, int mana) {
+        super(turnsQueue, name, "WHITE_MAGE", HP, DP, mana);
     }
 
-    /**
-     * Creates a new unarmed White Wizard Character.
-     *
-     * @param name
-     *     the character's name
-     * @param turnsQueue
-     *     the queue with the characters waiting for their turn
-     */
-    public WhiteMage(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                     @NotNull String name) {
-        super(turnsQueue, name, "WHITE_MAGE");
-
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof WhiteMage)) return false;
+        WhiteMage that = (WhiteMage) o;
+        return this.getCharacterClass().equals(that.getCharacterClass()) &&
+                this.getEquippedWeapon().equals(that.getEquippedWeapon()) &&
+                this.getName().equals(that.getName()) &&
+                this.getMana()==that.getMana() &&
+                this.getHP()==that.getHP() &&
+                this.getDP()==that.getDP();
     }
 
 

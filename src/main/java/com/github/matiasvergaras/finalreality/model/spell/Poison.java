@@ -24,4 +24,18 @@ public class Poison extends AbstractSpell{
                    final int cost) {
         super(name, cost, "POISON");
     }
+
+    /**
+     * Check if this is equal to a given object o.
+     * @param o The target object
+     * @return True if are equals, false otherwise
+     */
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Poison)) return false;
+        Poison that = (Poison) o;
+        return this.getName().equals(that.getName()) &&
+                this.getCost() == that.getCost() &&
+                this.getType() == that.getType();
+    }
 }

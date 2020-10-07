@@ -18,7 +18,6 @@ public abstract class AbstractWeapon implements IWeapon{
   /**
    * Creates a weapon with a name, a base damage, speed and it's type.
    *
-   * @see WeaponType
    */
   public AbstractWeapon(final String name, final int power, final int weight,
                         final String type) {
@@ -64,31 +63,4 @@ public abstract class AbstractWeapon implements IWeapon{
     return type;
   }
 
-  /**
-   * {@inheritDoc}
-   *
-   */
-  @Override
-  public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof AbstractWeapon)) {
-      return false;
-    }
-    final AbstractWeapon weapon = (AbstractWeapon) o;
-    return getPower() == weapon.getPower() &&
-        getWeight() == weapon.getWeight() &&
-        getName().equals(weapon.getName()) &&
-        getType() == weapon.getType();
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   */
-  @Override
-  public int hashCode() {
-    return Objects.hash(getName(), getPower(), getWeight(), getType());
-  }
 }

@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.Magic.BlackMage;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
 import org.jetbrains.annotations.NotNull;
@@ -16,51 +17,37 @@ import java.util.concurrent.BlockingQueue;
  */
 
 public class Engineer extends AbstractNormalCharacter {
-
     /**
-     * Creates a new Engineer Character with an Axe.
-     *
+     * Creates a new Engineer Character.
+     * @param turnsQueue
+     *     the queue with the characters ready to play
      * @param name
      *     the character's name
-     * @param turnsQueue
-     *     the queue with the characters waiting for their turn
-     * @param weapon
-     *     it's weapon.
+     * @param HP
+     *     the character's heal points
+     * @param DP
+     *     the character's defense points
      */
     public Engineer(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                       @NotNull String name, Axe weapon) {
-        super(turnsQueue, name, "ENGINEER");
-        this.equip(weapon);
+                    @NotNull String name, int HP, int DP) {
+        super(turnsQueue, name, "ENGINEER", HP, DP);
     }
 
     /**
-     * Creates a new Engineer Character with a Bow.
-     *
-     * @param name
-     *     the character's name
-     * @param turnsQueue
-     *     the queue with the characters waiting for their turn
-     * @param weapon
-     *     it's weapon.
+     * Check if this is equal to a given object o.
+     * @param o The target object
+     * @return True if are equals, false otherwise
      */
-    public Engineer(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                    @NotNull String name, Bow weapon) {
-        super(turnsQueue, name, "ENGINEER");
-        this.equip(weapon);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Engineer)) return false;
+        Engineer that = (Engineer) o;
+        return this.getCharacterClass().equals(that.getCharacterClass()) &&
+                this.getEquippedWeapon().equals(that.getEquippedWeapon()) &&
+                this.getName().equals(that.getName()) &&
+                this.getHP()==that.getHP() &&
+                this.getDP()==that.getDP();
     }
-
-    /**
-     * Creates a new Engineer Character unarmed.
-     *
-     * @param name
-     *     the character's name
-     * @param turnsQueue
-     *     the queue with the characters waiting for their turn
-     */
-    public Engineer(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                    @NotNull String name) {
-        super(turnsQueue, name, "ENGINEER");
-    }
-
 }
 

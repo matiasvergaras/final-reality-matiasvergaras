@@ -18,14 +18,15 @@ public abstract class AbstractNormalCharacter extends AbstractPlayerCharacter {
      * @param name
      *     the character's name
      * @param turnsQueue
-     *     the queue with the characters waiting for their turn
+     *     the queue with the characters ready to play
      * @param characterClass
      *     the class of this character
      */
     public AbstractNormalCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                    @NotNull String name,
-                                   final String characterClass) {
-        super(turnsQueue, name, characterClass);
+                                   final String characterClass,
+                                   int HP, int DP) {
+        super(turnsQueue, name, characterClass, HP, DP);
     }
 
 }
