@@ -1,8 +1,13 @@
-package com.github.cc3002.finalreality.model.character;
+package com.github.matiasvergaras.finalreality.model.character.CPU;
 
-import com.github.cc3002.finalreality.model.character.player.CharacterClass;
+import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
+import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -20,16 +25,9 @@ public class Enemy extends AbstractCharacter {
    * play.
    */
   public Enemy(@NotNull final String name, final int weight,
-      @NotNull final BlockingQueue<ICharacter> turnsQueue) {
-    super(turnsQueue, name, CharacterClass.ENEMY);
+               @NotNull final BlockingQueue<ICharacter> turnsQueue) {
+    super(turnsQueue, name, "ENEMY");
     this.weight = weight;
-  }
-
-  /**
-   * Returns the weight of this enemy.
-   */
-  public int getWeight() {
-    return weight;
   }
 
   @Override
@@ -48,4 +46,24 @@ public class Enemy extends AbstractCharacter {
   public int hashCode() {
     return Objects.hash(getWeight());
   }
-}
+
+
+
+  @Override
+  public void waitTurn() {
+    scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+    scheduledExecutor
+            .schedule(super::addToQueue, this.getWeight() / 10, TimeUnit.SECONDS);
+  }
+
+  /**
+   * Returns the weight of this enemy.
+   */
+  public int getWeight() {
+    return weight;
+  }
+
+
+  }
+
+
