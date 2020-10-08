@@ -3,6 +3,8 @@ package com.github.matiasvergaras.finalreality.model.character.player.Magic;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -45,6 +47,12 @@ public class BlackMage extends AbstractMagicCharacter {
                 this.getMana()==that.getMana() &&
                 this.getHP()==that.getHP() &&
                 this.getDP()==that.getDP();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getMana(), this.getEquippedWeapon(),this.getName(),
+                this.getCharacterClass() , this.getDP(), this.getHP());
     }
 
 }

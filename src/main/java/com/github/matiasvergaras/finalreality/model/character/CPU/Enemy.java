@@ -34,7 +34,7 @@ public class Enemy extends AbstractCharacter {
 
   public Enemy(@NotNull final String name, final int weight,
                @NotNull final BlockingQueue<ICharacter> turnsQueue,
-               @NotNull int HP, @NotNull int DP) {
+               int HP, int DP) {
     super(turnsQueue, name, "ENEMY", HP, DP);
     this.weight = weight;
   }
@@ -65,7 +65,8 @@ public class Enemy extends AbstractCharacter {
 
   @Override
   public int hashCode() {
-    return Objects.hash(getWeight());
+    return Objects.hash(this.getWeight()  + this.getName()
+                        +this.getCharacterClass() + this.getDP() + this.getHP());
   }
 
 

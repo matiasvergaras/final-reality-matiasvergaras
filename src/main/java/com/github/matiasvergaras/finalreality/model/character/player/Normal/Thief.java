@@ -5,6 +5,8 @@ import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -49,5 +51,12 @@ public class Thief extends AbstractNormalCharacter{
                 this.getHP()==that.getHP() &&
                 this.getDP()==that.getDP();
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getEquippedWeapon(),this.getName(),
+                this.getCharacterClass() , this.getDP(), this.getHP());
+    }
+
 
 }

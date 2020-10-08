@@ -1,5 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Normal;
 
+import java.util.Objects;
+
 /**
  * Class to represent a ''Bow'' weapon.
  * <p>
@@ -38,6 +40,12 @@ public class Bow extends AbstractNormalWeapon{
                 this.getType().equals(that.getType()) &&
                 this.getPower() == that.getPower() &&
                 this.getWeight() == that.getWeight();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getName(),this.getType(), this.getPower(),
+                this.getWeight());
     }
 
 }

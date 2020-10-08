@@ -2,6 +2,8 @@ package com.github.matiasvergaras.finalreality.model.weapon.Magic;
 
 import com.github.matiasvergaras.finalreality.model.spell.Fire;
 
+import java.util.Objects;
+
 /**
  * Class to represent a ''Stick'' weapon.
  * <p>
@@ -44,6 +46,12 @@ public class Staff extends AbstractMagicWeapon{
                 this.getPower() == that.getPower() &&
                 this.getWeight() == that.getWeight() &&
                 this.getMagicDamage() == that.getMagicDamage();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getName(),this.getType(), this.getPower(),
+                this.getWeight(), this.getMagicDamage());
     }
 
 }

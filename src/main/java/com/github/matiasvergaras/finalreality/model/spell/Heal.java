@@ -2,6 +2,8 @@ package com.github.matiasvergaras.finalreality.model.spell;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 /**
  * Class to represent a ''Heal'' Magic Spell.
  * <p>
@@ -38,4 +40,11 @@ public class Heal extends AbstractSpell{
                 this.getCost() == that.getCost() &&
                 this.getType() == that.getType();
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getName(),this.getCost(),
+                this.getType());
+    }
+
 }

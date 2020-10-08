@@ -2,6 +2,8 @@ package com.github.matiasvergaras.finalreality.model.weapon.Normal;
 
 import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 
+import java.util.Objects;
+
 /**
  * Class to represent an ''Axe'' weapon.
  * <p>
@@ -41,5 +43,10 @@ public class Axe extends AbstractNormalWeapon{
                 this.getWeight() == that.getWeight();
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getName(),this.getType(), this.getPower(),
+                this.getWeight());
+    }
 }
 

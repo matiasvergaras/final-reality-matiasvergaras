@@ -1,5 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Normal;
 
+import java.util.Objects;
+
 /**
  * Class to represent a ''Knife'' weapon.
  * <p>
@@ -38,5 +40,12 @@ public class Knife extends AbstractNormalWeapon {
                 this.getPower() == that.getPower() &&
                 this.getWeight() == that.getWeight();
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getName(),this.getType(), this.getPower(),
+                this.getWeight());
+    }
+
 
 }

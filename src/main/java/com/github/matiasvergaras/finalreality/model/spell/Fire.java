@@ -2,6 +2,8 @@ package com.github.matiasvergaras.finalreality.model.spell;
 import com.github.matiasvergaras.finalreality.model.character.player.Normal.Engineer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 
 /**
  * Class to represent a ''Fire'' Magic Spell.
@@ -39,6 +41,12 @@ public class Fire extends AbstractSpell {
         return this.getName().equals(that.getName()) &&
                 this.getCost() == that.getCost() &&
                 this.getType() == that.getType();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getName(),this.getCost(),
+                this.getType());
     }
 
 }

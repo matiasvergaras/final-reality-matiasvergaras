@@ -2,6 +2,8 @@ package com.github.matiasvergaras.finalreality.model.spell;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 /**
  * Class to represent a ''Thunder'' Magic Spell.
  * <p>
@@ -37,5 +39,11 @@ public class Thunder extends AbstractSpell{
         return this.getName().equals(that.getName()) &&
                 this.getCost() == that.getCost() &&
                 this.getType() == that.getType();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getName(),this.getCost(),
+                this.getType());
     }
 }
