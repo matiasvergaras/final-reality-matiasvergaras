@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Matias Vergara Silva.
  */
 public abstract class AbstractPlayerCharacter extends AbstractCharacter implements IPlayerCharacter {
-   private IWeapon equippedWeapon;
+   protected IWeapon equippedWeapon;
 
    /**
    * Creates a new Player Character

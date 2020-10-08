@@ -21,6 +21,12 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter{
      *     the queue with the characters ready to play
      * @param characterClass
      *     the class of this character
+     * @param HP
+     *     this character heal points
+     * @param DP
+     *     this character defense points
+     * @param mana
+     *     this character mana points
      */
     protected AbstractMagicCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                      @NotNull String name,

@@ -2,6 +2,7 @@ package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.Magic.BlackMage;
+import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
 import org.jetbrains.annotations.NotNull;
@@ -12,7 +13,7 @@ import java.util.concurrent.BlockingQueue;
 /**
  * Class to represent a ''Engineer'' unit.
  * <p>
- *Engineers can equip Axes and Bows, and no magic spells.
+ *Engineers can equip Axes and Bows, and cannot use magic spells.
  *
  * @author Matías Vergara Silva
  *
@@ -34,6 +35,27 @@ public class Engineer extends AbstractNormalCharacter {
                     @NotNull String name, int HP, int DP) {
         super(turnsQueue, name, "ENGINEER", HP, DP);
     }
+
+
+    /**
+     * Equips an Axe to this character
+     * @param weapon
+     *        the Axe to equip
+     */
+    public void equip(Axe weapon) {
+        equippedWeapon = weapon;
+    }
+
+    /**
+     * Equips a Bow to this character
+     * @param weapon
+     *        the Bow to equip
+     */
+    public void equip(Bow weapon) {
+        equippedWeapon = weapon;
+    }
+
+
 
     /**
      * Check if this is equal to a given object o.

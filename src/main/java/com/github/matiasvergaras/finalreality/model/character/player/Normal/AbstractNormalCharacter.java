@@ -21,6 +21,10 @@ public abstract class AbstractNormalCharacter extends AbstractPlayerCharacter {
      *     the queue with the characters ready to play
      * @param characterClass
      *     the class of this character
+     * @param HP
+     *     this character's heals points
+     * @param DP
+     *     this character's defense points
      */
     public AbstractNormalCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                    @NotNull String name,

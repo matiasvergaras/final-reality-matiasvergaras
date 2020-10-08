@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
@@ -12,7 +13,7 @@ import java.util.concurrent.BlockingQueue;
 /**
  * Class to represent a ''Knight'' unit.
  * <p>
- *Knights can equip Swords, Axes and Knives, and no magic spells.
+ *Knights can equip Swords, Axes and Knives, and cannot use magic spells.
  *
  * @author Matías Vergara Silva
  *
@@ -34,6 +35,38 @@ public class Knight extends AbstractNormalCharacter{
                   @NotNull String name, int HP, int DP) {
         super(turnsQueue, name, "KNIGHT", HP, DP);
     }
+
+
+    /**
+     * Equips a Sword to this character
+     * @param weapon
+     *        the Sword to equip
+     */
+    public void equip(Sword weapon) {
+        equippedWeapon = weapon;
+    }
+
+    /**
+     * Equips an Axe to this character
+     * @param weapon
+     *        the Axe to equip
+     */
+    public void equip(Axe weapon) {
+        equippedWeapon = weapon;
+    }
+
+    /**
+     * Equips an  Knife to this character
+     * @param weapon
+     *        the e Knife to equip
+     */
+    public void equip(Knife weapon) {
+        equippedWeapon = weapon;
+    }
+
+
+
+
 
     /**
      * Check if this is equal to a given object o.

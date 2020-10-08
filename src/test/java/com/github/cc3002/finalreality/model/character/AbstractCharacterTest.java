@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -24,10 +22,11 @@ import org.junit.jupiter.api.Test;
  * @author Matias Vergara Silva.
  * @see IPlayerCharacter
  */
-public abstract class AbstractCharacterTest {
 
-  protected BlockingQueue<IPlayerCharacter> turns;
-  protected List<IPlayerCharacter> testCharacters;
+  public abstract class AbstractCharacterTest {
+
+  protected BlockingQueue<ICharacter> turns;
+  protected List<ICharacter> testCharacters;
   protected IWeapon testWeapon;
 
   /**
@@ -52,10 +51,24 @@ public abstract class AbstractCharacterTest {
     }
   }
 
-  private void tryToEquip(IPlayerCharacter character) {
+  private void tryToEquip(ICharacter character) {
     character.equip(testWeapon);
   }
 
+  /**
+   * Checks that the class' constructor and equals method works properly.
+   * @param expectedCharacter
+   *                          A character of this type
+   * @param testEqualCharacter
+   *                          A character of this type and with the same common fields
+   *                          of expectedCharacter
+   * @param sameClassDifferentCharacter
+   *                          A character of this type with at least one field different
+   *                          from those of expectedCharacter
+   * @param differentClassCharacter
+   *                          A character from another type with the same common  fields of
+   *                          expectedCharacters
+   */
   protected void checkConstruction(final ICharacter expectedCharacter,
       final ICharacter testEqualCharacter,
       final ICharacter sameClassDifferentCharacter,
@@ -68,7 +81,6 @@ public abstract class AbstractCharacterTest {
 
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
-    testWeapon = new Axe("Test", 15, 10);
     testCharacters = new ArrayList<>();
   }
 }

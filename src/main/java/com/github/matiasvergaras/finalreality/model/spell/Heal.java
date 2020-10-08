@@ -39,7 +39,7 @@ public class Heal extends AbstractSpell{
         Heal that = (Heal) o;
         return this.getName().equals(that.getName()) &&
                 this.getCost() == that.getCost() &&
-                this.getType() == that.getType();
+                this.getType().equals(that.getType()) ;
     }
 
     /**

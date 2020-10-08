@@ -1,7 +1,9 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Magic;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -31,9 +33,26 @@ public class BlackMage extends AbstractMagicCharacter {
      *     the character's mana points
      */
     public BlackMage(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                     @NotNull String name,
-                     int HP, int DP, int mana) {
+                     @NotNull String name,  int HP, int DP, int mana) {
         super(turnsQueue, name, "BLACK_MAGE", HP, DP, mana);
+    }
+
+    /**
+     * Equips a Staff to this character
+     * @param weapon
+     *        the Staff to equip
+     */
+    public void equip(Staff weapon) {
+        equippedWeapon = weapon;
+    }
+
+    /**
+     * Equips a Knife to this character
+     * @param weapon
+     *        the Staff to equip
+     */
+    public void equip(Knife weapon) {
+        equippedWeapon = weapon;
     }
 
 

@@ -31,11 +31,18 @@ public class WhiteMage extends AbstractMagicCharacter {
      *     the character's mana points
      */
     public WhiteMage(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                     @NotNull String name,
-                     int HP, int DP, int mana) {
+                     @NotNull String name, int HP, int DP, int mana) {
         super(turnsQueue, name, "WHITE_MAGE", HP, DP, mana);
     }
 
+    /**
+     * Equips a Staff to this character
+     * @param weapon
+     *        the Staff to equip
+     */
+    public void equip(Staff weapon) {
+        equippedWeapon = weapon;
+    }
 
     /**
      * Check if this is equal to a given object o.

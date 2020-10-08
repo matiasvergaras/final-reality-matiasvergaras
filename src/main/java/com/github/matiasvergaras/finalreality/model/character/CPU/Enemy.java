@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Ignacio Slater Muñoz
  * @author <Your name>
  */
-public class Enemy extends AbstractCharacter {
+public class Enemy extends AbstractCharacter{
 
   private final int weight;
 
@@ -32,8 +32,8 @@ public class Enemy extends AbstractCharacter {
    *     the character's defense points
    */
 
-  public Enemy(@NotNull final String name, final int weight,
-               @NotNull final BlockingQueue<ICharacter> turnsQueue,
+  public Enemy(@NotNull final BlockingQueue<ICharacter> turnsQueue,
+               @NotNull final String name, final int weight,
                int HP, int DP) {
     super(turnsQueue, name, "ENEMY", HP, DP);
     this.weight = weight;

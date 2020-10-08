@@ -3,6 +3,7 @@ package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,7 +13,7 @@ import java.util.concurrent.BlockingQueue;
 /**
  * Class to represent a ''Thief'' unit.
  * <p>
- *Thieves can equip Swords, Staves (Staff) and Bows, and cannot use any Spells.
+ *Thieves can equip Swords, Knives (Knife) and Bows, and cannot use any Spells.
  *
  * @author Matías Vergara Silva
  *
@@ -32,6 +33,33 @@ public class Thief extends AbstractNormalCharacter{
     public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
                  @NotNull String name, int HP, int DP) {
         super(turnsQueue, name, "THIEF", HP, DP);
+    }
+
+    /**
+     * Equips a Sword to this character
+     * @param weapon
+     *        the Sword to equip
+     */
+    public void equip(Sword weapon) {
+        equippedWeapon = weapon;
+    }
+
+    /**
+     * Equips a Bow to this character
+     * @param weapon
+     *        the Bow to equip
+     */
+    public void equip(Bow weapon) {
+        equippedWeapon = weapon;
+    }
+
+    /**
+     * Equips a Knife to this character
+     * @param weapon
+     *        the Knife to equip
+     */
+    public void equip(Knife weapon) {
+        equippedWeapon = weapon;
     }
 
 
