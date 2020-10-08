@@ -4,27 +4,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Abstract class containing the common tests for all the types of characters.
+ * Abstract class containing the common tests for all the types of  playable characters.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
- * @see ICharacter
+ * @author Matias Vergara Silva.
+ * @see IPlayerCharacter
  */
 public abstract class AbstractCharacterTest {
 
-  protected BlockingQueue<ICharacter> turns;
-  protected List<ICharacter> testCharacters;
-  protected AbstractWeapon testWeapon;
+  protected BlockingQueue<IPlayerCharacter> turns;
+  protected List<IPlayerCharacter> testCharacters;
+  protected IWeapon testWeapon;
 
   /**
    * Checks that the character waits the appropriate amount of time for it's turn.
@@ -48,7 +52,7 @@ public abstract class AbstractCharacterTest {
     }
   }
 
-  private void tryToEquip(ICharacter character) {
+  private void tryToEquip(IPlayerCharacter character) {
     character.equip(testWeapon);
   }
 
@@ -64,7 +68,7 @@ public abstract class AbstractCharacterTest {
 
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
-    testWeapon = new AbstractWeapon("Test", 15, 10, WeaponType.AXE);
+    testWeapon = new Axe("Test", 15, 10);
     testCharacters = new ArrayList<>();
   }
 }

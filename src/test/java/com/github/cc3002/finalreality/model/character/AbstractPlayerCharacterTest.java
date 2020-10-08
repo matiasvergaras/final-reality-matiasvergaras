@@ -8,6 +8,8 @@ import com.github.matiasvergaras.finalreality.model.character.CPU.Enemy;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import java.util.EnumMap;
 import java.util.Map;
+
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,17 +17,17 @@ import org.junit.jupiter.api.Test;
  * Set of tests for the {@code GameCharacter} class.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author Matias Vergara Silva.
  * @see AbstractPlayerCharacter
  */
-class AbstractPlayerCharacterTest extends AbstractCharacterTest {
+class PlayerCharacterTest extends AbstractCharacterTest {
 
   private static final String BLACK_MAGE_NAME = "Vivi";
   private static final String KNIGHT_NAME = "Adelbert";
   private static final String WHITE_MAGE_NAME = "Eiko";
   private static final String ENGINEER_NAME = "Cid";
   private static final String THIEF_NAME = "Zidane";
-  private Map<CharacterClass, String> characterNames;
+  private Map<String, String> characterNames;
 
   /**
    * Setup method.
@@ -36,16 +38,16 @@ class AbstractPlayerCharacterTest extends AbstractCharacterTest {
     super.basicSetUp();
 
     characterNames = new EnumMap<>(CharacterClass.class);
-    characterNames.put(CharacterClass.BLACK_MAGE, BLACK_MAGE_NAME);
-    characterNames.put(CharacterClass.KNIGHT, KNIGHT_NAME);
-    characterNames.put(CharacterClass.WHITE_MAGE, WHITE_MAGE_NAME);
-    characterNames.put(CharacterClass.ENGINEER, ENGINEER_NAME);
-    characterNames.put(CharacterClass.THIEF, THIEF_NAME);
+    characterNames.put("BLACK_MAGE", BLACK_MAGE_NAME);
+    characterNames.put("KNIGHT", KNIGHT_NAME);
+    characterNames.put("WHITE_MAGE", WHITE_MAGE_NAME);
+    characterNames.put("ENGINEER", ENGINEER_NAME);
+    characterNames.put("THIEF", THIEF_NAME);
 
     for (var characterClass :
         characterNames.keySet()) {
       testCharacters.add(
-          new AbstractPlayerCharacter(characterNames.get(characterClass), turns, characterClass));
+          new IPlayerCharacter(characterNames.get(characterClass), turns, characterClass));
     }
   }
 
@@ -54,7 +56,7 @@ class AbstractPlayerCharacterTest extends AbstractCharacterTest {
    */
   @Test
   void constructorTest() {
-    var enemy = new Enemy("Enemy", 10, turns);
+    var enemy = new Enemy("Enemy", 10, turns, 200, 200);
     for (var character :
         testCharacters) {
       var characterClass = character.getCharacterClass();
