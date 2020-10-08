@@ -3,7 +3,7 @@ ChangeLog
 
 Version 2.0
 -----------
-- 
+- (B.2) Implementation of Equals and HashCode Methods
 - (B.1) Hierarchy implementation based on abstract classes
 
 Version 1.0
