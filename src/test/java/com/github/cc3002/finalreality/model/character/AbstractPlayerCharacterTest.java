@@ -21,17 +21,17 @@ import org.junit.jupiter.api.Test;
  * @see AbstractPlayerCharacter
  */
 public abstract class AbstractPlayerCharacterTest extends AbstractCharacterTest {
-    protected List<IPlayerCharacter> testCharacters;
+    protected List<IPlayerCharacter> testPlayerCharacters;
     protected IWeapon testWeapon;
 
     /**
      * Checks that the character waits the appropriate amount of time for it's turn.
      */
-    @Test
+    @Override
     void waitTurnTest() {
         Assertions.assertTrue(turns.isEmpty());
-        tryToEquip(testCharacters.get(0));
-        testCharacters.get(0).waitTurn();
+        tryToEquip(testPlayerCharacters.get(0));
+        testPlayerCharacters.get(0).waitTurn();
         try {
             // Thread.sleep is not accurate so this values may be changed to adjust the
             // acceptable error margin.
@@ -40,7 +40,7 @@ public abstract class AbstractPlayerCharacterTest extends AbstractCharacterTest 
             Assertions.assertEquals(0, turns.size());
             Thread.sleep(200);
             Assertions.assertEquals(1, turns.size());
-            Assertions.assertEquals(testCharacters.get(0), turns.peek());
+            Assertions.assertEquals(testPlayerCharacters.get(0), turns.peek());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -52,7 +52,6 @@ public abstract class AbstractPlayerCharacterTest extends AbstractCharacterTest 
     /**
      * Sets up the basics to test this class.
      */
-    @BeforeEach
     void setUp() {
         super.basicSetUp();
     }
@@ -60,13 +59,13 @@ public abstract class AbstractPlayerCharacterTest extends AbstractCharacterTest 
     /**
      * Checks that the class' equip method works properly.
      */
-    @Test
     void equipWeaponTest() {
         for (var character :
-                testCharacters) {
+                testPlayerCharacters) {
             assertNull(character.getEquippedWeapon());
             character.equip(testWeapon);
             assertEquals(testWeapon, character.getEquippedWeapon());
         }
     }
+
 }

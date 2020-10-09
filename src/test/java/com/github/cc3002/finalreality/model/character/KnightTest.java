@@ -22,7 +22,7 @@ class KnightTest extends AbstractPlayerCharacterTest {
      */
     @Test
     void constructorTest() {
-        checkConstruction(new Knight(turns, KNIGHT_NAME, 10, 200),
+        checkConstruction(new Knight(turns, KNIGHT_NAME, 200, 100),
                 testCharacters.get(0),
                 new Knight(turns, KNIGHT_NAME, 11, 200),
                 new Thief(turns, KNIGHT_NAME, 11, 200));

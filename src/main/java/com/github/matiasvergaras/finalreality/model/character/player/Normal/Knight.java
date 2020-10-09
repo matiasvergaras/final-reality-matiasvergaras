@@ -79,7 +79,6 @@ public class Knight extends AbstractNormalCharacter{
         if (!(o instanceof Knight)) return false;
         Knight that = (Knight) o;
         return this.getCharacterClass().equals(that.getCharacterClass()) &&
-                this.getEquippedWeapon().equals(that.getEquippedWeapon()) &&
                 this.getName().equals(that.getName()) &&
                 this.getHP()==that.getHP() &&
                 this.getDP()==that.getDP();
@@ -92,8 +91,8 @@ public class Knight extends AbstractNormalCharacter{
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getEquippedWeapon(),this.getName(),
-                this.getCharacterClass() , this.getDP(), this.getHP());
+        return Objects.hash( this.getName() +
+                this.getCharacterClass() + this.getDP() + this.getHP());
     }
 
 }

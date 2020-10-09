@@ -22,7 +22,7 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
      */
     @Test
     void constructorTest() {
-        checkConstruction(new WhiteMage(turns, WHITE_MAGE_NAME, 10, 200, 250),
+        checkConstruction(new WhiteMage(turns, WHITE_MAGE_NAME, 200, 100, 250),
                 testCharacters.get(0),
                 new WhiteMage(turns, WHITE_MAGE_NAME, 11, 200, 250),
                 new BlackMage(turns, WHITE_MAGE_NAME, 11, 200, 250));

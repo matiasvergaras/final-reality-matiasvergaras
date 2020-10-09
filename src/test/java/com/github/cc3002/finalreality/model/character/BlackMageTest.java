@@ -21,10 +21,11 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
      * Checks that the class' constructor and equals method works properly.
      */
     @Test
-    void constructorTest() {
-        checkConstruction(new BlackMage(turns, BLACK_MAGE_NAME, 10, 200, 250),
+    void checkConstruction() {
+        super.checkConstruction(new BlackMage(turns, BLACK_MAGE_NAME, 200, 100, 250),
                 testCharacters.get(0),
                 new BlackMage(turns, BLACK_MAGE_NAME, 11, 200, 250),
-                new WhiteMage(turns, BLACK_MAGE_NAME, 11, 200, 250));
+                new WhiteMage(turns, BLACK_MAGE_NAME, 200, 100, 250));
     }
 }
+

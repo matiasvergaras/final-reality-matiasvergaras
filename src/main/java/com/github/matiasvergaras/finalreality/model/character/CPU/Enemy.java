@@ -58,7 +58,7 @@ public class Enemy extends AbstractCharacter{
             this.getName().equals(that.getName()) &&
             this.getCharacterClass().equals(that.getCharacterClass()) &&
             this.getDP() == that.getDP() &&
-            this.getHP() == that. getHP();
+            this.getHP() == that.getHP();
   }
 
 

@@ -1,5 +1,5 @@
 package com.github.cc3002.finalreality.model.character;
-
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -27,15 +27,12 @@ import org.junit.jupiter.api.Test;
 
   protected BlockingQueue<ICharacter> turns;
   protected List<ICharacter> testCharacters;
-  protected IWeapon testWeapon;
 
   /**
    * Checks that the character waits the appropriate amount of time for it's turn.
    */
-  @Test
   void waitTurnTest() {
     Assertions.assertTrue(turns.isEmpty());
-    tryToEquip(testCharacters.get(0));
     testCharacters.get(0).waitTurn();
     try {
       // Thread.sleep is not accurate so this values may be changed to adjust the
@@ -51,9 +48,6 @@ import org.junit.jupiter.api.Test;
     }
   }
 
-  private void tryToEquip(ICharacter character) {
-    character.equip(testWeapon);
-  }
 
   /**
    * Checks that the class' constructor and equals method works properly.
@@ -69,10 +63,11 @@ import org.junit.jupiter.api.Test;
    *                          A character from another type with the same common  fields of
    *                          expectedCharacters
    */
+
   protected void checkConstruction(final ICharacter expectedCharacter,
-      final ICharacter testEqualCharacter,
-      final ICharacter sameClassDifferentCharacter,
-      final ICharacter differentClassCharacter) {
+                                   final ICharacter testEqualCharacter,
+                                   final ICharacter sameClassDifferentCharacter,
+                                   final ICharacter differentClassCharacter) {
     assertEquals(expectedCharacter, testEqualCharacter);
     assertNotEquals(sameClassDifferentCharacter, testEqualCharacter);
     assertNotEquals(testEqualCharacter, differentClassCharacter);

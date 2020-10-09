@@ -22,9 +22,9 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
      */
     @Test
     void constructorTest() {
-        checkConstruction(new Thief(turns, THIEF_NAME, 10, 200),
+        checkConstruction(new Thief(turns, THIEF_NAME, 200, 100),
                 testCharacters.get(0),
-                new Thief(turns, THIEF_NAME, 11, 200),
-                new Engineer(turns, THIEF_NAME, 11, 200));
+                new Thief(turns, THIEF_NAME, 110, 200),
+                new Engineer(turns, THIEF_NAME, 110, 200));
     }
 }

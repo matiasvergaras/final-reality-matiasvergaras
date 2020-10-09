@@ -67,7 +67,6 @@ public class BlackMage extends AbstractMagicCharacter {
         if (!(o instanceof BlackMage)) return false;
         BlackMage that = (BlackMage) o;
         return this.getCharacterClass().equals(that.getCharacterClass()) &&
-                this.getEquippedWeapon().equals(that.getEquippedWeapon()) &&
                 this.getName().equals(that.getName()) &&
                 this.getMana()==that.getMana() &&
                 this.getHP()==that.getHP() &&
@@ -81,8 +80,8 @@ public class BlackMage extends AbstractMagicCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getMana(), this.getEquippedWeapon(),this.getName(),
-                this.getCharacterClass() , this.getDP(), this.getHP());
+        return Objects.hash(this.getMana() + this.getName() +
+                this.getCharacterClass() + this.getDP() + this.getHP());
     }
 
 }

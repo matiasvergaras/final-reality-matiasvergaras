@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
@@ -48,20 +49,38 @@ class WeaponTest {
     var expectedBow = new Bow(BOW_NAME, DAMAGE, WEIGHT);
     var expectedKnife = new Knife(KNIFE_NAME, DAMAGE, WEIGHT);
 
+
+
     assertEquals(expectedAxe, testAxe);
     assertEquals(expectedAxe.hashCode(), testAxe.hashCode());
     assertNotEquals(expectedAxe.hashCode(), testStaff.hashCode());
+
     assertEquals(expectedStaff, testStaff);
     assertEquals(expectedStaff.hashCode(), testStaff.hashCode());
     assertNotEquals(expectedStaff.hashCode(), testSword.hashCode());
+
     assertEquals(expectedSword, testSword);
     assertEquals(expectedSword.hashCode(), testSword.hashCode());
     assertNotEquals(expectedSword.hashCode(), testBow.hashCode());
+
     assertEquals(expectedBow, testBow);
     assertEquals(expectedBow.hashCode(), testBow.hashCode());
     assertNotEquals(expectedBow.hashCode(), testKnife.hashCode());
+
     assertEquals(expectedKnife, testKnife);
     assertEquals(expectedKnife.hashCode(), testKnife.hashCode());
     assertNotEquals(expectedKnife.hashCode(), testAxe.hashCode());
   }
+
+  protected void checkConstruction(final IWeapon expectedWeapon,
+                                   final IWeapon testEqualWeapon,
+                                   final IWeapon sameClassDifferentWeapon,
+                                   final IWeapon differentWeapon){
+    assertEquals(expectedWeapon, testEqualWeapon);
+    assertNotEquals(sameClassDifferentWeapon, testEqualWeapon);
+    assertNotEquals(testEqualWeapon, differentWeapon);
+    assertEquals(expectedWeapon.hashCode(), testEqualWeapon.hashCode());
+
+  }
+
 }

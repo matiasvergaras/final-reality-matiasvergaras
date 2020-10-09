@@ -1,4 +1,5 @@
 package com.github.cc3002.finalreality.model.character;
+import com.github.matiasvergaras.finalreality.model.character.CPU.Enemy;
 import com.github.matiasvergaras.finalreality.model.character.player.Normal.Engineer;
 import com.github.matiasvergaras.finalreality.model.character.player.Normal.Thief;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,7 @@ class EngineerTest extends AbstractPlayerCharacterTest {
     @BeforeEach
     void setUp() {
         basicSetUp();
-        testCharacters.add(new Engineer(turns, ENGINEER_NAME, 200, 100));
+        testCharacters.add(new Engineer(turns, ENGINEER_NAME, 100, 200));
     }
 
     /**
@@ -22,9 +23,9 @@ class EngineerTest extends AbstractPlayerCharacterTest {
      */
     @Test
     void constructorTest() {
-        checkConstruction(new Engineer(turns, ENGINEER_NAME, 10, 200),
+        checkConstruction(new Engineer(turns, ENGINEER_NAME, 100, 200),
                 testCharacters.get(0),
-                new Engineer(turns, ENGINEER_NAME, 11, 200),
-                new Thief(turns, ENGINEER_NAME, 11, 200));
+                new Engineer(turns, ENGINEER_NAME, 110, 200),
+                new Enemy(turns, ENGINEER_NAME, 11,110, 200));
     }
 }

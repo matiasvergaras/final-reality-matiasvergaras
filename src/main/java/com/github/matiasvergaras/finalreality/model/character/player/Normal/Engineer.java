@@ -64,11 +64,14 @@ public class Engineer extends AbstractNormalCharacter {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Engineer)) return false;
-        Engineer that = (Engineer) o;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Engineer)) {
+            return false;
+        }
+        final Engineer that = (Engineer) o;
         return this.getCharacterClass().equals(that.getCharacterClass()) &&
-                this.getEquippedWeapon().equals(that.getEquippedWeapon()) &&
                 this.getName().equals(that.getName()) &&
                 this.getHP()==that.getHP() &&
                 this.getDP()==that.getDP();
@@ -81,8 +84,8 @@ public class Engineer extends AbstractNormalCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getEquippedWeapon(),this.getName(),
-                this.getCharacterClass() , this.getDP(), this.getHP());
+        return Objects.hash(this.getName() +
+                this.getCharacterClass() + this.getDP() + this.getHP());
     }
 
 

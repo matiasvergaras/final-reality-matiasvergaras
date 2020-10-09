@@ -74,7 +74,6 @@ public class Thief extends AbstractNormalCharacter{
         if (!(o instanceof Thief)) return false;
         Thief that = (Thief) o;
         return this.getCharacterClass().equals(that.getCharacterClass()) &&
-                this.getEquippedWeapon().equals(that.getEquippedWeapon()) &&
                 this.getName().equals(that.getName()) &&
                 this.getHP()==that.getHP() &&
                 this.getDP()==that.getDP();
@@ -87,8 +86,8 @@ public class Thief extends AbstractNormalCharacter{
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getEquippedWeapon(),this.getName(),
-                this.getCharacterClass() , this.getDP(), this.getHP());
+        return Objects.hash(this.getEquippedWeapon() + this.getName() +
+                this.getCharacterClass() + this.getDP() + this.getHP());
     }
 
 
