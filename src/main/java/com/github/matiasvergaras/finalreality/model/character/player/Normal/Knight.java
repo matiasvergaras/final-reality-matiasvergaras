@@ -43,7 +43,7 @@ public class Knight extends AbstractNormalCharacter{
      *        the Sword to equip
      */
     public void equip(Sword weapon) {
-        equippedWeapon = weapon;
+        super.equip(weapon);
     }
 
     /**
@@ -52,7 +52,7 @@ public class Knight extends AbstractNormalCharacter{
      *        the Axe to equip
      */
     public void equip(Axe weapon) {
-        equippedWeapon = weapon;
+        super.equip(weapon);
     }
 
     /**
@@ -61,7 +61,7 @@ public class Knight extends AbstractNormalCharacter{
      *        the e Knife to equip
      */
     public void equip(Knife weapon) {
-        equippedWeapon = weapon;
+        super.equip(weapon);
     }
 
 

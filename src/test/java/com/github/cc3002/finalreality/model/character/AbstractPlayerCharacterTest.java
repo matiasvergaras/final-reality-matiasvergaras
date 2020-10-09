@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,10 +25,19 @@ public abstract class AbstractPlayerCharacterTest extends AbstractCharacterTest 
     protected List<IPlayerCharacter> testPlayerCharacters;
     protected IWeapon testWeapon;
 
+
+    /**
+     * Method to try to equip a Weapon to a Character inside of the waitTurn Test
+     * @param character
+     *                  The character to try to equip
+     */
+    void tryToEquip(IPlayerCharacter character) {
+        character.equip(testWeapon);
+    }
+
     /**
      * Checks that the character waits the appropriate amount of time for it's turn.
      */
-    @Override
     void waitTurnTest() {
         Assertions.assertTrue(turns.isEmpty());
         tryToEquip(testPlayerCharacters.get(0));
@@ -45,9 +55,7 @@ public abstract class AbstractPlayerCharacterTest extends AbstractCharacterTest 
             e.printStackTrace();
         }
     }
-    private void tryToEquip(IPlayerCharacter character) {
-        character.equip(testWeapon);
-    }
+
 
     /**
      * Sets up the basics to test this class.

@@ -43,7 +43,7 @@ public class Engineer extends AbstractNormalCharacter {
      *        the Axe to equip
      */
     public void equip(Axe weapon) {
-        equippedWeapon = weapon;
+        super.equip(weapon);
     }
 
     /**
@@ -52,7 +52,7 @@ public class Engineer extends AbstractNormalCharacter {
      *        the Bow to equip
      */
     public void equip(Bow weapon) {
-        equippedWeapon = weapon;
+        super.equip(weapon);
     }
 
 

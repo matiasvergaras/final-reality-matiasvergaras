@@ -18,6 +18,7 @@ class EnemyTest extends AbstractCharacterTest {
     testCharacters.add(new Enemy(turns, ENEMY_NAME, 10, 200, 100));
   }
 
+
   /**
    * Checks that the class' constructor and equals method works properly.
    */
@@ -28,4 +29,10 @@ class EnemyTest extends AbstractCharacterTest {
         new Enemy(turns, ENEMY_NAME, 11, 200, 100),
         new Engineer(turns, ENEMY_NAME, 11, 200));
   }
+
+  @Test
+  void waitTurnTest(){
+    super.waitTurnTest();
+  }
+
 }

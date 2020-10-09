@@ -41,7 +41,7 @@ public class Thief extends AbstractNormalCharacter{
      *        the Sword to equip
      */
     public void equip(Sword weapon) {
-        equippedWeapon = weapon;
+        super.equip(weapon);
     }
 
     /**
@@ -50,7 +50,7 @@ public class Thief extends AbstractNormalCharacter{
      *        the Bow to equip
      */
     public void equip(Bow weapon) {
-        equippedWeapon = weapon;
+        super.equip(weapon);
     }
 
     /**
@@ -59,7 +59,7 @@ public class Thief extends AbstractNormalCharacter{
      *        the Knife to equip
      */
     public void equip(Knife weapon) {
-        equippedWeapon = weapon;
+        super.equip(weapon);
     }
 
 

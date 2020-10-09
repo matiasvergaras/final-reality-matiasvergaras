@@ -41,7 +41,7 @@ public class WhiteMage extends AbstractMagicCharacter {
      *        the Staff to equip
      */
     public void equip(Staff weapon) {
-        equippedWeapon = weapon;
+        super.equip(weapon);
     }
 
     /**

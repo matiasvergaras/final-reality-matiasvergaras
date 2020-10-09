@@ -1,12 +1,16 @@
 package com.github.cc3002.finalreality.model.character;
 import com.github.matiasvergaras.finalreality.model.character.player.Magic.BlackMage;
 import com.github.matiasvergaras.finalreality.model.character.player.Magic.WhiteMage;
+import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BlackMageTest extends AbstractPlayerCharacterTest {
 
     private static final String BLACK_MAGE_NAME = "Eiko";
+    private static final Staff EXAMPLE_STAFF = new Staff("Example Staff",
+            200, 100, 250);
+
 
     /**
      * Sets up an instance to test this class.
@@ -27,5 +31,8 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
                 new BlackMage(turns, BLACK_MAGE_NAME, 11, 200, 250),
                 new WhiteMage(turns, BLACK_MAGE_NAME, 200, 100, 250));
     }
+
+
+
 }
 

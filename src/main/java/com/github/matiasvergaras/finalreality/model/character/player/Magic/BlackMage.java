@@ -43,7 +43,7 @@ public class BlackMage extends AbstractMagicCharacter {
      *        the Staff to equip
      */
     public void equip(Staff weapon) {
-        equippedWeapon = weapon;
+        super.equip(weapon);
     }
 
     /**
@@ -52,7 +52,7 @@ public class BlackMage extends AbstractMagicCharacter {
      *        the Staff to equip
      */
     public void equip(Knife weapon) {
-        equippedWeapon = weapon;
+        super.equip(weapon);
     }
 
 
