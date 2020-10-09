@@ -1,5 +1,4 @@
 package com.github.cc3002.finalreality.model.character;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -29,7 +28,7 @@ import org.junit.jupiter.api.Assertions;
   /**
    * Checks that the character waits the appropriate amount of time for it's turn.
    */
-  void waitTurnTest() {
+  void checkTurns() {
     Assertions.assertTrue(turns.isEmpty());
     testCharacters.get(0).waitTurn();
     try {

@@ -32,7 +32,7 @@ class EnemyTest extends AbstractCharacterTest {
 
   @Test
   void waitTurnTest(){
-    super.waitTurnTest();
+    super.checkTurns();
   }
 
 }

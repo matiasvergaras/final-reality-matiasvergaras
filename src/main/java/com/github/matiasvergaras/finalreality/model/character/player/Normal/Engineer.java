@@ -85,7 +85,7 @@ public class Engineer extends AbstractNormalCharacter {
     @Override
     public int hashCode() {
         return Objects.hash(this.getName() +
-                this.getCharacterClass() + this.getDP() + this.getHP());
+                this.getCharacterClass());
     }
 
 

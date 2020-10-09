@@ -68,8 +68,8 @@ public class WhiteMage extends AbstractMagicCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getMana() +  this.getName(),
-                this.getCharacterClass() + this.getDP() + this.getHP());
+        return Objects.hash(this.getName() +
+                this.getCharacterClass());
     }
 
 

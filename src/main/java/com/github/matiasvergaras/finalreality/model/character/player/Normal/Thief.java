@@ -86,8 +86,8 @@ public class Thief extends AbstractNormalCharacter{
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getEquippedWeapon() + this.getName() +
-                this.getCharacterClass() + this.getDP() + this.getHP());
+        return Objects.hash(this.getName() +
+                this.getCharacterClass());
     }
 
 

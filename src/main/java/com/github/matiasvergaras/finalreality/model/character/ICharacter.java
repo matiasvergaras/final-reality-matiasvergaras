@@ -18,15 +18,28 @@ public interface ICharacter {
   void waitTurn();
 
   /**
-   * Returns this character's name.
+   * A method to get the name of this character.
+   * @return this character's name.
    */
   String getName();
 
   /**
-   * Returns this character's class.
+   * A method to get the class of this character.
+   * @return  this character's class.
    */
   String getCharacterClass();
 
+  /**
+   * A method to get the HP of this character.
+   * @return this character's HP.
+   */
+  int getHP();
+
+  /**
+   * A method to get the DP of this character.
+   * @return this character's DP.
+   */
+  int getDP();
   }
 
 

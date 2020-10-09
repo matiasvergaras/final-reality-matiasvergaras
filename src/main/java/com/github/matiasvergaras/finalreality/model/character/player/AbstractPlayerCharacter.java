@@ -35,7 +35,9 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
 
   }
 
-
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void waitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
@@ -43,23 +45,23 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
             .schedule(super::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
   }
 
-
   /**
-   * Sets the equipped weapon of this character.
-   *
-   * @param weapon
-   *     the weapon
-   */
-  public void equip(IWeapon weapon) {
-    this.equippedWeapon = weapon;
+   * @return the equipped weapon of this character.
+   * @see IWeapon
+   * */
+  @Override
+  public IWeapon getEquippedWeapon() {
+    return this.equippedWeapon;
   }
 
   /**
-   * Returns the equipped weapon
-   *
+   * {@inheritDoc}
+   * @param weapon
+   *              The weapon to equip.
    */
-  public IWeapon getEquippedWeapon() {
-    return this.equippedWeapon;
+  @Override
+  public void equip(IWeapon weapon){
+    this.equippedWeapon = weapon;
   }
 
 

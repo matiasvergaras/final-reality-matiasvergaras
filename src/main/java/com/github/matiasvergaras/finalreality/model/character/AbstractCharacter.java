@@ -62,10 +62,18 @@ public abstract class AbstractCharacter implements ICharacter {
     return characterClass;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public int getHP(){
     return HP;
   }
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public int getDP(){
     return DP;
   }
