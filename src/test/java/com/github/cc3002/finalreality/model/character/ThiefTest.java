@@ -18,7 +18,7 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
     }
 
     /**
-     * Checks that the class' constructor and equals method works properly.
+     * Checks that the class constructor and equals method works properly.
      */
     @Test
     void constructorTest() {
