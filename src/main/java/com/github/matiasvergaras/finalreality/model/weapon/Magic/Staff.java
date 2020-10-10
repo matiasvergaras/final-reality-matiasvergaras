@@ -1,4 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Magic;
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+
 import java.util.Objects;
 
 /**
@@ -25,7 +27,16 @@ public class Staff extends AbstractMagicWeapon{
      *              the Staff magic Damage
      */
     public Staff(final String name, final int power, final int weight, final int magicDamage) {
-        super(name, power, weight, "STAFF", magicDamage);
+        super(name, power, weight, magicDamage);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipTo(IPlayerCharacter character) {
+        character.equipStaff(this);
+        super.setOwner(character);
     }
 
     /**
@@ -39,7 +50,6 @@ public class Staff extends AbstractMagicWeapon{
         if (!(o instanceof Staff)) return false;
         Staff that = (Staff) o;
         return this.getName().equals(that.getName()) &&
-                this.getType().equals(that.getType()) &&
                 this.getPower() == that.getPower() &&
                 this.getWeight() == that.getWeight() &&
                 this.getMagicDamage() == that.getMagicDamage();
@@ -52,7 +62,7 @@ public class Staff extends AbstractMagicWeapon{
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(),this.getType(), this.getPower(),
+        return Objects.hash(this.getName(), this.getPower(),
                 this.getWeight(), this.getMagicDamage());
     }
 

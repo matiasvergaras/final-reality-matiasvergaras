@@ -7,7 +7,7 @@ import java.util.concurrent.BlockingQueue;
 
 /**
  * An abstract class that holds the common behaviour of all the Normal Characters in the game.
- *
+ * Maybe useful in the future.
  * @author Matias Vergara Silva.
  */
 public abstract class AbstractNormalCharacter extends AbstractPlayerCharacter {
@@ -19,8 +19,6 @@ public abstract class AbstractNormalCharacter extends AbstractPlayerCharacter {
      *     the character's name
      * @param turnsQueue
      *     the queue with the characters ready to play
-     * @param characterClass
-     *     the class of this character
      * @param HP
      *     this character's heals points
      * @param DP
@@ -28,9 +26,8 @@ public abstract class AbstractNormalCharacter extends AbstractPlayerCharacter {
      */
     public AbstractNormalCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                    @NotNull String name,
-                                   final String characterClass,
                                    int HP, int DP) {
-        super(turnsQueue, name, characterClass, HP, DP);
+        super(turnsQueue, name, HP, DP);
     }
 
 }

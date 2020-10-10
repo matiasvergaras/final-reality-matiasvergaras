@@ -4,38 +4,20 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
 
 import java.util.Objects;
 
-/**
- * Class to represent a ''Knife'' weapon.
- * <p>
- *
- *
- * @author Matías Vergara Silva
- *
- */
+public class NullWeapon extends AbstractNormalWeapon {
 
-public class Knife extends AbstractNormalWeapon {
     /**
-     * Creates a Knife object with a name, a base damage, weight and type.
-     * @param name
-     *              the Knife name
-     * @param power
-     *              the Knife power
-     * @param weight
-     *              the Knife weight
+     * Constructor for a default normal weapon without any special behaviour.
      */
-    public Knife(final String name, final int power, final int weight) {
-        super(name, power, weight);
+    public NullWeapon() {
+        super("", 0, 0);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void equipTo(IPlayerCharacter character) {
-        character.equipKnife(this);
+        character.equip(this);
         super.setOwner(character);
     }
-
 
     /**
      * Check if this is equal to a given object o.
@@ -43,13 +25,13 @@ public class Knife extends AbstractNormalWeapon {
      * @return True if are equals, false otherwise
      */
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o){
         if (this == o) return true;
-        if (!(o instanceof Knife)) return false;
-        Knife that = (Knife) o;
-        return this.getName().equals(that.getName()) &&
-                this.getPower() == that.getPower() &&
-                this.getWeight() == that.getWeight();
+        if (!(o instanceof NullWeapon)) return false;
+        NullWeapon that = (NullWeapon) o;
+        return this.getPower() == that.getPower() &&
+                this.getWeight() == that.getWeight() &&
+                getName().equals(that.getName());
     }
 
     /**
@@ -62,6 +44,5 @@ public class Knife extends AbstractNormalWeapon {
         return Objects.hash(this.getName(), this.getPower(),
                 this.getWeight());
     }
-
 
 }

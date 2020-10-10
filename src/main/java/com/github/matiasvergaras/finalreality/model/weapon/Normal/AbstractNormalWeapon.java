@@ -1,5 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Normal;
 
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 
 /**
@@ -12,19 +13,23 @@ import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
  * </p>
  */
 public abstract class AbstractNormalWeapon extends AbstractWeapon {
+
     /**
-     * Creates a Normal Weapon with a name, a base damage, speed and it's type.
-     * @param name
-     *     the weapon's name
-     * @param power
-     *     the weapon's base power (to heal or to damage).
-     * @param weight
-     *     the weight of this weapon
-     * @param type
-     *      the type of this weapon.
+     * Constructor for a default normal weapon without any special behaviour.
+     *
+     * @param name   the name of the item
+     * @param power  the power of the item
+     * @param weight  the weight of the item
      */
-    public AbstractNormalWeapon(final String name, final int power, final int weight,
-                               final String type) {
-        super(name, power, weight, type);
+    public AbstractNormalWeapon(String name, int power, int weight) {
+        super(name, power, weight);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public abstract void equipTo(IPlayerCharacter character);
+
+
 }

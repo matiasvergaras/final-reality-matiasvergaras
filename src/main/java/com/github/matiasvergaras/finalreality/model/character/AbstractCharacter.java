@@ -1,9 +1,12 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
 import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.Magic.IMagicCharacter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,27 +18,40 @@ import org.jetbrains.annotations.NotNull;
 public abstract class AbstractCharacter implements ICharacter {
 
   private final BlockingQueue<ICharacter> turnsQueue;
-  private final String characterClass;
   private final String name;
-  private final int HP;
-  private final int DP;
+  private final int maxHP;
+  protected int currentHP;
+  private final int maxDP;
+  protected int currentDP;
+  private String state;
   protected ScheduledExecutorService scheduledExecutor;
 
 
+
   /**
-   * Creates a character with turns queue, name and class.
+   * Constructor for a new Character.
+   *
+   * @param name
+   *     the character's name
+   * @param turnsQueue
+   *     the queue with the characters ready to play
+   * @param HP
+   *     this character's max heals points
+   * @param DP
+   *     this character's max defense points
    */
   protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                              @NotNull String name, @NotNull String characterClass,
-                              int HP,  int DP)
+                              @NotNull String name,
+                              int HP, int DP)
   {
     this.turnsQueue = turnsQueue;
     this.name = name;
-    this.characterClass = characterClass;
-    this.HP = HP;
-    this.DP = DP;
+    this.maxHP = HP;
+    this.currentHP = HP;
+    this.maxDP = DP;
+    this.currentDP = DP;
+    this.state = "NORMAL";
   }
-
 
   /**
    * Adds this character to the turns queue.
@@ -53,29 +69,52 @@ public abstract class AbstractCharacter implements ICharacter {
     return name;
   }
 
-
   /**
    * {@inheritDoc}
    */
   @Override
-  public String getCharacterClass() {
-    return characterClass;
+  public int getCurrentHP(){
+    return currentHP;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public int getHP(){
-    return HP;
+  public int getMaxHP(){
+    return maxHP;
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public int getDP(){
-    return DP;
+  public int getCurrentDP(){
+    return currentDP;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int getMaxDP(){
+    return maxDP;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isAlive(){
+    return currentHP > 0;
+  }
+
+  /**
+   * Performs a normal attack against a character
+   * @param character
+   *                the character to be attacked.
+   */
+  public void normalAttack(ICharacter character) {
+
   }
 
 }

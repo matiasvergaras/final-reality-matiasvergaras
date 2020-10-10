@@ -1,5 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Normal;
 
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 
 import java.util.Objects;
@@ -17,15 +18,25 @@ public class Axe extends AbstractNormalWeapon{
     /**
      * Creates a Axe object with a name, a base damage, weight and type.
      * @param name
-     *              the Axe name
+     *              the name of this Axe
      * @param power
-     *              the Axe power
+     *              the power of this Axe
      * @param weight
-     *              the Axe weight
+     *              the weight of this Axe
      */
     public Axe(final String name, final int power, final int weight) {
-        super(name, power, weight, "AXE");
+        super(name, power, weight);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipTo(IPlayerCharacter character) {
+        character.equipAxe(this);
+        super.setOwner(character);
+    }
+
 
     /**
      * Check if this is equal to a given object o.
@@ -38,7 +49,6 @@ public class Axe extends AbstractNormalWeapon{
         if (!(o instanceof Axe)) return false;
         Axe that = (Axe) o;
         return this.getName().equals(that.getName()) &&
-                this.getType().equals(that.getType()) &&
                 this.getPower() == that.getPower() &&
                 this.getWeight() == that.getWeight();
     }
@@ -50,7 +60,7 @@ public class Axe extends AbstractNormalWeapon{
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(),this.getType(), this.getPower(),
+        return Objects.hash(this.getName(), this.getPower(),
                 this.getWeight());
     }
 }

@@ -16,19 +16,19 @@ public abstract class AbstractMagicWeapon extends AbstractWeapon {
     private final int magicDamage;
 
     /**
-     * Creates a Magic Weapon with a name, a base damage, speed and it's type.
+     * Creates a default Magic Weapon with a name, base damage, weight and magic damage.
      * @param name
-     *     the weapon's name
+     *     the weapon's name.
      * @param power
-     *     the weapon's base power (to heal or to damage).
+     *     the weapon's base power.
      * @param weight
-     *     the weight of this weapon
-     * @param type
-     *      the type of this weapon.
+     *     the weight of this weapon.
+     * @param magicDamage
+     *      the weapon's magic power.
      */
     public AbstractMagicWeapon(final String name, final int power, final int weight,
-                          final String type, int magicDamage) {
-        super(name, power, weight, type);
+                           int magicDamage) {
+        super(name, power, weight);
         this.magicDamage=magicDamage;
     }
 

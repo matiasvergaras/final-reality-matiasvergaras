@@ -1,25 +1,46 @@
 package com.github.matiasvergaras.finalreality.model.weapon;
 
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+
 public interface IWeapon {
 
     /**
-     * Returns this weapon weight.
+     * Method to get the weight of this weapon.
+     * @return this weapon weight.
      */
     int getWeight();
 
     /**
-     * Returns this weapon name.
+     * Method to get the name of this weapon.
+     * @return this weapon name.
      */
     String getName();
 
     /**
-     * Returns this weapon power.
+     * Method to get the power of this weapon.
+     * @return this weapon power.
      */
     int getPower();
 
     /**
-     * Returns this weapon type.
+     * Equips this weapon to a character.
+     * @param character
+     *        the character that will be equipped with this weapon
      */
-    String getType();
+    void equipTo(IPlayerCharacter character);
+
+    /**
+     * Sets this weapon's owner.
+     * @param character
+     *        the character that has this weapon in its hand.
+     */
+    void setOwner(IPlayerCharacter character);
+
+    /**
+     * Method to get the character that is using this weapon. Useful for testing.
+     * @return the unit that has currently equipped this item
+     */
+    IPlayerCharacter getOwner();
+
 
 }

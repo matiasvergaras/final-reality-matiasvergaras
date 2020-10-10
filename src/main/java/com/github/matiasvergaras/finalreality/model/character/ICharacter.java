@@ -1,6 +1,8 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
 import com.github.matiasvergaras.finalreality.model.character.CPU.Enemy;
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.Magic.IMagicCharacter;
 
 /**
  * This represents a character from the game.
@@ -24,23 +26,45 @@ public interface ICharacter {
   String getName();
 
   /**
-   * A method to get the class of this character.
-   * @return  this character's class.
+   * A method to get the current HP of this character.
+   * @return this character's current HP.
    */
-  String getCharacterClass();
+  int getCurrentHP();
 
   /**
-   * A method to get the HP of this character.
-   * @return this character's HP.
+   * A method to get the max HP of this character.
+   * @return this character's max HP.
    */
-  int getHP();
+  int getMaxHP();
+
+
 
   /**
-   * A method to get the DP of this character.
-   * @return this character's DP.
+   * A method to get the current DP of this character.
+   * @return this character's current DP.
    */
-  int getDP();
-  }
+  int getCurrentDP();
+
+  /**
+   * A method to get the max DP of this character.
+   * @return this character's max DP.
+   */
+  int getMaxDP();
+
+
+  /**
+   * Evaluation of the statement "This character is alive".
+   * @return Boolean True if character is alive, False otherwise.
+   * */
+  boolean isAlive();
+
+  /**
+   * Performs a normal attack (Non-magic)
+   * @param character the character to be attacked.
+   *
+   */
+  void normalAttack(ICharacter character);
+}
 
 
 

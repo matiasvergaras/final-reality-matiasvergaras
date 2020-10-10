@@ -31,7 +31,7 @@ public class Engineer extends AbstractNormalCharacter {
      */
     public Engineer(@NotNull BlockingQueue<ICharacter> turnsQueue,
                     @NotNull String name, int HP, int DP) {
-        super(turnsQueue, name, "ENGINEER", HP, DP);
+        super(turnsQueue, name,  HP, DP);
     }
 
 
@@ -40,8 +40,8 @@ public class Engineer extends AbstractNormalCharacter {
      * @param weapon
      *        the Axe to equip
      */
-    public void equip(Axe weapon) {
-        super.equip(weapon);
+    public void equipAxe(Axe weapon) {
+        equippedWeapon = weapon;
     }
 
     /**
@@ -49,8 +49,8 @@ public class Engineer extends AbstractNormalCharacter {
      * @param weapon
      *        the Bow to equip
      */
-    public void equip(Bow weapon) {
-        super.equip(weapon);
+    public void equipBow(Bow weapon) {
+        equippedWeapon = weapon;
     }
 
 

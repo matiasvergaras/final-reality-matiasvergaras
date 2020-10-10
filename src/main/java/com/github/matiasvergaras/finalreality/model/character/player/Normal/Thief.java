@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
@@ -32,7 +31,7 @@ public class Thief extends AbstractNormalCharacter{
      */
     public Thief(@NotNull BlockingQueue<ICharacter> turnsQueue,
                  @NotNull String name, int HP, int DP) {
-        super(turnsQueue, name, "THIEF", HP, DP);
+        super(turnsQueue, name, HP, DP);
     }
 
     /**
@@ -40,17 +39,18 @@ public class Thief extends AbstractNormalCharacter{
      * @param weapon
      *        the Sword to equip
      */
-    public void equip(Sword weapon) {
-        super.equip(weapon);
+    public void equipSword(Sword weapon) {
+        equippedWeapon = weapon;
     }
+
 
     /**
      * Equips a Bow to this character
      * @param weapon
      *        the Bow to equip
      */
-    public void equip(Bow weapon) {
-        super.equip(weapon);
+    public void equipBow(Bow weapon) {
+        equippedWeapon = weapon;
     }
 
     /**
@@ -58,8 +58,8 @@ public class Thief extends AbstractNormalCharacter{
      * @param weapon
      *        the Knife to equip
      */
-    public void equip(Knife weapon) {
-        super.equip(weapon);
+    public void equipKnife(Knife weapon) {
+        equippedWeapon = weapon;
     }
 
 
@@ -73,10 +73,11 @@ public class Thief extends AbstractNormalCharacter{
         if (this == o) return true;
         if (!(o instanceof Thief)) return false;
         Thief that = (Thief) o;
-        return this.getCharacterClass().equals(that.getCharacterClass()) &&
-                this.getName().equals(that.getName()) &&
-                this.getHP()==that.getHP() &&
-                this.getDP()==that.getDP();
+        return this.getName().equals(that.getName()) &&
+                this.getMaxHP()==that.getMaxHP() &&
+                this.getMaxDP()==that.getMaxDP() &&
+                this.getCurrentDP() == that.getCurrentDP() &&
+                this.getCurrentHP() == that.getCurrentHP();
     }
 
     /**
@@ -86,8 +87,8 @@ public class Thief extends AbstractNormalCharacter{
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getEquippedWeapon() + this.getName() +
-                this.getCharacterClass() + this.getDP() + this.getHP());
+        return Objects.hash(this.getName()
+                + this.getMaxDP() + this.getMaxHP());
     }
 
 

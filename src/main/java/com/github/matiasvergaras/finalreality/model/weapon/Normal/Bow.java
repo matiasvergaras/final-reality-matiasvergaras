@@ -1,5 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Normal;
 
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+
 import java.util.Objects;
 
 /**
@@ -23,8 +25,18 @@ public class Bow extends AbstractNormalWeapon{
      *              the Bow weight
      */
     public Bow(final String name, final int power, final int weight) {
-        super(name, power, weight, "BOW");
+        super(name, power, weight);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipTo(IPlayerCharacter character) {
+        character.equipBow(this);
+        super.setOwner(character);
+    }
+
 
     /**
      * Check if this is equal to a given object o.
@@ -37,7 +49,6 @@ public class Bow extends AbstractNormalWeapon{
         if (!(o instanceof Bow)) return false;
         Bow that = (Bow) o;
         return this.getName().equals(that.getName()) &&
-                this.getType().equals(that.getType()) &&
                 this.getPower() == that.getPower() &&
                 this.getWeight() == that.getWeight();
     }
@@ -49,7 +60,7 @@ public class Bow extends AbstractNormalWeapon{
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(),this.getType(), this.getPower(),
+        return Objects.hash(this.getName(), this.getPower(),
                 this.getWeight());
     }
 

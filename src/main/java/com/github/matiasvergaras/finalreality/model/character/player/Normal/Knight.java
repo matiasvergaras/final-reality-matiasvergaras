@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
@@ -33,7 +32,7 @@ public class Knight extends AbstractNormalCharacter{
      */
     public Knight(@NotNull BlockingQueue<ICharacter> turnsQueue,
                   @NotNull String name, int HP, int DP) {
-        super(turnsQueue, name, "KNIGHT", HP, DP);
+        super(turnsQueue, name,  HP, DP);
     }
 
 
@@ -42,8 +41,8 @@ public class Knight extends AbstractNormalCharacter{
      * @param weapon
      *        the Sword to equip
      */
-    public void equip(Sword weapon) {
-        super.equip(weapon);
+    public void equipSword(Sword weapon) {
+        equippedWeapon = weapon;
     }
 
     /**
@@ -51,8 +50,8 @@ public class Knight extends AbstractNormalCharacter{
      * @param weapon
      *        the Axe to equip
      */
-    public void equip(Axe weapon) {
-        super.equip(weapon);
+    public void equipAxe(Axe weapon) {
+        equippedWeapon = weapon;
     }
 
     /**
@@ -60,12 +59,9 @@ public class Knight extends AbstractNormalCharacter{
      * @param weapon
      *        the e Knife to equip
      */
-    public void equip(Knife weapon) {
-        super.equip(weapon);
+    public void equipKnife(Knife weapon) {
+        equippedWeapon = weapon;
     }
-
-
-
 
 
     /**
@@ -78,10 +74,11 @@ public class Knight extends AbstractNormalCharacter{
         if (this == o) return true;
         if (!(o instanceof Knight)) return false;
         Knight that = (Knight) o;
-        return this.getCharacterClass().equals(that.getCharacterClass()) &&
-                this.getName().equals(that.getName()) &&
-                this.getHP()==that.getHP() &&
-                this.getDP()==that.getDP();
+        return this.getName().equals(that.getName()) &&
+                this.getMaxHP()==that.getMaxHP() &&
+                this.getMaxDP()==that.getMaxDP() &&
+                this.getCurrentDP() == that.getCurrentDP() &&
+                this.getCurrentHP() == that.getCurrentHP();
     }
 
     /**
@@ -91,8 +88,8 @@ public class Knight extends AbstractNormalCharacter{
      */
     @Override
     public int hashCode() {
-        return Objects.hash( this.getName() +
-                this.getCharacterClass());
+        return Objects.hash( this.getName() + this.getMaxHP() +
+                this.getMaxDP());
     }
 
 }
