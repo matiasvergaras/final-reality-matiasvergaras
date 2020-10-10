@@ -6,35 +6,28 @@ import com.github.matiasvergaras.finalreality.model.character.player.Magic.White
 import com.github.matiasvergaras.finalreality.model.character.player.Normal.Engineer;
 import com.github.matiasvergaras.finalreality.model.character.player.Normal.Thief;
 import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class EngineerTest extends AbstractCharacterTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-    private static final String ENGINEER_NAME = "Cid";
-    private static final Sword EXAMPLE_SWORD = new Sword("Example Sword",
-            200, 12);
+class EngineerTest extends AbstractPlayerCharacterTest {
 
     /**
      * Sets up an instance to test this class.
      */
     @BeforeEach
     void setUp() {
-        basicSetUp();
+        super.basicSetUp();
+        super.playerSetUp();
+        testPlayerCharacters.add(new Engineer(turns, ENGINEER_NAME, 200, 100));
+        testWeapons.add(EXAMPLE_AXE);
+        testWeapons.add(EXAMPLE_BOW);
+
     }
-
-
-    /**
-     * {@inheritDoc}
-     * @param character
-     *                  the character to try to equip.
-     */
-
-    void tryToEquip(IPlayerCharacter character) {
-        character.equip(EXAMPLE_SWORD);
-    }
-
 
     /**
      * Checks that the class' constructor and equals method works properly.
@@ -54,11 +47,18 @@ class EngineerTest extends AbstractCharacterTest {
     @Test
     void waitTurnTest() {
         Engineer TEST_ENGINEER = new Engineer(turns, ENGINEER_NAME, 200, 100);
-        TEST_ENGINEER.equip(EXAMPLE_SWORD);
+        TEST_ENGINEER.equip(EXAMPLE_AXE);
         testCharacters.add(TEST_ENGINEER);
         super.checkTurns();
     }
 
-
-
+    /**
+     * Checks that this Engineer character starts without any weapon,
+     * and that he can equip Axes and Bows.
+     * @see Engineer
+     */
+    @Test
+    void equipWeaponTest() {
+        super.checkEquipWeapon();
+    }
 }

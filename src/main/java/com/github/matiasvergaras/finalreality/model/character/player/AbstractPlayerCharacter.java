@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
 import org.jetbrains.annotations.NotNull;
 
 /**

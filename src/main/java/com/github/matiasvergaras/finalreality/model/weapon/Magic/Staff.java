@@ -1,7 +1,4 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Magic;
-
-import com.github.matiasvergaras.finalreality.model.spell.Fire;
-
 import java.util.Objects;
 
 /**

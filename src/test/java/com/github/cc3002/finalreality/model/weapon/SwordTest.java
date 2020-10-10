@@ -1,6 +1,6 @@
 package com.github.cc3002.finalreality.model.weapon;
 
-import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +13,7 @@ public class SwordTest extends AbstractWeaponTest {
     @BeforeEach
     void setUp() {
         basicSetUp();
-        exampleEngineer.equip(expectedSword);
+        exampleEngineer.equip(expectedAxe);
     }
 
     /**
@@ -21,9 +21,9 @@ public class SwordTest extends AbstractWeaponTest {
      */
     @Test
     void constructorTest(){
-        checkConstruction(new Sword(SWORD_NAME, DAMAGE, WEIGHT),
+        checkConstruction(new Axe(AXE_NAME, DAMAGE, WEIGHT),
                 exampleEngineer.getEquippedWeapon(),
-                new Sword(SWORD_NAME, DAMAGE*2, WEIGHT),
+                new Axe(AXE_NAME, DAMAGE*2, WEIGHT),
                 new Knife(SWORD_NAME, DAMAGE, WEIGHT));
     }
 }

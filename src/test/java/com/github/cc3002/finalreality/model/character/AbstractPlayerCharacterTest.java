@@ -1,58 +1,52 @@
 package com.github.cc3002.finalreality.model.character;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
-
-import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.LinkedBlockingQueue;
-
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
 
-/**
- * Set of tests for the {@code GameCharacter} class.
- *
- * @author Ignacio Slater Muñoz.
- * @author Matias Vergara Silva.
- * @see AbstractPlayerCharacter
- */
-public abstract class AbstractPlayerCharacterTest extends AbstractCharacterTest {
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+abstract public class AbstractPlayerCharacterTest extends AbstractCharacterTest {
     protected List<IPlayerCharacter> testPlayerCharacters;
-    protected IWeapon testWeapon;
+    protected List<IWeapon> testWeapons;
+    protected static final String BLACK_MAGE_NAME = "Airi";
+    protected static final String ENGINEER_NAME = "Cid";
+    protected static final String KNIGHT_NAME = "Adelbert";
+    protected static final String THIEF_NAME = "Zidane";
+    protected static final String WHITE_MAGE_NAME = "Eiko";
 
-    /**
-     * Method to try to equip a Weapon to a Character inside of the waitTurn Test
-     * @param character
-     *                  The character to try to equip
-     */
-    void tryToEquip(IPlayerCharacter character) {
-        character.equip(testWeapon);
+    protected static final Staff EXAMPLE_STAFF = new Staff("Example Staff", 200, 15, 250);
+    protected static final Sword EXAMPLE_SWORD = new Sword("Example Sword", 200, 12);
+    protected static final Axe EXAMPLE_AXE = new Axe("Example Axe", 200, 14);
+    protected static final Knife EXAMPLE_KNIFE = new Knife("Example Knife", 200, 12);
+    protected static final Bow EXAMPLE_BOW = new Bow("Example Bow", 200, 15);
+
+
+    void playerSetUp(){
+        testPlayerCharacters = new ArrayList<>();
+        testWeapons = new ArrayList<>();
     }
 
     /**
-     * Checks that the class' equip method works properly.
+     *  Checks that the character starts without any weapon,
+     *  and that he can equip the weapons corresponding to his type.
      */
-    void equipWeaponTest() {
+    void checkEquipWeapon() {
         for (var character :
                 testPlayerCharacters) {
             assertNull(character.getEquippedWeapon());
-            character.equip(testWeapon);
-            assertEquals(testWeapon, character.getEquippedWeapon());
+            for (var weapon : testWeapons) {
+                character.equip(weapon);
+                assertEquals(weapon, character.getEquippedWeapon());
+            }
         }
     }
-
-    protected void basicSetUp() {
-        turns = new LinkedBlockingQueue<>();
-        testCharacters = new ArrayList<>();
-    }
-
-
 }

@@ -6,17 +6,22 @@ import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ThiefTest extends AbstractPlayerCharacterTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-    private static final String THIEF_NAME = "Zidane";
-    private static final Knife EXAMPLE_KNIFE = new Knife("TEST_KNIFE", 200, 12);
+public class ThiefTest extends AbstractPlayerCharacterTest {
 
     /**
      * Sets up an instance to test this class.
      */
     @BeforeEach
     void setUp() {
-        basicSetUp();
+        super.basicSetUp();
+        super.playerSetUp();
+        testPlayerCharacters.add(new Thief(turns, THIEF_NAME, 200, 100));
+        testWeapons.add(EXAMPLE_KNIFE);
+        testWeapons.add(EXAMPLE_SWORD);
+        testWeapons.add(EXAMPLE_BOW);
     }
 
     /**
@@ -40,6 +45,16 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
         TEST_THIEF.equip(EXAMPLE_KNIFE);
         testCharacters.add(TEST_THIEF);
         super.checkTurns();
+    }
+
+    /**
+     * Checks that this Thief character starts without any weapon,
+     * and that he can equip Knives (Knife), Swords and Bows.
+     * @see Thief
+     */
+    @Test
+    void equipWeaponTest() {
+        super.checkEquipWeapon();
     }
 
 

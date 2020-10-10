@@ -3,7 +3,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,7 @@ import org.junit.jupiter.api.Assertions;
  *
  * @author Ignacio Slater Muñoz.
  * @author Matias Vergara Silva.
- * @see IPlayerCharacter
+ * @see ICharacter
  */
 
   public abstract class AbstractCharacterTest {

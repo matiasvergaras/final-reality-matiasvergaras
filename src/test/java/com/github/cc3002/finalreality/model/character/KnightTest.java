@@ -1,20 +1,28 @@
 package com.github.cc3002.finalreality.model.character;
+import com.github.matiasvergaras.finalreality.model.character.player.Magic.BlackMage;
+import com.github.matiasvergaras.finalreality.model.character.player.Normal.Engineer;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.character.player.Normal.Knight;
 import com.github.matiasvergaras.finalreality.model.character.player.Normal.Thief;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 class KnightTest extends AbstractPlayerCharacterTest {
 
-    private static final String KNIGHT_NAME = "Adelbert";
-    private static final Axe EXAMPLE_AXE = new Axe("Example Axe", 200, 14);
     /**
      * Sets up an instance to test this class.
      */
     @BeforeEach
     void setUp() {
         basicSetUp();
+        super.playerSetUp();
+        testPlayerCharacters.add(new Knight(turns, KNIGHT_NAME, 200, 100));
+        testWeapons.add(EXAMPLE_AXE);
+        testWeapons.add(EXAMPLE_KNIFE);
+        testWeapons.add(EXAMPLE_SWORD);
     }
 
     /**
@@ -40,5 +48,13 @@ class KnightTest extends AbstractPlayerCharacterTest {
         super.checkTurns();
     }
 
-
+    /**
+     * Checks that this Knight character starts without any weapon,
+     * and that he can equip Axes, Knives (Knife) and Swords.
+     * @see Knight
+     */
+    @Test
+    void equipWeaponTest() {
+        super.checkEquipWeapon();
+    }
 }

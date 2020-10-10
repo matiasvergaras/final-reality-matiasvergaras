@@ -1,26 +1,15 @@
 package com.github.cc3002.finalreality.model.character;
 import com.github.matiasvergaras.finalreality.model.character.player.Magic.BlackMage;
 import com.github.matiasvergaras.finalreality.model.character.player.Magic.WhiteMage;
-import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
-class BlackMageTest extends AbstractCharacterTest {
-
-    private static final String BLACK_MAGE_NAME = "Ahri";
-    private static final Staff EXAMPLE_STAFF = new Staff("Example Staff",
-            200, 15, 250);
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 
-    /**
-     * Method to try to equip a Weapon to a Character inside of the waitTurn Test
-     * @param character
-     *                  The character to try to equip
-     */
-    //void tryToEquip(IPlayerCharacter character) {
-    //    character.equip(EXAMPLE_STAFF);
-    //}
+class BlackMageTest extends AbstractPlayerCharacterTest {
 
     /**
      * Sets up an instance to test this class.
@@ -28,7 +17,10 @@ class BlackMageTest extends AbstractCharacterTest {
     @BeforeEach
     void setUp() {
         super.basicSetUp();
-
+        super.playerSetUp();
+        testPlayerCharacters.add(new BlackMage(turns, BLACK_MAGE_NAME, 200, 100, 250));
+        testWeapons.add(EXAMPLE_KNIFE);
+        testWeapons.add(EXAMPLE_STAFF);
     }
 
     /**
@@ -53,6 +45,17 @@ class BlackMageTest extends AbstractCharacterTest {
         testCharacters.add(TEST_BLACK_MAGE);
         super.checkTurns();
     }
+
+    /**
+     * Checks that this Black Mage character starts without any weapon,
+     * and that he can equip Knives (Knife) and Staves (Staff).
+     * @see BlackMage
+     */
+    @Test
+    void equipWeaponTest() {
+        super.checkEquipWeapon();
+    }
+
 
 
 

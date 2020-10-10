@@ -1,8 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.Magic.BlackMage;
-import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
 import org.jetbrains.annotations.NotNull;

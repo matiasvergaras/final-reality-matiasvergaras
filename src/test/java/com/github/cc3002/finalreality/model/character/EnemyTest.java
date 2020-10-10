@@ -30,6 +30,9 @@ class EnemyTest extends AbstractCharacterTest {
         new Engineer(turns, ENEMY_NAME, 11, 200));
   }
 
+  /**
+   * Checks that this Enemy character waits the appropriate amount of time for it's turn.
+   */
   @Test
   void waitTurnTest(){
     super.checkTurns();
