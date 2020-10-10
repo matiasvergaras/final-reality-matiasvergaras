@@ -53,6 +53,15 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   }
 
   /**
+   * {@inheritDoc}
+   * @param weapon
+   *              The weapon to equip.
+   */
+  public abstract void equipWeapon(IWeapon weapon);
+
+
+  /**
+   * Get the equipped weapon.
    * @return the equipped weapon of this character.
    * @see IWeapon
    * */
@@ -62,26 +71,27 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   }
 
   /**
-   * {@inheritDoc}
-   * @param weapon
-   *              The weapon to equip.
-   */
-  @Override
-  public void equip(IWeapon weapon) {
-    if (weapon.equals(new NullWeapon())) {
-      weapon.equipTo(this);
-    }
-  }
-
-  /**
+   * Equip an axe to this character.
    * {@inheritDoc}
    * @param weapon
    *              The Axe to equip.
    */
+
+  /**
+   * {@inheritDoc}
+   * @param weapon
+   *              The weapon to be equipped
+   */
+  @Override
+  public void equip(IWeapon weapon) {
+    equippedWeapon = weapon;
+  }
+
   public void equipAxe(Axe weapon){
   }
 
   /**
+   * Equip
    * {@inheritDoc}
    * @param weapon
    *              The Bow to equip.

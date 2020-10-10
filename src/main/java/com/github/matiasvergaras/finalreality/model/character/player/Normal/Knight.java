@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
@@ -12,7 +13,7 @@ import java.util.concurrent.BlockingQueue;
 /**
  * Class to represent a ''Knight'' unit.
  * <p>
- *Knights can equip Swords, Axes and Knives, and cannot use magic spells.
+ * Knights can equip Swords, Axes and Knives, and cannot use magic spells.
  *
  * @author Matías Vergara Silva
  *
@@ -36,32 +37,48 @@ public class Knight extends AbstractNormalCharacter{
     }
 
 
+
     /**
-     * Equips a Sword to this character
+     * {@inheritDoc}
      * @param weapon
-     *        the Sword to equip
+     *              The weapon to equip.
      */
-    public void equipSword(Sword weapon) {
+    @Override
+    public void equipSword(Sword weapon){
         equippedWeapon = weapon;
     }
 
     /**
-     * Equips an Axe to this character
+     * {@inheritDoc}
      * @param weapon
-     *        the Axe to equip
+     *              The weapon to equip.
      */
-    public void equipAxe(Axe weapon) {
-        equippedWeapon = weapon;
+    @Override
+    public void equipWeapon(IWeapon weapon) {
+        weapon.equipToKnight(this);
     }
 
     /**
-     * Equips an  Knife to this character
+     * {@inheritDoc}
      * @param weapon
-     *        the e Knife to equip
+     *              The weapon to equip.
      */
-    public void equipKnife(Knife weapon) {
+    @Override
+    public void equipAxe(Axe weapon){
         equippedWeapon = weapon;
     }
+
+
+    /**
+     * {@inheritDoc}
+     * @param weapon
+     *              The weapon to equip.
+     */
+    @Override
+    public void equipKnife(Knife weapon){
+        equippedWeapon = weapon;
+    }
+
 
 
     /**

@@ -9,7 +9,7 @@ import java.util.Objects;
  * A class that holds all the information of a weapon.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author Matías Vergara Silva.
  */
 public abstract class AbstractWeapon implements IWeapon{
 
@@ -63,9 +63,48 @@ public abstract class AbstractWeapon implements IWeapon{
 
   /**
    * {@inheritDoc}
+   * @param character
+   *              the Knight to equip with this weapon.
    */
   @Override
-  public abstract void equipTo(IPlayerCharacter character);
+  public void equipToKnight(IPlayerCharacter character) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * @param character
+   *                the Thief to equip with this weapon.
+   */
+  @Override
+  public void equipToThief(IPlayerCharacter character) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * @param character
+   *                the Engineer to equip with this weapon.
+   */
+  @Override
+  public void equipToEngineer(IPlayerCharacter character) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * @param character
+   *                the Black Mage to equip with this weapon.
+   */
+  @Override
+  public void equipToBlackMage(IPlayerCharacter character) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * @param character
+   *                the White Mage to equip with this weapon.
+   */
+  @Override
+  public void equipToWhiteMage(IPlayerCharacter character){
+  }
 
   /**
    * {@inheritDoc}
@@ -73,6 +112,7 @@ public abstract class AbstractWeapon implements IWeapon{
   public void setOwner(IPlayerCharacter character){
     owner = character;
   }
+
 
   /**
    * {@inheritDoc}

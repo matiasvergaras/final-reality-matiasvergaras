@@ -7,12 +7,11 @@ import java.util.Objects;
 /**
  * Class to represent a ''Sword'' weapon.
  * <p>
- *
+ * Swords can be used by Knights and Thieves (Thief).
  *
  * @author Matías Vergara Silva
  *
  */
-
 
 public class Sword extends AbstractNormalWeapon {
     /**
@@ -32,10 +31,18 @@ public class Sword extends AbstractNormalWeapon {
      * {@inheritDoc}
      */
     @Override
-    public void equipTo(IPlayerCharacter character) {
+    public void equipToKnight(IPlayerCharacter character) {
         character.equipSword(this);
-        super.setOwner(character);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipToThief(IPlayerCharacter character) {
+        character.equipSword(this);
+    }
+
 
     /**
      * Check if this is equal to a given object o.

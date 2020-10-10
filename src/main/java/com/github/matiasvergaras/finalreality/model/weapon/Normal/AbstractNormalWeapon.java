@@ -8,8 +8,9 @@ import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
  *
  * @author Matias Vergara Silva.
  * <p>
- * This class could serve us, for example, if we wanted to add properties of
- * '' sharp '' or '' penetration '' to normal weapons.
+ * This class could serve us in a future. For example, if we want to add properties of
+ * '' sharp '' or '' penetration '' to normal weapons, here we could create ''getSharp'' and
+ *  ''getPenetration'' methods.
  * </p>
  */
 public abstract class AbstractNormalWeapon extends AbstractWeapon {
@@ -24,12 +25,6 @@ public abstract class AbstractNormalWeapon extends AbstractWeapon {
     public AbstractNormalWeapon(String name, int power, int weight) {
         super(name, power, weight);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public abstract void equipTo(IPlayerCharacter character);
 
 
 }

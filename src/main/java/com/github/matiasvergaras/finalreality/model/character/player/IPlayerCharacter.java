@@ -17,7 +17,13 @@ public interface IPlayerCharacter extends ICharacter {
      * @param weapon
      *              The weapon to equip
      */
-    void equip(IWeapon weapon);
+    void equipWeapon(IWeapon weapon);
+
+    /**
+     * Sets this character's weapon
+     * @param weapon
+     */
+    public void equip(IWeapon weapon);
 
     /**
      * Equips a given axe to this character.

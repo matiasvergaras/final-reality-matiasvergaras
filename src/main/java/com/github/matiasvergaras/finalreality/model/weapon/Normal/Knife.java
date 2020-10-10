@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Class to represent a ''Knife'' weapon.
  * <p>
- *
+ * Knives (Knife) can be used by Knights, Engineers and Thieves (Thief).
  *
  * @author Matías Vergara Silva
  *
@@ -27,15 +27,30 @@ public class Knife extends AbstractNormalWeapon {
         super(name, power, weight);
     }
 
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void equipTo(IPlayerCharacter character) {
-        character.equipKnife(this);
-        super.setOwner(character);
+    public void equipToKnight(IPlayerCharacter character) {
+        character.equip(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipToBlackMage(IPlayerCharacter character) {
+        character.equipKnife(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipToThief(IPlayerCharacter character) {
+        character.equipKnife(this);
+    }
 
     /**
      * Check if this is equal to a given object o.

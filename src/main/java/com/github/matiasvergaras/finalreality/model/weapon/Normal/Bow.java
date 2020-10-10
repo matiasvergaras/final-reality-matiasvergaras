@@ -7,14 +7,13 @@ import java.util.Objects;
 /**
  * Class to represent a ''Bow'' weapon.
  * <p>
- *
+ * Bow's can be used by Engineers and Thieves (Thief).
  *
  * @author Matías Vergara Silva
  *
  */
-
-
 public class Bow extends AbstractNormalWeapon{
+
     /**
      * Creates a Bow object with a name, a base damage, weight and type.
      * @param name
@@ -32,11 +31,17 @@ public class Bow extends AbstractNormalWeapon{
      * {@inheritDoc}
      */
     @Override
-    public void equipTo(IPlayerCharacter character) {
+    public void equipToThief(IPlayerCharacter character) {
         character.equipBow(this);
-        super.setOwner(character);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipToEngineer(IPlayerCharacter character) {
+        character.equipBow(this);
+    }
 
     /**
      * Check if this is equal to a given object o.

@@ -4,15 +4,12 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
 import java.util.Objects;
 
 /**
- * Class to represent a ''Stick'' weapon.
+ * Class to represent a ''Saff'' weapon.
  * <p>
- *
- *
+ * Staves (Staff) can be used only by Magic Characters, i.e. Mages.
  * @author Matías Vergara Silva
  *
  */
-
-
 public class Staff extends AbstractMagicWeapon{
 
     /**
@@ -34,9 +31,18 @@ public class Staff extends AbstractMagicWeapon{
      * {@inheritDoc}
      */
     @Override
-    public void equipTo(IPlayerCharacter character) {
+    public void equipToBlackMage(IPlayerCharacter character) {
         character.equipStaff(this);
-        super.setOwner(character);
+        setOwner(character);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipToWhiteMage(IPlayerCharacter character) {
+        character.equipStaff(this);
+        setOwner(character);
     }
 
     /**

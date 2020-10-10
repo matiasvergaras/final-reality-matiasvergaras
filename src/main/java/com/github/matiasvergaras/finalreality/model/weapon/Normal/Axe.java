@@ -8,12 +8,11 @@ import java.util.Objects;
 /**
  * Class to represent an ''Axe'' weapon.
  * <p>
- *
+ * Axes can be used by Knights and Engineers.
  *
  * @author Matías Vergara Silva
  *
  */
-
 public class Axe extends AbstractNormalWeapon{
     /**
      * Creates a Axe object with a name, a base damage, weight and type.
@@ -32,11 +31,17 @@ public class Axe extends AbstractNormalWeapon{
      * {@inheritDoc}
      */
     @Override
-    public void equipTo(IPlayerCharacter character) {
+    public void equipToEngineer(IPlayerCharacter character) {
         character.equipAxe(this);
-        super.setOwner(character);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipToKnight(IPlayerCharacter character) {
+        character.equip(this);
+    }
 
     /**
      * Check if this is equal to a given object o.

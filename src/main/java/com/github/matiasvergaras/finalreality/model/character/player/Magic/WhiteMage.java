@@ -1,7 +1,9 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Magic;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -32,16 +34,27 @@ public class WhiteMage extends AbstractMagicCharacter {
      */
     public WhiteMage(@NotNull BlockingQueue<ICharacter> turnsQueue,
                      @NotNull String name, int HP, int DP, int mana) {
-        super(turnsQueue, name, "WHITE_MAGE", HP, DP, mana);
+        super(turnsQueue, name, HP, DP, mana);
     }
 
     /**
-     * Equips a Staff to this character
+     * {@inheritDoc}
      * @param weapon
-     *        the Staff to equip
+     *              The weapon to equip.
      */
-    public void equip(Staff weapon) {
-        super.equip(weapon);
+    @Override
+    public void equipWeapon(IWeapon weapon) {
+        weapon.equipToWhiteMage(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param weapon
+     *              The weapon to equip.
+     */
+    @Override
+    public void equipStaff(Staff weapon){
+        equippedWeapon = weapon;
     }
 
     /**
@@ -54,11 +67,13 @@ public class WhiteMage extends AbstractMagicCharacter {
         if (this == o) return true;
         if (!(o instanceof WhiteMage)) return false;
         WhiteMage that = (WhiteMage) o;
-        return this.getCharacterClass().equals(that.getCharacterClass()) &&
-                this.getName().equals(that.getName()) &&
-                this.getMana()==that.getMana() &&
-                this.getHP()==that.getHP() &&
-                this.getDP()==that.getDP();
+        return this.getName().equals(that.getName()) &&
+                this.getMaxHP()==that.getMaxHP() &&
+                this.getMaxDP()==that.getMaxDP() &&
+                this.getMaxMana() == that.getMaxMana() &&
+                this.getCurrentDP() == that.getCurrentDP() &&
+                this.getCurrentHP() == that.getCurrentHP() &&
+                this.getCurrentMana() == that.getCurrentMana();
     }
 
     /**
@@ -68,8 +83,8 @@ public class WhiteMage extends AbstractMagicCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName() +
-                this.getCharacterClass());
+            return Objects.hash(this.getName() + this.getMaxDP() + this.getMaxHP()
+                    +this.getMaxMana());
     }
 
 

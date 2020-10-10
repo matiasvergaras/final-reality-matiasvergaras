@@ -32,6 +32,10 @@ public abstract class AbstractMagicWeapon extends AbstractWeapon {
         this.magicDamage=magicDamage;
     }
 
+    /**
+     * Get the magic damage of this weapon.
+     * @return this weapon's magic damage.
+     */
     public int getMagicDamage(){
         return magicDamage;
     }

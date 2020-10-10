@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
 import org.jetbrains.annotations.NotNull;
@@ -34,26 +35,35 @@ public class Engineer extends AbstractNormalCharacter {
         super(turnsQueue, name,  HP, DP);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param weapon
+     *              The weapon to equip.
+     */
+    @Override
+    public void equipWeapon(IWeapon weapon) {
+        weapon.equipToEngineer(this);
+    }
 
     /**
-     * Equips an Axe to this character
+     * {@inheritDoc}
      * @param weapon
-     *        the Axe to equip
+     *              The weapon to equip.
      */
-    public void equipAxe(Axe weapon) {
+    @Override
+    public void equipAxe(Axe weapon){
         equippedWeapon = weapon;
     }
 
     /**
-     * Equips a Bow to this character
+     * {@inheritDoc}
      * @param weapon
-     *        the Bow to equip
+     *              The weapon to equip.
      */
-    public void equipBow(Bow weapon) {
+    @Override
+    public void equipBow(Bow weapon){
         equippedWeapon = weapon;
     }
-
-
 
     /**
      * Check if this is equal to a given object o.
@@ -69,10 +79,11 @@ public class Engineer extends AbstractNormalCharacter {
             return false;
         }
         final Engineer that = (Engineer) o;
-        return this.getCharacterClass().equals(that.getCharacterClass()) &&
-                this.getName().equals(that.getName()) &&
-                this.getHP()==that.getHP() &&
-                this.getDP()==that.getDP();
+        return this.getName().equals(that.getName()) &&
+                this.getMaxHP()==that.getMaxHP() &&
+                this.getMaxDP()==that.getMaxDP() &&
+                this.getCurrentDP() == that.getCurrentDP() &&
+                this.getCurrentHP() == that.getCurrentHP();
     }
 
     /**
@@ -82,8 +93,8 @@ public class Engineer extends AbstractNormalCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName() +
-                this.getCharacterClass());
+        return Objects.hash( this.getName() + this.getMaxHP() +
+                this.getMaxDP());
     }
 
 

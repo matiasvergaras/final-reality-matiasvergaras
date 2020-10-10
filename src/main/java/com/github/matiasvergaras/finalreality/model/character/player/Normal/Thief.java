@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
@@ -34,34 +35,46 @@ public class Thief extends AbstractNormalCharacter{
         super(turnsQueue, name, HP, DP);
     }
 
-    /**
-     * Equips a Sword to this character
-     * @param weapon
-     *        the Sword to equip
-     */
-    public void equipSword(Sword weapon) {
-        equippedWeapon = weapon;
-    }
-
 
     /**
-     * Equips a Bow to this character
+     * {@inheritDoc}
      * @param weapon
-     *        the Bow to equip
+     *              The weapon to equip.
      */
-    public void equipBow(Bow weapon) {
-        equippedWeapon = weapon;
+    @Override
+    public void equipWeapon(IWeapon weapon) {
+        weapon.equipToThief(this);
     }
 
     /**
-     * Equips a Knife to this character
+     * {@inheritDoc}
      * @param weapon
-     *        the Knife to equip
+     *              The weapon to equip.
      */
-    public void equipKnife(Knife weapon) {
+    @Override
+    public void equipBow(Bow weapon){
         equippedWeapon = weapon;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param weapon
+     *              The weapon to equip.
+     */
+    @Override
+    public void equipKnife(Knife weapon){
+        equippedWeapon = weapon;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param weapon
+     *              The weapon to equip.
+     */
+    @Override
+    public void equipSword(Sword weapon){
+        equippedWeapon = weapon;
+    }
 
     /**
      * Check if this is equal to a given object o.
