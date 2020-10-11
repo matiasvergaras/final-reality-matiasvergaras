@@ -1,9 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.weapon;
 
-import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-
-import java.util.Objects;
 
 /**
  * A class that holds all the information of a weapon.
@@ -32,6 +29,7 @@ public abstract class AbstractWeapon implements IWeapon{
     this.name = name;
     this.power = power;
     this.weight = weight;
+    this.owner = null;
   }
 
   /**
@@ -121,6 +119,15 @@ public abstract class AbstractWeapon implements IWeapon{
   public IPlayerCharacter getOwner(){
     return owner;
   }
-}
 
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void setWeaponFree() {
+    if (getOwner() != null) {
+      getOwner().unequip();
+    }
+  }
+}
 

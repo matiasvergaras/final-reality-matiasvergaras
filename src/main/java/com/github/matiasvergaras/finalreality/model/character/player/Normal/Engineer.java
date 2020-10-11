@@ -2,8 +2,6 @@ package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -19,6 +17,7 @@ import java.util.concurrent.BlockingQueue;
  */
 
 public class Engineer extends AbstractNormalCharacter {
+
     /**
      * Creates a new Engineer Character.
      * @param turnsQueue
@@ -37,33 +36,12 @@ public class Engineer extends AbstractNormalCharacter {
 
     /**
      * {@inheritDoc}
-     * @param weapon
-     *              The weapon to equip.
      */
     @Override
     public void equipWeapon(IWeapon weapon) {
         weapon.equipToEngineer(this);
     }
 
-    /**
-     * {@inheritDoc}
-     * @param weapon
-     *              The weapon to equip.
-     */
-    @Override
-    public void equipAxe(Axe weapon){
-        equippedWeapon = weapon;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param weapon
-     *              The weapon to equip.
-     */
-    @Override
-    public void equipBow(Bow weapon){
-        equippedWeapon = weapon;
-    }
 
     /**
      * Check if this is equal to a given object o.
@@ -93,7 +71,7 @@ public class Engineer extends AbstractNormalCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash( this.getName() + this.getMaxHP() +
+        return Objects.hash( this.getName(), this.getMaxHP(),
                 this.getMaxDP());
     }
 

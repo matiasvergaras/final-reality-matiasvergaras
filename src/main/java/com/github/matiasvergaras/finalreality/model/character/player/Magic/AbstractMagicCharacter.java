@@ -40,5 +40,4 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter{
     }
 
     public int getCurrentMana(){ return this.currentMana; }
-
 }

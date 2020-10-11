@@ -1,9 +1,5 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
-import com.github.matiasvergaras.finalreality.model.character.CPU.Enemy;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.Magic.IMagicCharacter;
-
 /**
  * This represents a character from the game.
  * A character can be controlled by the player or by the CPU (an enemy).
@@ -37,8 +33,6 @@ public interface ICharacter {
    */
   int getMaxHP();
 
-
-
   /**
    * A method to get the current DP of this character.
    * @return this character's current DP.
@@ -51,7 +45,6 @@ public interface ICharacter {
    */
   int getMaxDP();
 
-
   /**
    * Evaluation of the statement "This character is alive".
    * @return Boolean True if character is alive, False otherwise.
@@ -59,11 +52,13 @@ public interface ICharacter {
   boolean isAlive();
 
   /**
-   * Performs a normal attack (Non-magic)
-   * @param character the character to be attacked.
+   * modify the HP of this character.
    *
+   * @param diff a Integer to rest to the Character HP.
    */
-  void normalAttack(ICharacter character);
+  void reduceHP(double diff);
+
+
 }
 
 

@@ -5,6 +5,12 @@ import com.github.matiasvergaras.finalreality.model.character.player.Normal.Engi
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Class to test basics features of a Enemy Character.
+ *
+ * @author Matias Vergara Silva.
+ */
+
 class EnemyTest extends AbstractCharacterTest {
 
   private static final String ENEMY_NAME = "Goblin";
@@ -14,8 +20,8 @@ class EnemyTest extends AbstractCharacterTest {
    */
   @BeforeEach
   void setUp() {
-    basicSetUp();
-    testCharacters.add(new Enemy(turns, ENEMY_NAME, 10, 200, 100));
+    super.basicSetUp();
+    testCharacters.add(new Enemy(turns, ENEMY_NAME, 10, 200, 100, 200, 1));
   }
 
 
@@ -24,10 +30,10 @@ class EnemyTest extends AbstractCharacterTest {
    */
   @Test
   void constructorTest() {
-    checkConstruction(new Enemy(turns, ENEMY_NAME, 10, 200, 100),
+    checkConstruction(new Enemy(turns, ENEMY_NAME, 10, 200, 100, 200, 1),
         testCharacters.get(0),
-        new Enemy(turns, ENEMY_NAME, 11, 200, 100),
-        new Engineer(turns, ENEMY_NAME, 11, 200));
+        new Enemy(turns, ENEMY_NAME, 10, 200, 100, 200, 2),
+        new Engineer(turns, ENEMY_NAME, 200, 100));
   }
 
   /**

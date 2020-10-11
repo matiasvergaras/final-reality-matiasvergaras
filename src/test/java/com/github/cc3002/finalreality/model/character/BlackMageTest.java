@@ -4,10 +4,11 @@ import com.github.matiasvergaras.finalreality.model.character.player.Magic.White
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
+/**
+ * Class to test basics features of a Black Mage Character.
+ *
+ * @author Matias Vergara Silva.
+ */
 
 class BlackMageTest extends AbstractPlayerCharacterTest {
 
@@ -31,8 +32,8 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
         testCharacters.add(new BlackMage(turns, BLACK_MAGE_NAME, 200, 100, 250));
         super.checkConstruction(new BlackMage(turns, BLACK_MAGE_NAME, 200, 100, 250),
                 testCharacters.get(0),
-                new BlackMage(turns, BLACK_MAGE_NAME, 11, 200, 250),
-                new WhiteMage(turns, BLACK_MAGE_NAME, 200, 100, 250));
+                new BlackMage(turns, BLACK_MAGE_NAME, 110, 200, 250),
+                new WhiteMage(turns, WHITE_MAGE_NAME, 200, 100, 250));
     }
 
     /**

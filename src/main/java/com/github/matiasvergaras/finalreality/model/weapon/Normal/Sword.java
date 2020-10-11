@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 
 import java.util.Objects;
 
@@ -13,7 +14,8 @@ import java.util.Objects;
  *
  */
 
-public class Sword extends AbstractNormalWeapon {
+public class Sword extends AbstractWeapon {
+
     /**
      * Creates a Sword object with a name, a base damage, weight and type.
      * @param name
@@ -32,7 +34,8 @@ public class Sword extends AbstractNormalWeapon {
      */
     @Override
     public void equipToKnight(IPlayerCharacter character) {
-        character.equipSword(this);
+        setWeaponFree();
+        character.equip(this);
     }
 
     /**
@@ -40,7 +43,8 @@ public class Sword extends AbstractNormalWeapon {
      */
     @Override
     public void equipToThief(IPlayerCharacter character) {
-        character.equipSword(this);
+        setWeaponFree();
+        character.equip(this);
     }
 
 

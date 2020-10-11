@@ -2,6 +2,7 @@ package com.github.cc3002.finalreality.model.character;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import com.github.cc3002.finalreality.model.abstractModelTest;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
 import java.util.ArrayList;
@@ -19,9 +20,7 @@ import org.junit.jupiter.api.Assertions;
  * @see ICharacter
  */
 
-  public abstract class AbstractCharacterTest {
-
-  protected BlockingQueue<ICharacter> turns;
+  public abstract class AbstractCharacterTest extends abstractModelTest {
   protected List<ICharacter> testCharacters;
 
   /**
@@ -59,7 +58,6 @@ import org.junit.jupiter.api.Assertions;
    *                          A character from another type with the same common  fields of
    *                          expectedCharacters
    */
-
   protected void checkConstruction(final ICharacter expectedCharacter,
                                    final ICharacter testEqualCharacter,
                                    final ICharacter sameClassDifferentCharacter,
@@ -68,10 +66,14 @@ import org.junit.jupiter.api.Assertions;
     assertNotEquals(sameClassDifferentCharacter, testEqualCharacter);
     assertNotEquals(testEqualCharacter, differentClassCharacter);
     assertEquals(expectedCharacter.hashCode(), testEqualCharacter.hashCode());
+    assertNotEquals(expectedCharacter.hashCode(), differentClassCharacter.hashCode());
   }
 
+  /**
+   * Sets the basic set up for a test of characters.
+   */
   protected void basicSetUp() {
-    turns = new LinkedBlockingQueue<>();
+    turnSetUp();
     testCharacters = new ArrayList<>();
   }
 }

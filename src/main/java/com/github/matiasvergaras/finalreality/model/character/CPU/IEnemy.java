@@ -11,6 +11,18 @@ public interface IEnemy extends ICharacter {
      int getPower();
 
     /**
+     * Get the state of this enemy.
+     * @return the state of this enemy.
+     */
+    String getState();
+
+    /**
+     * Get the weight of this enemy.
+     * @return the weight of this enemy.
+     */
+    int getWeight();
+
+    /**
      * Performs a normal attack against a player's character.
      * @param character
      *                  the character to be attacked.

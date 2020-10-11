@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 
 import java.util.Objects;
 
@@ -13,7 +14,8 @@ import java.util.Objects;
  *
  */
 
-public class Knife extends AbstractNormalWeapon {
+public class Knife extends AbstractWeapon {
+
     /**
      * Creates a Knife object with a name, a base damage, weight and type.
      * @param name
@@ -26,7 +28,6 @@ public class Knife extends AbstractNormalWeapon {
     public Knife(final String name, final int power, final int weight) {
         super(name, power, weight);
     }
-
 
     /**
      * {@inheritDoc}
@@ -41,7 +42,8 @@ public class Knife extends AbstractNormalWeapon {
      */
     @Override
     public void equipToBlackMage(IPlayerCharacter character) {
-        character.equipKnife(this);
+        setWeaponFree();
+        character.equip(this);
     }
 
     /**
@@ -49,7 +51,8 @@ public class Knife extends AbstractNormalWeapon {
      */
     @Override
     public void equipToThief(IPlayerCharacter character) {
-        character.equipKnife(this);
+        setWeaponFree();
+        character.equip(this);
     }
 
     /**
@@ -77,6 +80,5 @@ public class Knife extends AbstractNormalWeapon {
         return Objects.hash(this.getName(), this.getPower(),
                 this.getWeight());
     }
-
 
 }

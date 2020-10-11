@@ -1,12 +1,10 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
-import java.util.Objects;
-import java.util.Random;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.Magic.IMagicCharacter;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -20,13 +18,10 @@ public abstract class AbstractCharacter implements ICharacter {
   private final BlockingQueue<ICharacter> turnsQueue;
   private final String name;
   private final int maxHP;
-  protected int currentHP;
+  private int currentHP;
   private final int maxDP;
   protected int currentDP;
-  private String state;
   protected ScheduledExecutorService scheduledExecutor;
-
-
 
   /**
    * Constructor for a new Character.
@@ -50,7 +45,6 @@ public abstract class AbstractCharacter implements ICharacter {
     this.currentHP = HP;
     this.maxDP = DP;
     this.currentDP = DP;
-    this.state = "NORMAL";
   }
 
   /**
@@ -109,12 +103,13 @@ public abstract class AbstractCharacter implements ICharacter {
   }
 
   /**
-   * Performs a normal attack against a character
-   * @param character
-   *                the character to be attacked.
+   * modify the HP of this character.
+   *
+   * @param diff a positive Integer to rest to the Character HP.
    */
-  public void normalAttack(ICharacter character) {
-
+  @Override
+  public void reduceHP(double diff) {
+    this.currentHP -= diff;
   }
 
 }

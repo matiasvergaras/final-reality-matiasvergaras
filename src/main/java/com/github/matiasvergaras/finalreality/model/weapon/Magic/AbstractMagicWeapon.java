@@ -12,7 +12,7 @@ import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
  * '' additional mana '' or '' lifesteal '' to magic weapons.
  * </p>
  */
-public abstract class AbstractMagicWeapon extends AbstractWeapon {
+public abstract class AbstractMagicWeapon extends AbstractWeapon implements IMagicWeapon{
     private final int magicDamage;
 
     /**
@@ -39,4 +39,6 @@ public abstract class AbstractMagicWeapon extends AbstractWeapon {
     public int getMagicDamage(){
         return magicDamage;
     }
+
+
 }

@@ -3,62 +3,29 @@ package com.github.matiasvergaras.finalreality.model.character.player;
 import com.github.matiasvergaras.finalreality.model.character.CPU.IEnemy;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
-
 
 public interface IPlayerCharacter extends ICharacter {
     /**
-     * Equips a given weapon to this character
+     * Starts the process of equip a weapon to this character,
+     * checking if it is possible via double dispatch.
      * @see IWeapon
      * @param weapon
-     *              The weapon to equip
+     *              The weapon to be equipped
      */
     void equipWeapon(IWeapon weapon);
 
     /**
-     * Sets this character's weapon
+     * Sets this weapon to this character, once it's feasibility
+     * has been checked.
      * @param weapon
+     *              The weapon to be equipped
      */
-    public void equip(IWeapon weapon);
+    void equip(IWeapon weapon);
 
     /**
-     * Equips a given axe to this character.
-     * @param weapon
-     *        the axe to equip.
+     * Unequip a weapon from this character.
      */
-    void equipAxe(Axe weapon);
-
-    /**
-     * Equips a given bow to this character.
-     * @param weapon
-     *        the bow to equip.
-     */
-    void equipBow(Bow weapon);
-
-    /**
-     * Equips a given knife to this character.
-     * @param weapon
-     *        the knife to equip.
-     */
-    void equipKnife(Knife weapon);
-
-    /**
-     * Equips a given staff to this character.
-     * @param weapon
-     *        the staff to equip.
-     */
-    void equipStaff(Staff weapon);
-
-    /**
-     * Equips a given sword to this character.
-     * @param weapon
-     *        the sword to equip.
-     */
-    void equipSword(Sword weapon);
+    void unequip();
 
     /**
      * @see IWeapon
@@ -66,12 +33,13 @@ public interface IPlayerCharacter extends ICharacter {
      */
     IWeapon getEquippedWeapon();
 
+    
     /**
      * Performs a non-magic attack
      * @param character the character to be attacked.
      *
      */
-    void normalAttack(ICharacter character);
+    void normalAttack(IEnemy character);
 
     /**
      * Receive a non-magic attack

@@ -1,9 +1,9 @@
 package com.github.matiasvergaras.finalreality.model.character.player.Magic;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
-public interface IMagicCharacter {
-    int getMagicDamage();
+public interface IMagicCharacter extends IPlayerCharacter {
 
     /**
      * Performs a Fire attack

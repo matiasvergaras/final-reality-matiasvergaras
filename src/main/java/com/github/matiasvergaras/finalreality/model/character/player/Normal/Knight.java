@@ -2,9 +2,6 @@ package com.github.matiasvergaras.finalreality.model.character.player.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -19,6 +16,7 @@ import java.util.concurrent.BlockingQueue;
  *
  */
 public class Knight extends AbstractNormalCharacter{
+
     /**
 
      * Creates a new Knight Character
@@ -36,50 +34,13 @@ public class Knight extends AbstractNormalCharacter{
         super(turnsQueue, name,  HP, DP);
     }
 
-
-
     /**
      * {@inheritDoc}
-     * @param weapon
-     *              The weapon to equip.
-     */
-    @Override
-    public void equipSword(Sword weapon){
-        equippedWeapon = weapon;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param weapon
-     *              The weapon to equip.
      */
     @Override
     public void equipWeapon(IWeapon weapon) {
         weapon.equipToKnight(this);
     }
-
-    /**
-     * {@inheritDoc}
-     * @param weapon
-     *              The weapon to equip.
-     */
-    @Override
-    public void equipAxe(Axe weapon){
-        equippedWeapon = weapon;
-    }
-
-
-    /**
-     * {@inheritDoc}
-     * @param weapon
-     *              The weapon to equip.
-     */
-    @Override
-    public void equipKnife(Knife weapon){
-        equippedWeapon = weapon;
-    }
-
-
 
     /**
      * Check if this is equal to a given object o.
@@ -105,7 +66,7 @@ public class Knight extends AbstractNormalCharacter{
      */
     @Override
     public int hashCode() {
-        return Objects.hash( this.getName() + this.getMaxHP() +
+        return Objects.hash( this.getName(), this.getMaxHP(),
                 this.getMaxDP());
     }
 

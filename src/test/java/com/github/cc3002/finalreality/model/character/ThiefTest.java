@@ -1,13 +1,14 @@
 package com.github.cc3002.finalreality.model.character;
-import com.github.matiasvergaras.finalreality.model.character.player.Magic.BlackMage;
 import com.github.matiasvergaras.finalreality.model.character.player.Normal.Engineer;
 import com.github.matiasvergaras.finalreality.model.character.player.Normal.Thief;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+/**
+ * Class to test basics features of a Thief Character.
+ *
+ * @author Matias Vergara Silva.
+ */
 
 public class ThiefTest extends AbstractPlayerCharacterTest {
 
@@ -33,7 +34,7 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
         super.checkConstruction(new Thief(turns, THIEF_NAME, 200, 100),
                 testCharacters.get(0),
                 new Thief(turns, THIEF_NAME, 110, 200),
-                new Engineer(turns, THIEF_NAME, 110, 200));
+                new Engineer(turns, ENGINEER_NAME, 200, 100));
     }
 
     /**

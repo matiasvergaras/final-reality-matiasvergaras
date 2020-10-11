@@ -1,54 +1,20 @@
 package com.github.cc3002.finalreality.model.weapon;
 
-import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.Magic.BlackMage;
-import com.github.matiasvergaras.finalreality.model.character.player.Magic.WhiteMage;
-import com.github.matiasvergaras.finalreality.model.character.player.Normal.Engineer;
-import com.github.matiasvergaras.finalreality.model.character.player.Normal.Knight;
-import com.github.matiasvergaras.finalreality.model.character.player.Normal.Thief;
+import com.github.cc3002.finalreality.model.abstractModelTest;
+
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
-public abstract class AbstractWeaponTest {
-    protected BlockingQueue<ICharacter> turns;
-    protected static final String AXE_NAME = "Test Axe";
-    protected static final String STAFF_NAME = "Test Staff";
-    protected static final String SWORD_NAME = "Test Sword";
-    protected static final String BOW_NAME = "Test Bow";
-    protected static final String KNIFE_NAME = "Test Knife";
-    protected static final int DAMAGE = 15;
-    protected static final int WEIGHT = 10;
-    protected static final int MAGIC_DAMAGE = 30;
-    Axe expectedAxe = new Axe(AXE_NAME, DAMAGE, WEIGHT);
-    BlackMage exampleBlackMage = new BlackMage(turns, "Example Black Mage", 200, 200, 200);
-    WhiteMage exampleWhiteMage = new WhiteMage(turns, "Example Black Mage", 200, 200, 200);
-    Engineer exampleEngineer = new Engineer(turns, "Example Engineer", 200, 200);
-    Knight exampleKnight = new Knight(turns, "Example Knight", 200, 200);
-    Thief exampleThief = new Thief(turns, "Example Thief", 200, 200);
-
-    Staff expectedStaff = new Staff(STAFF_NAME, DAMAGE, WEIGHT, MAGIC_DAMAGE);
-    Sword expectedSword = new Sword(SWORD_NAME, DAMAGE, WEIGHT);
-    Bow expectedBow = new Bow(BOW_NAME, DAMAGE, WEIGHT);
-    Knife expectedKnife = new Knife(KNIFE_NAME, DAMAGE, WEIGHT);
-
-
-
+public abstract class AbstractWeaponTest extends abstractModelTest {
 
     /**
      * Sets up the basics to test a weapon type against the others.
      */
     void basicSetUp(){
-        turns = new LinkedBlockingQueue<>();
+        super.turnSetUp();
     }
 
     /**
@@ -65,4 +31,64 @@ public abstract class AbstractWeaponTest {
         assertNotEquals(expectedWeapon.hashCode(), differentWeapon.hashCode());
 
     }
+
+    /**
+     * Checks that the weapon can be properly equipped an unequipped
+     * from a character
+     * @param weapon
+     *              the weapon to be tested
+     * @param characterA
+     *              A character from the first class that can equip the weapon
+     * @param characterB
+     *              the second character that will equip the weapon
+     */
+    protected void checkEquipUnequip(IWeapon weapon,
+                                     IPlayerCharacter characterA,
+                                     IPlayerCharacter characterB){
+        characterA.equipWeapon(weapon);
+        assertEquals(characterA.getEquippedWeapon(), weapon);
+        assertEquals(weapon.getOwner(), characterA);
+        characterB.equipWeapon(weapon);
+        assertNull(characterA.getEquippedWeapon());
+        assertEquals(characterB.getEquippedWeapon(), weapon);
+        assertEquals(weapon.getOwner(), characterB);
+    }
+
+    /**
+     * Checks that the weapon can be properly equipped an unequipped
+     * from a character
+     * @param weapon
+     *              the weapon to be tested
+     * @param character
+     *              A character from the first class that can equip the weapon
+     *
+     */
+    protected void checkUnequippableBehavior(IWeapon weapon,
+                                             IPlayerCharacter character){
+        weapon.setWeaponFree();
+        character.equipWeapon(weapon);
+        assertNull(weapon.getOwner());
+        assertNull(character.getEquippedWeapon());
+    }
+
+    /**
+     * Checks that the weapon getPower method works properly.
+     * @param weapon
+     *              the weapon to be tested
+     * @param expectedPower
+     *              the expected value of power of this weapon.
+     *
+     */
+    protected void checkGetPower(IWeapon weapon, int expectedPower){
+        assertEquals(weapon.getPower(), expectedPower);
+    }
+
+    protected void checkGetName(IWeapon weapon, String expectedName){
+        assertEquals(weapon.getName(), expectedName);
+    }
+
+    protected void checkGetWeight(IWeapon weapon, int expectedWeight){
+        assertEquals(weapon.getWeight(), expectedWeight);
+    }
+
 }

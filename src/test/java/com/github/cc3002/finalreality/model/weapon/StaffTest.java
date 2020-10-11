@@ -5,6 +5,11 @@ import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Class to test all the features of an Staff weapon.
+ *
+ * @author Matias Vergara Silva.
+ */
 public class StaffTest extends AbstractWeaponTest {
     /**
      * Sets up an instance to test this class.
@@ -12,7 +17,7 @@ public class StaffTest extends AbstractWeaponTest {
     @BeforeEach
     void setUp() {
         basicSetUp();
-        exampleBlackMage.equip(expectedStaff);
+
     }
 
     /**
@@ -20,9 +25,46 @@ public class StaffTest extends AbstractWeaponTest {
      */
     @Test
     void constructorTest(){
+        exampleBlackMage.equip(exampleStaff);
         checkConstruction(new Staff(STAFF_NAME, DAMAGE, WEIGHT, MAGIC_DAMAGE),
                 exampleBlackMage.getEquippedWeapon(),
                 new Staff(STAFF_NAME, DAMAGE*2, WEIGHT, MAGIC_DAMAGE),
-                new Knife(STAFF_NAME, DAMAGE, WEIGHT));
+                new Knife(KNIFE_NAME, DAMAGE, WEIGHT));
     }
+
+    /**
+     * Checks that the weapon can be properly equipped an unequipped
+     * from a character
+     */
+    @Test
+    void equipUnequipTest(){
+        checkEquipUnequip(exampleStaff, exampleBlackMage,
+                exampleWhiteMage);
+    }
+
+
+    /**
+     * Check that the weapon is not equipped when not appropriate
+     */
+    @Test
+    void unequippableBehaviorTest(){
+        exampleStaff.setWeaponFree();
+        checkUnequippableBehavior(exampleStaff, exampleEngineer);
+        checkUnequippableBehavior(exampleStaff, exampleKnight);
+        checkUnequippableBehavior(exampleStaff, exampleThief);
+    }
+
+    /**
+     * Check that the weapon getPower method works properly.
+     */
+    @Test
+    void gettersTest(){
+        Staff testStaff = new Staff("AnStaff", 200, 10, 250);
+        checkGetPower(testStaff, 200);
+        checkGetName(testStaff, "AnStaff");
+        checkGetWeight(testStaff, 10);
+
+    }
+
+
 }

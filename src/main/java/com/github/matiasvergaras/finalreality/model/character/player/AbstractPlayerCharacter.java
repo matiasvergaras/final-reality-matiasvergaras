@@ -6,12 +6,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import com.github.matiasvergaras.finalreality.model.character.CPU.Enemy;
 import com.github.matiasvergaras.finalreality.model.character.CPU.IEnemy;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -59,7 +56,6 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
    */
   public abstract void equipWeapon(IWeapon weapon);
 
-
   /**
    * Get the equipped weapon.
    * @return the equipped weapon of this character.
@@ -71,61 +67,28 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
   }
 
   /**
-   * Equip an axe to this character.
    * {@inheritDoc}
    * @param weapon
-   *              The Axe to equip.
-   */
-
-  /**
-   * {@inheritDoc}
-   * @param weapon
-   *              The weapon to be equipped
+   *              The weapon to be equip
    */
   @Override
   public void equip(IWeapon weapon) {
     equippedWeapon = weapon;
-  }
-
-  public void equipAxe(Axe weapon){
-  }
-
-  /**
-   * Equip
-   * {@inheritDoc}
-   * @param weapon
-   *              The Bow to equip.
-   */
-  public void equipBow(Bow weapon){
+    weapon.setOwner(this);
   }
 
   /**
    * {@inheritDoc}
-   * @param weapon
-   *              The Staff to equip.
    */
-  public void equipStaff(Staff weapon){
+  @Override
+  public void unequip() {
+    equippedWeapon = null;
   }
 
-  /**
-   * {@inheritDoc}
-   * @param weapon
-   *              The Knife to equip.
-   */
-  public void equipKnife(Knife weapon){
-  }
-
-  /**
-   * {@inheritDoc}
-   * @param weapon
-   *              The Sword to equip.
-   */
-  public void equipSword(Sword weapon){
-  }
 
   public void normalAttack(IEnemy character){
     character.receiveNormalAttack(this);
-  };
+  }
 
   /**
    * Receive a non-magic attack
@@ -133,7 +96,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
    *
    */
   public void receiveNormalAttack(IEnemy character){
-    this.currentHP-=character.getPower();
+    this.reduceHP(character.getPower());
   }
 
   /**
@@ -141,7 +104,11 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
    */
   @Override
   public void receiveHeal() {
-    this.currentHP+=this.currentHP*0.3;
+    /* Since we set HP as private, and it is not possible for enemies to get healed,
+     * we will abuse of the reduceHP method (that is common both for player characters as well as
+     * enemies) to implement the receiveHeal method -as an negative attack-.
+     */
+    reduceHP(-this.getMaxHP()*0.3);
   }
 }
 

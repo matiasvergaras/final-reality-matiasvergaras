@@ -1,14 +1,14 @@
 package com.github.cc3002.finalreality.model.character;
-import com.github.matiasvergaras.finalreality.model.character.player.Magic.BlackMage;
-import com.github.matiasvergaras.finalreality.model.character.player.Normal.Engineer;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
 import com.github.matiasvergaras.finalreality.model.character.player.Normal.Knight;
 import com.github.matiasvergaras.finalreality.model.character.player.Normal.Thief;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+/**
+ * Class to test basics features of a Knight Character.
+ *
+ * @author Matias Vergara Silva.
+ */
 
 class KnightTest extends AbstractPlayerCharacterTest {
 
@@ -17,7 +17,7 @@ class KnightTest extends AbstractPlayerCharacterTest {
      */
     @BeforeEach
     void setUp() {
-        basicSetUp();
+        super.basicSetUp();
         super.playerSetUp();
         testPlayerCharacters.add(new Knight(turns, KNIGHT_NAME, 200, 100));
         testWeapons.add(EXAMPLE_AXE);
@@ -34,7 +34,7 @@ class KnightTest extends AbstractPlayerCharacterTest {
         checkConstruction(new Knight(turns, KNIGHT_NAME, 200, 100),
                 testCharacters.get(0),
                 new Knight(turns, KNIGHT_NAME, 11, 200),
-                new Thief(turns, KNIGHT_NAME, 11, 200));
+                new Thief(turns, THIEF_NAME, 11, 200));
     }
 
     /**

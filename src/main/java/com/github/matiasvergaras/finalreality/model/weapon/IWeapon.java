@@ -66,10 +66,13 @@ public interface IWeapon {
     void setOwner(IPlayerCharacter character);
 
     /**
-     * Method to get the character that is using this weapon. Useful for testing.
+     * Get the character that is using this weapon. Useful for testing.
      * @return the unit that has currently equipped this item
      */
     IPlayerCharacter getOwner();
 
-
+    /**
+     * Set this weapon free, if it is being used by a character.
+     */
+    void setWeaponFree();
 }

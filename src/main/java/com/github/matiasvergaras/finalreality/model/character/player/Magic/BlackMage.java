@@ -2,9 +2,6 @@ package com.github.matiasvergaras.finalreality.model.character.player.Magic;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -20,6 +17,7 @@ import java.util.concurrent.BlockingQueue;
  */
 
 public class BlackMage extends AbstractMagicCharacter {
+
     /**
      * Creates a new Black Wizard Character.
      * @param turnsQueue
@@ -40,33 +38,13 @@ public class BlackMage extends AbstractMagicCharacter {
 
     /**
      * {@inheritDoc}
-     * @param weapon
-     *              The weapon to equip.
      */
     @Override
     public void equipWeapon(IWeapon weapon) {
         weapon.equipToBlackMage(this);
     }
 
-    /**
-     * {@inheritDoc}
-     * @param weapon
-     *              The weapon to equip.
-     */
-    @Override
-    public void equipStaff(Staff weapon){
-        equippedWeapon = weapon;
-    }
 
-    /**
-     * {@inheritDoc}
-     * @param weapon
-     *              The weapon to equip.
-     */
-    @Override
-    public void equipKnife(Knife weapon){
-        equippedWeapon = weapon;
-    }
 
     /**
      * Check if this is equal to a given object o.
@@ -94,8 +72,8 @@ public class BlackMage extends AbstractMagicCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName() + this.getMaxDP() + this.getMaxHP()
-        +this.getMaxMana());
+        return Objects.hash(this.getName(), this.getMaxHP(), this.getMaxDP(),
+        this.getMaxMana());
     }
 
 }

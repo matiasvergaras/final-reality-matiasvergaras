@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 
 import java.util.Objects;
 
@@ -12,7 +13,7 @@ import java.util.Objects;
  * @author Matías Vergara Silva
  *
  */
-public class Bow extends AbstractNormalWeapon{
+public class Bow extends AbstractWeapon {
 
     /**
      * Creates a Bow object with a name, a base damage, weight and type.
@@ -32,7 +33,8 @@ public class Bow extends AbstractNormalWeapon{
      */
     @Override
     public void equipToThief(IPlayerCharacter character) {
-        character.equipBow(this);
+        setWeaponFree();
+        character.equip(this);
     }
 
     /**
@@ -40,7 +42,8 @@ public class Bow extends AbstractNormalWeapon{
      */
     @Override
     public void equipToEngineer(IPlayerCharacter character) {
-        character.equipBow(this);
+        setWeaponFree();
+        character.equip(this);
     }
 
     /**

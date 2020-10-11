@@ -1,7 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.weapon.Normal;
 
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
+import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 
 import java.util.Objects;
 
@@ -13,7 +13,8 @@ import java.util.Objects;
  * @author Matías Vergara Silva
  *
  */
-public class Axe extends AbstractNormalWeapon{
+public class Axe extends AbstractWeapon {
+
     /**
      * Creates a Axe object with a name, a base damage, weight and type.
      * @param name
@@ -32,7 +33,8 @@ public class Axe extends AbstractNormalWeapon{
      */
     @Override
     public void equipToEngineer(IPlayerCharacter character) {
-        character.equipAxe(this);
+        setWeaponFree();
+        character.equip(this);
     }
 
     /**
@@ -40,6 +42,7 @@ public class Axe extends AbstractNormalWeapon{
      */
     @Override
     public void equipToKnight(IPlayerCharacter character) {
+        setWeaponFree();
         character.equip(this);
     }
 
