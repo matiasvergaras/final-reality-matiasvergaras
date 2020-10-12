@@ -3,7 +3,6 @@ package com.github.matiasvergaras.finalreality.model.character.cpu;
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.magic.IMagicCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 import org.jetbrains.annotations.NotNull;
 
@@ -120,25 +119,6 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
             setParalyzed();
         }
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param character the attacking character
-     */
-    public void receivePoisonAttack(IMagicCharacter character) {
-        setPoisoned();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param character the attacking character
-     */
-    public void receiveParalysisAttack(IMagicCharacter character) {
-        setParalyzed();
-    }
-
 
     /**
      * {@inheritDoc}
