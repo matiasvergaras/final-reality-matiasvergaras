@@ -80,9 +80,11 @@ It is not necessary to have fields that store the type of weapons or characters,
 In addition to what is requested by the statement, we added some fields that allows us to implement certain characteristics assumed or implicit in the logic of the game, such as that a weapon can be equipped by only one character at a time. To do this, we create the `owner` field, and the `setOwner` and `getOwner` methods, which are called each time a weapon is equipped.
 
 #### UML Diagram
-To date the UML diagram of the model looks like this:
+To date the UML diagram of the model looks like this (showing only class names):
 
 ![Figure 2. Homework 1 Final Delivery UML Diagram](/images/UML_T1_Final_Delivery.png)
+
+To see the complet UML Diagram, check for **UML.pdf** in the root folder.
 
 If you want to go deeper, you can continue reading the next section, Partial Delivery 2. The changes from that version to this are minimal and only relate to the tests, not to the way the program works.
 
@@ -142,6 +144,7 @@ In Partial Delivery 1 we focus on the architecture with which our program implem
 The code provided by the teaching team corresponds to a low-level hierarchy using abstract classes and interfaces of the Character class, and a null hierarchy of the Weapon class. It also includes test, but since this initial code have several conception mistakes (i.e. bad practices), they won't be usefull once we modify the code. 
 
 The UML diagram of the initial state is presented below:
+
 ![Figure 1. Initial state UML Diagram](/images/initial_state.png)
 
 We identified several problems: Enemies inherit from the `AbstractCharacter` class, which in turn implements the `equip` and `equippedWeapon` methods, but from their description they cannot use or carry weapons. This first problem immediately breaks the **Liskov substitution principle.**
