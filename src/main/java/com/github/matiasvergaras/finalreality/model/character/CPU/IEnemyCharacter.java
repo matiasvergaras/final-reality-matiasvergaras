@@ -5,7 +5,7 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
 import com.github.matiasvergaras.finalreality.model.character.player.magic.IMagicCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 
-public interface IEnemy extends ICharacter {
+public interface IEnemyCharacter extends ICharacter {
     /**
      * Get the power of this enemy.
      *

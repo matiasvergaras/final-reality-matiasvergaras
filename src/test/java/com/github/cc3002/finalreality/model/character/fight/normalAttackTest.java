@@ -1,7 +1,7 @@
 package com.github.cc3002.finalreality.model.character.fight;
 
 import com.github.cc3002.finalreality.model.abstractModelTest;
-import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemy;
+import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemyCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.junit.jupiter.api.Test;
@@ -19,11 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  *
  * @author Matías Vergara Silva.
  * @see IPlayerCharacter
- * @see IEnemy
+ * @see IEnemyCharacter
  */
 public class normalAttackTest extends abstractModelTest {
 
-    protected void checkNormalAttack(IEnemy enemy, IPlayerCharacter character,
+    protected void checkNormalAttack(IEnemyCharacter enemy, IPlayerCharacter character,
                                      IWeapon weapon) {
 
         character.equipWeapon(weapon);

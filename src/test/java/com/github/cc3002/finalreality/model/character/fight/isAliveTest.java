@@ -1,7 +1,7 @@
 package com.github.cc3002.finalreality.model.character.fight;
 
 import com.github.cc3002.finalreality.model.abstractModelTest;
-import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemy;
+import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemyCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.junit.jupiter.api.Test;
@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class isAliveTest extends abstractModelTest {
 
-    protected void checkAlive(IEnemy enemy, IPlayerCharacter character,
+    protected void checkAlive(IEnemyCharacter enemy, IPlayerCharacter character,
                               IWeapon weapon) {
-        IEnemy anotherEnemy = enemy;
+        IEnemyCharacter anotherEnemy = enemy;
         character.equipWeapon(weapon);
         while (enemy.isAlive()) {
             character.normalAttack(enemy);

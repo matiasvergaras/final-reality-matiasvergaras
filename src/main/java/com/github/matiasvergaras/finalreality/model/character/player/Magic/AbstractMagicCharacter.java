@@ -1,7 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemy;
+import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemyCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
@@ -46,16 +46,16 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter imp
         currentMana -= diff;
     }
 
-    public void useThunderSpell(IEnemy enemy) {
+    public void useThunderSpell(IEnemyCharacter enemy) {
     }
 
-    public void useFireSpell(IEnemy enemy) {
+    public void useFireSpell(IEnemyCharacter enemy) {
     }
 
-    public void useParalysisSpell(IEnemy enemy) {
+    public void useParalysisSpell(IEnemyCharacter enemy) {
     }
 
-    public void usePoisonSpell(IEnemy enemy) {
+    public void usePoisonSpell(IEnemyCharacter enemy) {
     }
 
     public void useHealSpell(IPlayerCharacter ally) {

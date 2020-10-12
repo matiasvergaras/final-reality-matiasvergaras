@@ -12,7 +12,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class AbstractEnemy extends AbstractCharacter implements IEnemy {
+public class AbstractEnemyCharacter extends AbstractCharacter implements IEnemyCharacter {
 
     private final int weight;
     private final int power;
@@ -29,9 +29,9 @@ public class AbstractEnemy extends AbstractCharacter implements IEnemy {
      * @param power      the character's power points
      */
 
-    public AbstractEnemy(@NotNull final BlockingQueue<ICharacter> turnsQueue,
-                         @NotNull final String name, int weight,
-                         int HP, int DP, int power) {
+    public AbstractEnemyCharacter(@NotNull final BlockingQueue<ICharacter> turnsQueue,
+                                  @NotNull final String name, int weight,
+                                  int HP, int DP, int power) {
         super(turnsQueue, name, HP, DP);
         this.weight = weight;
         this.power = power;

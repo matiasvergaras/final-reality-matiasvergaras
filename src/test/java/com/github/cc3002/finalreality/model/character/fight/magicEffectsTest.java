@@ -1,7 +1,7 @@
 package com.github.cc3002.finalreality.model.character.fight;
 
 import com.github.cc3002.finalreality.model.abstractModelTest;
-import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemy;
+import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemyCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * A class to test that the methods related to magic effects works properly.
  *
  * @author Matías Vergara Silva.
- * @see IEnemy
+ * @see IEnemyCharacter
  */
 
 public class magicEffectsTest extends abstractModelTest {
@@ -63,8 +63,8 @@ public class magicEffectsTest extends abstractModelTest {
     @Test
     void fireTest() {
         exampleBlackMage.useFireSpell(exampleEnemy);
-        IMagicWeapon weapon = (IMagicWeapon)exampleBlackMage.getEquippedWeapon();
-        assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP()- weapon.getMagicDamage());
+        IMagicWeapon weapon = (IMagicWeapon) exampleBlackMage.getEquippedWeapon();
+        assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP() - weapon.getMagicDamage());
     }
 
     /**
@@ -73,11 +73,9 @@ public class magicEffectsTest extends abstractModelTest {
     @Test
     void thunderTest() {
         exampleBlackMage.useThunderSpell(exampleEnemy);
-        IMagicWeapon weapon = (IMagicWeapon)exampleBlackMage.getEquippedWeapon();
-        assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP()- weapon.getMagicDamage());
+        IMagicWeapon weapon = (IMagicWeapon) exampleBlackMage.getEquippedWeapon();
+        assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP() - weapon.getMagicDamage());
     }
-
-
 
 
 }

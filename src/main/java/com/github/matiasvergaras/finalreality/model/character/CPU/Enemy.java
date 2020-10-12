@@ -16,7 +16,7 @@ import java.util.concurrent.BlockingQueue;
  * @author Ignacio Slater Muñoz
  * @author Matías Vergara Silva
  */
-public class Enemy extends AbstractEnemy {
+public class Enemy extends AbstractEnemyCharacter {
 
     /**
      * Creates a new Enemy Character.

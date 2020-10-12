@@ -1,7 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.player;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemy;
+import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemyCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
 public interface IPlayerCharacter extends ICharacter {
@@ -39,14 +39,14 @@ public interface IPlayerCharacter extends ICharacter {
      *
      * @param character the character to be attacked.
      */
-    void normalAttack(IEnemy character);
+    void normalAttack(IEnemyCharacter character);
 
     /**
      * Receive a non-magic attack
      *
      * @param character the character that attacks.
      */
-    void receiveNormalAttack(IEnemy character);
+    void receiveNormalAttack(IEnemyCharacter character);
 
     /**
      * Receive a Heal-Spell ''attack''
