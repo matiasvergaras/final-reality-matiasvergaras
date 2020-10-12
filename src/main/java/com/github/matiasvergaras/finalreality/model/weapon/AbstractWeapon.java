@@ -1,31 +1,35 @@
 package com.github.matiasvergaras.finalreality.model.weapon;
 
-import java.util.Objects;
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 /**
  * A class that holds all the information of a weapon.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author Matías Vergara Silva.
  */
 public abstract class AbstractWeapon implements IWeapon{
 
   private final String name;
   private final int power; //Could be heal - power or damage - power
   private final int weight;
-  private final String type;
+  private IPlayerCharacter owner;
 
   /**
-   * Creates a weapon with a name, a base damage, speed and it's type.
+   * Constructor for a default item without any special behaviour.
    *
-   * @see WeaponType
+   * @param name
+   *     the name of the item
+   * @param power
+   *     the power of the item
+   * @param weight
+   *     the weight of the item
    */
-  public AbstractWeapon(final String name, final int power, final int weight,
-                        final String type) {
+  public AbstractWeapon(final String name, final int power, final int weight) {
     this.name = name;
     this.power = power;
     this.weight = weight;
-    this.type = type;
+    this.owner = null;
   }
 
   /**
@@ -57,38 +61,73 @@ public abstract class AbstractWeapon implements IWeapon{
 
   /**
    * {@inheritDoc}
-   *
+   * @param character
+   *              the Knight to equip with this weapon.
    */
   @Override
-  public String getType() {
-    return type;
+  public void equipToKnight(IPlayerCharacter character) {
   }
 
   /**
    * {@inheritDoc}
-   *
+   * @param character
+   *                the Thief to equip with this weapon.
    */
   @Override
-  public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof AbstractWeapon)) {
-      return false;
-    }
-    final AbstractWeapon weapon = (AbstractWeapon) o;
-    return getPower() == weapon.getPower() &&
-        getWeight() == weapon.getWeight() &&
-        getName().equals(weapon.getName()) &&
-        getType() == weapon.getType();
+  public void equipToThief(IPlayerCharacter character) {
   }
 
   /**
    * {@inheritDoc}
-   *
+   * @param character
+   *                the Engineer to equip with this weapon.
    */
   @Override
-  public int hashCode() {
-    return Objects.hash(getName(), getPower(), getWeight(), getType());
+  public void equipToEngineer(IPlayerCharacter character) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * @param character
+   *                the Black Mage to equip with this weapon.
+   */
+  @Override
+  public void equipToBlackMage(IPlayerCharacter character) {
+  }
+
+  /**
+   * {@inheritDoc}
+   * @param character
+   *                the White Mage to equip with this weapon.
+   */
+  @Override
+  public void equipToWhiteMage(IPlayerCharacter character){
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setOwner(IPlayerCharacter character){
+    owner = character;
+  }
+
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public IPlayerCharacter getOwner(){
+    return owner;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void setWeaponFree() {
+    if (getOwner() != null) {
+      getOwner().unequip();
+    }
   }
 }
+

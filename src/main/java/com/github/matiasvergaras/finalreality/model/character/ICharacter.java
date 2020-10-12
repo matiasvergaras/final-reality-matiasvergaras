@@ -16,42 +16,52 @@ public interface ICharacter {
   void waitTurn();
 
   /**
-   * Returns this character's name.
+   * A method to get the name of this character.
+   * @return this character's name.
    */
   String getName();
 
   /**
-   * Returns this character's class.
+   * A method to get the current HP of this character.
+   * @return this character's current HP.
    */
-  String getCharacterClass();
+  int getCurrentHP();
 
   /**
-   * Sets this character in paralysed state.
+   * A method to get the max HP of this character.
+   * @return this character's max HP.
    */
-  void setParalysed();
+  int getMaxHP();
 
   /**
-   * Sets this character in poisoned state.
-   * @param damage
-   *              damage to apply in each turn (already divided by 3)
+   * A method to get the current DP of this character.
+   * @return this character's current DP.
    */
-  void setPoisoned(int damage);
+  int getCurrentDP();
 
   /**
-   * Sets this character in burned state.
-   * @param damage
-   *               damage to apply in each turn (already divided by 2)
+   * A method to get the max DP of this character.
+   * @return this character's max DP.
    */
-  void setBurned(int damage);
+  int getMaxDP();
 
   /**
-   * Heals this unit
-   */
-  void setHealed();
+   * Evaluation of the statement "This character is alive".
+   * @return Boolean True if character is alive, False otherwise.
+   * */
+  boolean isAlive();
 
   /**
-   * I can swear that I dont have any idea of wtf is this
+   * modify the HP of this character.
+   *
+   * @param diff a Integer to rest to the Character HP.
    */
-  int hashCode();
+  void reduceHP(double diff);
+
 
 }
+
+
+
+
+

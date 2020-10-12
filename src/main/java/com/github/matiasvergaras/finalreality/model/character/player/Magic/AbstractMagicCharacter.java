@@ -10,8 +10,8 @@ import java.util.concurrent.BlockingQueue;
  * @author Matias Vergara Silva.
  */
 public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter{
-    private int mana;
-
+    private final int maxMana;
+    private final int currentMana;
 
     /**
      * Creates a new Magic Character.
@@ -19,16 +19,25 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter{
      * @param name
      *     the character's name
      * @param turnsQueue
-     *     the queue with the characters waiting for their turn
-     * @param characterClass
-     *     the class of this character
+     *     the queue with the characters ready to play
+     * @param HP
+     *     this character heal points
+     * @param DP
+     *     this character defense points
+     * @param mana
+     *     this character mana points
      */
     protected AbstractMagicCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                      @NotNull String name,
-                                     final String characterClass) {
-        super(turnsQueue, name, characterClass);
-        this.mana=mana;
+                                     int HP, int DP, int mana) {
+        super(turnsQueue, name, HP, DP);
+        this.maxMana=mana;
+        this.currentMana=mana;
     }
 
+    public int getMaxMana() {
+        return this.maxMana;
+    }
 
+    public int getCurrentMana(){ return this.currentMana; }
 }

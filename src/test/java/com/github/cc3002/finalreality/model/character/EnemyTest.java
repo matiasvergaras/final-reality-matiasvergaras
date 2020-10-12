@@ -1,25 +1,47 @@
 package com.github.cc3002.finalreality.model.character;
 
 import com.github.matiasvergaras.finalreality.model.character.CPU.Enemy;
-import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.Normal.Engineer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+/**
+ * Class to test basics features of a Enemy Character.
+ *
+ * @author Matias Vergara Silva.
+ */
 
 class EnemyTest extends AbstractCharacterTest {
 
   private static final String ENEMY_NAME = "Goblin";
 
+  /**
+   * Sets up an instance to test this class.
+   */
   @BeforeEach
   void setUp() {
-    basicSetUp();
-    testCharacters.add(new Enemy(ENEMY_NAME, 10, turns));
+    super.basicSetUp();
+    testCharacters.add(new Enemy(turns, ENEMY_NAME, 10, 200, 100, 200, 1));
   }
 
+
+  /**
+   * Checks that the class' constructor and equals method works properly.
+   */
   @Test
   void constructorTest() {
-    checkConstruction(new Enemy(ENEMY_NAME, 10, turns),
+    checkConstruction(new Enemy(turns, ENEMY_NAME, 10, 200, 100, 200, 1),
         testCharacters.get(0),
-        new Enemy(ENEMY_NAME, 11, turns),
-        new AbstractPlayerCharacter(ENEMY_NAME, turns, CharacterClass.THIEF));
+        new Enemy(turns, ENEMY_NAME, 10, 200, 100, 200, 2),
+        new Engineer(turns, ENEMY_NAME, 200, 100));
   }
+
+  /**
+   * Checks that this Enemy character waits the appropriate amount of time for it's turn.
+   */
+  @Test
+  void waitTurnTest(){
+    super.checkTurns();
+  }
+
 }

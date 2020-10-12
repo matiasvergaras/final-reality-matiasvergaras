@@ -1,35 +1,78 @@
 package com.github.matiasvergaras.finalreality.model.weapon;
 
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+
 public interface IWeapon {
 
     /**
-     * Returns this weapon weight.
+     * Method to get the weight of this weapon.
+     * @return this weapon weight.
      */
     int getWeight();
 
     /**
-     * Returns this weapon name.
+     * Method to get the name of this weapon.
+     * @return this weapon name.
      */
     String getName();
 
     /**
-     * Returns this weapon power.
+     * Method to get the power of this weapon.
+     * @return this weapon power.
      */
     int getPower();
 
     /**
-     * Returns this weapon type.
+     * Equip this weapon to a given Knight.
+     * @param character
+     *        the Knight that will be equipped with this weapon
      */
-    String getType();
+    void equipToKnight(IPlayerCharacter character);
 
     /**
-     * wtf is this bro?¿ serious question
+     * Equip this weapon to a given Engineer.
+     * @param character
+     *        the Engineer that will be equipped with this weapon
      */
-    int hashCode();
+    void equipToEngineer(IPlayerCharacter character);
 
     /**
-     * check if an object is equal to this
+     * Equip this weapon to a given Thief.
+     * @param character
+     *        the Thief that will be equipped with this weapon
      */
-    boolean equals(final Object o);
+    void equipToThief(IPlayerCharacter character);
 
+    /**
+     * Equip this weapon to a given Black Mage.
+     * @param character
+     *        the Black Mage that will be equipped with this weapon
+     */
+    void equipToBlackMage(IPlayerCharacter character);
+
+    /**
+     * Equip this weapon to a given White Mage.
+     * @param character
+     *        the White Mage that will be equipped with this weapon
+     */
+    void equipToWhiteMage(IPlayerCharacter character);
+
+
+    /**
+     * Sets this weapon's owner.
+     * @param character
+     *        the character that has this weapon in its hand.
+     */
+    void setOwner(IPlayerCharacter character);
+
+    /**
+     * Get the character that is using this weapon. Useful for testing.
+     * @return the unit that has currently equipped this item
+     */
+    IPlayerCharacter getOwner();
+
+    /**
+     * Set this weapon free, if it is being used by a character.
+     */
+    void setWeaponFree();
 }

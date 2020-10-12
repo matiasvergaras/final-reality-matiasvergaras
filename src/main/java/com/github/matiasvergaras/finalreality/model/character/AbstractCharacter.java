@@ -1,8 +1,9 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
-import java.util.Objects;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
+
 
 import org.jetbrains.annotations.NotNull;
 
@@ -15,33 +16,36 @@ import org.jetbrains.annotations.NotNull;
 public abstract class AbstractCharacter implements ICharacter {
 
   private final BlockingQueue<ICharacter> turnsQueue;
-  private final String characterClass;
   private final String name;
-  protected ScheduledExecutorService scheduledExecutor;
- /* protected final StateType state;
-  private final int currentHP;
   private final int maxHP;
-  private final int currentDP;
-  private final int maxDP; */
-
+  private int currentHP;
+  private final int maxDP;
+  protected int currentDP;
+  protected ScheduledExecutorService scheduledExecutor;
 
   /**
-   * Creates a character with turns queue, name and class.
+   * Constructor for a new Character.
    *
+   * @param name
+   *     the character's name
+   * @param turnsQueue
+   *     the queue with the characters ready to play
+   * @param HP
+   *     this character's max heals points
+   * @param DP
+   *     this character's max defense points
    */
   protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
-                              @NotNull String name, @NotNull String characterClass
-                              ) {
+                              @NotNull String name,
+                              int HP, int DP)
+  {
     this.turnsQueue = turnsQueue;
     this.name = name;
-    this.characterClass = characterClass;
-    /*this.state = state;
     this.maxHP = HP;
-    this.currentHP = HP ;
+    this.currentHP = HP;
+    this.maxDP = DP;
     this.currentDP = DP;
-    this.maxDP = DP; */
-}
-
+  }
 
   /**
    * Adds this character to the turns queue.
@@ -53,7 +57,6 @@ public abstract class AbstractCharacter implements ICharacter {
 
   /**
    * {@inheritDoc}
-   *
    */
   @Override
   public String getName() {
@@ -62,62 +65,57 @@ public abstract class AbstractCharacter implements ICharacter {
 
   /**
    * {@inheritDoc}
+   */
+  @Override
+  public int getCurrentHP(){
+    return currentHP;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int getMaxHP(){
+    return maxHP;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int getCurrentDP(){
+    return currentDP;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int getMaxDP(){
+    return maxDP;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean isAlive(){
+    return currentHP > 0;
+  }
+
+  /**
+   * modify the HP of this character.
    *
+   * @param diff a positive Integer to rest to the Character HP.
    */
   @Override
-  public int hashCode() {
-    return Objects.hash(getCharacterClass());
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   */
-  @Override
-  public String getCharacterClass() {
-    return characterClass;
-  }
-
-
-  /**
-   * {@inheritDoc}
-   *
-   */
-  @Override
-  public void setParalysed() {
-
-  }
-
-  /**
-   * {@inheritDoc}
-   * @param damage
-   *              damage to apply in each turn, already divided by 3.
-   */
-  @Override
-  public void setPoisoned(int damage) {
-
-  }
-
-  /**
-   * {@inheritDoc}
-   * @param damage
-   *              damage to apply in each turn, already divided by 2.
-   */
-  @Override
-  public void setBurned(int damage) {
-
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   */
-  @Override
-  public void setHealed() {
-
+  public void reduceHP(double diff) {
+    this.currentHP -= diff;
   }
 
 }
+
+
+
 
 
 

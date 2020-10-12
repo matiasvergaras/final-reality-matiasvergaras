@@ -5,6 +5,8 @@ import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import com.github.matiasvergaras.finalreality.model.character.CPU.IEnemy;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  * @author Ignacio Slater Muñoz.
  * @author Matias Vergara Silva.
  */
-public abstract class AbstractPlayerCharacter extends AbstractCharacter {
+public abstract class AbstractPlayerCharacter extends AbstractCharacter implements IPlayerCharacter {
    protected IWeapon equippedWeapon;
 
    /**
@@ -24,18 +26,22 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter {
    * @param name
    *     the character's name
    * @param turnsQueue
-   *     the queue with the characters waiting for their turn
-   * @param characterClass
-   *     the class of this character
+   *     the queue with the characters ready to play
+   * @param HP
+   *    the character's max heal points
+   * @param DP
+   *    the character's max defense points
    */
   protected AbstractPlayerCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                    @NotNull String name,
-                                   final String characterClass) {
-    super(turnsQueue, name, characterClass);
+                                    int HP, int DP) {
+    super(turnsQueue, name, HP, DP);
 
   }
 
-
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void waitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
@@ -43,36 +49,66 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter {
             .schedule(super::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
   }
 
-
   /**
-   * Equip a weapon to calling character.
-   *
+   * {@inheritDoc}
    * @param weapon
-   *     the weapon
+   *              The weapon to equip.
    */
-  public void equip(IWeapon weapon) {
-    this.equippedWeapon = weapon;
+  public abstract void equipWeapon(IWeapon weapon);
+
+  /**
+   * Get the equipped weapon.
+   * @return the equipped weapon of this character.
+   * @see IWeapon
+   * */
+  @Override
+  public IWeapon getEquippedWeapon() {
+    return equippedWeapon;
   }
 
   /**
-   * Returns the equipped weapon
-   *
+   * {@inheritDoc}
+   * @param weapon
+   *              The weapon to be equip
    */
-  public IWeapon getEquippedWeapon() {
-    return this.equippedWeapon;
+  @Override
+  public void equip(IWeapon weapon) {
+    equippedWeapon = weapon;
+    weapon.setOwner(this);
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof AbstractPlayerCharacter)) {
-      return false;
-    }
-    final AbstractPlayerCharacter that = (AbstractPlayerCharacter) o;
-    return getCharacterClass() == that.getCharacterClass()
-            && getName().equals(that.getName());
+  public void unequip() {
+    equippedWeapon = null;
+  }
+
+
+  public void normalAttack(IEnemy character){
+    character.receiveNormalAttack(this);
+  }
+
+  /**
+   * Receive a non-magic attack
+   * @param character the attacking character.
+   *
+   */
+  public void receiveNormalAttack(IEnemy character){
+    this.reduceHP(character.getPower());
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void receiveHeal() {
+    /* Since we set HP as private, and it is not possible for enemies to get healed,
+     * we will abuse of the reduceHP method (that is common both for player characters as well as
+     * enemies) to implement the receiveHeal method -as an negative attack-.
+     */
+    reduceHP(-this.getMaxHP()*0.3);
   }
 }
 

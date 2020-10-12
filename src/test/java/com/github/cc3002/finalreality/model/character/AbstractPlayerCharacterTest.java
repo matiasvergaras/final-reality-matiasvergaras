@@ -1,82 +1,59 @@
 package com.github.cc3002.finalreality.model.character;
 
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
+import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import com.github.matiasvergaras.finalreality.model.character.CPU.Enemy;
-import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
-import java.util.EnumMap;
-import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 /**
- * Set of tests for the {@code GameCharacter} class.
+ * Abstract class containing the common tests for all the playable characters.
  *
- * @author Ignacio Slater Muñoz.
- * @author <Your name>
- * @see AbstractPlayerCharacter
+ * @author Matias Vergara Silva.
+ * @see IPlayerCharacter
  */
-class AbstractPlayerCharacterTest extends AbstractCharacterTest {
+abstract public class AbstractPlayerCharacterTest extends AbstractCharacterTest {
+    protected List<IWeapon> testWeapons;
+    protected List<IPlayerCharacter> testPlayerCharacters;
 
-  private static final String BLACK_MAGE_NAME = "Vivi";
-  private static final String KNIGHT_NAME = "Adelbert";
-  private static final String WHITE_MAGE_NAME = "Eiko";
-  private static final String ENGINEER_NAME = "Cid";
-  private static final String THIEF_NAME = "Zidane";
-  private Map<CharacterClass, String> characterNames;
+    protected static final String BLACK_MAGE_NAME = "Airi";
+    protected static final String ENGINEER_NAME = "Cid";
+    protected static final String KNIGHT_NAME = "Adelbert";
+    protected static final String THIEF_NAME = "Zidane";
+    protected static final String WHITE_MAGE_NAME = "Eiko";
 
-  /**
-   * Setup method.
-   * Creates a new character named Vivi with 10 speed and links it to a turn queue.
-   */
-  @BeforeEach
-  void setUp() {
-    super.basicSetUp();
+    protected static final Staff EXAMPLE_STAFF = new Staff("Example Staff", 5, 15, 250);
+    protected static final Sword EXAMPLE_SWORD = new Sword("Example Sword", 20, 12);
+    protected static final Axe EXAMPLE_AXE = new Axe("Example Axe", 35, 14);
+    protected static final Knife EXAMPLE_KNIFE = new Knife("Example Knife", 30, 12);
+    protected static final Bow EXAMPLE_BOW = new Bow("Example Bow", 20, 15);
 
-    characterNames = new EnumMap<>(CharacterClass.class);
-    characterNames.put(CharacterClass.BLACK_MAGE, BLACK_MAGE_NAME);
-    characterNames.put(CharacterClass.KNIGHT, KNIGHT_NAME);
-    characterNames.put(CharacterClass.WHITE_MAGE, WHITE_MAGE_NAME);
-    characterNames.put(CharacterClass.ENGINEER, ENGINEER_NAME);
-    characterNames.put(CharacterClass.THIEF, THIEF_NAME);
 
-    for (var characterClass :
-        characterNames.keySet()) {
-      testCharacters.add(
-          new AbstractPlayerCharacter(characterNames.get(characterClass), turns, characterClass));
-    }
-  }
-
-  /**
-   * Checks that the class' constructor and equals method works properly.
-   */
-  @Test
-  void constructorTest() {
-    var enemy = new Enemy("Enemy", 10, turns);
-    for (var character :
-        testCharacters) {
-      var characterClass = character.getCharacterClass();
-      var characterName = characterNames.get(characterClass);
-      checkConstruction(new AbstractPlayerCharacter(characterName, turns, characterClass),
-          character,
-          new AbstractPlayerCharacter("Test", turns, characterClass),
-          new AbstractPlayerCharacter(characterName, turns,
-              characterClass == CharacterClass.THIEF ? CharacterClass.BLACK_MAGE
-                  : CharacterClass.THIEF));
-      assertNotEquals(character, enemy);
+    protected void playerSetUp(){
+        super.basicSetUp();
+        testWeapons = new ArrayList<>();
+        testPlayerCharacters = new ArrayList<>();
     }
 
-  }
-
-  @Test
-  void equipWeaponTest() {
-    for (var character :
-        testCharacters) {
-      assertNull(character.getEquippedWeapon());
-      character.equip(testWeapon);
-      assertEquals(testWeapon, character.getEquippedWeapon());
+    /**
+     *  Checks that the character starts without any weapon,
+     *  and that he can equip the weapons corresponding to his type.
+     */
+    protected void checkEquipWeapon() {
+        for (var character :
+                testPlayerCharacters) {
+            assertNull(character.getEquippedWeapon());
+            for (var weapon : testWeapons) {
+                character.equip(weapon);
+                assertEquals(weapon, character.getEquippedWeapon());
+            }
+        }
     }
-  }
 }
