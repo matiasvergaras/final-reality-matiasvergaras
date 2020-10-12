@@ -2,7 +2,7 @@ package com.github.cc3002.finalreality.model.character.fight;
 
 import com.github.cc3002.finalreality.model.abstractModelTest;
 import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
-import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemyCharacter;
+import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
 import com.github.matiasvergaras.finalreality.model.character.player.magic.WhiteMage;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * A class to test that the methods related to magic effects works properly.
  *
  * @author Matías Vergara Silva.
- * @see IEnemyCharacter
+ * @see ICPUCharacter
  */
 
 public class magicEffectsTest extends abstractModelTest {
