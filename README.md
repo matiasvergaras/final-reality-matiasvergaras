@@ -1,10 +1,25 @@
 Final Reality
 =============
 
+Course: *CC3002 - Design and Programming Methodologies*
+
+Section: 2
+
+Student: Matías Vergara Silva
+
+Github User: matiasvergaras
+
+Lecture teacher: Mrs. Nancy Hitschfield
+
+Assistant teachers: Matías Ramírez & Ignacio Slater M.
+
+Review assistant: Kevin Pinochet Hérnandez (?) (I guess, because he's on the project view)
+
 ![http://creativecommons.org/licenses/by/4.0/](https://i.creativecommons.org/l/by/4.0/88x31.png)
 
 This work is licensed under a 
 [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/)
+
 
 Context
 -------
@@ -25,24 +40,7 @@ enemies controlled by the computer.b
 
 ---
 
-# Semestral Project: Final Reality
-
-Course: *CC3002 - Design and Programming Methodologies*
-
-Section: 2
-
-Student: Matías Vergara Silva
-
-Github User: matiasvergaras
-
-Lecture teacher: Mrs. Nancy Hitschfield
-
-Assistant teachers: Matías Ramírez & Ignacio Slater M.
-
-Review assistant: Kevin Pinochet Hérnandez (?) (I guess, because he's on the project view)
-
-
-**We will be writing updates of the work done in each merge here, in '' Latest first '' format. Execution instructions will be added at the end, once the program is fully developed and functional.**
+**We will be writing updates of the work done in each merge here, in '' Latest first '' format. Execution instructions will be added at each Final Delivery, once the program is fully developed and functional.**
 
 --- 
 
