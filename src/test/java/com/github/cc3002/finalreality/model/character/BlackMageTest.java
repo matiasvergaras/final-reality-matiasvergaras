@@ -1,6 +1,7 @@
 package com.github.cc3002.finalreality.model.character;
-import com.github.matiasvergaras.finalreality.model.character.player.Magic.BlackMage;
-import com.github.matiasvergaras.finalreality.model.character.player.Magic.WhiteMage;
+
+import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
+import com.github.matiasvergaras.finalreality.model.character.player.magic.WhiteMage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -50,14 +51,13 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
     /**
      * Checks that this Black Mage character starts without any weapon,
      * and that he can equip Knives (Knife) and Staves (Staff).
+     *
      * @see BlackMage
      */
     @Test
     void equipWeaponTest() {
         super.checkEquipWeapon();
     }
-
-
 
 
 }

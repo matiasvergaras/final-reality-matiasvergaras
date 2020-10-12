@@ -1,6 +1,7 @@
 package com.github.cc3002.finalreality.model.character;
-import com.github.matiasvergaras.finalreality.model.character.player.Normal.Knight;
-import com.github.matiasvergaras.finalreality.model.character.player.Normal.Thief;
+
+import com.github.matiasvergaras.finalreality.model.character.player.normal.Knight;
+import com.github.matiasvergaras.finalreality.model.character.player.normal.Thief;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,6 +52,7 @@ class KnightTest extends AbstractPlayerCharacterTest {
     /**
      * Checks that this Knight character starts without any weapon,
      * and that he can equip Axes, Knives (Knife) and Swords.
+     *
      * @see Knight
      */
     @Test

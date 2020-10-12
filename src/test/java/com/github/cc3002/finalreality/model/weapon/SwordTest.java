@@ -1,7 +1,7 @@
 package com.github.cc3002.finalreality.model.weapon;
 
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
+import com.github.matiasvergaras.finalreality.model.weapon.normal.Knife;
+import com.github.matiasvergaras.finalreality.model.weapon.normal.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,11 +24,11 @@ public class SwordTest extends AbstractWeaponTest {
      * Checks that the class constructor and equals, hashcode methods works properly.
      */
     @Test
-    void constructorTest(){
+    void constructorTest() {
         exampleEngineer.equip(exampleSword);
         checkConstruction(new Sword(SWORD_NAME, DAMAGE, WEIGHT),
                 exampleEngineer.getEquippedWeapon(),
-                new Sword(SWORD_NAME, DAMAGE*2, WEIGHT),
+                new Sword(SWORD_NAME, DAMAGE * 2, WEIGHT),
                 new Knife(KNIFE_NAME, DAMAGE, WEIGHT));
     }
 
@@ -37,7 +37,7 @@ public class SwordTest extends AbstractWeaponTest {
      * from a character
      */
     @Test
-    void equipUnequipTest(){
+    void equipUnequipTest() {
         checkEquipUnequip(exampleSword, exampleKnight,
                 exampleThief);
     }
@@ -46,7 +46,7 @@ public class SwordTest extends AbstractWeaponTest {
      * Check that the weapon is not equipped when not appropriate
      */
     @Test
-    void unequippableBehaviorTest(){
+    void unequippableBehaviorTest() {
         exampleSword.setWeaponFree();
         checkUnequippableBehavior(exampleSword, exampleEngineer);
         checkUnequippableBehavior(exampleSword, exampleBlackMage);
@@ -57,7 +57,7 @@ public class SwordTest extends AbstractWeaponTest {
      * Check that the getters methods works properly.
      */
     @Test
-    void gettersTest(){
+    void gettersTest() {
         Sword testSword = new Sword("AnSword", 200, 10);
         checkGetPower(testSword, 200);
         checkGetName(testSword, "AnSword");

@@ -1,6 +1,7 @@
 package com.github.cc3002.finalreality.model.character;
-import com.github.matiasvergaras.finalreality.model.character.player.Normal.Engineer;
-import com.github.matiasvergaras.finalreality.model.character.player.Normal.Thief;
+
+import com.github.matiasvergaras.finalreality.model.character.player.normal.Engineer;
+import com.github.matiasvergaras.finalreality.model.character.player.normal.Thief;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +35,7 @@ class EngineerTest extends AbstractPlayerCharacterTest {
         super.checkConstruction(new Engineer(turns, ENGINEER_NAME, 100, 200),
                 testCharacters.get(0),
                 new Engineer(turns, ENGINEER_NAME, 110, 200),
-                new Thief(turns, THIEF_NAME, 100,200));
+                new Thief(turns, THIEF_NAME, 100, 200));
     }
 
     /**
@@ -51,6 +52,7 @@ class EngineerTest extends AbstractPlayerCharacterTest {
     /**
      * Checks that this Engineer character starts without any weapon,
      * and that he can equip Axes and Bows.
+     *
      * @see Engineer
      */
     @Test

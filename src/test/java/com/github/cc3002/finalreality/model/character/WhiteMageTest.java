@@ -1,6 +1,7 @@
 package com.github.cc3002.finalreality.model.character;
-import com.github.matiasvergaras.finalreality.model.character.player.Magic.BlackMage;
-import com.github.matiasvergaras.finalreality.model.character.player.Magic.WhiteMage;
+
+import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
+import com.github.matiasvergaras.finalreality.model.character.player.magic.WhiteMage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
      */
     @Test
     void constructorTest() {
-        testCharacters.add(new WhiteMage(turns, WHITE_MAGE_NAME, 200, 100,250));
+        testCharacters.add(new WhiteMage(turns, WHITE_MAGE_NAME, 200, 100, 250));
         checkConstruction(new WhiteMage(turns, WHITE_MAGE_NAME, 200, 100, 250),
                 testCharacters.get(0),
                 new WhiteMage(turns, WHITE_MAGE_NAME, 11, 200, 250),

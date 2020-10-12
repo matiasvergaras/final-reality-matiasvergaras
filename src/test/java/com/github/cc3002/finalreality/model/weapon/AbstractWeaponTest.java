@@ -1,9 +1,7 @@
 package com.github.cc3002.finalreality.model.weapon;
 
 import com.github.cc3002.finalreality.model.abstractModelTest;
-
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,7 +11,7 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
     /**
      * Sets up the basics to test a weapon type against the others.
      */
-    void basicSetUp(){
+    void basicSetUp() {
         super.turnSetUp();
     }
 
@@ -23,7 +21,7 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
     protected void checkConstruction(final IWeapon expectedWeapon,
                                      final IWeapon testEqualWeapon,
                                      final IWeapon sameClassDifferentWeapon,
-                                     final IWeapon differentWeapon){
+                                     final IWeapon differentWeapon) {
         assertEquals(expectedWeapon, testEqualWeapon);
         assertNotEquals(sameClassDifferentWeapon, testEqualWeapon);
         assertNotEquals(testEqualWeapon, differentWeapon);
@@ -35,16 +33,14 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
     /**
      * Checks that the weapon can be properly equipped an unequipped
      * from a character
-     * @param weapon
-     *              the weapon to be tested
-     * @param characterA
-     *              A character from the first class that can equip the weapon
-     * @param characterB
-     *              the second character that will equip the weapon
+     *
+     * @param weapon     the weapon to be tested
+     * @param characterA A character from the first class that can equip the weapon
+     * @param characterB the second character that will equip the weapon
      */
     protected void checkEquipUnequip(IWeapon weapon,
                                      IPlayerCharacter characterA,
-                                     IPlayerCharacter characterB){
+                                     IPlayerCharacter characterB) {
         characterA.equipWeapon(weapon);
         assertEquals(characterA.getEquippedWeapon(), weapon);
         assertEquals(weapon.getOwner(), characterA);
@@ -57,14 +53,12 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
     /**
      * Checks that the weapon can be properly equipped an unequipped
      * from a character
-     * @param weapon
-     *              the weapon to be tested
-     * @param character
-     *              A character from the first class that can equip the weapon
      *
+     * @param weapon    the weapon to be tested
+     * @param character A character from the first class that can equip the weapon
      */
     protected void checkUnequippableBehavior(IWeapon weapon,
-                                             IPlayerCharacter character){
+                                             IPlayerCharacter character) {
         weapon.setWeaponFree();
         character.equipWeapon(weapon);
         assertNull(weapon.getOwner());
@@ -73,21 +67,19 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
 
     /**
      * Checks that the weapon getPower method works properly.
-     * @param weapon
-     *              the weapon to be tested
-     * @param expectedPower
-     *              the expected value of power of this weapon.
      *
+     * @param weapon        the weapon to be tested
+     * @param expectedPower the expected value of power of this weapon.
      */
-    protected void checkGetPower(IWeapon weapon, int expectedPower){
+    protected void checkGetPower(IWeapon weapon, int expectedPower) {
         assertEquals(weapon.getPower(), expectedPower);
     }
 
-    protected void checkGetName(IWeapon weapon, String expectedName){
+    protected void checkGetName(IWeapon weapon, String expectedName) {
         assertEquals(weapon.getName(), expectedName);
     }
 
-    protected void checkGetWeight(IWeapon weapon, int expectedWeight){
+    protected void checkGetWeight(IWeapon weapon, int expectedWeight) {
         assertEquals(weapon.getWeight(), expectedWeight);
     }
 

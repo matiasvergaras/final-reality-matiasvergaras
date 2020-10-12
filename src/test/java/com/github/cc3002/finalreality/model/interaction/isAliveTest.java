@@ -1,4 +1,4 @@
-package com.github.cc3002.finalreality.model.character.fight;
+package com.github.cc3002.finalreality.model.interaction;
 
 import com.github.cc3002.finalreality.model.abstractModelTest;
 import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;

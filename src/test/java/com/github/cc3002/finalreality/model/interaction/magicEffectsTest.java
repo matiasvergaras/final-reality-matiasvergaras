@@ -1,4 +1,4 @@
-package com.github.cc3002.finalreality.model.character.fight;
+package com.github.cc3002.finalreality.model.interaction;
 
 import com.github.cc3002.finalreality.model.abstractModelTest;
 import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
@@ -78,10 +78,8 @@ public class magicEffectsTest extends abstractModelTest {
         }
         assertEquals(exampleEnemy.getState(), "BURNED");
     }
-
     /**
-     * To test that Fire Spell Attack works properly, and can get to put the enemy in paralyzed state.
-     */
+     * To test that Fire Spell Attack works properly, and can get to put the enemy in paralyzed state.     */
     @Test
     void thunderTest() {
         BlackMage exampleBlackMage = new BlackMage(turns, "New Black", 200, 200, 999999);
@@ -100,6 +98,7 @@ public class magicEffectsTest extends abstractModelTest {
 
     /**
      * To test that the burned state setter method works properly.
+     * (i.e. a Black Mage using White Magic, and viceversa).
      */
     @Test
     void burnedTest() {
@@ -108,11 +107,10 @@ public class magicEffectsTest extends abstractModelTest {
     }
 
     /**
-     * To test the null behavior of unappropiate use of spells
-     * (i.e. a Black Mage using White Magic, and viceversa).
+     * To test the null behavior of inappropriate use of spells
      */
     @Test
-    void unappropiateUsesTest() {
+    void inappropriateUsesTest() {
         exampleBlackMage.useHealSpell(exampleKnight);
         assertEquals(exampleKnight.getCurrentHP(), exampleKnight.getMaxHP());
         exampleBlackMage.usePoisonSpell(exampleEnemy);
