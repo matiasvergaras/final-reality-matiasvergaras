@@ -67,7 +67,7 @@ public class BlackMage extends AbstractMagicCharacter {
     @Override
     public void useFireSpell(IEnemyCharacter enemy) {
         if (this.getCurrentMana() > 15) {
-            enemy.receiveThunderAttack((IMagicWeapon) this.equippedWeapon);
+            enemy.receiveFireAttack((IMagicWeapon) this.equippedWeapon);
             this.reduceMana(15);
         } else {
             //Temporary ''solution''. Actually this will still do an attack (without effect),

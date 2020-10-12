@@ -77,5 +77,24 @@ public class magicEffectsTest extends abstractModelTest {
         assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP() - weapon.getMagicDamage());
     }
 
+    /**
+     * To test that the burned state setter method works properly.
+     */
+    @Test
+    void burnedTest() {
+        exampleEnemy.setBurned();
+        assertEquals(exampleEnemy.getState(), "BURNED");
+    }
+
+    /**
+     * To test the null behavior of unappropiate use of spells
+     */
+    @Test
+    void burnedTest() {
+        exampleBlackMage.use
+        assertEquals(exampleEnemy.getState(), "BURNED");
+    }
+
+
 
 }
