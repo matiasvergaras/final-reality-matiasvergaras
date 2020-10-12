@@ -2,6 +2,16 @@ package com.github.matiasvergaras.finalreality.model.weapon;
 
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
+/**
+ *
+ * This represent a Weapon  from the game.
+ * <p>
+ * Weapons are an essential part of the game. Only playable
+ * characters can equip and use them, and they need them to
+ * attack and to get into the turnsQueue.
+ * @see IPlayerCharacter
+ * @author Matías Vergara Silva
+ */
 public interface IWeapon {
 
     /**

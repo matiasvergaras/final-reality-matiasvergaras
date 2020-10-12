@@ -11,6 +11,10 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * A class that holds all the information of a CPU character of the game.
+ * @author Matías Vergara Silva
+ */
 public abstract class AbstractCPUCharacter extends AbstractCharacter implements ICPUCharacter {
 
     private final int weight;

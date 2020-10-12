@@ -4,6 +4,15 @@ import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
+
+/**
+ *
+ * This represent a Playable Character from the game.
+ * <p>
+ * Playable characters can equip and use weapons. Their turnsQueue
+ * time is calculated based on their equipped weapon weight.
+ * @author Matías Vergara Silva
+ */
 public interface IPlayerCharacter extends ICharacter {
     /**
      * Starts the process of equip a weapon to this character,

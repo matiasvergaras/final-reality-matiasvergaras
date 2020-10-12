@@ -4,6 +4,17 @@ import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 
+/**
+ *
+ * This represent a CPU-controlled character from the game.
+ * <p>
+ * CPU characters are enemies. They behaves as an ICharacter.
+ * They have two special fields
+ * ''weight'' that does the work of define their time in the turnsQueue and
+ * ''damage'', that does the work of the equipped weapon damage.
+ * @see ICharacter
+ * @author Matías Vergara Silva
+ */
 public interface ICPUCharacter extends ICharacter {
     /**
      * Get the power of this enemy.

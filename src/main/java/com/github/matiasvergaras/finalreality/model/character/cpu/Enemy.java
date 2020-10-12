@@ -8,11 +8,6 @@ import java.util.concurrent.BlockingQueue;
 
 /**
  * A class that holds all the information of a single enemy of the game.
- * <p>
- * Since we may want to have many units of Enemy with the same name, ex: 3 different Globin,
- * we will add an special field to this class: EnemyID.
- * <p> They also have an state, since they can suffer from magic spells effects. </p>
- *
  * @author Ignacio Slater Muñoz
  * @author Matías Vergara Silva
  */
