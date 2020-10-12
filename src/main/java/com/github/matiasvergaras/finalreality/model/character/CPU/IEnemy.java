@@ -1,67 +1,72 @@
-package com.github.matiasvergaras.finalreality.model.character.CPU;
+package com.github.matiasvergaras.finalreality.model.character.cpu;
+
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.Magic.IMagicCharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.magic.IMagicCharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 
 public interface IEnemy extends ICharacter {
     /**
      * Get the power of this enemy.
+     *
      * @return the power of this enemy.
      */
-     int getPower();
+    int getPower();
 
     /**
      * Get the state of this enemy.
+     *
      * @return the state of this enemy.
      */
     String getState();
 
     /**
      * Get the weight of this enemy.
+     *
      * @return the weight of this enemy.
      */
     int getWeight();
 
     /**
      * Performs a normal attack against a player's character.
-     * @param character
-     *                  the character to be attacked.
+     *
+     * @param character the character to be attacked.
      */
     void normalAttack(IPlayerCharacter character);
 
     /**
      * Receive a normal attack from a player's character.
-     * @param character
-     *                  the attacking character.
+     *
+     * @param character the attacking character.
      */
     void receiveNormalAttack(IPlayerCharacter character);
 
 
     /**
      * Receive a Fire-Spell attack
-     * @param character the attacking character.
      *
+     * @param weapon the weapon with which the character is being attacked
      */
-    void receiveFireAttack(IMagicCharacter character);
+    void receiveFireAttack(IMagicWeapon weapon);
 
     /**
      * Receive a Thunder-Spell attack
-     * @param character the attacking character.
      *
+     * @param weapon the weapon with which the character is being attacked
      */
-    void receiveThunderAttack(IMagicCharacter character);
+    void receiveThunderAttack(IMagicWeapon weapon);
 
     /**
      * Receive a Poison-Spell attack
-     * @param character the attacking character.
      *
+     * @param character the attacking character.
      */
     void receivePoisonAttack(IMagicCharacter character);
 
     /**
      * Receive a Paralysis-Spell attack
-     * @param character the attacking character.
      *
+     * @param character the attacking character.
      */
     void receiveParalysisAttack(IMagicCharacter character);
 

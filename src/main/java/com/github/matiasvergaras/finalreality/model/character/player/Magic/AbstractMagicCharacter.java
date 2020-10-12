@@ -1,7 +1,11 @@
-package com.github.matiasvergaras.finalreality.model.character.player.Magic;
-import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
+package com.github.matiasvergaras.finalreality.model.character.player.magic;
+
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemy;
+import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -9,35 +13,53 @@ import java.util.concurrent.BlockingQueue;
  *
  * @author Matias Vergara Silva.
  */
-public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter{
+public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter implements IMagicCharacter {
     private final int maxMana;
-    private final int currentMana;
+    private int currentMana;
 
     /**
      * Creates a new Magic Character.
      *
-     * @param name
-     *     the character's name
-     * @param turnsQueue
-     *     the queue with the characters ready to play
-     * @param HP
-     *     this character heal points
-     * @param DP
-     *     this character defense points
-     * @param mana
-     *     this character mana points
+     * @param name       the character's name
+     * @param turnsQueue the queue with the characters ready to play
+     * @param HP         this character heal points
+     * @param DP         this character defense points
+     * @param mana       this character mana points
      */
     protected AbstractMagicCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                      @NotNull String name,
                                      int HP, int DP, int mana) {
         super(turnsQueue, name, HP, DP);
-        this.maxMana=mana;
-        this.currentMana=mana;
+        this.maxMana = mana;
+        this.currentMana = mana;
     }
 
     public int getMaxMana() {
-        return this.maxMana;
+        return maxMana;
     }
 
-    public int getCurrentMana(){ return this.currentMana; }
+    public int getCurrentMana() {
+        return currentMana;
+    }
+
+    public void reduceMana(int diff) {
+        currentMana -= diff;
+    }
+
+    public void useThunderSpell(IEnemy enemy) {
+    }
+
+    public void useFireSpell(IEnemy enemy) {
+    }
+
+    public void useParalysisSpell(IEnemy enemy) {
+    }
+
+    public void usePoisonSpell(IEnemy enemy) {
+    }
+
+    public void useHealSpell(IPlayerCharacter ally) {
+    }
+
+
 }

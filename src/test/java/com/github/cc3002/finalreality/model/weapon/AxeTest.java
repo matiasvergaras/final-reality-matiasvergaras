@@ -1,7 +1,7 @@
 package com.github.cc3002.finalreality.model.weapon;
 
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Axe;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Sword;
+import com.github.matiasvergaras.finalreality.model.weapon.normal.Axe;
+import com.github.matiasvergaras.finalreality.model.weapon.normal.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,11 +24,11 @@ public class AxeTest extends AbstractWeaponTest {
      * Checks that the class constructor and equals, hashcode methods works properly.
      */
     @Test
-    void constructorTest(){
+    void constructorTest() {
         exampleKnight.equip(exampleAxe);
         checkConstruction(new Axe(AXE_NAME, DAMAGE, WEIGHT),
                 exampleKnight.getEquippedWeapon(),
-                new Axe(AXE_NAME, DAMAGE*2, WEIGHT),
+                new Axe(AXE_NAME, DAMAGE * 2, WEIGHT),
                 new Sword(SWORD_NAME, DAMAGE, WEIGHT));
     }
 
@@ -37,7 +37,7 @@ public class AxeTest extends AbstractWeaponTest {
      * from a character
      */
     @Test
-    void equipUnequipTest(){
+    void equipUnequipTest() {
         checkEquipUnequip(exampleAxe, exampleKnight,
                 exampleEngineer);
     }
@@ -46,7 +46,7 @@ public class AxeTest extends AbstractWeaponTest {
      * Check that the weapon is not equipped when not appropriate
      */
     @Test
-    void unequippableBehaviorTest(){
+    void unequippableBehaviorTest() {
         checkUnequippableBehavior(exampleAxe, exampleThief);
         checkUnequippableBehavior(exampleAxe, exampleBlackMage);
         checkUnequippableBehavior(exampleAxe, exampleWhiteMage);
@@ -57,7 +57,7 @@ public class AxeTest extends AbstractWeaponTest {
      * Check that the weapon getPower method works properly.
      */
     @Test
-    void gettersTest(){
+    void gettersTest() {
         Axe testAxe = new Axe("AnAxe", 100, 10);
         checkGetPower(testAxe, 100);
         checkGetName(testAxe, "AnAxe");

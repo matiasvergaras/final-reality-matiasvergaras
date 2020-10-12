@@ -1,7 +1,7 @@
 package com.github.cc3002.finalreality.model.weapon;
 
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Bow;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
+import com.github.matiasvergaras.finalreality.model.weapon.normal.Bow;
+import com.github.matiasvergaras.finalreality.model.weapon.normal.Knife;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,11 +23,11 @@ public class KnifeTest extends AbstractWeaponTest {
      * Checks that the class constructor and equals, hashcode methods works properly.
      */
     @Test
-    void constructorTest(){
+    void constructorTest() {
         exampleThief.equip(exampleKnife);
         checkConstruction(new Knife(KNIFE_NAME, DAMAGE, WEIGHT),
                 exampleThief.getEquippedWeapon(),
-                new Knife(KNIFE_NAME, DAMAGE*2, WEIGHT),
+                new Knife(KNIFE_NAME, DAMAGE * 2, WEIGHT),
                 new Bow(BOW_NAME, DAMAGE, WEIGHT));
     }
 
@@ -36,7 +36,7 @@ public class KnifeTest extends AbstractWeaponTest {
      * all character classes that can use it
      */
     @Test
-    void equipUnequipTest(){
+    void equipUnequipTest() {
         checkEquipUnequip(exampleKnife, exampleThief,
                 exampleBlackMage);
         exampleKnife.setWeaponFree();
@@ -48,7 +48,7 @@ public class KnifeTest extends AbstractWeaponTest {
      * Check that the weapon is not equipped when not appropriate
      */
     @Test
-    void unequippableBehaviorTest(){
+    void unequippableBehaviorTest() {
         checkUnequippableBehavior(exampleKnife, exampleEngineer);
         checkUnequippableBehavior(exampleKnife, exampleWhiteMage);
     }
@@ -57,7 +57,7 @@ public class KnifeTest extends AbstractWeaponTest {
      * Check that the weapon getPower method works properly.
      */
     @Test
-    void gettersTest(){
+    void gettersTest() {
         Knife testKnife = new Knife("AnKnife", 200, 10);
         checkGetPower(testKnife, 200);
         checkGetName(testKnife, "AnKnife");

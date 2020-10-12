@@ -1,6 +1,7 @@
 package com.github.cc3002.finalreality.model.character;
-import com.github.matiasvergaras.finalreality.model.character.player.Normal.Engineer;
-import com.github.matiasvergaras.finalreality.model.character.player.Normal.Thief;
+
+import com.github.matiasvergaras.finalreality.model.character.player.normal.Engineer;
+import com.github.matiasvergaras.finalreality.model.character.player.normal.Thief;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,6 +52,7 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
     /**
      * Checks that this Thief character starts without any weapon,
      * and that he can equip Knives (Knife), Swords and Bows.
+     *
      * @see Thief
      */
     @Test

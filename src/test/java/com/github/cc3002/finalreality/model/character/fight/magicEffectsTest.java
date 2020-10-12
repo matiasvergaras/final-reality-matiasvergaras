@@ -1,44 +1,83 @@
 package com.github.cc3002.finalreality.model.character.fight;
 
 import com.github.cc3002.finalreality.model.abstractModelTest;
-import com.github.matiasvergaras.finalreality.model.character.CPU.IEnemy;
+import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemy;
+import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * A class to test that the methods related to magic effects works properly.
- * <p>
- *     In the future, we will add tests to prove that those states can also be reached by
- *     magic attacks.
- * </p>
- * @see IEnemy
+ *
  * @author Matías Vergara Silva.
+ * @see IEnemy
  */
 
 public class magicEffectsTest extends abstractModelTest {
 
+
     /**
-     * To test that state setters methods works properly.
+     * Setup: Equip a magic weapon to the characters that we will use.
+     */
+    @BeforeEach
+    void magicSetUp() {
+        exampleWhiteMage.equipWeapon(exampleStaff);
+        exampleBlackMage.equipWeapon(new Staff("Another Example", 20, 12, 50));
+    }
+
+
+    /**
+     * To test that receiveHeal method works properly.
      */
     @Test
-    void stateTest(){
-        assertEquals(exampleEnemy.getState(), "NORMAL");
-        exampleEnemy.setBurned();
-        assertEquals(exampleEnemy.getState(), "BURNED");
-        exampleEnemy.setParalyzed();
+    void healTest() {
+        exampleWhiteMage.useHealSpell(exampleKnight);
+        assertEquals(exampleKnight.getCurrentHP(), exampleKnight.getMaxHP() * 1.3);
+    }
+
+    /**
+     * To test that receiveHeal method works properly.
+     */
+    @Test
+    void paralysisTest() {
+        exampleWhiteMage.useParalysisSpell(exampleEnemy);
         assertEquals(exampleEnemy.getState(), "PARALYZED");
-        exampleEnemy.setPoisoned();
+    }
+
+    /**
+     * To test that receiveHeal method works properly.
+     */
+    @Test
+    void poisonTest() {
+        exampleWhiteMage.usePoisonSpell(exampleEnemy);
         assertEquals(exampleEnemy.getState(), "POISONED");
     }
 
 
     /**
-     * To test that receiveHeal method works properly. We will test it with a ''heal Attack'' in the future.
+     * To test that Fire Spell Attack works properly, and can get to put the enemy in burned state.
      */
     @Test
-    void healTest(){
-        exampleKnight.receiveHeal();
-        assertEquals(exampleKnight.getCurrentHP(), exampleKnight.getMaxHP()*1.3);
+    void fireTest() {
+        exampleBlackMage.useFireSpell(exampleEnemy);
+        IMagicWeapon weapon = (IMagicWeapon)exampleBlackMage.getEquippedWeapon();
+        assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP()- weapon.getMagicDamage());
     }
+
+    /**
+     * To test that Fire Spell Attack works properly, and can get to put the enemy in burned state.
+     */
+    @Test
+    void thunderTest() {
+        exampleBlackMage.useThunderSpell(exampleEnemy);
+        IMagicWeapon weapon = (IMagicWeapon)exampleBlackMage.getEquippedWeapon();
+        assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP()- weapon.getMagicDamage());
+    }
+
+
+
+
 }

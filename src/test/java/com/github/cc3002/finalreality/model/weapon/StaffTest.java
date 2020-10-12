@@ -1,7 +1,7 @@
 package com.github.cc3002.finalreality.model.weapon;
 
-import com.github.matiasvergaras.finalreality.model.weapon.Magic.Staff;
-import com.github.matiasvergaras.finalreality.model.weapon.Normal.Knife;
+import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
+import com.github.matiasvergaras.finalreality.model.weapon.normal.Knife;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,11 +24,11 @@ public class StaffTest extends AbstractWeaponTest {
      * Checks that the class constructor and equals, hashcode methods works properly.
      */
     @Test
-    void constructorTest(){
+    void constructorTest() {
         exampleBlackMage.equip(exampleStaff);
         checkConstruction(new Staff(STAFF_NAME, DAMAGE, WEIGHT, MAGIC_DAMAGE),
                 exampleBlackMage.getEquippedWeapon(),
-                new Staff(STAFF_NAME, DAMAGE*2, WEIGHT, MAGIC_DAMAGE),
+                new Staff(STAFF_NAME, DAMAGE * 2, WEIGHT, MAGIC_DAMAGE),
                 new Knife(KNIFE_NAME, DAMAGE, WEIGHT));
     }
 
@@ -37,7 +37,7 @@ public class StaffTest extends AbstractWeaponTest {
      * from a character
      */
     @Test
-    void equipUnequipTest(){
+    void equipUnequipTest() {
         checkEquipUnequip(exampleStaff, exampleBlackMage,
                 exampleWhiteMage);
     }
@@ -47,7 +47,7 @@ public class StaffTest extends AbstractWeaponTest {
      * Check that the weapon is not equipped when not appropriate
      */
     @Test
-    void unequippableBehaviorTest(){
+    void unequippableBehaviorTest() {
         exampleStaff.setWeaponFree();
         checkUnequippableBehavior(exampleStaff, exampleEngineer);
         checkUnequippableBehavior(exampleStaff, exampleKnight);
@@ -58,7 +58,7 @@ public class StaffTest extends AbstractWeaponTest {
      * Check that the weapon getPower method works properly.
      */
     @Test
-    void gettersTest(){
+    void gettersTest() {
         Staff testStaff = new Staff("AnStaff", 200, 10, 250);
         checkGetPower(testStaff, 200);
         checkGetName(testStaff, "AnStaff");

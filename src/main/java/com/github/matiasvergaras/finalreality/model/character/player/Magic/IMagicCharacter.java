@@ -1,37 +1,44 @@
-package com.github.matiasvergaras.finalreality.model.character.player.Magic;
+package com.github.matiasvergaras.finalreality.model.character.player.magic;
 
-import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemy;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 public interface IMagicCharacter extends IPlayerCharacter {
 
     /**
-     * Performs a Fire attack
-     * @param character the character to be attacked.
+     * Performs a Fire Spell attack
      *
+     * @param enemy the enemy to be attacked.
      */
-    void FireAttack(ICharacter character);
+    void useFireSpell(IEnemy enemy);
 
     /**
-     * Performs a Thunder attack
-     * @param character the character to be attacked.
+     * Performs a Thunder Spell attack
      *
+     * @param enemy the enemy to be attacked.
      */
-    void ThunderAttack(ICharacter character);
+    void useThunderSpell(IEnemy enemy);
 
     /**
-     * Performs a Poison attack
-     * @param character the character to be attacked.
+     * Performs a Poison Spell attack
      *
+     * @param enemy the enemy to be attacked.
      */
-    void PoisonAttack(ICharacter character);
+    void usePoisonSpell(IEnemy enemy);
 
     /**
-     * Performs a Heal 'attack'
-     * @param character the character to be attacked.
+     * Performs a Paralysis Spell attack
      *
+     * @param enemy the enemy to be attacked.
      */
-    void HealAlly(ICharacter character);
+    void useParalysisSpell(IEnemy enemy);
 
+
+    /**
+     * Performs a Heal Spell to an ally
+     *
+     * @param ally the player character to be attacked.
+     */
+    void useHealSpell(IPlayerCharacter ally);
 
 }
