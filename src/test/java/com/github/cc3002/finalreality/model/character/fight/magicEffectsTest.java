@@ -1,7 +1,10 @@
 package com.github.cc3002.finalreality.model.character.fight;
 
 import com.github.cc3002.finalreality.model.abstractModelTest;
+import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
 import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemyCharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
+import com.github.matiasvergaras.finalreality.model.character.player.magic.WhiteMage;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +28,7 @@ public class magicEffectsTest extends abstractModelTest {
     @BeforeEach
     void magicSetUp() {
         exampleWhiteMage.equipWeapon(exampleStaff);
-        exampleBlackMage.equipWeapon(new Staff("Another Example", 20, 12, 50));
+        exampleBlackMage.equipWeapon(new Staff("Another Staff", 20, 12, 50));
     }
 
 
@@ -39,7 +42,7 @@ public class magicEffectsTest extends abstractModelTest {
     }
 
     /**
-     * To test that receiveHeal method works properly.
+     * To test that useParalysisSpell method works properly.
      */
     @Test
     void paralysisTest() {
@@ -48,7 +51,7 @@ public class magicEffectsTest extends abstractModelTest {
     }
 
     /**
-     * To test that receiveHeal method works properly.
+     * To test that usePoisonSpell method works properly.
      */
     @Test
     void poisonTest() {
@@ -62,19 +65,37 @@ public class magicEffectsTest extends abstractModelTest {
      */
     @Test
     void fireTest() {
+        BlackMage exampleBlackMage = new BlackMage(turns, "New Black", 200, 200, 999999);
+        Enemy exampleEnemy = new Enemy(turns, "New Enemy", 15, 999999, 100, 100);
+        exampleBlackMage.equipWeapon(exampleStaff);
+
         exampleBlackMage.useFireSpell(exampleEnemy);
         IMagicWeapon weapon = (IMagicWeapon) exampleBlackMage.getEquippedWeapon();
         assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP() - weapon.getMagicDamage());
+
+        while(exampleEnemy.getState().equals("NORMAL")){
+            exampleBlackMage.useFireSpell(exampleEnemy);
+        }
+        assertEquals(exampleEnemy.getState(), "BURNED");
     }
 
     /**
-     * To test that Fire Spell Attack works properly, and can get to put the enemy in burned state.
+     * To test that Fire Spell Attack works properly, and can get to put the enemy in paralyzed state.
      */
     @Test
     void thunderTest() {
+        BlackMage exampleBlackMage = new BlackMage(turns, "New Black", 200, 200, 999999);
+        Enemy exampleEnemy = new Enemy(turns, "New Enemy", 15, 999999, 100, 100);
+        exampleBlackMage.equipWeapon(exampleStaff);
+
         exampleBlackMage.useThunderSpell(exampleEnemy);
         IMagicWeapon weapon = (IMagicWeapon) exampleBlackMage.getEquippedWeapon();
         assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP() - weapon.getMagicDamage());
+
+        while (exampleEnemy.getState().equals("NORMAL")) {
+            exampleBlackMage.useThunderSpell(exampleEnemy);
+        }
+        assertEquals(exampleEnemy.getState(), "PARALYZED");
     }
 
     /**
@@ -88,6 +109,7 @@ public class magicEffectsTest extends abstractModelTest {
 
     /**
      * To test the null behavior of unappropiate use of spells
+     * (i.e. a Black Mage using White Magic, and viceversa).
      */
     @Test
     void unappropiateUsesTest() {
@@ -103,6 +125,25 @@ public class magicEffectsTest extends abstractModelTest {
         assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP());
     }
 
+    /**
+     * To test behavior of spells when the mage ran out of mana
+     * (i.e. check that they do nothing).
+     */
+    @Test
+    void outOfManaTest() {
+        BlackMage theBlackWithoutMana = new BlackMage(turns, "The Black", 200, 200, 5);
+        WhiteMage theWhiteWithoutMana = new WhiteMage(turns, "The White", 200, 200, 1);
+        theWhiteWithoutMana.useHealSpell(exampleKnight);
+        assertEquals(exampleKnight.getCurrentHP(), exampleKnight.getMaxHP());
+        theWhiteWithoutMana.usePoisonSpell(exampleEnemy);
+        assertEquals(exampleEnemy.getState(), "NORMAL");
+        theWhiteWithoutMana.useParalysisSpell(exampleEnemy);
+        assertEquals(exampleEnemy.getState(), "NORMAL");
+        theBlackWithoutMana.useThunderSpell(exampleEnemy);
+        assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP());
+        theBlackWithoutMana.useFireSpell(exampleEnemy);
+        assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP());
+    }
 
 
 }

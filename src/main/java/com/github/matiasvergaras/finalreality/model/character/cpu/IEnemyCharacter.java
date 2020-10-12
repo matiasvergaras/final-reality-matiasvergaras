@@ -57,20 +57,6 @@ public interface IEnemyCharacter extends ICharacter {
     void receiveThunderAttack(IMagicWeapon weapon);
 
     /**
-     * Receive a Poison-Spell attack
-     *
-     * @param character the attacking character.
-     */
-    void receivePoisonAttack(IMagicCharacter character);
-
-    /**
-     * Receive a Paralysis-Spell attack
-     *
-     * @param character the attacking character.
-     */
-    void receiveParalysisAttack(IMagicCharacter character);
-
-    /**
      * Sets this character state to Paralyzed.
      */
     void setParalyzed();

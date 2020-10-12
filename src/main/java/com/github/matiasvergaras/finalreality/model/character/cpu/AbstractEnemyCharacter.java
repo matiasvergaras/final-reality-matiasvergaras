@@ -123,25 +123,6 @@ public class AbstractEnemyCharacter extends AbstractCharacter implements IEnemyC
 
     /**
      * {@inheritDoc}
-     *
-     * @param character the attacking character
-     */
-    public void receivePoisonAttack(IMagicCharacter character) {
-        setPoisoned();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param character the attacking character
-     */
-    public void receiveParalysisAttack(IMagicCharacter character) {
-        setParalyzed();
-    }
-
-
-    /**
-     * {@inheritDoc}
      */
     public void setBurned() {
         state = "BURNED";
