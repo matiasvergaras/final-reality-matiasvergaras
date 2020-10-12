@@ -90,9 +90,17 @@ public class magicEffectsTest extends abstractModelTest {
      * To test the null behavior of unappropiate use of spells
      */
     @Test
-    void burnedTest() {
-        exampleBlackMage.use
-        assertEquals(exampleEnemy.getState(), "BURNED");
+    void unappropiateUsesTest() {
+        exampleBlackMage.useHealSpell(exampleKnight);
+        assertEquals(exampleKnight.getCurrentHP(), exampleKnight.getMaxHP());
+        exampleBlackMage.usePoisonSpell(exampleEnemy);
+        assertEquals(exampleEnemy.getState(), "NORMAL");
+        exampleBlackMage.useParalysisSpell(exampleEnemy);
+        assertEquals(exampleEnemy.getState(), "NORMAL");
+        exampleWhiteMage.useThunderSpell(exampleEnemy);
+        assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP());
+        exampleWhiteMage.useFireSpell(exampleEnemy);
+        assertEquals(exampleEnemy.getCurrentHP(), exampleEnemy.getMaxHP());
     }
 
 

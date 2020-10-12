@@ -5,7 +5,6 @@ import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemyCharacte
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.concurrent.BlockingQueue;
 
 /**

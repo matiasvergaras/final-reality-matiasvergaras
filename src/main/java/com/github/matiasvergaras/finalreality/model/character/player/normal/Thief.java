@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
+
 /**
  * Class to represent a ''Thief'' unit.
  * <p>
