@@ -2,7 +2,7 @@ package com.github.matiasvergaras.finalreality.model.character.player;
 
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemyCharacter;
+import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
@@ -82,7 +82,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     }
 
 
-    public void normalAttack(IEnemyCharacter character) {
+    public void normalAttack(ICPUCharacter character) {
 
         character.receiveNormalAttack(this);
     }
@@ -92,7 +92,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
      *
      * @param character the attacking character.
      */
-    public void receiveNormalAttack(IEnemyCharacter character) {
+    public void receiveNormalAttack(ICPUCharacter character) {
         this.reduceHP(character.getPower());
     }
 

@@ -1,6 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
 
-import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemyCharacter;
+import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 public interface IMagicCharacter extends IPlayerCharacter {
@@ -10,28 +10,28 @@ public interface IMagicCharacter extends IPlayerCharacter {
      *
      * @param enemy the enemy to be attacked.
      */
-    void useFireSpell(IEnemyCharacter enemy);
+    void useFireSpell(ICPUCharacter enemy);
 
     /**
      * Performs a Thunder Spell attack
      *
      * @param enemy the enemy to be attacked.
      */
-    void useThunderSpell(IEnemyCharacter enemy);
+    void useThunderSpell(ICPUCharacter enemy);
 
     /**
      * Performs a Poison Spell attack
      *
      * @param enemy the enemy to be attacked.
      */
-    void usePoisonSpell(IEnemyCharacter enemy);
+    void usePoisonSpell(ICPUCharacter enemy);
 
     /**
      * Performs a Paralysis Spell attack
      *
      * @param enemy the enemy to be attacked.
      */
-    void useParalysisSpell(IEnemyCharacter enemy);
+    void useParalysisSpell(ICPUCharacter enemy);
 
 
     /**

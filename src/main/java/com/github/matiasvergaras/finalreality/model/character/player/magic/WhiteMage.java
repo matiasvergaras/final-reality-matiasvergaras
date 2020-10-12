@@ -1,7 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemyCharacter;
+import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
@@ -47,7 +47,7 @@ public class WhiteMage extends AbstractMagicCharacter {
      * @param enemy the enemy that will receive the magic attack
      */
     @Override
-    public void useParalysisSpell(IEnemyCharacter enemy) {
+    public void useParalysisSpell(ICPUCharacter enemy) {
         if (this.getCurrentMana() > 25) {
             enemy.setParalyzed();
             this.reduceMana(25);
@@ -65,7 +65,7 @@ public class WhiteMage extends AbstractMagicCharacter {
      * @param enemy the enemy that will receive the magic attack
      */
     @Override
-    public void usePoisonSpell(IEnemyCharacter enemy) {
+    public void usePoisonSpell(ICPUCharacter enemy) {
         if (this.getCurrentMana() > 40) {
             enemy.setPoisoned();
             this.reduceMana(40);

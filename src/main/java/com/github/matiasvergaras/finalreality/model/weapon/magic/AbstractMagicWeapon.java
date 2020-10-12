@@ -1,5 +1,4 @@
 package com.github.matiasvergaras.finalreality.model.weapon.magic;
-import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 
 

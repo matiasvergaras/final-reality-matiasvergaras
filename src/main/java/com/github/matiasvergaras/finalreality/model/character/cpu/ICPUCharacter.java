@@ -2,9 +2,10 @@ package com.github.matiasvergaras.finalreality.model.character.cpu;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.magic.IMagicCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 
-public interface IEnemyCharacter extends ICharacter {
+public interface ICPUCharacter extends ICharacter {
     /**
      * Get the power of this enemy.
      *
@@ -54,6 +55,20 @@ public interface IEnemyCharacter extends ICharacter {
      * @param weapon the weapon with which the character is being attacked
      */
     void receiveThunderAttack(IMagicWeapon weapon);
+
+    /**
+     * Receive a Poison-Spell attack
+     *
+     * @param character the attacking character.
+     */
+    void receivePoisonAttack(IMagicCharacter character);
+
+    /**
+     * Receive a Paralysis-Spell attack
+     *
+     * @param character the attacking character.
+     */
+    void receiveParalysisAttack(IMagicCharacter character);
 
     /**
      * Sets this character state to Paralyzed.

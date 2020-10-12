@@ -12,7 +12,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class AbstractEnemyCharacter extends AbstractCharacter implements IEnemyCharacter {
+public abstract class AbstractCPUCharacter extends AbstractCharacter implements ICPUCharacter {
 
     private final int weight;
     private final int power;
@@ -29,9 +29,9 @@ public class AbstractEnemyCharacter extends AbstractCharacter implements IEnemyC
      * @param power      the character's power points
      */
 
-    public AbstractEnemyCharacter(@NotNull final BlockingQueue<ICharacter> turnsQueue,
-                                  @NotNull final String name, int weight,
-                                  int HP, int DP, int power) {
+    public AbstractCPUCharacter(@NotNull final BlockingQueue<ICharacter> turnsQueue,
+                                @NotNull final String name, int weight,
+                                int HP, int DP, int power) {
         super(turnsQueue, name, HP, DP);
         this.weight = weight;
         this.power = power;
@@ -120,6 +120,25 @@ public class AbstractEnemyCharacter extends AbstractCharacter implements IEnemyC
             setParalyzed();
         }
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param character the attacking character
+     */
+    public void receivePoisonAttack(IMagicCharacter character) {
+        setPoisoned();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param character the attacking character
+     */
+    public void receiveParalysisAttack(IMagicCharacter character) {
+        setParalyzed();
+    }
+
 
     /**
      * {@inheritDoc}

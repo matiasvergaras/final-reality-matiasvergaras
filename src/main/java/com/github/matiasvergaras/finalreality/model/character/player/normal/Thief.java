@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.player.normal;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +16,7 @@ import java.util.concurrent.BlockingQueue;
  *
  * @author Matías Vergara Silva
  */
-public class Thief extends AbstractNormalCharacter {
+public class Thief extends AbstractPlayerCharacter {
 
     /**
      * Creates a new Thief Character.

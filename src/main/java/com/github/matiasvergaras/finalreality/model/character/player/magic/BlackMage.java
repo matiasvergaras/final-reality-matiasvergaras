@@ -1,7 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.cpu.IEnemyCharacter;
+import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 import org.jetbrains.annotations.NotNull;
@@ -47,7 +47,7 @@ public class BlackMage extends AbstractMagicCharacter {
      * @param enemy the enemy that will receive the magic attack
      */
     @Override
-    public void useThunderSpell(IEnemyCharacter enemy) {
+    public void useThunderSpell(ICPUCharacter enemy) {
         if (this.getCurrentMana() > 15) {
             enemy.receiveThunderAttack((IMagicWeapon) this.equippedWeapon);
             this.reduceMana(15);
@@ -65,7 +65,7 @@ public class BlackMage extends AbstractMagicCharacter {
      * @param enemy the enemy that will receive the magic attack
      */
     @Override
-    public void useFireSpell(IEnemyCharacter enemy) {
+    public void useFireSpell(ICPUCharacter enemy) {
         if (this.getCurrentMana() > 15) {
             enemy.receiveFireAttack((IMagicWeapon) this.equippedWeapon);
             this.reduceMana(15);
