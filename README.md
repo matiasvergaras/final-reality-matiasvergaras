@@ -13,8 +13,15 @@ This project's goal is to create a (simplified) clone of _Final Fantasy_'s comba
 by [_Square Enix_](https://www.square-enix.com).
 
 
-Broadly speaking for the combat the player has a group of characters to control and a group of 
-enemies controlled by the computer. Characters may be from 2 diferent types: Normal Characters and Magic Characters. Normal Characters include 3 subclasses: Engineer, Thief and Knight. Magic Characters include Black Mages and White Mages. Each subclass can equip specific types of weapons (which can be Staves, Knieves, Swords, Bows and Axes) but just one at a time. Characters fight enemies (who cannot use magic or weapons) through a turn system.
+Broadly speaking:
+
+- For the combat the player has a group of characters to control and a group of 
+enemies controlled by the computer.b
+- Characters may be from 2 diferent types: Normal Characters and Magic Characters.
+- Normal Characters include 3 subclasses: Engineer, Thief and Knight.
+- Magic Characters include Black Mages and White Mages. 
+- Each subclass can equip specific types of weapons (which can be Staves, Knieves, Swords, Bows and Axes) but just one at a time. 
+- Characters fight enemies (who cannot use magic or weapons) through a turn system.
 
 ---
 
@@ -74,6 +81,11 @@ It is not necessary to have fields that store the type of weapons or characters,
 
 In addition to what is requested by the statement, we added some fields that allows us to implement certain characteristics assumed or implicit in the logic of the game, such as that a weapon can be equipped by only one character at a time. To do this, we create the `owner` field, and the `setOwner` and `getOwner` methods, which are called each time a weapon is equipped.
 
+#### UML Diagram
+To date the UML diagram of the model looks like this:
+
+![Figure 2. Homework 1 Final Delivery UML Diagram](/images/UML_T1_Final_Delivery.png)
+
 If you want to go deeper, you can continue reading the next section, Partial Delivery 2. The changes from that version to this are minimal and only relate to the tests, not to the way the program works.
 
 ---
@@ -131,7 +143,7 @@ In Partial Delivery 1 we focus on the architecture with which our program implem
 ##### Initial state - Provided code
 The code provided by the teaching team corresponds to a low-level hierarchy using abstract classes and interfaces of the Character class, and a null hierarchy of the Weapon class. It also includes test, but since this initial code have several conception mistakes (i.e. bad practices), they won't be usefull once we modify the code. 
 
-The UML diagram of the initial state is presented below (See Figure 1):
+The UML diagram of the initial state is presented below:
 ![Figure 1. Initial state UML Diagram](/images/initial_state.png)
 
 We identified several problems: Enemies inherit from the `AbstractCharacter` class, which in turn implements the `equip` and `equippedWeapon` methods, but from their description they cannot use or carry weapons. This first problem immediately breaks the **Liskov substitution principle.**
