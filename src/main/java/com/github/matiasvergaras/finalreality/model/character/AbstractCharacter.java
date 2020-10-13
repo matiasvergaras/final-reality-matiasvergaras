@@ -18,9 +18,9 @@ public abstract class AbstractCharacter implements ICharacter {
     private final String name;
     private final int maxHP;
     private final int maxDP;
-    protected int currentDP;
-    protected ScheduledExecutorService scheduledExecutor;
+    private int currentDP;
     private int currentHP;
+    protected ScheduledExecutorService scheduledExecutor;
 
     /**
      * Constructor for a new Character.
