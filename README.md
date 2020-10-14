@@ -49,7 +49,7 @@ enemies controlled by the computer.b
 As Final Delivery we are requested to finish the work done to Partial Delivery 1 and 2. 
 
 #### Execution Instructions
-Until now there is no operation of the game as such, so there are no further execution instructions. However, it is possible to run tests that show that the program logic works as expected.
+Until now the game is still under development, so there are no further execution instructions. However, it is possible to run tests that show that the program logic works as expected.
 
 To do this use IntelliJ's "Run Tests" option, or compile individual tests using ``cp`` and run them with the ``org.junit.runner.JUnitCore`` flag as shown on [this StackOverFlow thread](https://stackoverflow.com/questions/2235276/how-to-run-junit-test-cases-from-the-command-line).
 
