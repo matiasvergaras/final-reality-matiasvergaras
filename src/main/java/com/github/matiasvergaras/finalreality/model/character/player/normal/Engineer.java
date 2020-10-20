@@ -57,9 +57,7 @@ public class Engineer extends AbstractPlayerCharacter {
         final Engineer that = (Engineer) o;
         return this.getName().equals(that.getName()) &&
                 this.getMaxHP() == that.getMaxHP() &&
-                this.getMaxDP() == that.getMaxDP() &&
-                this.getCurrentDP() == that.getCurrentDP() &&
-                this.getCurrentHP() == that.getCurrentHP();
+                this.getMaxDP() == that.getMaxDP();
     }
 
     /**

@@ -92,10 +92,7 @@ public class BlackMage extends AbstractMagicCharacter {
         return this.getName().equals(that.getName()) &&
                 this.getMaxHP() == that.getMaxHP() &&
                 this.getMaxDP() == that.getMaxDP() &&
-                this.getMaxMana() == that.getMaxMana() &&
-                this.getCurrentDP() == that.getCurrentDP() &&
-                this.getCurrentHP() == that.getCurrentHP() &&
-                this.getCurrentMana() == that.getCurrentMana();
+                this.getMaxMana() == that.getMaxMana();
     }
 
     /**
