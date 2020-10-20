@@ -67,7 +67,13 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
      */
     @Override
     public void normalAttack(IPlayerCharacter character) {
-        character.receiveNormalAttack(this);
+        if(character.isAlive()){
+            character.receiveNormalAttack(this);
+        }
+        else{
+            System.out.println("Attack not possible: \n" +
+                    "You shouldn't attack someone who has already died!");
+        }
     }
 
     /**
@@ -75,6 +81,7 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
      */
     @Override
     public void receiveNormalAttack(IPlayerCharacter character) {
+
         reduceHP(character.getEquippedWeapon().getPower() - getMaxDP());
     }
 
@@ -95,55 +102,5 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
     public String getState() {
         return state;
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param weapon the weapon with which the character is being attacked
-     */
-    public void receiveFireAttack(IMagicWeapon weapon) {
-        this.reduceHP(weapon.getMagicDamage());
-        Random rand = new Random();
-        double prob = rand.nextDouble();
-        if (prob <= 0.2) {
-            setBurned();
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param weapon the weapon with which the character is being attacked
-     */
-    public void receiveThunderAttack(IMagicWeapon weapon) {
-        this.reduceHP(weapon.getMagicDamage());
-        Random rand = new Random();
-        double prob = rand.nextDouble();
-        if (prob <= 0.3) {
-            setParalyzed();
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setBurned() {
-        state = "BURNED";
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setParalyzed() {
-        state = "PARALYZED";
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setPoisoned() {
-        state = "POISONED";
-    }
-
 
 }

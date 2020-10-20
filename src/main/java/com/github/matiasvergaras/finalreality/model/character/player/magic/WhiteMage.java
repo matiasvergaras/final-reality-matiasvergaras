@@ -42,60 +42,6 @@ public class WhiteMage extends AbstractMagicCharacter {
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @param enemy the enemy that will receive the magic attack
-     */
-    @Override
-    public void useParalysisSpell(ICPUCharacter enemy) {
-        if (this.getCurrentMana() > 25) {
-            enemy.setParalyzed();
-            this.reduceMana(25);
-        } else {
-            //Temporary ''solution''. Actually this will still do an attack (without effect),
-            // but we want this case to do nothing, so the player can try with
-            // another movement.
-            System.out.println("Not enough mana");
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param enemy the enemy that will receive the magic attack
-     */
-    @Override
-    public void usePoisonSpell(ICPUCharacter enemy) {
-        if (this.getCurrentMana() > 40) {
-            enemy.setPoisoned();
-            this.reduceMana(40);
-        } else {
-            //Temporary ''solution''. Actually this will still do an attack (without effect),
-            // but we want this case to do nothing, so the player can try with
-            // another movement.
-            System.out.println("Not enough mana");
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param ally the ally that will receive the heal
-     */
-    @Override
-    public void useHealSpell(IPlayerCharacter ally) {
-        if (this.getCurrentMana() > 15) {
-            ally.receiveHeal();
-            this.reduceMana(15);
-        } else {
-            //Temporary ''solution''. Actually this will still do an attack (without effect),
-            // but we want this case to do nothing, so the player can try with
-            // another movement.
-            System.out.println("Not enough mana");
-        }
-    }
-
-    /**
      * Check if this is equal to a given object o.
      *
      * @param o The target object

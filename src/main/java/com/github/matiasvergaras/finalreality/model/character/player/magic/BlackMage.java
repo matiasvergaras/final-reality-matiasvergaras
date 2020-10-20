@@ -42,43 +42,6 @@ public class BlackMage extends AbstractMagicCharacter {
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @param enemy the enemy that will receive the magic attack
-     */
-    @Override
-    public void useThunderSpell(ICPUCharacter enemy) {
-        if (this.getCurrentMana() > 15) {
-            enemy.receiveThunderAttack((IMagicWeapon) this.equippedWeapon);
-            this.reduceMana(15);
-        } else {
-            //Temporary ''solution''. Actually this will still do an attack (without effect),
-            // but we want this case to do nothing, so the player can try with
-            // another movement.
-            System.out.println("Not enough mana");
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param enemy the enemy that will receive the magic attack
-     */
-    @Override
-    public void useFireSpell(ICPUCharacter enemy) {
-        if (this.getCurrentMana() > 15) {
-            enemy.receiveFireAttack((IMagicWeapon) this.equippedWeapon);
-            this.reduceMana(15);
-        } else {
-            //Temporary ''solution''. Actually this will still do an attack (without effect),
-            // but we want this case to do nothing, so the player can try with
-            // another movement.
-            System.out.println("Not enough mana");
-        }
-    }
-
-
-    /**
      * Check if this is equal to a given object o.
      *
      * @param o The target object

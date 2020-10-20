@@ -57,10 +57,6 @@ public interface IPlayerCharacter extends ICharacter {
      */
     void receiveNormalAttack(ICPUCharacter character);
 
-    /**
-     * Receive a Heal-Spell ''attack''
-     */
-    void receiveHeal();
 
 
 }

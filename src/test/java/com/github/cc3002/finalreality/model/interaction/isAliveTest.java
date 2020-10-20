@@ -6,6 +6,7 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -20,6 +21,13 @@ public class isAliveTest extends abstractModelTest {
     protected void checkAlive(ICPUCharacter enemy, IPlayerCharacter character,
                               IWeapon weapon) {
         ICPUCharacter anotherEnemy = enemy;
+        IPlayerCharacter anotherCharacter = character;
+
+        assertEquals(enemy.getMaxHP(), enemy.getCurrentHP());
+        assertTrue(enemy.getCurrentHP()>0);
+        assertEquals(character.getMaxHP(), character.getCurrentHP());
+        assertTrue(character.getCurrentHP()>0);
+
         character.equipWeapon(weapon);
         while (enemy.isAlive()) {
             character.normalAttack(enemy);
@@ -30,6 +38,14 @@ public class isAliveTest extends abstractModelTest {
         }
         assertTrue(enemy.getCurrentHP() <= 0);
         assertTrue(character.getCurrentHP() <= 0);
+
+        int DeadHP = character.getCurrentHP();
+        anotherEnemy.normalAttack(character);
+        assertEquals(character.getCurrentHP(), DeadHP);
+
+        int DeadEnemyHP = enemy.getCurrentHP();
+        anotherCharacter.normalAttack(enemy);
+        assertEquals(enemy.getCurrentHP(), DeadEnemyHP);
     }
 
 

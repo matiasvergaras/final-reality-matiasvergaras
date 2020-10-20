@@ -30,7 +30,7 @@ public abstract class AbstractCharacter implements ICharacter {
      * @param HP         this character's max heals points
      * @param DP         this character's max defense points
      */
-    protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
+    public AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                 @NotNull String name,
                                 int HP, int DP) {
         this.turnsQueue = turnsQueue;
@@ -93,7 +93,7 @@ public abstract class AbstractCharacter implements ICharacter {
      * {@inheritDoc}
      */
     public boolean isAlive() {
-        return currentHP > 0;
+        return currentHP> 0;
     }
 
     /**

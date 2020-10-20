@@ -27,8 +27,8 @@ public class normalAttackTest extends abstractModelTest {
                                      IWeapon weapon) {
 
         character.equipWeapon(weapon);
-
         character.normalAttack(enemy);
+
         int enemyHP = enemy.getMaxHP() - character.getEquippedWeapon().getPower();
         assertEquals(enemyHP, enemy.getCurrentHP());
 
@@ -39,6 +39,7 @@ public class normalAttackTest extends abstractModelTest {
         assertEquals(characterHP, character.getCurrentHP());
 
     }
+
 
     // We will show that every character can attack, even when the methods are inherited from their abstract class
 

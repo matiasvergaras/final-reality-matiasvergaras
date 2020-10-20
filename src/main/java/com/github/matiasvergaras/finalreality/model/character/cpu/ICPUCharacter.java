@@ -52,33 +52,4 @@ public interface ICPUCharacter extends ICharacter {
     void receiveNormalAttack(IPlayerCharacter character);
 
 
-    /**
-     * Receive a Fire-Spell attack
-     *
-     * @param weapon the weapon with which the character is being attacked
-     */
-    void receiveFireAttack(IMagicWeapon weapon);
-
-    /**
-     * Receive a Thunder-Spell attack
-     *
-     * @param weapon the weapon with which the character is being attacked
-     */
-    void receiveThunderAttack(IMagicWeapon weapon);
-
-    /**
-     * Sets this character state to Paralyzed.
-     */
-    void setParalyzed();
-
-    /**
-     * Sets this character state to Burned.
-     */
-    void setBurned();
-
-    /**
-     * Sets this character state to Poisoned.
-     */
-    void setPoisoned();
-
 }

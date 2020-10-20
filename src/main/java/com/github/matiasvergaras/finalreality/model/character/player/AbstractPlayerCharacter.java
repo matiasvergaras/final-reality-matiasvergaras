@@ -83,8 +83,13 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
 
 
     public void normalAttack(ICPUCharacter character) {
-
-        character.receiveNormalAttack(this);
+        if (character.isAlive()) {
+            character.receiveNormalAttack(this);
+        }
+        else{
+            System.out.println("Attack not possible: \n" +
+                    "You cannot attack someone who has already died!");
+        }
     }
 
     /**
@@ -94,18 +99,6 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
      */
     public void receiveNormalAttack(ICPUCharacter character) {
         this.reduceHP(character.getPower()- getMaxDP());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void receiveHeal() {
-        /* Since we set HP as private, and it is not possible for enemies to get healed,
-         * we will abuse of the reduceHP method (that is common both for player characters as well as
-         * enemies) to implement the receiveHeal method -as an negative attack-.
-         */
-        reduceHP(-this.getMaxHP() * 0.3);
     }
 }
 

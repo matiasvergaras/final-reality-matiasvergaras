@@ -45,20 +45,4 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter imp
         currentMana -= diff;
     }
 
-    public void useThunderSpell(ICPUCharacter enemy) {
-    }
-
-    public void useFireSpell(ICPUCharacter enemy) {
-    }
-
-    public void useParalysisSpell(ICPUCharacter enemy) {
-    }
-
-    public void usePoisonSpell(ICPUCharacter enemy) {
-    }
-
-    public void useHealSpell(IPlayerCharacter ally) {
-    }
-
-
 }
