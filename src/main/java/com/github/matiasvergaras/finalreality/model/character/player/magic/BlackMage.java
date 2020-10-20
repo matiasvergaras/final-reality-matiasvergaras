@@ -13,7 +13,7 @@ import java.util.concurrent.BlockingQueue;
  * Class to represent a ''Black Mage'' unit.
  * <p>
  * Black Mages can can equip Staves (Staff) and Knives (Knife), and use Thunder and Fire Spells.
- *
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 

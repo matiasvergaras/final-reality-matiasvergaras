@@ -9,7 +9,7 @@ import java.util.Objects;
  * Class to represent a ''Sword'' weapon.
  * <p>
  * Swords can be used by Knights and Thieves (Thief).
- *
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 

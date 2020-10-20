@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
 /**
- * Abstract class containing the common tests for all the types of  playable characters.
- *
+ * Abstract class containing the common tests for all types of  playable characters.
+ * @since Homework 1
  * @author Ignacio Slater Muñoz.
  * @author Matias Vergara Silva.
  * @see ICharacter

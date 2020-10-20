@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
- * Abstract class containing the common tests for all the playable characters.
- *
+ * Abstract class containing the common tests for all playable characters.
+ * @since Homework 1
  * @author Matias Vergara Silva.
  * @see IPlayerCharacter
  */

@@ -13,6 +13,7 @@ import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
  * ''weight'' that does the work of define their time in the turnsQueue and
  * ''damage'', that does the work of the equipped weapon damage.
  * @see ICharacter
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 public interface ICPUCharacter extends ICharacter {

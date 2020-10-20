@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Class to test all the features of an Knife weapon.
- *
+ * @since Homework 1
  * @author Matias Vergara Silva.
  */
 public class KnifeTest extends AbstractWeaponTest {

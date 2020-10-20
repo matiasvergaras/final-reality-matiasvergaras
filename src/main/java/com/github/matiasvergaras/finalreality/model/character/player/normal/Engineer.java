@@ -13,6 +13,7 @@ import java.util.concurrent.BlockingQueue;
  * <p>
  * Engineers can equip Axes and Bows, and cannot use magic spells.
  *
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 

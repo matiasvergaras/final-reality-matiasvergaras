@@ -11,6 +11,7 @@ import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
  * <p>
  * Playable characters can equip and use weapons. Their turnsQueue
  * time is calculated based on their equipped weapon weight.
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 public interface IPlayerCharacter extends ICharacter {

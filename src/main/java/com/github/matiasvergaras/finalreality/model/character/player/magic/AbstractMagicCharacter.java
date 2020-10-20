@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.BlockingQueue;
 
 /**
- * An abstract class that holds the common behaviour of all the Magic Characters in the game.
- *
+ * An abstract class that holds the common behaviour of all Magic Characters in the game.
+ * @since Homework 1
  * @author Matias Vergara Silva.
  */
 public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter implements IMagicCharacter {

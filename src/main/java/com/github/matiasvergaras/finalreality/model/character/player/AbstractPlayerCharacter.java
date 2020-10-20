@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * A class that holds all the information of all Player Characters of the game.
- *
+ * @since Homework 1
  * @author Ignacio Slater Muñoz.
  * @author Matias Vergara Silva.
  */

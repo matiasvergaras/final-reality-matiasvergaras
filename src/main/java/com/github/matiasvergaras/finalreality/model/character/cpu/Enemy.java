@@ -8,6 +8,7 @@ import java.util.concurrent.BlockingQueue;
 
 /**
  * A class that holds all the information of a single enemy of the game.
+ * @since Homework 1
  * @author Ignacio Slater Muñoz
  * @author Matías Vergara Silva
  */

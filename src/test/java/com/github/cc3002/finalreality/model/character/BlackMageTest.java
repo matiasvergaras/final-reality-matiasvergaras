@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Class to test basics features of a Black Mage Character.
- *
+ * @since Homework 1
  * @author Matias Vergara Silva.
  */
 

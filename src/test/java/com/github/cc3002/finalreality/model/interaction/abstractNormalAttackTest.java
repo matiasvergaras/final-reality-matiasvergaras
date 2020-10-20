@@ -21,22 +21,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * <p>
  * An attack with a weapon power greater than opponent defense deals a damage of power-defense to the opponent hp
  * An attack with a weapon power smallest than opponent defense do not deal any damage.
- *
- * @author Matías Vergara Silva.
  * @see IPlayerCharacter
  * @see ICPUCharacter
+ * @since Homework 1
+ * @author Matías Vergara Silva.
+
  */
 abstract class abstractNormalAttackTest extends abstractModelTest {
 
     protected boolean powerIsEnough(int power, int DP){
         return power > DP;
-    }
-
-    /*
-     * Basic set-up : A turns queue
-     */
-    protected void turnSetUp() {
-        super.turnSetUp();
     }
 
     /*

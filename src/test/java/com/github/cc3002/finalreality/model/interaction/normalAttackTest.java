@@ -1,7 +1,16 @@
 package com.github.cc3002.finalreality.model.interaction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+/**
+ * <p>
+ * A class to test the normal attacks between CPU and Player Characters,
+ * using two instances of each type, a weak and a powerful one, and the same for weapons.
+ * Weapons can be of the same type or different, but they must be equippable to the given
+ * player character.
+ * @see abstractNormalAttackTest
+ * @author Matias Vergara Silva.
+ * @since Homework 2 - Partial 3
+ */
 public class normalAttackTest extends abstractNormalAttackTest{
     /**
      * Sets up a queue.

@@ -14,6 +14,7 @@ import java.util.concurrent.BlockingQueue;
  * <p>
  * Thieves can equip Swords, Knives (Knife) and Bows, and cannot use any Spells.
  *
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 public class Thief extends AbstractPlayerCharacter {

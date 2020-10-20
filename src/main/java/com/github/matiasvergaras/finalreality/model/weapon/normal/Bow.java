@@ -9,7 +9,7 @@ import java.util.Objects;
  * Class to represent a ''Bow'' weapon.
  * <p>
  * Bow's can be used by Engineers and Thieves (Thief).
- *
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 public class Bow extends AbstractWeapon {

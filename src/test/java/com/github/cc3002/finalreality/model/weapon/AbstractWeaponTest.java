@@ -1,10 +1,19 @@
 package com.github.cc3002.finalreality.model.weapon;
 
 import com.github.cc3002.finalreality.model.abstractModelTest;
+import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Abstract class containing the common tests for all types of weapons.
+ * @since Homework 1
+ * @author Ignacio Slater Muñoz.
+ * @author Matias Vergara Silva.
+ * @see ICharacter
+ */
 
 public abstract class AbstractWeaponTest extends abstractModelTest {
 

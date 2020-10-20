@@ -7,21 +7,24 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * A class to test that the isAlive method of AbstractCharacter works properly, i.e., that every character
  * starts alive and can get to die. It also check that dead's HP ends at 0.
- *
- * @author Matías Vergara Silva.
  * @see com.github.matiasvergaras.finalreality.model.character.ICharacter
+ * @since Homework 1
+ * @author Matías Vergara Silva.
+ *
  */
 public abstract class abstractIsAliveTest extends abstractModelTest {
 
     protected void checkStartAlive(ICharacter someCharacter){
         if (someCharacter.getCurrentHP()>0) {
             assertTrue(someCharacter.isAlive());
+        }
+        else{
+            assertFalse(someCharacter.isAlive());
         }
     }
 

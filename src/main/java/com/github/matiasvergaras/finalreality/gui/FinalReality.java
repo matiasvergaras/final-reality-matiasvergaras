@@ -11,6 +11,7 @@ import javafx.stage.Stage;
  * <p>
  * <Complete here with the details of the implemented application>
  *
+ * @since Homework 1
  * @author Ignacio Slater Muñoz.
  * @author Matías Vergara Silva.
  */

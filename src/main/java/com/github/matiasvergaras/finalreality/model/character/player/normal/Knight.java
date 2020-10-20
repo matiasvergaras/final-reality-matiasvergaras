@@ -13,6 +13,7 @@ import java.util.concurrent.BlockingQueue;
  * <p>
  * Knights can equip Swords, Axes and Knives, and cannot use magic spells.
  *
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 public class Knight extends AbstractPlayerCharacter {

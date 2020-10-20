@@ -11,6 +11,7 @@ import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
  * of the magic attacks of their owner. Only Magic Characters
  * are able to use their magicDamage.
  * @see IMagicWeapon
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 public interface IMagicWeapon extends IWeapon {

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Class to test all the features of an Sword weapon.
- *
+ * @since Homework 1
  * @author Matias Vergara Silva.
  */
 public class SwordTest extends AbstractWeaponTest {

@@ -3,7 +3,7 @@ package com.github.matiasvergaras.finalreality.model.character;
 /**
  * This represents a character from the game.
  * A character can be controlled by the player or by the CPU (an enemy).
- *
+ * @since Homework 1
  * @author Ignacio Slater Muñoz.
  * @author Matías Vergara Silva.
  */

@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * A class that holds all the information of a CPU character of the game.
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 public abstract class AbstractCPUCharacter extends AbstractCharacter implements ICPUCharacter {

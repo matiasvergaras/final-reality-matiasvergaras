@@ -8,7 +8,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * An abstract class that holds the common behaviour of all the characters in the game.
- *
+ * @since Homework 1
  * @author Ignacio Slater Muñoz.
  * @author Matias Vergara Silva.
  */

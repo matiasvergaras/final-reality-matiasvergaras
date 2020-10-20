@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Class to test basics features of a Knight Character.
- *
+ * @since Homework 1
  * @author Matias Vergara Silva.
  */
 

@@ -14,6 +14,7 @@ import java.util.concurrent.BlockingQueue;
  * <p>
  * White Wizards can can equip only Staves (Staff), and use Heal, Poison and Paralysis Spells.
  *
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 
