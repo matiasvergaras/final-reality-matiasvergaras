@@ -81,8 +81,9 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
      */
     @Override
     public void receiveNormalAttack(IPlayerCharacter character) {
-
-        reduceHP(character.getEquippedWeapon().getPower() - getMaxDP());
+        if (character.getEquippedWeapon().getPower()>this.getDP()) {
+            reduceHP(character.getEquippedWeapon().getPower() - getDP());
+        }
     }
 
     /**

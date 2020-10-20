@@ -25,7 +25,7 @@ public class BowTest extends AbstractWeaponTest {
      */
     @Test
     void constructorTest() {
-        exampleThief.equip(exampleBow);
+        exampleThief.equipWeapon(exampleBow);
         checkConstruction(new Bow(BOW_NAME, DAMAGE, WEIGHT),
                 exampleThief.getEquippedWeapon(),
                 new Bow(BOW_NAME, DAMAGE * 2, WEIGHT),

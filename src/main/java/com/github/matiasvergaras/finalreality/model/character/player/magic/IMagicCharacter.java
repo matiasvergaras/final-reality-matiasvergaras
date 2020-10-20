@@ -15,5 +15,10 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
  */
 public interface IMagicCharacter extends IPlayerCharacter {
 
+    //Magic attacks not implemented yet.
+    //int getCurrentMana();
+
+    //void reduceMana(int diff);
+
 
 }

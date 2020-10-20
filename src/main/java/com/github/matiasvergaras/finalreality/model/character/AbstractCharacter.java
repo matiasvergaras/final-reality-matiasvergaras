@@ -17,9 +17,9 @@ public abstract class AbstractCharacter implements ICharacter {
     private final BlockingQueue<ICharacter> turnsQueue;
     private final String name;
     private final int maxHP;
-    private final int maxDP;
-    private int currentDP;
     private int currentHP;
+    private final int DP;
+
     protected ScheduledExecutorService scheduledExecutor;
 
     /**
@@ -37,8 +37,7 @@ public abstract class AbstractCharacter implements ICharacter {
         this.name = name;
         this.maxHP = HP;
         this.currentHP = HP;
-        this.maxDP = DP;
-        this.currentDP = DP;
+        this.DP = DP;
     }
 
     /**
@@ -77,16 +76,8 @@ public abstract class AbstractCharacter implements ICharacter {
      * {@inheritDoc}
      */
     @Override
-    public int getCurrentDP() {
-        return currentDP;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getMaxDP() {
-        return maxDP;
+    public int getDP() {
+        return DP;
     }
 
     /**
@@ -104,6 +95,10 @@ public abstract class AbstractCharacter implements ICharacter {
     @Override
     public void reduceHP(double diff) {
         this.currentHP -= diff;
+        if(this.currentHP<0){
+            //To avoid characters of having negative HP.
+            this.currentHP=0;
+        }
     }
 
 }

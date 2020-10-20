@@ -1,87 +1,54 @@
 package com.github.cc3002.finalreality.model.interaction;
-
-import com.github.cc3002.finalreality.model.abstractModelTest;
-import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-/**
- * A class to test that the attack between PlayerCharacters and Enemies works properly.
- * <p>
- * We will show that every character can get to attack an enemy, even when the methods are inherited from
- * their abstract class IPlayerCharacter (so every character will work the same way). We will do this only for
- * this test, but for the next we will assume that test with one kind of character is enough - except if they
- * overrides methods -.
- * </p>
- *
- * @author Matías Vergara Silva.
- * @see IPlayerCharacter
- * @see ICPUCharacter
- */
-public class normalAttackTest extends abstractModelTest {
-
-    protected void checkNormalAttack(ICPUCharacter enemy, IPlayerCharacter character,
-                                     IWeapon weapon) {
-
-        character.equipWeapon(weapon);
-        character.normalAttack(enemy);
-
-        int enemyHP = enemy.getMaxHP() - character.getEquippedWeapon().getPower();
-        assertEquals(enemyHP, enemy.getCurrentHP());
-
-
-        enemy.normalAttack(character);
-        int characterHP = character.getMaxHP() - enemy.getPower();
-
-        assertEquals(characterHP, character.getCurrentHP());
-
-    }
-
-
-    // We will show that every character can attack, even when the methods are inherited from their abstract class
-
+public class normalAttackTest extends abstractNormalAttackTest{
     /**
-     * Check that a Knight can attack an Enemy.
+     * Sets up a queue.
      */
-    @Test
-    void KnightAttackTest() {
-        checkNormalAttack(exampleEnemy, exampleKnight, exampleAxe);
+    @BeforeEach
+    void setUp() {
+        super.turnSetUp();
     }
 
     /**
-     * Check that an Engineer can attack an Enemy.
+     * Checks that the interactions between Enemies and Black Mages works properly.
      */
     @Test
-    void EngineerAttackTest() {
-        checkNormalAttack(exampleEnemy, exampleEngineer, exampleBow);
+    void BlackMageAgainstEnemies(){
+        checkInteractions(exampleEnemy, weakEnemy, exampleBlackMage, weakBlackMage, powerfulStaff, weakKnife);
     }
 
     /**
-     * Check that a Thief can attack an Enemy.
+     * Checks that the interactions between Enemies and White Mages works properly.
      */
     @Test
-    void ThiefAttackTest() {
-        checkNormalAttack(exampleEnemy, exampleThief, exampleKnife);
+    void WhiteMageAgainstEnemies(){
+        checkInteractions(exampleEnemy, weakEnemy, exampleWhiteMage, weakWhiteMage, powerfulStaff, weakStaff);
     }
 
     /**
-     * Check that a Black Mage can attack an Enemy (using only normal attacks).
+     * Checks that the interactions between Enemies and Knights works properly.
      */
     @Test
-    void BlackMageAttackTest() {
-        checkNormalAttack(exampleEnemy, exampleBlackMage, exampleStaff);
+    void KnightAgainstEnemies(){
+        checkInteractions(exampleEnemy, weakEnemy, exampleKnight, weakKnight, powerfulSword, weakAxe);
     }
 
     /**
-     * Check that a White Mage can attack an Enemy (using only normal attacks).
+     * Checks that the interactions between Enemies and Engineers works properly.
      */
     @Test
-    void WhiteMageAttackTest() {
-        checkNormalAttack(exampleEnemy, exampleWhiteMage, exampleStaff);
+    void EngineerAgainstEnemies(){
+        checkInteractions(exampleEnemy, weakEnemy, exampleEngineer, weakEngineer, powerfulAxe, weakBow);
     }
 
+    /**
+     * Checks that the interactions between Enemies and Thieves works properly.
+     */
+    @Test
+    void ThiefAgainstEnemies(){
+        checkInteractions(exampleEnemy, weakEnemy, exampleThief, weakThief, powerfulKnife, weakBow);
+    }
 
 }

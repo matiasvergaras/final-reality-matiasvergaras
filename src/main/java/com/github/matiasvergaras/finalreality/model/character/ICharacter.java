@@ -37,18 +37,11 @@ public interface ICharacter {
     int getMaxHP();
 
     /**
-     * A method to get the current DP of this character.
-     *
-     * @return this character's current DP.
-     */
-    int getCurrentDP();
-
-    /**
-     * A method to get the max DP of this character.
+     * A method to get the Defense Points of this character.
      *
      * @return this character's max DP.
      */
-    int getMaxDP();
+    int getDP();
 
     /**
      * Evaluation of the statement "This character is alive".

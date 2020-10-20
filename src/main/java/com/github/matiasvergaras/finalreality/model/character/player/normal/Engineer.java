@@ -57,7 +57,7 @@ public class Engineer extends AbstractPlayerCharacter {
         final Engineer that = (Engineer) o;
         return this.getName().equals(that.getName()) &&
                 this.getMaxHP() == that.getMaxHP() &&
-                this.getMaxDP() == that.getMaxDP();
+                this.getDP() == that.getDP();
     }
 
     /**
@@ -69,7 +69,7 @@ public class Engineer extends AbstractPlayerCharacter {
     @Override
     public int hashCode() {
         return Objects.hash(this.getName(), this.getMaxHP(),
-                this.getMaxDP());
+                this.getDP());
     }
 
 

@@ -25,7 +25,7 @@ public class StaffTest extends AbstractWeaponTest {
      */
     @Test
     void constructorTest() {
-        exampleBlackMage.equip(exampleStaff);
+        exampleBlackMage.equipWeapon(exampleStaff);
         checkConstruction(new Staff(STAFF_NAME, DAMAGE, WEIGHT, MAGIC_DAMAGE),
                 exampleBlackMage.getEquippedWeapon(),
                 new Staff(STAFF_NAME, DAMAGE * 2, WEIGHT, MAGIC_DAMAGE),

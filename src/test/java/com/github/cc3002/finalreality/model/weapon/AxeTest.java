@@ -25,10 +25,10 @@ public class AxeTest extends AbstractWeaponTest {
      */
     @Test
     void constructorTest() {
-        exampleKnight.equip(exampleAxe);
+        exampleKnight.equipWeapon(exampleAxe);
         checkConstruction(new Axe(AXE_NAME, DAMAGE, WEIGHT),
                 exampleKnight.getEquippedWeapon(),
-                new Axe(AXE_NAME, DAMAGE * 2, WEIGHT),
+                new Axe("Another", DAMAGE * 2, WEIGHT),
                 new Sword(SWORD_NAME, DAMAGE, WEIGHT));
     }
 

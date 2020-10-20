@@ -37,12 +37,13 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter imp
         return maxMana;
     }
 
-    public int getCurrentMana() {
-        return currentMana;
-    }
+    //Magic attacks not implemented yet.
+    //public int getCurrentMana() {
+    //    return currentMana;
+    //}
 
-    public void reduceMana(int diff) {
-        currentMana -= diff;
-    }
+    //public void reduceMana(int diff) {
+    //    currentMana -= diff;
+    //}
 
 }
