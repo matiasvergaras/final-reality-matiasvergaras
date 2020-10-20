@@ -93,7 +93,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
      * @param character the attacking character.
      */
     public void receiveNormalAttack(ICPUCharacter character) {
-        this.reduceHP(character.getPower());
+        this.reduceHP(character.getPower()- getMaxDP());
     }
 
     /**
