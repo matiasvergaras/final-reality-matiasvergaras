@@ -1,6 +1,4 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
-
-import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 /**
