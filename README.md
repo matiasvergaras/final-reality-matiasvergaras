@@ -57,7 +57,8 @@ All the implementations that are not required yet are removed as they were mostl
 - Life status of the characters
 - Tests of the above.
 
-That is, all the methods related to magic attacks and adverse states were removed.
+That is, **all the methods related to magic attacks and adverse states were removed.**
+
 --- 
 
 # #Homework 1 
