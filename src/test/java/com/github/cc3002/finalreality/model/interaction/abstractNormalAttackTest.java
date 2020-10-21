@@ -84,4 +84,7 @@ abstract class abstractNormalAttackTest extends abstractModelTest {
             assertEquals(characterHP, character.getCurrentHP());
         }
     }
+
+
+
 }

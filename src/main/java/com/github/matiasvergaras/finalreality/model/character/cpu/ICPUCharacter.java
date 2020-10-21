@@ -24,13 +24,6 @@ public interface ICPUCharacter extends ICharacter {
     int getPower();
 
     /**
-     * Get the state of this enemy.
-     *
-     * @return the state of this enemy.
-     */
-    String getState();
-
-    /**
      * Get the weight of this enemy.
      *
      * @return the weight of this enemy.

@@ -99,13 +99,4 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
         return weight;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return the state of this enemy.
-     */
-    public String getState() {
-        return state;
-    }
-
 }

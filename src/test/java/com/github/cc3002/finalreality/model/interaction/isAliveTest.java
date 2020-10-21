@@ -13,8 +13,8 @@ import org.junit.jupiter.api.Test;
  * @since Homework 2 - Partial 3
  */
 public class isAliveTest extends abstractIsAliveTest {
-    protected BlackMage ElmuErtito = new BlackMage(turns, "Elmu Ertito", 0, 200, 123);
-    protected Enemy UncaDaver = new Enemy(turns, "Unca Daver", 0, 200, 200, 200);
+    protected BlackMage deadBlackMage = new BlackMage(turns, "Elmu Ertito", 0, 200, 123);
+    protected Enemy deadEnemy = new Enemy(turns, "Unca Daver", 0, 200, 200, 200);
     @BeforeEach
     void setUp(){
         super.turnSetUp();
@@ -25,7 +25,7 @@ public class isAliveTest extends abstractIsAliveTest {
      */
     @Test
     void deadPlayerCharacterTest(){
-        checkStartAlive(ElmuErtito);
+        checkStartAlive(deadBlackMage);
 
     }
 
@@ -34,7 +34,7 @@ public class isAliveTest extends abstractIsAliveTest {
      */
     @Test
     void deadCPUCharacterTest(){
-        checkStartAlive(UncaDaver);
+        checkStartAlive(deadEnemy);
     }
 
     /**
