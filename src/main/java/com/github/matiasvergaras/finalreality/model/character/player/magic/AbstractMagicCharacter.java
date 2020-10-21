@@ -1,9 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.BlockingQueue;
 

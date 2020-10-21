@@ -59,7 +59,7 @@ public abstract class abstractModelTest {
     protected Engineer exampleEngineer = new Engineer(turns, "Example Engineer", 320, 210);
     protected Knight exampleKnight = new Knight(turns, "Example Knight", 120, 300);
     protected Thief exampleThief = new Thief(turns, "Example Thief", 100, 80);
-    protected Enemy exampleEnemy = new Enemy(turns, "Example Enemy", 12, 100, 120, DAMAGE);
+    protected Enemy exampleEnemy = new Enemy(turns, "Example Enemy", 12, 100, 120, POWERFUL_DAMAGE);
 
     //--------------------------------------SET-UP OF SOME LOW-DP CHARACTERS------------------------------------------//
     protected BlackMage weakBlackMage = new BlackMage(turns, "Weak Black Mage", 100, LOW_DP, 250);

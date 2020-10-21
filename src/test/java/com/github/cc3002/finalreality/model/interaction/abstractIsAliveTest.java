@@ -5,7 +5,6 @@ import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,7 +34,7 @@ public abstract class abstractIsAliveTest extends abstractModelTest {
             while (enemy.isAlive()) {
                 character.normalAttack(enemy);
             }
-            assertEquals(character.getCurrentHP(), 0);
+            assertEquals(enemy.getCurrentHP(), 0);
         }
     }
 

@@ -3,10 +3,7 @@ package com.github.matiasvergaras.finalreality.model.character.cpu;
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -68,12 +65,18 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
      */
     @Override
     public void normalAttack(IPlayerCharacter character) {
-        if(character.isAlive()){
-            character.receiveNormalAttack(this);
+        if( this.isAlive()) {
+            if (character.isAlive()) {
+                character.receiveNormalAttack(this);
+            } else {
+                System.out.println("Attack not possible: \n" +
+                        "You shouldn't attack someone who has already died!");
+            }
         }
         else{
             System.out.println("Attack not possible: \n" +
-                    "You shouldn't attack someone who has already died!");
+                    "You should consider let dead people rest.");
+
         }
     }
 

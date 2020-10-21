@@ -20,44 +20,79 @@ public class isAliveTest extends abstractIsAliveTest {
         super.turnSetUp();
     }
 
+    /**
+     * To test that player characters are created alive
+     */
     @Test
     void deadPlayerCharacterTest(){
         checkStartAlive(ElmuErtito);
 
     }
 
+    /**
+     * To test that CPU characters are created alive
+     */
     @Test
     void deadCPUCharacterTest(){
         checkStartAlive(UncaDaver);
     }
 
+    /**
+     * To test that Black Mage characters can die
+     */
     @Test
     void BlackMageDyingTest(){
         checkStartAlive(exampleBlackMage);
         checkPlayerDies(exampleEnemy, exampleBlackMage);
-        checkCPUDies(exampleEnemy, exampleBlackMage, powerfulStaff);
     }
+
+    /**
+     * To test that White Mage characters can die
+     */
     @Test
     void WhiteMageDyingTest(){
         checkStartAlive(exampleWhiteMage);
         checkPlayerDies(exampleEnemy, exampleWhiteMage);
     }
+
+    /**
+     * To test that Engineer characters can die
+     */
     @Test
     void EngineerDyingTest(){
         checkStartAlive(exampleEngineer);
         checkPlayerDies(exampleEnemy, exampleEngineer);
     }
+
+    /**
+     * To test that Thief characters can die
+     */
     @Test
     void ThiefDyingTest(){
         checkStartAlive(exampleThief);
         checkPlayerDies(exampleEnemy, exampleThief);
 
     }
+
+    /**
+     * To test that Knight characters can die
+     */
     @Test
     void KnightDyingTest(){
         checkStartAlive(exampleKnight);
         checkPlayerDies(exampleEnemy, exampleKnight);
 
     }
+
+    /**
+     * To test that Enemy characters can die
+     */
+    @Test
+    void EnemyDyingTest(){
+        checkStartAlive(exampleEnemy);
+        checkCPUDies(exampleEnemy, exampleKnight, powerfulKnife);
+    }
+
+
 
 }

@@ -1,9 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
