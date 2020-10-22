@@ -59,6 +59,11 @@ All the implementations that are not required yet are removed as they were mostl
 
 That is, **all the methods related to magic attacks and adverse states were removed.**
 
+#### Assumptions made so far
+- Characters and weapons do not change type.
+- Weapons can be equipped to only one character at a time. If the player tries to equip a weapon that is already equipped to another character, the weapon user is updated, so the first one ends without equipped weapon.
+- In the future, we may be interested in add another type of Enemy (So we abstracted all unespecific methods of Enemy in an AbstractCPUCharacter abstract class).
+- We can identify characters by their name, and that works both for CPU and Player characters.
 --- 
 
 # #Homework 1 
