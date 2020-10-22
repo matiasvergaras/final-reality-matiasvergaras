@@ -44,6 +44,23 @@ enemies controlled by the computer.b
 
 --- 
 
+# #Homework 2 
+
+---
+
+### Partial Delivery 2
+
+All the implementations that are not required yet are removed as they were mostly wrong. So far the code contemplates:
+- The same class hierarchy described in Homework 1
+- Weapon equipment
+- Normal attacks
+- Life status of the characters
+- Tests of the above.
+
+That is, **all the methods related to magic attacks and adverse states were removed.**
+
+--- 
+
 # #Homework 1 
 ### Final Delivery 
 As Final Delivery we are requested to finish the work done to Partial Delivery 1 and 2. 
