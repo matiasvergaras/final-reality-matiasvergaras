@@ -87,7 +87,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
             character.receiveNormalAttack(this);
         }
         else{
-            System.out.println("Attack not possible: \n" +
+            System.out.println("Attack not possible: " +
                     "You cannot attack someone who has already died!");
         }
     }

@@ -36,7 +36,13 @@ public class BlackMage extends AbstractMagicCharacter {
      */
     @Override
     public void equipWeapon(IWeapon weapon) {
-        weapon.equipToBlackMage(this);
+        if(this.isAlive()){
+            weapon.equipToBlackMage(this);
+        }
+        else{
+            System.out.println("Equipment not possible. You should consider let dead people rest.");
+        }
+
     }
 
     /**

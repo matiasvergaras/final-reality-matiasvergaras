@@ -37,7 +37,12 @@ public class Engineer extends AbstractPlayerCharacter {
      */
     @Override
     public void equipWeapon(IWeapon weapon) {
-        weapon.equipToEngineer(this);
+        if(this.isAlive()) {
+            weapon.equipToEngineer(this);
+        }
+        else{
+            System.out.println("Equipment not possible. You should consider let dead people rest.");
+        }
     }
 
 

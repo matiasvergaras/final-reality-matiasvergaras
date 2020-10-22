@@ -37,7 +37,12 @@ public class Thief extends AbstractPlayerCharacter {
      */
     @Override
     public void equipWeapon(IWeapon weapon) {
-        weapon.equipToThief(this);
+        if(this.isAlive()) {
+            weapon.equipToThief(this);
+        }
+        else{
+            System.out.println("Equipment not possible. You should consider let dead people rest.");
+        }
     }
 
     /**

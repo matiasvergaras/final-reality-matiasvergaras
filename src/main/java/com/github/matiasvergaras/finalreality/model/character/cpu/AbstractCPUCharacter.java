@@ -69,12 +69,12 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
             if (character.isAlive()) {
                 character.receiveNormalAttack(this);
             } else {
-                System.out.println("Attack not possible: \n" +
+                System.out.println("Attack not possible: " +
                         "You shouldn't attack someone who has already died!");
             }
         }
         else{
-            System.out.println("Attack not possible: \n" +
+            System.out.println("Attack not possible: " +
                     "You should consider let dead people rest.");
 
         }
