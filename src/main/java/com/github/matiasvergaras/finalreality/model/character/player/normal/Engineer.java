@@ -40,9 +40,6 @@ public class Engineer extends AbstractPlayerCharacter {
         if(this.isAlive()) {
             weapon.equipToEngineer(this);
         }
-        else{
-            System.out.println("Equipment not possible. You should consider let dead people rest.");
-        }
     }
 
 

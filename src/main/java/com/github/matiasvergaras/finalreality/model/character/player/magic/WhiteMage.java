@@ -42,9 +42,6 @@ public class WhiteMage extends AbstractMagicCharacter {
         if(this.isAlive()) {
             weapon.equipToWhiteMage(this);
         }
-        else{
-            System.out.println("Equipment not possible. You should consider let dead people rest.");
-        }
     }
 
     /**

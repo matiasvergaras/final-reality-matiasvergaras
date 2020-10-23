@@ -40,9 +40,6 @@ public class Thief extends AbstractPlayerCharacter {
         if(this.isAlive()) {
             weapon.equipToThief(this);
         }
-        else{
-            System.out.println("Equipment not possible. You should consider let dead people rest.");
-        }
     }
 
     /**
