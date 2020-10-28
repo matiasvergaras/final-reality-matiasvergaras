@@ -54,6 +54,17 @@ public class KnifeTest extends AbstractWeaponTest {
     }
 
     /**
+     * Check that the weapon is not equipped when the character to equip is appropriate
+     * but is dead
+     */
+    @Test
+    void deadEquipmentBehaviorTest() {
+        checkDeadEquipmentBehavior(exampleKnife, deadKnight);
+        checkDeadEquipmentBehavior(exampleKnife, deadBlackMage);
+        checkDeadEquipmentBehavior(exampleKnife, deadThief);
+    }
+
+    /**
      * Check that the weapon getPower method works properly.
      */
     @Test

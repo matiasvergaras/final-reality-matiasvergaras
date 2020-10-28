@@ -23,9 +23,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class normalAttackTest extends abstractNormalAttackTest{
 
-    protected Engineer deadEngineer = new Engineer(turns, "Zombie Engineer", 0, 100);
-    protected Enemy deadEnemy= new Enemy(turns, "Zombie Enemy", 0, 0, 100, 100);
-
     /**
      * Sets up a queue.
      */

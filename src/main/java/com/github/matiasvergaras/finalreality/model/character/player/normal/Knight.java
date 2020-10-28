@@ -52,9 +52,7 @@ public class Knight extends AbstractPlayerCharacter {
         if (this == o) return true;
         if (!(o instanceof Knight)) return false;
         Knight that = (Knight) o;
-        return this.getName().equals(that.getName()) &&
-                this.getMaxHP() == that.getMaxHP() &&
-                this.getDP() == that.getDP();
+        return this.getName().equals(that.getName());
     }
 
     /**
@@ -65,8 +63,7 @@ public class Knight extends AbstractPlayerCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(), this.getMaxHP(),
-                this.getDP());
+        return Objects.hash(this.getName());
     }
 
 }

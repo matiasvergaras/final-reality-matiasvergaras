@@ -13,7 +13,7 @@ Lecture teacher: Mrs. Nancy Hitschfield
 
 Assistant teachers: Matías Ramírez & Ignacio Slater M.
 
-Review assistant: Kevin Pinochet Hérnandez (?) (I guess, because he's on the project view)
+Review assistant: Benjamin del Pino B.
 
 ![http://creativecommons.org/licenses/by/4.0/](https://i.creativecommons.org/l/by/4.0/88x31.png)
 
@@ -31,7 +31,7 @@ by [_Square Enix_](https://www.square-enix.com).
 Broadly speaking:
 
 - For the combat the player has a group of characters to control and a group of 
-enemies controlled by the computer.b
+enemies controlled by the computer.
 - Characters may be from 2 diferent types: Normal Characters and Magic Characters.
 - Normal Characters include 3 subclasses: Engineer, Thief and Knight.
 - Magic Characters include Black Mages and White Mages. 
@@ -50,20 +50,22 @@ enemies controlled by the computer.b
 
 ### Partial Delivery 2
 
-All the implementations that are not required yet are removed as they were mostly wrong. So far the code contemplates:
+All the features that are not required yet are removed as they were mostly wrong. So far the code contemplates:
 - The same class hierarchy described in Homework 1
 - Weapon equipment
 - Normal attacks
 - Life status of the characters
 - Tests of the above.
 
-That is, **all the methods related to magic attacks and adverse states were removed.**
+That is, **all the methods related to magic attacks and adverse states were removed.** They will be re-implemented in the future, once we have delved further into the course.
 
+The equipping process is carried out via double dispatch, as we described before. Similar for the normal attacks, but we have added the new Deffense Points based behavior.
 #### Assumptions made so far
 - Characters and weapons do not change type.
 - Weapons can be equipped to only one character at a time. If the player tries to equip a weapon that is already equipped to another character, the weapon user is updated, so the first one ends without equipped weapon.
-- In the future, we may be interested in add another type of Enemy (So we abstracted all unespecific methods of Enemy in an AbstractCPUCharacter abstract class).
-- We can identify characters by their name, and that works both for CPU and Player characters.
+- In the future, we may be interested in add another type of Enemy (So we abstracted all unspecific methods of Enemy in an AbstractCPUCharacter abstract class).
+- We can identify characters by their name, and that works both for CPU and Player characters. There will not be characters with same name, even if they are from different types (Attention: this last point is very important, because hashcode only takes in count the names, so if there are a BlackMage and an Enemy with the same name, they will have the same hashcode).
+- Initially we considered adding the maximum HP and maximum DP to the features that determine a character, however, we will consider that in the future the characters could 'level up' and increase these characteristics, so the key will be only the name.
 --- 
 
 # #Homework 1 
@@ -82,7 +84,7 @@ Assumptions are the same of Partial Delivery 2:
 - Enemies can suffer from only one state at a time, and those states are overwritten when a new one is set.
 - We can identify player characters by the combination of their name, maxDP, maxHP, currentHP and currentDP. We would like to assume that it is enough with the name (to to make sense in game), but it is not really necessary this far, and we will discuss about that with the teaching team for future deliveries.
 - We can identify enemies by the combination of their name, weight, power, maxDP and maxHP. We would like to add an integer field ID to have many enemies with the same name but distinguishable, in order to have -for example- a group of Globin units, and be able to differentiate them. Since it is not described in the statement, it will be discussed with the teaching team for future deliveries.
-- In the future, we may be interested in add another type of Enemy (So we abstracted all unespecific methods of Enemy in an AbstractCPUCharacter abstract class).
+- In the future, we may be interested in add another type of Enemy (So we abstracted all unspecific methods of Enemy in an AbstractCPUCharacter abstract class).
 
 #### Logic and operation of the program
 Our program works based on a hierarchy of character and weapon classes.

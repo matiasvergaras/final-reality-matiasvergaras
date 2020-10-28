@@ -53,12 +53,14 @@ public abstract class abstractModelTest {
     //--------------------------------------SET-UP OF A LOW-DAMAGE-POWER ENEMY----------------------------------------//
     protected Enemy weakEnemy = new Enemy(turns, "Weak Enemy", 12, 100, 120, WEAK_DAMAGE);
 
-    //--------------------------------------SET-UP OF SOME EXAMPLE CHARACTERS-----------------------------------------//
+    //--------------------------------------SET-UP OF SOME EXAMPLE COMMON CHARACTERS----------------------------------//
     protected BlackMage exampleBlackMage = new BlackMage(turns, "Example Black Mage", 100, 200, 250);
     protected WhiteMage exampleWhiteMage = new WhiteMage(turns, "Example White Mage", 200, 100, 200);
     protected Engineer exampleEngineer = new Engineer(turns, "Example Engineer", 320, 210);
     protected Knight exampleKnight = new Knight(turns, "Example Knight", 120, 300);
     protected Thief exampleThief = new Thief(turns, "Example Thief", 100, 80);
+
+    //-------------------------------------SET-UP OF A POWERFUL EXAMPLE ENEMY-----------------------------------------#
     protected Enemy exampleEnemy = new Enemy(turns, "Example Enemy", 12, 100, 120, POWERFUL_DAMAGE);
 
     //--------------------------------------SET-UP OF SOME LOW-DP CHARACTERS------------------------------------------//
@@ -74,6 +76,15 @@ public abstract class abstractModelTest {
     protected Sword exampleSword = new Sword(SWORD_NAME, DAMAGE, WEIGHT);
     protected Bow exampleBow = new Bow(BOW_NAME, DAMAGE, WEIGHT);
     protected Knife exampleKnife = new Knife(KNIFE_NAME, DAMAGE, WEIGHT);
+
+    //--------------------------------------SET-UP OF SOME DEAD CHARACTERS--------------------------------------------//
+    protected Engineer deadEngineer = new Engineer(turns, "Zombie Engineer", 0, 100);
+    protected BlackMage deadBlackMage = new BlackMage(turns, "Zombie Black Mage", 0, 80, 100);
+    protected WhiteMage deadWhiteMage = new WhiteMage(turns, "Zombie White Mage", 0, 100, 120);
+    protected Thief deadThief = new Thief(turns, "Zombie Thief", 0, 60);
+    protected Knight deadKnight = new Knight(turns, "Zombie Knight", 0, 200);
+    protected Enemy deadEnemy= new Enemy(turns, "Zombie Enemy", 0, 0, 100, 100);
+
 
     /*
      * Basic set-up : A turns queue

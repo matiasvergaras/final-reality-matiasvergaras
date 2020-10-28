@@ -46,11 +46,7 @@ public class Enemy extends AbstractCPUCharacter {
             return false;
         }
         final Enemy that = (Enemy) o;
-        return this.getWeight() == that.getWeight() &&
-                this.getName().equals(that.getName()) &&
-                this.getDP() == that.getDP() &&
-                this.getMaxHP() == that.getMaxHP() &&
-                this.getPower() == that.getPower();
+        return this.getName().equals(that.getName());
     }
 
 
@@ -62,8 +58,7 @@ public class Enemy extends AbstractCPUCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getWeight() + this.getName()
-                + this.getPower() + this.getDP() + this.getMaxHP());
+        return Objects.hash(this.getName());
     }
 
 

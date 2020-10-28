@@ -55,10 +55,7 @@ public class WhiteMage extends AbstractMagicCharacter {
         if (this == o) return true;
         if (!(o instanceof WhiteMage)) return false;
         WhiteMage that = (WhiteMage) o;
-        return this.getName().equals(that.getName()) &&
-                this.getMaxHP() == that.getMaxHP() &&
-                this.getDP() == that.getDP() &&
-                this.getMaxMana() == that.getMaxMana();
+        return this.getName().equals(that.getName());
     }
 
     /**
@@ -69,8 +66,7 @@ public class WhiteMage extends AbstractMagicCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(), this.getMaxHP(), this.getDP(),
-                +this.getMaxMana());
+        return Objects.hash(this.getName());
     }
 
 

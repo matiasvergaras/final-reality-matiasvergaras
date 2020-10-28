@@ -2,6 +2,13 @@ package com.github.cc3002.finalreality.model.character;
 
 import com.github.cc3002.finalreality.model.abstractModelTest;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
+import com.github.matiasvergaras.finalreality.model.weapon.normal.Axe;
+import com.github.matiasvergaras.finalreality.model.weapon.normal.Bow;
+import com.github.matiasvergaras.finalreality.model.weapon.normal.Knife;
+import com.github.matiasvergaras.finalreality.model.weapon.normal.Sword;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
@@ -21,7 +28,13 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public abstract class AbstractCharacterTest extends abstractModelTest {
     protected List<ICharacter> testCharacters;
-
+    protected static final String BLACK_MAGE_NAME = "Airi";
+    protected static final String ENGINEER_NAME = "Cid";
+    protected static final String KNIGHT_NAME = "Adelbert";
+    protected static final String THIEF_NAME = "Zidane";
+    protected static final String WHITE_MAGE_NAME = "Eiko";
+    protected List<IWeapon> testWeapons;
+    protected List<IPlayerCharacter> testPlayerCharacters;
     /**
      * Checks that the character waits the appropriate amount of time for it's turn.
      */
@@ -51,18 +64,24 @@ public abstract class AbstractCharacterTest extends abstractModelTest {
      *                                    of expectedCharacter
      * @param sameClassDifferentCharacter A character of this type with at least one field different
      *                                    from those of expectedCharacter
-     * @param differentClassCharacter     A character from another type with the same common  fields of
+     * @param differentClassDifferentName A character from another type with the same common  fields of
      *                                    expectedCharacters
+     * @param differentClassSameName      A character with the same name but from a different class
      */
     protected void checkConstruction(final ICharacter expectedCharacter,
                                      final ICharacter testEqualCharacter,
                                      final ICharacter sameClassDifferentCharacter,
-                                     final ICharacter differentClassCharacter) {
+                                     final ICharacter differentClassDifferentName,
+                                     final ICharacter differentClassSameName) {
         assertEquals(expectedCharacter, testEqualCharacter);
         assertNotEquals(sameClassDifferentCharacter, testEqualCharacter);
-        assertNotEquals(testEqualCharacter, differentClassCharacter);
+        assertNotEquals(testEqualCharacter, differentClassDifferentName);
         assertEquals(expectedCharacter.hashCode(), testEqualCharacter.hashCode());
-        assertNotEquals(expectedCharacter.hashCode(), differentClassCharacter.hashCode());
+        assertNotEquals(expectedCharacter.hashCode(), differentClassDifferentName.hashCode());
+        //To test that the hashcode depends only on the name, and not on the class.
+        // In practice, we have to avoid to fall in this case.
+        assertEquals(expectedCharacter.hashCode(), differentClassSameName.hashCode());
+
     }
 
     /**

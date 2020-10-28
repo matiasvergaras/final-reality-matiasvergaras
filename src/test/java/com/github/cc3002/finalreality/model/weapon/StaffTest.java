@@ -55,6 +55,16 @@ public class StaffTest extends AbstractWeaponTest {
     }
 
     /**
+     * Check that the weapon is not equipped when the character to equip is appropriate
+     * but is dead
+     */
+    @Test
+    void deadEquipmentBehaviorTest() {
+        checkDeadEquipmentBehavior(exampleStaff, deadWhiteMage);
+        checkDeadEquipmentBehavior(exampleStaff, deadBlackMage);
+    }
+
+    /**
      * Check that the weapon getPower method works properly.
      */
     @Test

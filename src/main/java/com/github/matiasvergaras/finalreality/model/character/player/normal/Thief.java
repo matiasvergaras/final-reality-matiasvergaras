@@ -53,9 +53,7 @@ public class Thief extends AbstractPlayerCharacter {
         if (this == o) return true;
         if (!(o instanceof Thief)) return false;
         Thief that = (Thief) o;
-        return this.getName().equals(that.getName()) &&
-                this.getMaxHP() == that.getMaxHP() &&
-                this.getDP() == that.getDP();
+        return this.getName().equals(that.getName());
     }
 
     /**
@@ -66,8 +64,7 @@ public class Thief extends AbstractPlayerCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(),
-                this.getMaxHP(), this.getDP());
+        return Objects.hash(this.getName());
     }
 
 

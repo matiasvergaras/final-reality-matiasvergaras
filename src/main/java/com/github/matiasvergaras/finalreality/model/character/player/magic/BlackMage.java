@@ -39,10 +39,6 @@ public class BlackMage extends AbstractMagicCharacter {
         if(this.isAlive()){
             weapon.equipToBlackMage(this);
         }
-        else{
-            System.out.println("Equipment not possible. You should consider let dead people rest.");
-        }
-
     }
 
     /**
@@ -56,10 +52,7 @@ public class BlackMage extends AbstractMagicCharacter {
         if (this == o) return true;
         if (!(o instanceof BlackMage)) return false;
         BlackMage that = (BlackMage) o;
-        return this.getName().equals(that.getName()) &&
-                this.getMaxHP() == that.getMaxHP() &&
-                this.getDP() == that.getDP() &&
-                this.getMaxMana() == that.getMaxMana();
+        return this.getName().equals(that.getName());
     }
 
     /**
@@ -70,8 +63,7 @@ public class BlackMage extends AbstractMagicCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(), this.getMaxHP(), this.getDP(),
-                this.getMaxMana());
+        return Objects.hash(this.getName());
     }
 
 }

@@ -21,9 +21,9 @@ class KnightTest extends AbstractPlayerCharacterTest {
         super.basicSetUp();
         super.playerSetUp();
         testPlayerCharacters.add(new Knight(turns, KNIGHT_NAME, 200, 100));
-        testWeapons.add(EXAMPLE_AXE);
-        testWeapons.add(EXAMPLE_KNIFE);
-        testWeapons.add(EXAMPLE_SWORD);
+        testWeapons.add(exampleAxe);
+        testWeapons.add(exampleKnife);
+        testWeapons.add(exampleSword);
     }
 
     /**
@@ -34,8 +34,9 @@ class KnightTest extends AbstractPlayerCharacterTest {
         testCharacters.add(new Knight(turns, KNIGHT_NAME, 200, 100));
         checkConstruction(new Knight(turns, KNIGHT_NAME, 200, 100),
                 testCharacters.get(0),
-                new Knight(turns, KNIGHT_NAME, 11, 200),
-                new Thief(turns, THIEF_NAME, 11, 200));
+                new Knight(turns, "Another Knight", 11, 200),
+                new Thief(turns, THIEF_NAME, 11, 200),
+                new Thief(turns, KNIGHT_NAME, 11, 200));
     }
 
     /**
@@ -44,7 +45,7 @@ class KnightTest extends AbstractPlayerCharacterTest {
     @Test
     void waitTurnTest() {
         Knight TEST_KNIGHT = new Knight(turns, KNIGHT_NAME, 200, 100);
-        TEST_KNIGHT.equip(EXAMPLE_AXE);
+        TEST_KNIGHT.equip(exampleAxe);
         testCharacters.add(TEST_KNIGHT);
         super.checkTurns();
     }

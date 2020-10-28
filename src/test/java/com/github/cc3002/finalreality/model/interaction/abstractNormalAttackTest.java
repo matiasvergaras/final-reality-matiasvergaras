@@ -66,9 +66,7 @@ abstract class abstractNormalAttackTest extends abstractModelTest {
         if(powerIsEnough(powerfulEnemy.getPower(), character.getDP())) {
             powerfulEnemy.normalAttack(character);
             //if enemy HP - (equipped weapon power - enemy defense points) < 0, then enemy current HP is set to 0
-            int characterHP = Math.max(0, character.getMaxHP() - (powerfulEnemy.getPower() - character.getDP()));
-            int currentHP = character.getCurrentHP();
-            assertEquals(characterHP, currentHP);
+            assertEquals(character.getCurrentHP(),  Math.max(0, character.getMaxHP() - (powerfulEnemy.getPower() - character.getDP())));
         }
     }
 
@@ -80,8 +78,7 @@ abstract class abstractNormalAttackTest extends abstractModelTest {
         //First we check that the power of the enemy is not enough to deal damage to the character.
         if(powerIsEnough(weakEnemy.getPower(), character.getDP())) {
             weakEnemy.normalAttack(character);
-            int characterHP = character.getMaxHP() - weakEnemy.getPower();
-            assertEquals(characterHP, character.getCurrentHP());
+            assertEquals(character.getCurrentHP(), character.getMaxHP() - weakEnemy.getPower());
         }
     }
 

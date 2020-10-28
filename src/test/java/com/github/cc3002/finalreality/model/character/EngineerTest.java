@@ -21,8 +21,8 @@ class EngineerTest extends AbstractPlayerCharacterTest {
         super.basicSetUp();
         super.playerSetUp();
         testPlayerCharacters.add(new Engineer(turns, ENGINEER_NAME, 200, 100));
-        testWeapons.add(EXAMPLE_AXE);
-        testWeapons.add(EXAMPLE_BOW);
+        testWeapons.add(exampleAxe);
+        testWeapons.add(exampleAxe);
 
     }
 
@@ -34,8 +34,9 @@ class EngineerTest extends AbstractPlayerCharacterTest {
         testCharacters.add(new Engineer(turns, ENGINEER_NAME, 100, 200));
         super.checkConstruction(new Engineer(turns, ENGINEER_NAME, 100, 200),
                 testCharacters.get(0),
-                new Engineer(turns, ENGINEER_NAME, 110, 200),
-                new Thief(turns, THIEF_NAME, 100, 200));
+                new Engineer(turns, "Another Engineer", 110, 200),
+                new Thief(turns, THIEF_NAME, 100, 200),
+                new Thief(turns, ENGINEER_NAME, 100, 200));
     }
 
     /**
@@ -44,7 +45,7 @@ class EngineerTest extends AbstractPlayerCharacterTest {
     @Test
     void waitTurnTest() {
         Engineer TEST_ENGINEER = new Engineer(turns, ENGINEER_NAME, 200, 100);
-        TEST_ENGINEER.equip(EXAMPLE_AXE);
+        TEST_ENGINEER.equip(exampleAxe);
         testCharacters.add(TEST_ENGINEER);
         super.checkTurns();
     }

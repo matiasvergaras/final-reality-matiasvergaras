@@ -52,6 +52,15 @@ public class AxeTest extends AbstractWeaponTest {
         checkUnequippableBehavior(exampleAxe, exampleWhiteMage);
     }
 
+    /**
+     * Check that the weapon is not equipped when the character to equip is appropriate
+     * but is dead
+     */
+    @Test
+    void deadEquipmentBehaviorTest() {
+        checkDeadEquipmentBehavior(exampleAxe, deadEngineer);
+        checkDeadEquipmentBehavior(exampleAxe, deadKnight);
+    }
 
     /**
      * Check that the weapon getPower method works properly.

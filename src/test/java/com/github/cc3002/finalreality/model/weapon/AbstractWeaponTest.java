@@ -41,7 +41,7 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
 
     /**
      * Checks that the weapon can be properly equipped an unequipped
-     * from a character
+     * from an (alive) character.
      *
      * @param weapon     the weapon to be tested
      * @param characterA A character from the first class that can equip the weapon
@@ -60,11 +60,10 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
     }
 
     /**
-     * Checks that the weapon can be properly equipped an unequipped
-     * from a character
+     * Checks that the weapon will not be equipped to an inappropriate character,
      *
      * @param weapon    the weapon to be tested
-     * @param character A character from the first class that can equip the weapon
+     * @param character A character from a class that cannot equip this weapon.
      */
     protected void checkUnequippableBehavior(IWeapon weapon,
                                              IPlayerCharacter character) {
@@ -73,6 +72,21 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
         assertNull(weapon.getOwner());
         assertNull(character.getEquippedWeapon());
     }
+
+    /**
+     * Checks that the weapon will not be equipped to a dead (but appropriate) character.
+     * @param weapon    the weapon to be tested
+     * @param character A character from a class that can equip the weapon, but with 0 HP.
+     */
+    protected void checkDeadEquipmentBehavior(IWeapon weapon,
+                                             IPlayerCharacter character) {
+        //Preliminaries
+        weapon.setWeaponFree();
+        assertFalse(character.isAlive());
+        //To avoid code repeating but also to have individual case tests
+        checkUnequippableBehavior(weapon, character);
+    }
+
 
     /**
      * Checks that the weapon getPower method works properly.
