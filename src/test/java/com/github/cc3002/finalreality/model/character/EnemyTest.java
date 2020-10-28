@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
  * @author Matias Vergara Silva.
  */
 
-class EnemyTest extends AbstractCharacterTest {
+class EnemyTest extends AbstractCPUCharacterTest {
 
     private static final String ENEMY_NAME = "Goblin";
 
@@ -44,6 +44,18 @@ class EnemyTest extends AbstractCharacterTest {
     @Test
     void waitTurnTest() {
         super.checkTurns();
+    }
+
+    /**
+     * Check that the getters methods works properly.
+     */
+    @Test
+    void gettersTest() {
+        checkGetPower(exampleEnemy, POWERFUL_DAMAGE);
+        checkGetWeight(exampleEnemy, WEIGHT);
+        super.checkGetMaxHP(exampleEnemy, HP);
+        super.checkGetMaxDP(exampleEnemy, DP);
+        super.checkGetCurrentHP(exampleEnemy, HP);
     }
 
 }

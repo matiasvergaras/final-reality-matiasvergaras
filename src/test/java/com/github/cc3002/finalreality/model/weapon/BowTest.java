@@ -68,10 +68,9 @@ public class BowTest extends AbstractWeaponTest {
      */
     @Test
     void gettersTest() {
-        Bow testBow = new Bow("AnBow", 200, 10);
-        checkGetPower(testBow, 200);
-        checkGetName(testBow, "AnBow");
-        checkGetWeight(testBow, 10);
+        checkGetPower(exampleBow, DAMAGE);
+        checkGetName(exampleBow, BOW_NAME);
+        checkGetWeight(exampleBow, WEIGHT);
 
     }
 }

@@ -69,10 +69,9 @@ public class StaffTest extends AbstractWeaponTest {
      */
     @Test
     void gettersTest() {
-        Staff testStaff = new Staff("AnStaff", 200, 10, 250);
-        checkGetPower(testStaff, 200);
-        checkGetName(testStaff, "AnStaff");
-        checkGetWeight(testStaff, 10);
+        checkGetPower(exampleStaff, DAMAGE);
+        checkGetName(exampleStaff, STAFF_NAME);
+        checkGetWeight(exampleStaff, WEIGHT);
 
     }
 

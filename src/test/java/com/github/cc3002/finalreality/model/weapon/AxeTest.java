@@ -67,10 +67,9 @@ public class AxeTest extends AbstractWeaponTest {
      */
     @Test
     void gettersTest() {
-        Axe testAxe = new Axe("AnAxe", 100, 10);
-        checkGetPower(testAxe, 100);
-        checkGetName(testAxe, "AnAxe");
-        checkGetWeight(testAxe, 10);
+        checkGetPower(exampleAxe, DAMAGE);
+        checkGetName(exampleAxe, AXE_NAME);
+        checkGetWeight(exampleAxe, WEIGHT);
     }
 
 }

@@ -91,4 +91,38 @@ public abstract class AbstractCharacterTest extends abstractModelTest {
         turnSetUp();
         testCharacters = new ArrayList<>();
     }
+
+    /**
+     * Checks that the Player Character getMaxHP method works properly.
+     *
+     * @param character        the character to be tested
+     * @param expectedMaxHP    the expected value of Max HP of this character.
+     */
+    protected void checkGetMaxHP(ICharacter character, int expectedMaxHP) {
+        assertEquals(character.getMaxHP(), expectedMaxHP);
+    }
+
+    /**
+     * Checks that the Player Character getMaxDP method works properly.
+     *
+     * @param character     the Player Character to be tested
+     * @param expectedDP    the expected value of DP of this character.
+     */
+    protected void checkGetMaxDP(ICharacter character, int expectedDP) {
+        assertEquals(character.getDP(), expectedDP);
+    }
+
+    /**
+     * Checks that the Player Character getCurrentHP method works properly.
+     * Attention: In each character class we will test only that the value starts at max HP.
+     * The loss of points when receiving attacks will be tested in the interactions package.
+     * @param character     the Player Character to be tested
+     * @param expectedHP    the expected value of Current HP of this character.
+     */
+    protected void checkGetCurrentHP(ICharacter character, int expectedHP) {
+        assertEquals(character.getCurrentHP(), expectedHP);
+    }
+
+    //Attention: the getCurrentHP method is tested in 'interaction' package, since
+    //it requires attacks.
 }

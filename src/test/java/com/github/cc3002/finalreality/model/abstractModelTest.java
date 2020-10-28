@@ -30,11 +30,14 @@ public abstract class abstractModelTest {
     protected int WEIGHT = 10;
     protected int MAGIC_DAMAGE = 300;
     protected int LOW_DP = 30;
+    protected int MANA = 150;
+    protected int HP = 100;
+    protected int DP = 150;
     protected String AXE_NAME="Some Axe";
     protected String BOW_NAME="Some Bow";
     protected String KNIFE_NAME="Some Knife";
     protected String STAFF_NAME="Some Staff";
-    protected String SWORD_NAME="Some SWord";
+    protected String SWORD_NAME="Some Sword";
 
     //--------------------------------------SET-UP OF SOME POWERFUL WEAPONS-------------------------------------------//
     protected Axe powerfulAxe = new Axe("Powerful Axe", POWERFUL_DAMAGE, WEIGHT);
@@ -54,14 +57,14 @@ public abstract class abstractModelTest {
     protected Enemy weakEnemy = new Enemy(turns, "Weak Enemy", 12, 100, 120, WEAK_DAMAGE);
 
     //--------------------------------------SET-UP OF SOME EXAMPLE COMMON CHARACTERS----------------------------------//
-    protected BlackMage exampleBlackMage = new BlackMage(turns, "Example Black Mage", 100, 200, 250);
-    protected WhiteMage exampleWhiteMage = new WhiteMage(turns, "Example White Mage", 200, 100, 200);
-    protected Engineer exampleEngineer = new Engineer(turns, "Example Engineer", 320, 210);
-    protected Knight exampleKnight = new Knight(turns, "Example Knight", 120, 300);
-    protected Thief exampleThief = new Thief(turns, "Example Thief", 100, 80);
+    protected BlackMage exampleBlackMage = new BlackMage(turns, "Example Black Mage", HP, DP, MANA);
+    protected WhiteMage exampleWhiteMage = new WhiteMage(turns, "Example White Mage", HP, DP, MANA);
+    protected Engineer exampleEngineer = new Engineer(turns, "Example Engineer", HP, DP);
+    protected Knight exampleKnight = new Knight(turns, "Example Knight", HP, DP);
+    protected Thief exampleThief = new Thief(turns, "Example Thief", HP, DP);
 
     //-------------------------------------SET-UP OF A POWERFUL EXAMPLE ENEMY-----------------------------------------#
-    protected Enemy exampleEnemy = new Enemy(turns, "Example Enemy", 12, 100, 120, POWERFUL_DAMAGE);
+    protected Enemy exampleEnemy = new Enemy(turns, "Example Enemy", WEIGHT, HP, DP, POWERFUL_DAMAGE);
 
     //--------------------------------------SET-UP OF SOME LOW-DP CHARACTERS------------------------------------------//
     protected BlackMage weakBlackMage = new BlackMage(turns, "Weak Black Mage", 100, LOW_DP, 250);

@@ -13,9 +13,20 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
  */
 public interface IMagicCharacter extends IPlayerCharacter {
 
-    //Magic attacks not implemented yet.
-    //int getCurrentMana();
+    /**
+     * @return the max mana points of this character
+     * @see IMagicCharacter
+     */
+    int getMaxMana();
 
+    /**
+     * @return the actual mana points of this character
+     * @see IMagicCharacter
+     */
+    int getCurrentMana();
+
+
+    //Magic attacks not implemented yet.
     //void reduceMana(int diff);
 
 

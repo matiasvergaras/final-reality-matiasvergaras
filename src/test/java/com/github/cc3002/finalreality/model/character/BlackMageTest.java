@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
  * @author Matias Vergara Silva.
  */
 
-class BlackMageTest extends AbstractPlayerCharacterTest {
+class BlackMageTest extends AbstractMagicCharacterTest {
 
     /**
      * Sets up an instance to test this class.
@@ -60,6 +60,18 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
         super.checkEquipWeapon();
     }
 
+    /**
+     * Check that the getters methods works properly.
+     */
+    @Test
+    void gettersTest() {
+        checkGetMaxMana(exampleBlackMage, MANA);
+        checkGetCurrentMana(exampleBlackMage, MANA);
+        super.checkGetMaxHP(exampleBlackMage, HP);
+        super.checkGetMaxDP(exampleBlackMage, DP);
+        super.checkGetCurrentHP(exampleBlackMage, HP);
+
+    }
 
 }
 

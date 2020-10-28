@@ -60,4 +60,15 @@ class EngineerTest extends AbstractPlayerCharacterTest {
     void equipWeaponTest() {
         super.checkEquipWeapon();
     }
+
+    /**
+     * Check that the getters methods works properly.
+     */
+    @Test
+    void gettersTest() {
+        super.checkGetMaxHP(exampleEngineer, HP);
+        super.checkGetMaxDP(exampleEngineer, DP);
+        super.checkGetCurrentHP(exampleEngineer, HP);
+    }
+
 }

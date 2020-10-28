@@ -61,5 +61,17 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
         super.checkEquipWeapon();
     }
 
+    /**
+     * Check that the getters methods works properly.
+     */
+    @Test
+    void gettersTest() {
+        super.checkGetMaxHP(exampleThief, HP);
+        super.checkGetMaxDP(exampleThief, DP);
+        super.checkGetCurrentHP(exampleThief, HP);
+    }
+
+
+
 
 }

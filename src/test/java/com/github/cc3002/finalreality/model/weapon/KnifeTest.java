@@ -69,10 +69,9 @@ public class KnifeTest extends AbstractWeaponTest {
      */
     @Test
     void gettersTest() {
-        Knife testKnife = new Knife("AnKnife", 200, 10);
-        checkGetPower(testKnife, 200);
-        checkGetName(testKnife, "AnKnife");
-        checkGetWeight(testKnife, 10);
+        checkGetPower(exampleKnife, DAMAGE);
+        checkGetName(exampleKnife, KNIFE_NAME);
+        checkGetWeight(exampleKnife, WEIGHT);
 
     }
 

@@ -1,6 +1,7 @@
 package com.github.cc3002.finalreality.model.character;
 
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.magic.IMagicCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.normal.Axe;
@@ -43,4 +44,8 @@ abstract public class AbstractPlayerCharacterTest extends AbstractCharacterTest 
             }
         }
     }
+
+
+
+
 }

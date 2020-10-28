@@ -60,4 +60,16 @@ class KnightTest extends AbstractPlayerCharacterTest {
     void equipWeaponTest() {
         super.checkEquipWeapon();
     }
+
+    /**
+     * Check that the getters methods works properly.
+     */
+    @Test
+    void gettersTest() {
+        super.checkGetMaxHP(exampleKnight, HP);
+        super.checkGetMaxDP(exampleKnight, DP);
+        super.checkGetCurrentHP(exampleKnight, HP);
+    }
+
+
 }

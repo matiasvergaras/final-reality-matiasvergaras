@@ -98,12 +98,23 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
         assertEquals(weapon.getPower(), expectedPower);
     }
 
+    /**
+     * Checks that the weapon getName method works properly.
+     *
+     * @param weapon        the weapon to be tested
+     * @param expectedName the expected name of this weapon.
+     */
     protected void checkGetName(IWeapon weapon, String expectedName) {
         assertEquals(weapon.getName(), expectedName);
     }
 
+    /**
+     * Checks that the weapon getWeight method works properly.
+     *
+     * @param weapon        the weapon to be tested
+     * @param expectedWeight the expected value of weight of this weapon.
+     */
     protected void checkGetWeight(IWeapon weapon, int expectedWeight) {
         assertEquals(weapon.getWeight(), expectedWeight);
     }
-
 }
