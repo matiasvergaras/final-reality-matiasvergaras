@@ -2,7 +2,6 @@ package com.github.matiasvergaras.finalreality.model.character.cpu;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 
 /**
  *
@@ -13,6 +12,7 @@ import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
  * ''weight'' that does the work of define their time in the turnsQueue and
  * ''damage'', that does the work of the equipped weapon damage.
  * @see ICharacter
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 public interface ICPUCharacter extends ICharacter {
@@ -22,13 +22,6 @@ public interface ICPUCharacter extends ICharacter {
      * @return the power of this enemy.
      */
     int getPower();
-
-    /**
-     * Get the state of this enemy.
-     *
-     * @return the state of this enemy.
-     */
-    String getState();
 
     /**
      * Get the weight of this enemy.
@@ -51,34 +44,5 @@ public interface ICPUCharacter extends ICharacter {
      */
     void receiveNormalAttack(IPlayerCharacter character);
 
-
-    /**
-     * Receive a Fire-Spell attack
-     *
-     * @param weapon the weapon with which the character is being attacked
-     */
-    void receiveFireAttack(IMagicWeapon weapon);
-
-    /**
-     * Receive a Thunder-Spell attack
-     *
-     * @param weapon the weapon with which the character is being attacked
-     */
-    void receiveThunderAttack(IMagicWeapon weapon);
-
-    /**
-     * Sets this character state to Paralyzed.
-     */
-    void setParalyzed();
-
-    /**
-     * Sets this character state to Burned.
-     */
-    void setBurned();
-
-    /**
-     * Sets this character state to Poisoned.
-     */
-    void setPoisoned();
 
 }

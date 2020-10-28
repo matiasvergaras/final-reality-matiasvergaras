@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Class to test basics features of a Black Mage Character.
- *
+ * @since Homework 1
  * @author Matias Vergara Silva.
  */
 
-class BlackMageTest extends AbstractPlayerCharacterTest {
+class BlackMageTest extends AbstractMagicCharacterTest {
 
     /**
      * Sets up an instance to test this class.
@@ -21,8 +21,8 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
         super.basicSetUp();
         super.playerSetUp();
         testPlayerCharacters.add(new BlackMage(turns, BLACK_MAGE_NAME, 200, 100, 250));
-        testWeapons.add(EXAMPLE_KNIFE);
-        testWeapons.add(EXAMPLE_STAFF);
+        testWeapons.add(exampleKnife);
+        testWeapons.add(exampleStaff);
     }
 
     /**
@@ -33,8 +33,9 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
         testCharacters.add(new BlackMage(turns, BLACK_MAGE_NAME, 200, 100, 250));
         super.checkConstruction(new BlackMage(turns, BLACK_MAGE_NAME, 200, 100, 250),
                 testCharacters.get(0),
-                new BlackMage(turns, BLACK_MAGE_NAME, 110, 200, 250),
-                new WhiteMage(turns, WHITE_MAGE_NAME, 200, 100, 250));
+                new BlackMage(turns, "Another Black Mage", 110, 200, 250),
+                new WhiteMage(turns, WHITE_MAGE_NAME, 200, 100, 250),
+                new WhiteMage(turns, BLACK_MAGE_NAME, 200, 100, 250));
     }
 
     /**
@@ -43,7 +44,7 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
     @Test
     void waitTurnTest() {
         BlackMage TEST_BLACK_MAGE = new BlackMage(turns, BLACK_MAGE_NAME, 200, 100, 250);
-        TEST_BLACK_MAGE.equip(EXAMPLE_STAFF);
+        TEST_BLACK_MAGE.equip(exampleStaff);
         testCharacters.add(TEST_BLACK_MAGE);
         super.checkTurns();
     }
@@ -59,6 +60,18 @@ class BlackMageTest extends AbstractPlayerCharacterTest {
         super.checkEquipWeapon();
     }
 
+    /**
+     * Check that the getters methods works properly.
+     */
+    @Test
+    void gettersTest() {
+        checkGetMaxMana(exampleBlackMage, MANA);
+        checkGetCurrentMana(exampleBlackMage, MANA);
+        super.checkGetMaxHP(exampleBlackMage, HP);
+        super.checkGetMaxDP(exampleBlackMage, DP);
+        super.checkGetCurrentHP(exampleBlackMage, HP);
+
+    }
 
 }
 

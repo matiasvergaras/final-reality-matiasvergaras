@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Class to test all the features of Bow weapon.
- *
+ * @since Homework 1
  * @author Matias Vergara Silva.
  */
 
@@ -25,7 +25,7 @@ public class BowTest extends AbstractWeaponTest {
      */
     @Test
     void constructorTest() {
-        exampleThief.equip(exampleBow);
+        exampleThief.equipWeapon(exampleBow);
         checkConstruction(new Bow(BOW_NAME, DAMAGE, WEIGHT),
                 exampleThief.getEquippedWeapon(),
                 new Bow(BOW_NAME, DAMAGE * 2, WEIGHT),
@@ -53,14 +53,24 @@ public class BowTest extends AbstractWeaponTest {
     }
 
     /**
+     * Check that the weapon is not equipped when the character to equip is appropriate
+     * but is dead
+     */
+    @Test
+    void deadEquipmentBehaviorTest() {
+        checkDeadEquipmentBehavior(exampleBow, deadEngineer);
+        checkDeadEquipmentBehavior(exampleBow, deadThief);
+    }
+
+
+    /**
      * Check that the weapon getPower method works properly.
      */
     @Test
     void gettersTest() {
-        Bow testBow = new Bow("AnBow", 200, 10);
-        checkGetPower(testBow, 200);
-        checkGetName(testBow, "AnBow");
-        checkGetWeight(testBow, 10);
+        checkGetPower(exampleBow, DAMAGE);
+        checkGetName(exampleBow, BOW_NAME);
+        checkGetWeight(exampleBow, WEIGHT);
 
     }
 }

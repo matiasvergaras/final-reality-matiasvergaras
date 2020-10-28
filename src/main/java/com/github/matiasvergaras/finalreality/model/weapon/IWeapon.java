@@ -9,6 +9,7 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
  * Weapons are an essential part of the game. Only playable
  * characters can equip and use them, and they need them to
  * attack and to get into the turnsQueue.
+ * @since Homework 1
  * @see IPlayerCharacter
  * @author Matías Vergara Silva
  */

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Class to test basics features of a Thief Character.
- *
+ * @since Homework 1
  * @author Matias Vergara Silva.
  */
 
@@ -21,9 +21,9 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
         super.basicSetUp();
         super.playerSetUp();
         testPlayerCharacters.add(new Thief(turns, THIEF_NAME, 200, 100));
-        testWeapons.add(EXAMPLE_KNIFE);
-        testWeapons.add(EXAMPLE_SWORD);
-        testWeapons.add(EXAMPLE_BOW);
+        testWeapons.add(exampleKnife);
+        testWeapons.add(exampleSword);
+        testWeapons.add(exampleBow);
     }
 
     /**
@@ -34,8 +34,9 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
         testCharacters.add(new Thief(turns, THIEF_NAME, 200, 100));
         super.checkConstruction(new Thief(turns, THIEF_NAME, 200, 100),
                 testCharacters.get(0),
-                new Thief(turns, THIEF_NAME, 110, 200),
-                new Engineer(turns, ENGINEER_NAME, 200, 100));
+                new Thief(turns, "Another Thief", 110, 200),
+                new Engineer(turns, ENGINEER_NAME, 200, 100),
+                new Engineer(turns, THIEF_NAME, 200, 100));
     }
 
     /**
@@ -44,7 +45,7 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
     @Test
     void waitTurnTest() {
         Thief TEST_THIEF = new Thief(turns, THIEF_NAME, 200, 100);
-        TEST_THIEF.equip(EXAMPLE_KNIFE);
+        TEST_THIEF.equip(exampleKnife);
         testCharacters.add(TEST_THIEF);
         super.checkTurns();
     }
@@ -59,6 +60,18 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
     void equipWeaponTest() {
         super.checkEquipWeapon();
     }
+
+    /**
+     * Check that the getters methods works properly.
+     */
+    @Test
+    void gettersTest() {
+        super.checkGetMaxHP(exampleThief, HP);
+        super.checkGetMaxDP(exampleThief, DP);
+        super.checkGetCurrentHP(exampleThief, HP);
+    }
+
+
 
 
 }

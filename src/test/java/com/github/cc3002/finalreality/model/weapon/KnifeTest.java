@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Class to test all the features of an Knife weapon.
- *
+ * @since Homework 1
  * @author Matias Vergara Silva.
  */
 public class KnifeTest extends AbstractWeaponTest {
@@ -24,7 +24,7 @@ public class KnifeTest extends AbstractWeaponTest {
      */
     @Test
     void constructorTest() {
-        exampleThief.equip(exampleKnife);
+        exampleThief.equipWeapon(exampleKnife);
         checkConstruction(new Knife(KNIFE_NAME, DAMAGE, WEIGHT),
                 exampleThief.getEquippedWeapon(),
                 new Knife(KNIFE_NAME, DAMAGE * 2, WEIGHT),
@@ -54,14 +54,24 @@ public class KnifeTest extends AbstractWeaponTest {
     }
 
     /**
+     * Check that the weapon is not equipped when the character to equip is appropriate
+     * but is dead
+     */
+    @Test
+    void deadEquipmentBehaviorTest() {
+        checkDeadEquipmentBehavior(exampleKnife, deadKnight);
+        checkDeadEquipmentBehavior(exampleKnife, deadBlackMage);
+        checkDeadEquipmentBehavior(exampleKnife, deadThief);
+    }
+
+    /**
      * Check that the weapon getPower method works properly.
      */
     @Test
     void gettersTest() {
-        Knife testKnife = new Knife("AnKnife", 200, 10);
-        checkGetPower(testKnife, 200);
-        checkGetName(testKnife, "AnKnife");
-        checkGetWeight(testKnife, 10);
+        checkGetPower(exampleKnife, DAMAGE);
+        checkGetName(exampleKnife, KNIFE_NAME);
+        checkGetWeight(exampleKnife, WEIGHT);
 
     }
 

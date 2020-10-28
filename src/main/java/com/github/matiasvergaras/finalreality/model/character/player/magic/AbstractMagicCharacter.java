@@ -1,15 +1,13 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.BlockingQueue;
 
 /**
- * An abstract class that holds the common behaviour of all the Magic Characters in the game.
- *
+ * An abstract class that holds the common behaviour of all Magic Characters in the game.
+ * @since Homework 1
  * @author Matias Vergara Silva.
  */
 public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter implements IMagicCharacter {
@@ -40,25 +38,11 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter imp
     public int getCurrentMana() {
         return currentMana;
     }
+    
 
-    public void reduceMana(int diff) {
-        currentMana -= diff;
-    }
-
-    public void useThunderSpell(ICPUCharacter enemy) {
-    }
-
-    public void useFireSpell(ICPUCharacter enemy) {
-    }
-
-    public void useParalysisSpell(ICPUCharacter enemy) {
-    }
-
-    public void usePoisonSpell(ICPUCharacter enemy) {
-    }
-
-    public void useHealSpell(IPlayerCharacter ally) {
-    }
-
+    //Magic attacks not implemented yet.
+    //public void reduceMana(int diff) {
+    //    currentMana -= diff;
+    //}
 
 }

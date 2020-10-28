@@ -1,6 +1,4 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
-
-import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 /**
@@ -16,39 +14,20 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
 public interface IMagicCharacter extends IPlayerCharacter {
 
     /**
-     * Performs a Fire Spell attack
-     *
-     * @param enemy the enemy to be attacked.
+     * @return the max mana points of this character
+     * @see IMagicCharacter
      */
-    void useFireSpell(ICPUCharacter enemy);
+    int getMaxMana();
 
     /**
-     * Performs a Thunder Spell attack
-     *
-     * @param enemy the enemy to be attacked.
+     * @return the actual mana points of this character
+     * @see IMagicCharacter
      */
-    void useThunderSpell(ICPUCharacter enemy);
-
-    /**
-     * Performs a Poison Spell attack
-     *
-     * @param enemy the enemy to be attacked.
-     */
-    void usePoisonSpell(ICPUCharacter enemy);
-
-    /**
-     * Performs a Paralysis Spell attack
-     *
-     * @param enemy the enemy to be attacked.
-     */
-    void useParalysisSpell(ICPUCharacter enemy);
+    int getCurrentMana();
 
 
-    /**
-     * Performs a Heal Spell to an ally
-     *
-     * @param ally the player character to be attacked.
-     */
-    void useHealSpell(IPlayerCharacter ally);
+    //Magic attacks not implemented yet.
+    //void reduceMana(int diff);
+
 
 }

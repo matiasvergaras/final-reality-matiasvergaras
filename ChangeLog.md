@@ -1,6 +1,11 @@
 ChangeLog
 =========
 
+
+Version 4.0
+-----------
+- (A.1) Removed all implementations that are not yet required. Code cleaning. Normal attacks and state of life.
+
 Version 3.0
 -----------
 - (RC.1) Reformated code and changed some names to make everything clearer and according to the standards. Model working properly.
@@ -11,6 +16,7 @@ Version 3.0
 - (B.2) Added test for character equipment.
 - (B.1) Improved character equipment. Now working properly.
 - (A.1) Radical changes in the conception of the program. Starting to use Double-Dispatch in equipment related issues.
+
 Version 2.0
 -----------
 - (B.3) Added Tests for Weapons and Characters

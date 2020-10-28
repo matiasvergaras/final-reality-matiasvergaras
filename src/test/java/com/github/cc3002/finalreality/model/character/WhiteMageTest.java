@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Class to test basics features of a White Mage Character.
- *
+ * @since Homework 1
  * @author Matias Vergara Silva.
  */
 
-class WhiteMageTest extends AbstractPlayerCharacterTest {
+class WhiteMageTest extends AbstractMagicCharacterTest {
 
     /**
      * Sets up an instance to test this class.
@@ -21,7 +21,7 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
         super.basicSetUp();
         super.playerSetUp();
         testPlayerCharacters.add(new WhiteMage(turns, WHITE_MAGE_NAME, 200, 100, 250));
-        testWeapons.add(EXAMPLE_STAFF);
+        testWeapons.add(exampleStaff);
     }
 
     /**
@@ -32,8 +32,9 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
         testCharacters.add(new WhiteMage(turns, WHITE_MAGE_NAME, 200, 100, 250));
         checkConstruction(new WhiteMage(turns, WHITE_MAGE_NAME, 200, 100, 250),
                 testCharacters.get(0),
-                new WhiteMage(turns, WHITE_MAGE_NAME, 11, 200, 250),
-                new BlackMage(turns, BLACK_MAGE_NAME, 11, 200, 250));
+                new WhiteMage(turns, "Another White Mage", 11, 200, 250),
+                new BlackMage(turns, BLACK_MAGE_NAME, 11, 200, 250),
+                new BlackMage(turns, WHITE_MAGE_NAME, 11, 200, 250));
     }
 
     /**
@@ -42,7 +43,7 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
     @Test
     void waitTurnTest() {
         WhiteMage TEST_WHITE_MAGE = new WhiteMage(turns, WHITE_MAGE_NAME, 200, 100, 250);
-        TEST_WHITE_MAGE.equip(EXAMPLE_STAFF);
+        TEST_WHITE_MAGE.equip(exampleStaff);
         testCharacters.add(TEST_WHITE_MAGE);
         super.checkTurns();
     }
@@ -55,4 +56,19 @@ class WhiteMageTest extends AbstractPlayerCharacterTest {
     void equipWeaponTest() {
         super.checkEquipWeapon();
     }
+
+    /**
+     * Check that the getters methods works properly.
+     */
+    @Test
+    void gettersTest() {
+        checkGetMaxMana(exampleBlackMage, MANA);
+        checkGetCurrentMana(exampleBlackMage, MANA);
+        super.checkGetMaxHP(exampleWhiteMage, HP);
+        super.checkGetMaxDP(exampleWhiteMage, DP);
+        super.checkGetCurrentHP(exampleWhiteMage, HP);
+
+    }
+
+
 }

@@ -9,7 +9,7 @@ import java.util.Objects;
  * Class to represent a ''Knife'' weapon.
  * <p>
  * Knives (Knife) can be used by Knights, Engineers and Thieves (Thief).
- *
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 

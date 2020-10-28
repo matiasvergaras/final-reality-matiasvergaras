@@ -8,7 +8,7 @@ import java.util.Objects;
  * Class to represent a ''Staff'' weapon.
  * <p>
  * Staves (Staff) can be used only by Magic Characters, i.e. Mages.
- *
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 public class Staff extends AbstractMagicWeapon {

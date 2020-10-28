@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Class to test all the features of an Axe weapon.
- *
+ * @since Homework 1
  * @author Matias Vergara Silva.
  */
 
@@ -25,10 +25,10 @@ public class AxeTest extends AbstractWeaponTest {
      */
     @Test
     void constructorTest() {
-        exampleKnight.equip(exampleAxe);
+        exampleKnight.equipWeapon(exampleAxe);
         checkConstruction(new Axe(AXE_NAME, DAMAGE, WEIGHT),
                 exampleKnight.getEquippedWeapon(),
-                new Axe(AXE_NAME, DAMAGE * 2, WEIGHT),
+                new Axe("Another", DAMAGE * 2, WEIGHT),
                 new Sword(SWORD_NAME, DAMAGE, WEIGHT));
     }
 
@@ -52,16 +52,24 @@ public class AxeTest extends AbstractWeaponTest {
         checkUnequippableBehavior(exampleAxe, exampleWhiteMage);
     }
 
+    /**
+     * Check that the weapon is not equipped when the character to equip is appropriate
+     * but is dead
+     */
+    @Test
+    void deadEquipmentBehaviorTest() {
+        checkDeadEquipmentBehavior(exampleAxe, deadEngineer);
+        checkDeadEquipmentBehavior(exampleAxe, deadKnight);
+    }
 
     /**
      * Check that the weapon getPower method works properly.
      */
     @Test
     void gettersTest() {
-        Axe testAxe = new Axe("AnAxe", 100, 10);
-        checkGetPower(testAxe, 100);
-        checkGetName(testAxe, "AnAxe");
-        checkGetWeight(testAxe, 10);
+        checkGetPower(exampleAxe, DAMAGE);
+        checkGetName(exampleAxe, AXE_NAME);
+        checkGetWeight(exampleAxe, WEIGHT);
     }
 
 }

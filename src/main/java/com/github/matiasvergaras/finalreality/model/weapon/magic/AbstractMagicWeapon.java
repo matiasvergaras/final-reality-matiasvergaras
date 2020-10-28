@@ -4,7 +4,7 @@ import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 
 /**
  * An abstract class that holds the common behaviour of all  Magic Weapons in the game.
- *
+ * @since Homework 1
  * @author Matias Vergara Silva.
  * <p>
  * This class could serve us, for example, if we wanted to add properties of

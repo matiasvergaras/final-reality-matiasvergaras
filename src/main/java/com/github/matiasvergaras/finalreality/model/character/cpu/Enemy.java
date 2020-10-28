@@ -8,6 +8,7 @@ import java.util.concurrent.BlockingQueue;
 
 /**
  * A class that holds all the information of a single enemy of the game.
+ * @since Homework 1
  * @author Ignacio Slater Muñoz
  * @author Matías Vergara Silva
  */
@@ -45,11 +46,7 @@ public class Enemy extends AbstractCPUCharacter {
             return false;
         }
         final Enemy that = (Enemy) o;
-        return this.getWeight() == that.getWeight() &&
-                this.getName().equals(that.getName()) &&
-                this.getMaxDP() == that.getMaxDP() &&
-                this.getMaxHP() == that.getMaxHP() &&
-                this.getPower() == that.getPower();
+        return this.getName().equals(that.getName());
     }
 
 
@@ -61,8 +58,7 @@ public class Enemy extends AbstractCPUCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getWeight() + this.getName()
-                + this.getPower() + this.getMaxDP() + this.getMaxHP());
+        return Objects.hash(this.getName());
     }
 
 

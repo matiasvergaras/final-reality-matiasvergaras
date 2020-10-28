@@ -4,7 +4,7 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
 
 /**
  * A class that holds all the information of a weapon.
- *
+ * @since Homework 1
  * @author Ignacio Slater Muñoz.
  * @author Matías Vergara Silva.
  */

@@ -3,16 +3,14 @@ package com.github.matiasvergaras.finalreality.model.character.cpu;
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 /**
  * A class that holds all the information of a CPU character of the game.
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 public abstract class AbstractCPUCharacter extends AbstractCharacter implements ICPUCharacter {
@@ -67,7 +65,11 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
      */
     @Override
     public void normalAttack(IPlayerCharacter character) {
-        character.receiveNormalAttack(this);
+        if( this.isAlive()) {
+            if (character.isAlive()) {
+                character.receiveNormalAttack(this);
+            }
+        }
     }
 
     /**
@@ -75,7 +77,9 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
      */
     @Override
     public void receiveNormalAttack(IPlayerCharacter character) {
-        reduceHP(character.getEquippedWeapon().getPower());
+        if (character.getEquippedWeapon().getPower()>this.getDP()) {
+            reduceHP(character.getEquippedWeapon().getPower() - getDP());
+        }
     }
 
     /**
@@ -86,64 +90,5 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
     public int getWeight() {
         return weight;
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return the state of this enemy.
-     */
-    public String getState() {
-        return state;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param weapon the weapon with which the character is being attacked
-     */
-    public void receiveFireAttack(IMagicWeapon weapon) {
-        this.reduceHP(weapon.getMagicDamage());
-        Random rand = new Random();
-        double prob = rand.nextDouble();
-        if (prob <= 0.2) {
-            setBurned();
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param weapon the weapon with which the character is being attacked
-     */
-    public void receiveThunderAttack(IMagicWeapon weapon) {
-        this.reduceHP(weapon.getMagicDamage());
-        Random rand = new Random();
-        double prob = rand.nextDouble();
-        if (prob <= 0.3) {
-            setParalyzed();
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setBurned() {
-        state = "BURNED";
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setParalyzed() {
-        state = "PARALYZED";
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void setPoisoned() {
-        state = "POISONED";
-    }
-
 
 }

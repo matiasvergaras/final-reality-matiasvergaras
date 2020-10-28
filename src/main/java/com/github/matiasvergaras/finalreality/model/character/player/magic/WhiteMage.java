@@ -14,6 +14,7 @@ import java.util.concurrent.BlockingQueue;
  * <p>
  * White Wizards can can equip only Staves (Staff), and use Heal, Poison and Paralysis Spells.
  *
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 
@@ -38,60 +39,8 @@ public class WhiteMage extends AbstractMagicCharacter {
      */
     @Override
     public void equipWeapon(IWeapon weapon) {
-        weapon.equipToWhiteMage(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param enemy the enemy that will receive the magic attack
-     */
-    @Override
-    public void useParalysisSpell(ICPUCharacter enemy) {
-        if (this.getCurrentMana() > 25) {
-            enemy.setParalyzed();
-            this.reduceMana(25);
-        } else {
-            //Temporary ''solution''. Actually this will still do an attack (without effect),
-            // but we want this case to do nothing, so the player can try with
-            // another movement.
-            System.out.println("Not enough mana");
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param enemy the enemy that will receive the magic attack
-     */
-    @Override
-    public void usePoisonSpell(ICPUCharacter enemy) {
-        if (this.getCurrentMana() > 40) {
-            enemy.setPoisoned();
-            this.reduceMana(40);
-        } else {
-            //Temporary ''solution''. Actually this will still do an attack (without effect),
-            // but we want this case to do nothing, so the player can try with
-            // another movement.
-            System.out.println("Not enough mana");
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param ally the ally that will receive the heal
-     */
-    @Override
-    public void useHealSpell(IPlayerCharacter ally) {
-        if (this.getCurrentMana() > 15) {
-            ally.receiveHeal();
-            this.reduceMana(15);
-        } else {
-            //Temporary ''solution''. Actually this will still do an attack (without effect),
-            // but we want this case to do nothing, so the player can try with
-            // another movement.
-            System.out.println("Not enough mana");
+        if(this.isAlive()) {
+            weapon.equipToWhiteMage(this);
         }
     }
 
@@ -106,13 +55,7 @@ public class WhiteMage extends AbstractMagicCharacter {
         if (this == o) return true;
         if (!(o instanceof WhiteMage)) return false;
         WhiteMage that = (WhiteMage) o;
-        return this.getName().equals(that.getName()) &&
-                this.getMaxHP() == that.getMaxHP() &&
-                this.getMaxDP() == that.getMaxDP() &&
-                this.getMaxMana() == that.getMaxMana() &&
-                this.getCurrentDP() == that.getCurrentDP() &&
-                this.getCurrentHP() == that.getCurrentHP() &&
-                this.getCurrentMana() == that.getCurrentMana();
+        return this.getName().equals(that.getName());
     }
 
     /**
@@ -123,8 +66,7 @@ public class WhiteMage extends AbstractMagicCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(), this.getMaxHP(), this.getMaxDP(),
-                +this.getMaxMana());
+        return Objects.hash(this.getName());
     }
 
 

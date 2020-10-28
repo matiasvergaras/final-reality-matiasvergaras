@@ -14,6 +14,7 @@ import java.util.concurrent.BlockingQueue;
  * <p>
  * Thieves can equip Swords, Knives (Knife) and Bows, and cannot use any Spells.
  *
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 public class Thief extends AbstractPlayerCharacter {
@@ -36,7 +37,9 @@ public class Thief extends AbstractPlayerCharacter {
      */
     @Override
     public void equipWeapon(IWeapon weapon) {
-        weapon.equipToThief(this);
+        if(this.isAlive()) {
+            weapon.equipToThief(this);
+        }
     }
 
     /**
@@ -50,11 +53,7 @@ public class Thief extends AbstractPlayerCharacter {
         if (this == o) return true;
         if (!(o instanceof Thief)) return false;
         Thief that = (Thief) o;
-        return this.getName().equals(that.getName()) &&
-                this.getMaxHP() == that.getMaxHP() &&
-                this.getMaxDP() == that.getMaxDP() &&
-                this.getCurrentDP() == that.getCurrentDP() &&
-                this.getCurrentHP() == that.getCurrentHP();
+        return this.getName().equals(that.getName());
     }
 
     /**
@@ -65,8 +64,7 @@ public class Thief extends AbstractPlayerCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(),
-                this.getMaxHP(), this.getMaxDP());
+        return Objects.hash(this.getName());
     }
 
 

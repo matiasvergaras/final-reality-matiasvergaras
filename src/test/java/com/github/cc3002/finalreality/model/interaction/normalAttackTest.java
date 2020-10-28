@@ -1,86 +1,187 @@
 package com.github.cc3002.finalreality.model.interaction;
-
-import com.github.cc3002.finalreality.model.abstractModelTest;
-import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
+import com.github.matiasvergaras.finalreality.model.character.player.normal.Engineer;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * A class to test that the attack between PlayerCharacters and Enemies works properly.
  * <p>
- * We will show that every character can get to attack an enemy, even when the methods are inherited from
- * their abstract class IPlayerCharacter (so every character will work the same way). We will do this only for
- * this test, but for the next we will assume that test with one kind of character is enough - except if they
- * overrides methods -.
+ * A class to test the normal attacks between CPU and Player Characters,
+ * using two instances of each type, a weak and a powerful one, and the same for weapons.
+ * Weapons can be of the same type or different, but they must be equippable to the given
+ * player character.
+ * <p>
+ * The tests are divided in two directions: From character to enemy and from enemy to character.
+ * This is to avoid having to create copies of the characters involved, since there is no copy method,
+ * and creating more instances would mess up the code too much. 
  * </p>
- *
- * @author Matías Vergara Silva.
- * @see IPlayerCharacter
- * @see ICPUCharacter
+ * @see abstractNormalAttackTest
+ * @author Matias Vergara Silva.
+ * @since Homework 2 - Partial 3
  */
-public class normalAttackTest extends abstractModelTest {
-
-    protected void checkNormalAttack(ICPUCharacter enemy, IPlayerCharacter character,
-                                     IWeapon weapon) {
-
-        character.equipWeapon(weapon);
-
-        character.normalAttack(enemy);
-        int enemyHP = enemy.getMaxHP() - character.getEquippedWeapon().getPower();
-        assertEquals(enemyHP, enemy.getCurrentHP());
-
-
-        enemy.normalAttack(character);
-        int characterHP = character.getMaxHP() - enemy.getPower();
-
-        assertEquals(characterHP, character.getCurrentHP());
-
-    }
-
-    // We will show that every character can attack, even when the methods are inherited from their abstract class
+public class normalAttackTest extends abstractNormalAttackTest{
 
     /**
-     * Check that a Knight can attack an Enemy.
+     * Sets up a queue.
      */
-    @Test
-    void KnightAttackTest() {
-        checkNormalAttack(exampleEnemy, exampleKnight, exampleAxe);
+    @BeforeEach
+    void setUp() {
+        super.turnSetUp();
     }
 
     /**
-     * Check that an Engineer can attack an Enemy.
+     * Checks that nothing happens if a character tries to attack another one already dead.
      */
     @Test
-    void EngineerAttackTest() {
-        checkNormalAttack(exampleEnemy, exampleEngineer, exampleBow);
+    void aliveAgainstDead(){
+        //Attack a dead CPU character
+        exampleEngineer.equipWeapon(exampleBow);
+        exampleEngineer.normalAttack(deadEnemy);
+        assertEquals(deadEnemy.getMaxHP(), deadEnemy.getCurrentHP());
+        //Attack a dead player character
+        exampleEnemy.normalAttack(deadEngineer);
+        assertEquals(deadEngineer.getMaxHP(), deadEngineer.getCurrentHP());
     }
 
     /**
-     * Check that a Thief can attack an Enemy.
+     * Checks that nothing happens if a dead character tries to attack another one.
      */
     @Test
-    void ThiefAttackTest() {
-        checkNormalAttack(exampleEnemy, exampleThief, exampleKnife);
+    void deadAgainstAlive(){
+        //Attack with an dead player character
+        deadEngineer.equipWeapon(exampleBow);
+        deadEngineer.normalAttack(exampleEnemy);
+        assertEquals(exampleEnemy.getMaxHP(), exampleEnemy.getCurrentHP());
+        //Attack with a dead CPU character
+        deadEnemy.normalAttack(exampleEngineer);
+        assertEquals(exampleEngineer.getMaxHP(), exampleEngineer.getCurrentHP());
+
     }
 
     /**
-     * Check that a Black Mage can attack an Enemy (using only normal attacks).
+     * This one is just to prove we will not have fights in the afterlife.
      */
     @Test
-    void BlackMageAttackTest() {
-        checkNormalAttack(exampleEnemy, exampleBlackMage, exampleStaff);
+    void deadAgainstDead(){
+        //Dead player character attacks to dead CPU character
+        deadEngineer.equipWeapon(exampleBow);
+        deadEngineer.normalAttack(deadEnemy);
+        assertEquals(deadEnemy.getMaxHP(), deadEnemy.getCurrentHP());
+        //Dead CPU character attacks to dead player character
+        deadEnemy.normalAttack(deadEngineer);
+        assertEquals(deadEngineer.getMaxHP(), deadEngineer.getCurrentHP());
+    }
+
+
+    /**
+     * Checks that the interactions between Enemies and Black Mages works properly.
+     * Side: From Black Mage to Enemy
+     */
+    @Test
+    void BlackMageAgainstEnemies(){
+        checkEffectiveNormalPlayerAttack(exampleEnemy, exampleBlackMage, powerfulStaff);
+        checkIneffectiveNormalPlayerAttack(exampleEnemy, exampleBlackMage, weakKnife);
+
+    }
+
+
+    /**
+     * Checks that the interactions between Enemies and Black Mages works properly.
+     * Side: From Enemy to Black Mage
+     */
+    @Test
+    void EnemyAgainstBlackMage(){
+        checkEffectiveNormalCPUAttack(exampleEnemy, weakBlackMage);
+        checkIneffectiveNormalCPUAttack(weakEnemy, exampleBlackMage);
+    }
+
+
+
+    /**
+     * Checks that the interactions between Enemies and White Mages works properly.
+     * Side: From White Mage to Enemy
+     */
+    @Test
+    void WhiteMageAgainstEnemies(){
+        checkEffectiveNormalPlayerAttack(exampleEnemy, exampleWhiteMage, powerfulStaff);
+        checkIneffectiveNormalPlayerAttack(exampleEnemy, exampleWhiteMage, weakStaff);
+
     }
 
     /**
-     * Check that a White Mage can attack an Enemy (using only normal attacks).
+     * Checks that the interactions between Enemies and White Mages works properly.
+     * Side: From Enemy to White Mage
      */
     @Test
-    void WhiteMageAttackTest() {
-        checkNormalAttack(exampleEnemy, exampleWhiteMage, exampleStaff);
+    void EnemyAgainstWhiteMage(){
+        checkEffectiveNormalCPUAttack(exampleEnemy, weakWhiteMage);
+        checkIneffectiveNormalCPUAttack(weakEnemy, exampleWhiteMage);
     }
 
+
+    /**
+     * Checks that the interactions between Enemies and Knights works properly.
+     * Side: From Knight to Enemy
+     */
+    @Test
+    void KnightAgainstEnemies(){
+        checkEffectiveNormalPlayerAttack(exampleEnemy, exampleKnight, powerfulSword);
+        checkIneffectiveNormalPlayerAttack(exampleEnemy, exampleKnight, weakAxe);
+
+    }
+
+    /**
+     * Checks that the interactions between Enemies and Knights works properly.
+     * Side: From Enemy to Knight
+     */
+    @Test
+    void EnemyAgainstKnight(){
+        checkEffectiveNormalCPUAttack(exampleEnemy, weakKnight);
+        checkIneffectiveNormalCPUAttack(weakEnemy, exampleKnight);
+    }
+
+    /**
+     * Checks that the interactions between Enemies and Engineers works properly.
+     * Side: From Engineer to Enemy
+     */
+    @Test
+    void EngineerAgainstEnemies(){
+        checkEffectiveNormalPlayerAttack(exampleEnemy, exampleEngineer, powerfulBow);
+        checkIneffectiveNormalPlayerAttack(exampleEnemy, exampleEngineer, weakAxe);
+
+    }
+
+    /**
+     * Checks that the interactions between Enemies and Engineers works properly.
+     * Side: From Enemy to Engineer
+     */
+    @Test
+    void EnemyAgainstEngineer(){
+        checkEffectiveNormalCPUAttack(exampleEnemy, weakEngineer);
+        checkIneffectiveNormalCPUAttack(weakEnemy, exampleEngineer);
+    }
+
+    /**
+     * Checks that the interactions between Enemies and Thieves works properly.
+     * Side: From Thieve to Enemy
+     */
+    @Test
+    void ThiefAgainstEnemies(){
+        checkEffectiveNormalPlayerAttack(exampleEnemy, exampleThief, powerfulKnife);
+        checkIneffectiveNormalPlayerAttack(exampleEnemy, exampleThief, weakBow);
+
+    }
+
+    /**
+     * Checks that the interactions between Enemies and Thieves works properly.
+     * Side: From Enemy to Thieve
+     */
+    @Test
+    void EnemyAgainstThief(){
+        checkEffectiveNormalCPUAttack(exampleEnemy, weakThief);
+        checkIneffectiveNormalCPUAttack(weakEnemy, exampleThief);
+    }
 
 }

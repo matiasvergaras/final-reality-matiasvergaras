@@ -9,7 +9,7 @@ import java.util.Objects;
  * Class to represent an ''Axe'' weapon.
  * <p>
  * Axes can be used by Knights and Engineers.
- *
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 public class Axe extends AbstractWeapon {

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Class to test all the features of an Staff weapon.
- *
+ * @since Homework 1
  * @author Matias Vergara Silva.
  */
 public class StaffTest extends AbstractWeaponTest {
@@ -25,7 +25,7 @@ public class StaffTest extends AbstractWeaponTest {
      */
     @Test
     void constructorTest() {
-        exampleBlackMage.equip(exampleStaff);
+        exampleBlackMage.equipWeapon(exampleStaff);
         checkConstruction(new Staff(STAFF_NAME, DAMAGE, WEIGHT, MAGIC_DAMAGE),
                 exampleBlackMage.getEquippedWeapon(),
                 new Staff(STAFF_NAME, DAMAGE * 2, WEIGHT, MAGIC_DAMAGE),
@@ -55,14 +55,23 @@ public class StaffTest extends AbstractWeaponTest {
     }
 
     /**
+     * Check that the weapon is not equipped when the character to equip is appropriate
+     * but is dead
+     */
+    @Test
+    void deadEquipmentBehaviorTest() {
+        checkDeadEquipmentBehavior(exampleStaff, deadWhiteMage);
+        checkDeadEquipmentBehavior(exampleStaff, deadBlackMage);
+    }
+
+    /**
      * Check that the weapon getPower method works properly.
      */
     @Test
     void gettersTest() {
-        Staff testStaff = new Staff("AnStaff", 200, 10, 250);
-        checkGetPower(testStaff, 200);
-        checkGetName(testStaff, "AnStaff");
-        checkGetWeight(testStaff, 10);
+        checkGetPower(exampleStaff, DAMAGE);
+        checkGetName(exampleStaff, STAFF_NAME);
+        checkGetWeight(exampleStaff, WEIGHT);
 
     }
 

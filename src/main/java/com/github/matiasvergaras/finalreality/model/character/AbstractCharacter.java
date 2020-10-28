@@ -8,7 +8,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * An abstract class that holds the common behaviour of all the characters in the game.
- *
+ * @since Homework 1
  * @author Ignacio Slater Muñoz.
  * @author Matias Vergara Silva.
  */
@@ -17,9 +17,9 @@ public abstract class AbstractCharacter implements ICharacter {
     private final BlockingQueue<ICharacter> turnsQueue;
     private final String name;
     private final int maxHP;
-    private final int maxDP;
-    private int currentDP;
     private int currentHP;
+    private final int DP;
+
     protected ScheduledExecutorService scheduledExecutor;
 
     /**
@@ -30,15 +30,14 @@ public abstract class AbstractCharacter implements ICharacter {
      * @param HP         this character's max heals points
      * @param DP         this character's max defense points
      */
-    protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
+    public AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
                                 @NotNull String name,
                                 int HP, int DP) {
         this.turnsQueue = turnsQueue;
         this.name = name;
         this.maxHP = HP;
         this.currentHP = HP;
-        this.maxDP = DP;
-        this.currentDP = DP;
+        this.DP = DP;
     }
 
     /**
@@ -77,23 +76,15 @@ public abstract class AbstractCharacter implements ICharacter {
      * {@inheritDoc}
      */
     @Override
-    public int getCurrentDP() {
-        return currentDP;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getMaxDP() {
-        return maxDP;
+    public int getDP() {
+        return DP;
     }
 
     /**
      * {@inheritDoc}
      */
     public boolean isAlive() {
-        return currentHP > 0;
+        return currentHP> 0;
     }
 
     /**
@@ -104,6 +95,10 @@ public abstract class AbstractCharacter implements ICharacter {
     @Override
     public void reduceHP(double diff) {
         this.currentHP -= diff;
+        if(this.currentHP<0){
+            //To avoid characters of having negative HP.
+            this.currentHP=0;
+        }
     }
 
 }

@@ -13,6 +13,7 @@ import java.util.concurrent.BlockingQueue;
  * <p>
  * Engineers can equip Axes and Bows, and cannot use magic spells.
  *
+ * @since Homework 1
  * @author Matías Vergara Silva
  */
 
@@ -36,7 +37,9 @@ public class Engineer extends AbstractPlayerCharacter {
      */
     @Override
     public void equipWeapon(IWeapon weapon) {
-        weapon.equipToEngineer(this);
+        if(this.isAlive()) {
+            weapon.equipToEngineer(this);
+        }
     }
 
 
@@ -55,11 +58,7 @@ public class Engineer extends AbstractPlayerCharacter {
             return false;
         }
         final Engineer that = (Engineer) o;
-        return this.getName().equals(that.getName()) &&
-                this.getMaxHP() == that.getMaxHP() &&
-                this.getMaxDP() == that.getMaxDP() &&
-                this.getCurrentDP() == that.getCurrentDP() &&
-                this.getCurrentHP() == that.getCurrentHP();
+        return this.getName().equals(that.getName());
     }
 
     /**
@@ -70,8 +69,7 @@ public class Engineer extends AbstractPlayerCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(), this.getMaxHP(),
-                this.getMaxDP());
+        return Objects.hash(this.getName());
     }
 
 

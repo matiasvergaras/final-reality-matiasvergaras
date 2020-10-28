@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * A class that holds all the information of all Player Characters of the game.
- *
+ * @since Homework 1
  * @author Ignacio Slater Muñoz.
  * @author Matias Vergara Silva.
  */
@@ -83,8 +83,9 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
 
 
     public void normalAttack(ICPUCharacter character) {
-
-        character.receiveNormalAttack(this);
+        if (character.isAlive() && this.isAlive()) {
+            character.receiveNormalAttack(this);
+        }
     }
 
     /**
@@ -93,19 +94,9 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
      * @param character the attacking character.
      */
     public void receiveNormalAttack(ICPUCharacter character) {
-        this.reduceHP(character.getPower());
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void receiveHeal() {
-        /* Since we set HP as private, and it is not possible for enemies to get healed,
-         * we will abuse of the reduceHP method (that is common both for player characters as well as
-         * enemies) to implement the receiveHeal method -as an negative attack-.
-         */
-        reduceHP(-this.getMaxHP() * 0.3);
+        if(character.getPower()>this.getDP()) {
+            this.reduceHP(character.getPower() - getDP());
+        }
     }
 }
 

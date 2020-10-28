@@ -1,48 +1,96 @@
 package com.github.cc3002.finalreality.model.interaction;
 
-import com.github.cc3002.finalreality.model.abstractModelTest;
-import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
+import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 /**
- * A class to test that the isAlive method of AbstractCharacter works properly, i.e., that every character
- * can get to die.
- *
- * @author Matías Vergara Silva.
- * @see com.github.matiasvergaras.finalreality.model.character.ICharacter
+ * <p>
+ * A class to test that all characters starts alive, and they can get to die when they receive attacks.
+ * @see abstractIsAliveTest
+ * @author Matias Vergara Silva.
+ * @since Homework 2 - Partial 3
  */
-public class isAliveTest extends abstractModelTest {
-
-    protected void checkAlive(ICPUCharacter enemy, IPlayerCharacter character,
-                              IWeapon weapon) {
-        ICPUCharacter anotherEnemy = enemy;
-        character.equipWeapon(weapon);
-        while (enemy.isAlive()) {
-            character.normalAttack(enemy);
-        }
-
-        while (character.isAlive()) {
-            anotherEnemy.normalAttack(character);
-        }
-        assertTrue(enemy.getCurrentHP() <= 0);
-        assertTrue(character.getCurrentHP() <= 0);
+public class isAliveTest extends abstractIsAliveTest {
+    @BeforeEach
+    void setUp(){
+        super.turnSetUp();
     }
-
 
     /**
-     * Checks that the condition of isAlive is reached
-     * <p>
-     * Since we have tests to prove that every character can attack an enemy,
-     * we will assume that if one kind of character can get to kill, then everyone can.
-     * </p>
+     * To test that player characters are created alive
      */
     @Test
-    void aliveTest() {
-        checkAlive(exampleEnemy, exampleKnight, exampleKnife);
+    void deadPlayerCharacterTest(){
+        checkStartAlive(deadBlackMage);
+
     }
+
+    /**
+     * To test that CPU characters are created alive
+     */
+    @Test
+    void deadCPUCharacterTest(){
+        checkStartAlive(deadEnemy);
+    }
+
+    /**
+     * To test that Black Mage characters can die
+     */
+    @Test
+    void BlackMageDyingTest(){
+        checkStartAlive(exampleBlackMage);
+        checkPlayerDies(exampleEnemy, exampleBlackMage);
+    }
+
+    /**
+     * To test that White Mage characters can die
+     */
+    @Test
+    void WhiteMageDyingTest(){
+        checkStartAlive(exampleWhiteMage);
+        checkPlayerDies(exampleEnemy, exampleWhiteMage);
+    }
+
+    /**
+     * To test that Engineer characters can die
+     */
+    @Test
+    void EngineerDyingTest(){
+        checkStartAlive(exampleEngineer);
+        checkPlayerDies(exampleEnemy, exampleEngineer);
+    }
+
+    /**
+     * To test that Thief characters can die
+     */
+    @Test
+    void ThiefDyingTest(){
+        checkStartAlive(exampleThief);
+        checkPlayerDies(exampleEnemy, exampleThief);
+
+    }
+
+    /**
+     * To test that Knight characters can die
+     */
+    @Test
+    void KnightDyingTest(){
+        checkStartAlive(exampleKnight);
+        checkPlayerDies(exampleEnemy, exampleKnight);
+
+    }
+
+    /**
+     * To test that Enemy characters can die
+     */
+    @Test
+    void EnemyDyingTest(){
+        checkStartAlive(exampleEnemy);
+        checkCPUDies(exampleEnemy, exampleKnight, powerfulKnife);
+    }
+
+
 
 }
