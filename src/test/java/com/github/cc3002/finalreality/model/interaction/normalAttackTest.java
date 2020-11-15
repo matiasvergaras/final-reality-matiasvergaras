@@ -39,10 +39,12 @@ public class normalAttackTest extends abstractNormalAttackTest{
         //Attack a dead CPU character
         exampleEngineer.equipWeapon(exampleBow);
         exampleEngineer.normalAttack(deadEnemy);
-        assertEquals(deadEnemy.getMaxHP(), deadEnemy.getCurrentHP());
+        assertEquals(deadEnemy.getMaxHP(), deadEnemy.getCurrentHP(), "Dead Enemy HP changed after receiving an" +
+                "attack.");
         //Attack a dead player character
         exampleEnemy.normalAttack(deadEngineer);
-        assertEquals(deadEngineer.getMaxHP(), deadEngineer.getCurrentHP());
+        assertEquals(deadEngineer.getMaxHP(), deadEngineer.getCurrentHP(), "Dead Character HP changed after " +
+                "receiving an attack.");
     }
 
     /**
@@ -53,10 +55,12 @@ public class normalAttackTest extends abstractNormalAttackTest{
         //Attack with an dead player character
         deadEngineer.equipWeapon(exampleBow);
         deadEngineer.normalAttack(exampleEnemy);
-        assertEquals(exampleEnemy.getMaxHP(), exampleEnemy.getCurrentHP());
+        assertEquals(exampleEnemy.getMaxHP(), exampleEnemy.getCurrentHP(), "Dead Player attacked and caused" +
+                "damage.");
         //Attack with a dead CPU character
         deadEnemy.normalAttack(exampleEngineer);
-        assertEquals(exampleEngineer.getMaxHP(), exampleEngineer.getCurrentHP());
+        assertEquals(exampleEngineer.getMaxHP(), exampleEngineer.getCurrentHP(), "Dead Enemy attacked and caused" +
+                "damage.");
 
     }
 
@@ -66,12 +70,16 @@ public class normalAttackTest extends abstractNormalAttackTest{
     @Test
     void deadAgainstDead(){
         //Dead player character attacks to dead CPU character
+        assertEquals(deadEnemy.getMaxHP(), 0, "This test has to be used with characters with maxHP = 0," +
+                "but it is getting another value.");
+        assertEquals(deadEngineer.getMaxHP(), 0, "This test has to be used with characters with maxHP =" +
+                " 0, but it is getting another value.");
         deadEngineer.equipWeapon(exampleBow);
         deadEngineer.normalAttack(deadEnemy);
-        assertEquals(deadEnemy.getMaxHP(), deadEnemy.getCurrentHP());
+        assertEquals(deadEnemy.getMaxHP(), deadEnemy.getCurrentHP(), "There has been a fight in the afterlife.");
         //Dead CPU character attacks to dead player character
         deadEnemy.normalAttack(deadEngineer);
-        assertEquals(deadEngineer.getMaxHP(), deadEngineer.getCurrentHP());
+        assertEquals(deadEngineer.getMaxHP(), deadEngineer.getCurrentHP(), "There has been a fight in the afterlife.");
     }
 
 

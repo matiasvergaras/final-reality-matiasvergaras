@@ -31,11 +31,13 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
                                      final IWeapon testEqualWeapon,
                                      final IWeapon sameClassDifferentWeapon,
                                      final IWeapon differentWeapon) {
-        assertEquals(expectedWeapon, testEqualWeapon);
-        assertNotEquals(sameClassDifferentWeapon, testEqualWeapon);
-        assertNotEquals(testEqualWeapon, differentWeapon);
-        assertEquals(expectedWeapon.hashCode(), testEqualWeapon.hashCode());
-        assertNotEquals(expectedWeapon.hashCode(), differentWeapon.hashCode());
+        assertEquals(expectedWeapon, testEqualWeapon, "expectedWeapon differs from EqualWeapon.");
+        assertNotEquals(sameClassDifferentWeapon, testEqualWeapon, "sameClassDifferentWeapon equals EqualWeapon.");
+        assertNotEquals(testEqualWeapon, differentWeapon, "EqualWeapon equals differentWeapon.");
+        assertEquals(expectedWeapon.hashCode(), testEqualWeapon.hashCode(), "expectedWeapon hashcode differs" +
+                "from EqualWeapon hashcode.");
+        assertNotEquals(expectedWeapon.hashCode(), differentWeapon.hashCode(), "expectedWeapon hashcode " +
+                "equals differentWeapon hashcode.");
 
     }
 
@@ -51,12 +53,15 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
                                      IPlayerCharacter characterA,
                                      IPlayerCharacter characterB) {
         characterA.equipWeapon(weapon);
-        assertEquals(characterA.getEquippedWeapon(), weapon);
-        assertEquals(weapon.getOwner(), characterA);
+        assertEquals(characterA.getEquippedWeapon(), weapon, "Weapon was not equipped successfully.");
+        assertEquals(weapon.getOwner(), characterA, "Weapon owner was not set successfully.");
         characterB.equipWeapon(weapon);
-        assertNull(characterA.getEquippedWeapon());
-        assertEquals(characterB.getEquippedWeapon(), weapon);
-        assertEquals(weapon.getOwner(), characterB);
+        assertNull(characterA.getEquippedWeapon(), "Weapon was not unequipped when tried to equip to another" +
+                "character.");
+        assertEquals(characterB.getEquippedWeapon(), weapon, "Weapon was not equipped successfully when " +
+                "tried to equip from another character.");
+        assertEquals(weapon.getOwner(), characterB, "Weapon owner was not set successfully when tried to" +
+                "equip from another character.");
     }
 
     /**
@@ -69,8 +74,9 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
                                              IPlayerCharacter character) {
         weapon.setWeaponFree();
         character.equipWeapon(weapon);
-        assertNull(weapon.getOwner());
-        assertNull(character.getEquippedWeapon());
+        assertNull(weapon.getOwner(), "Weapon was not supposed to be equipped, but it got an owner.");
+        assertNull(character.getEquippedWeapon(), "Character was not supossed to be equipped with this " +
+                "weapon, but he got an equippedWeapon.");
     }
 
     /**
@@ -82,7 +88,8 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
                                              IPlayerCharacter character) {
         //Preliminaries
         weapon.setWeaponFree();
-        assertFalse(character.isAlive());
+        assertFalse(character.isAlive(), "This test must be used with a character already dead, but " +
+                "it is getting an Alive character.");
         //To avoid code repeating but also to have individual case tests
         checkUnequippableBehavior(weapon, character);
     }

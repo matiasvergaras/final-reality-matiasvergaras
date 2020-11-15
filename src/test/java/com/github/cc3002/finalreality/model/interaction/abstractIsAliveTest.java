@@ -21,10 +21,10 @@ public abstract class abstractIsAliveTest extends abstractModelTest {
 
     protected void checkStartAlive(ICharacter someCharacter){
         if (someCharacter.getCurrentHP()>0) {
-            assertTrue(someCharacter.isAlive());
+            assertTrue(someCharacter.isAlive(), "Character has HP > 0, but his isAlive attribute shows False.");
         }
         else{
-            assertFalse(someCharacter.isAlive());
+            assertFalse(someCharacter.isAlive(), "Character has HP <= 0, but his isAlive attribute shows True.");
         }
     }
 
@@ -35,7 +35,8 @@ public abstract class abstractIsAliveTest extends abstractModelTest {
             while (enemy.isAlive()) {
                 character.normalAttack(enemy);
             }
-            assertEquals(enemy.getCurrentHP(), 0);
+            assertEquals(enemy.getCurrentHP(), 0, "Enemy got isAlive = False, but his getCurrentHP method" +
+                    "is not returning 0.");
         }
     }
 
@@ -45,7 +46,8 @@ public abstract class abstractIsAliveTest extends abstractModelTest {
             while (character.isAlive()) {
                 powerfulEnemy.normalAttack(character);
             }
-            assertEquals(character.getCurrentHP(), 0);
+            assertEquals(character.getCurrentHP(), 0, "Player got isAlive = False, but his getCurrentHP" +
+                    "method is not returning 0.");
         }
     }
 }

@@ -37,10 +37,10 @@ abstract public class AbstractPlayerCharacterTest extends AbstractCharacterTest 
     protected void checkEquipWeapon() {
         for (var character :
                 testPlayerCharacters) {
-            assertNull(character.getEquippedWeapon());
+            assertNull(character.getEquippedWeapon(), "Character started equipped, but that is not right.");
             for (var weapon : testWeapons) {
                 character.equip(weapon);
-                assertEquals(weapon, character.getEquippedWeapon());
+                assertEquals(weapon, character.getEquippedWeapon(), "Weapon was not equipped successfully.");
             }
         }
     }
