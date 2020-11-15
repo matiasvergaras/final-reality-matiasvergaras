@@ -34,12 +34,15 @@ abstract class abstractNormalAttackTest extends abstractModelTest {
                                      IWeapon powerfulWeapon) {
         //First we check that the power of the weapon is enough to deal damage to the enemy.
         if (powerIsEnough(powerfulWeapon.getPower(), enemy.getDP())) {
+            assertEquals(enemy.getMaxHP(), enemy.getCurrentHP(), "Enemy MaxHP and Initial CurrentHP are " +
+                    "not the same.");
             character.equipWeapon(powerfulWeapon);
             character.normalAttack(enemy);
             //if enemy HP - (equipped weapon power - enemy defense points) < 0, then enemy current HP is set to 0
             int enemyHP = Math.max(0, enemy.getCurrentHP() - (character.getEquippedWeapon().getPower() - enemy.getDP()));
             int currentHP = enemy.getCurrentHP();
-            assertEquals(enemyHP, currentHP);
+            assertEquals(enemyHP, currentHP, "Player attacked Enemy with a powerful weapon able to inflict" +
+                    "damage, but Enemy HP did not change.");
         }
     }
 
@@ -51,9 +54,12 @@ abstract class abstractNormalAttackTest extends abstractModelTest {
                                                       IWeapon weakWeapon) {
         //First we check that the power of the weapon is not enough to deal damage to the enemy.
         if (powerIsEnough(weakWeapon.getPower(), enemy.getDP())) {
+            assertEquals(enemy.getMaxHP(), enemy.getCurrentHP(), "Enemy MaxHP and Initial Current HP are " +
+                    "not the same.");
             character.equipWeapon(weakWeapon);
             character.normalAttack(enemy);
-            assertEquals(enemy.getMaxHP(), enemy.getCurrentHP());
+            assertEquals(enemy.getMaxHP(), enemy.getCurrentHP(), "Player attacked Enemy with a weak weapon " +
+                    "that should not inflict damage, but it did.");
         }
     }
 
@@ -66,7 +72,9 @@ abstract class abstractNormalAttackTest extends abstractModelTest {
         if(powerIsEnough(powerfulEnemy.getPower(), character.getDP())) {
             powerfulEnemy.normalAttack(character);
             //if enemy HP - (equipped weapon power - enemy defense points) < 0, then enemy current HP is set to 0
-            assertEquals(character.getCurrentHP(),  Math.max(0, character.getMaxHP() - (powerfulEnemy.getPower() - character.getDP())));
+            assertEquals(character.getCurrentHP(),  Math.max(0, character.getMaxHP() - (powerfulEnemy.getPower() -
+                    character.getDP())), "A strong enemy attacked to the playerCharacter, but his " +
+                    "HP did not change the correct amount.");
         }
     }
 
@@ -76,9 +84,10 @@ abstract class abstractNormalAttackTest extends abstractModelTest {
      */
     protected void checkIneffectiveNormalCPUAttack(ICPUCharacter weakEnemy,  IPlayerCharacter character) {
         //First we check that the power of the enemy is not enough to deal damage to the character.
-        if(powerIsEnough(weakEnemy.getPower(), character.getDP())) {
+        if(!powerIsEnough(weakEnemy.getPower(), character.getDP())) {
             weakEnemy.normalAttack(character);
-            assertEquals(character.getCurrentHP(), character.getMaxHP() - weakEnemy.getPower());
+            assertEquals(character.getCurrentHP(), character.getMaxHP(), "A weak" +
+                    "enemy attacked to the playerCharacter, but his HP changed (and they should not do it).");
         }
     }
 

@@ -20,10 +20,11 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
  * Abstract class containing the common tests for all types of  playable characters.
- * @since Homework 1
+ *
  * @author Ignacio Slater Muñoz.
  * @author Matias Vergara Silva.
  * @see ICharacter
+ * @since Homework 1
  */
 
 public abstract class AbstractCharacterTest extends abstractModelTest {
@@ -35,6 +36,7 @@ public abstract class AbstractCharacterTest extends abstractModelTest {
     protected static final String WHITE_MAGE_NAME = "Eiko";
     protected List<IWeapon> testWeapons;
     protected List<IPlayerCharacter> testPlayerCharacters;
+
     /**
      * Checks that the character waits the appropriate amount of time for it's turn.
      */
@@ -73,14 +75,19 @@ public abstract class AbstractCharacterTest extends abstractModelTest {
                                      final ICharacter sameClassDifferentCharacter,
                                      final ICharacter differentClassDifferentName,
                                      final ICharacter differentClassSameName) {
-        assertEquals(expectedCharacter, testEqualCharacter);
-        assertNotEquals(sameClassDifferentCharacter, testEqualCharacter);
-        assertNotEquals(testEqualCharacter, differentClassDifferentName);
-        assertEquals(expectedCharacter.hashCode(), testEqualCharacter.hashCode());
-        assertNotEquals(expectedCharacter.hashCode(), differentClassDifferentName.hashCode());
+        assertEquals(expectedCharacter, testEqualCharacter, "ExpectedCharacter differs from EqualCharacter.");
+        assertNotEquals(sameClassDifferentCharacter, testEqualCharacter, "sameClassDifferentCharacter is" +
+                " equal to EqualCharacter.");
+        assertNotEquals(testEqualCharacter, differentClassDifferentName, "EqualCharacter is equal to " +
+                "differentClassDifferentName.");
+        assertEquals(expectedCharacter.hashCode(), testEqualCharacter.hashCode(), "expectedCharacter and" +
+                " EqualCharacter hashcode are different.");
+        assertNotEquals(expectedCharacter.hashCode(), differentClassDifferentName.hashCode(), "expectedCharacter" +
+                " and differentClassDifferentName hashCode are equals.");
         //To test that the hashcode depends only on the name, and not on the class.
         // In practice, we have to avoid to fall in this case.
-        assertEquals(expectedCharacter.hashCode(), differentClassSameName.hashCode());
+        assertEquals(expectedCharacter.hashCode(), differentClassSameName.hashCode(), "expectedCharacter and" +
+                "differentClassSameName hashcode are not equals, but they should be since hashcode depends on name.");
 
     }
 
@@ -95,8 +102,8 @@ public abstract class AbstractCharacterTest extends abstractModelTest {
     /**
      * Checks that the Player Character getMaxHP method works properly.
      *
-     * @param character        the character to be tested
-     * @param expectedMaxHP    the expected value of Max HP of this character.
+     * @param character     the character to be tested
+     * @param expectedMaxHP the expected value of Max HP of this character.
      */
     protected void checkGetMaxHP(ICharacter character, int expectedMaxHP) {
         assertEquals(character.getMaxHP(), expectedMaxHP);
@@ -105,8 +112,8 @@ public abstract class AbstractCharacterTest extends abstractModelTest {
     /**
      * Checks that the Player Character getMaxDP method works properly.
      *
-     * @param character     the Player Character to be tested
-     * @param expectedDP    the expected value of DP of this character.
+     * @param character  the Player Character to be tested
+     * @param expectedDP the expected value of DP of this character.
      */
     protected void checkGetMaxDP(ICharacter character, int expectedDP) {
         assertEquals(character.getDP(), expectedDP);
@@ -116,8 +123,9 @@ public abstract class AbstractCharacterTest extends abstractModelTest {
      * Checks that the Player Character getCurrentHP method works properly.
      * Attention: In each character class we will test only that the value starts at max HP.
      * The loss of points when receiving attacks will be tested in the interactions package.
-     * @param character     the Player Character to be tested
-     * @param expectedHP    the expected value of Current HP of this character.
+     *
+     * @param character  the Player Character to be tested
+     * @param expectedHP the expected value of Current HP of this character.
      */
     protected void checkGetCurrentHP(ICharacter character, int expectedHP) {
         assertEquals(character.getCurrentHP(), expectedHP);
