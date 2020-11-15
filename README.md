@@ -48,9 +48,9 @@ enemies controlled by the computer.
 
 ---
 
-### Partial Delivery 2
+### Partial Delivery 2 & 3
 
-All the features that are not required yet are removed as they were mostly wrong. So far the code contemplates:
+All the features that are not required yet are removed as they were probably wrong  (or at least Slater said that on U-cursitos). So far the code contemplates:
 - The same class hierarchy described in Homework 1
 - Weapon equipment
 - Normal attacks
@@ -59,13 +59,14 @@ All the features that are not required yet are removed as they were mostly wrong
 
 That is, **all the methods related to magic attacks and adverse states were removed.** They will be re-implemented in the future, once we have delved further into the course.
 
-The equipping process is carried out via double dispatch, as we described before. Similar for the normal attacks, but we have added the new Deffense Points based behavior.
+The equipping process is carried out via double dispatch, as we described before. Similar for the normal attacks, but **we have added the new Deffense Points based behavior**.
 #### Assumptions made so far
 - Characters and weapons do not change type.
 - Weapons can be equipped to only one character at a time. If the player tries to equip a weapon that is already equipped to another character, the weapon user is updated, so the first one ends without equipped weapon.
 - In the future, we may be interested in add another type of Enemy (So we abstracted all unspecific methods of Enemy in an AbstractCPUCharacter abstract class).
 - We can identify characters by their name, and that works both for CPU and Player characters. There will not be characters with same name, even if they are from different types (Attention: this last point is very important, because hashcode only takes in count the names, so if there are a BlackMage and an Enemy with the same name, they will have the same hashcode).
 - Initially we considered adding the maximum HP and maximum DP to the features that determine a character, however, we will consider that in the future the characters could 'level up' and increase these characteristics, so the key will be only the name.
+- Related to the character equipment, we decided to take the option that says that a Thief can equip Swords, Thieves and Bows.
 --- 
 
 # #Homework 1 
@@ -85,6 +86,8 @@ Assumptions are the same of Partial Delivery 2:
 - We can identify player characters by the combination of their name, maxDP, maxHP, currentHP and currentDP. We would like to assume that it is enough with the name (to to make sense in game), but it is not really necessary this far, and we will discuss about that with the teaching team for future deliveries.
 - We can identify enemies by the combination of their name, weight, power, maxDP and maxHP. We would like to add an integer field ID to have many enemies with the same name but distinguishable, in order to have -for example- a group of Globin units, and be able to differentiate them. Since it is not described in the statement, it will be discussed with the teaching team for future deliveries.
 - In the future, we may be interested in add another type of Enemy (So we abstracted all unspecific methods of Enemy in an AbstractCPUCharacter abstract class).
+- Related to the character equipment, we decided to take the option that says that a Thief can equip Swords, Thieves and Bows.
+
 
 #### Logic and operation of the program
 Our program works based on a hierarchy of character and weapon classes.
