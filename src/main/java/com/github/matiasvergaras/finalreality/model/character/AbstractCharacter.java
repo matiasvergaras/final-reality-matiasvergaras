@@ -101,6 +101,7 @@ public abstract class AbstractCharacter implements ICharacter {
         }
     }
 
+
 }
 
 

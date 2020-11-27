@@ -82,12 +82,6 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     }
 
 
-    public void normalAttack(ICPUCharacter character) {
-        if (character.isAlive() && this.isAlive()) {
-            character.receiveNormalAttack(this);
-        }
-    }
-
     /**
      * Receive a non-magic attack
      *
