@@ -4,6 +4,8 @@ import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +19,6 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
 
     private final int weight;
     private final int power;
-    private String state;
 
     /**
      * Basic constructor for an Enemy Character.
@@ -36,7 +37,6 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
         super(turnsQueue, name, HP, DP);
         this.weight = weight;
         this.power = power;
-        this.state = "NORMAL";
     }
 
     /**
@@ -77,7 +77,7 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
      */
     @Override
     public void receiveNormalAttack(IPlayerCharacter character) {
-        if (character.getEquippedWeapon().getPower()>this.getDP()) {
+        if (character.isEquipped() & character.getEquippedWeapon().getPower()>this.getDP()) {
             reduceHP(character.getEquippedWeapon().getPower() - getDP());
         }
     }
@@ -91,4 +91,16 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
         return weight;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return An ArrayList of Integer with the attributes of this character all together,
+     * in the following order: maxHP, currentHP, DP, weight, power.
+     */
+    public ArrayList<Integer> getAttributes(){
+        ArrayList<Integer> attributes = super.getAttributes();
+        attributes.add(weight);
+        attributes.add(power);
+        return attributes;
+    }
 }

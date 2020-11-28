@@ -58,6 +58,9 @@ public interface IPlayerCharacter extends ICharacter {
      */
     void receiveNormalAttack(ICPUCharacter character);
 
-
-
+    /**
+     * A boolean telling if this character has a weapon equipped
+     * @return true if equiped, false otherwise.
+     */
+    boolean isEquipped();
 }

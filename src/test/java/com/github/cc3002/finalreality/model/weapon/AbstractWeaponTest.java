@@ -52,7 +52,9 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
     protected void checkEquipUnequip(IWeapon weapon,
                                      IPlayerCharacter characterA,
                                      IPlayerCharacter characterB) {
+        assertFalse(characterA.isEquipped(), "Character 'isEquipped' attribute started as true");
         characterA.equipWeapon(weapon);
+        assertTrue(characterA.isEquipped(), "Character 'isEquipped' attribute rest as false after being equipped.");
         assertEquals(characterA.getEquippedWeapon(), weapon, "Weapon was not equipped successfully.");
         assertEquals(weapon.getOwner(), characterA, "Weapon owner was not set successfully.");
         characterB.equipWeapon(weapon);

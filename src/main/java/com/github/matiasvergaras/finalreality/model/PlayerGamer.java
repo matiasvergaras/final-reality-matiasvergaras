@@ -17,7 +17,7 @@ import java.util.List;
  * @since Homework 2
  * @author Matías Vergara Silva
  */
-public class UserPlayer {
+public class PlayerGamer {
     private ArrayList<IPlayerCharacter> party;
     private ArrayList<IWeapon> inventory;
     private IPlayerCharacter selectedCharacter;
@@ -28,10 +28,10 @@ public class UserPlayer {
             deadCharacter = new PropertyChangeSupport(this);
 
     /**
-     * Creates a new Player
+     * Creates a new PlayerGamer
      *
      */
-    public UserPlayer() {
+    public PlayerGamer() {
         this.party = new ArrayList<>();
         this.inventory = new ArrayList<>();
         this.activeCharacter = null;
@@ -83,7 +83,7 @@ public class UserPlayer {
 
     /**
      * Sets the player's party
-     * @param party player's ArrayList with weapon objects.
+     * @param party player's ArrayList with the PlayerCharacter's that will be the new player's party.
      */
     public void setParty(ArrayList<IPlayerCharacter> party) {
         this.party = party;
@@ -145,8 +145,5 @@ public class UserPlayer {
     public void removeFromInventory(IWeapon weapon) {
         this.inventory.remove(weapon);
     }
-
-
-
 
 }

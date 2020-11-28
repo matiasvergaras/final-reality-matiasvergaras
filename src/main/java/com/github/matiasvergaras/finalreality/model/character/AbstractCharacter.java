@@ -3,6 +3,7 @@ package com.github.matiasvergaras.finalreality.model.character;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -101,6 +102,18 @@ public abstract class AbstractCharacter implements ICharacter {
         }
     }
 
+    /**
+     * To get the all the attributes of this character together.
+     * @return An ArrayList of Integer with the attributes in the following
+     * order: maxHP, currentHP, DP.
+     */
+    public ArrayList<Integer> getAttributes(){
+        ArrayList<Integer> attributes = new ArrayList<Integer>();
+        attributes.add(this.maxHP);
+        attributes.add(this.currentHP);
+        attributes.add(this.DP);
+        return attributes;
+    }
 
 }
 

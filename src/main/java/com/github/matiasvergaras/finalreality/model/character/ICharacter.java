@@ -1,5 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
+import java.util.ArrayList;
+
 /**
  * This represents a character from the game.
  * A character can be controlled by the player or by the CPU (an enemy).
@@ -56,6 +58,14 @@ public interface ICharacter {
      * @param diff a Integer to rest to the Character HP.
      */
     void reduceHP(double diff);
+
+    /**
+     * To get all the attributes of this character together.
+     * @return An ArrayList of Integer whit the attributes in the following
+     * order: maxHP, currentHP, DP, maxMana (if applicable), currentMana (if applicable)
+     */
+    ArrayList<Integer> getAttributes();
+
 
 
 }

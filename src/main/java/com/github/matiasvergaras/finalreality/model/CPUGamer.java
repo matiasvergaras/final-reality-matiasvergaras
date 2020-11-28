@@ -1,49 +1,53 @@
 package com.github.matiasvergaras.finalreality.model;
 
 import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+
 
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
-public class CPUPlayer {
+/**
+ * A class that holds all the information of a CPU Gamer.
+ * A CPU Gamer has its own list of characters and its observed by the Game Controller
+ * looking for an endTurn or the dead of a Character.
+ * @since Homework 2
+ * @author Matías Vergara Silva
+ */
+public class CPUGamer {
     private ArrayList<ICPUCharacter> party;
-    private IPlayerCharacter activeCharacter;
-    private IWeapon selectedWeapon;
+    private ICPUCharacter activeCharacter;
     private PropertyChangeSupport
             endTurn = new PropertyChangeSupport(this),
             deadCharacter = new PropertyChangeSupport(this);
 
     /**
-     * Creates a new CPU Player
+     * Creates a new CPU Gamer
      *
      */
-    public CPUPlayer() {
+    public CPUGamer() {
         this.party = new ArrayList<>();
         this.activeCharacter = null;
-        this.selectedWeapon = null;
     }
 
 
     /**
-     * Returns the CPU player's active Character.
-     * @return the active PlayerCharacter.
+     * Returns the CPU gamer's active Character.
+     * @return the active CPUCharacter.
      */
-    public IPlayerCharacter getActiveCharacter() {
+    public ICPUCharacter getActiveCharacter() {
         return this.activeCharacter;
     }
 
     /**
-     * Sets the CPU player's active Character.
+     * Sets the CPU gamer's active Character.
      *
      * @param aCharacter that will be activated.
      */
-    public void setActiveCharacter(IPlayerCharacter aCharacter){
+    public void setActiveCharacter(ICPUCharacter aCharacter){
         this.activeCharacter = aCharacter;
     }
 
-    /** Gives the CPU player's party
+    /** Gives the CPU gamer's party
      * @return the player's Characters list object.
      */
     public ArrayList<ICPUCharacter> getParty() {
@@ -51,8 +55,8 @@ public class CPUPlayer {
     }
 
     /**
-     * Sets the CPU player's party
-     * @param party player's ArrayList with weapon objects.
+     * Sets the CPU gamer's party
+     * @param party gamer's ArrayList with CPUCharacters  that will be the new CPU party.
      */
     public void setParty(ArrayList<ICPUCharacter> party) {
         this.party = party;

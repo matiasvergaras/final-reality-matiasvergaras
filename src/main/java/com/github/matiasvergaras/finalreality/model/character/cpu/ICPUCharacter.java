@@ -3,6 +3,8 @@ package com.github.matiasvergaras.finalreality.model.character.cpu;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
+import java.util.ArrayList;
+
 /**
  *
  * This represent a CPU-controlled character from the game.
@@ -43,6 +45,14 @@ public interface ICPUCharacter extends ICharacter {
      * @param character the attacking character.
      */
     void receiveNormalAttack(IPlayerCharacter character);
+
+    /**
+     * To get all the attributes of this character together, adding those
+     * exclusives of an CPU character.
+     * @return An ArrayList of Integer whit the attributes in the following
+     * order: maxHP, currentHP, DP, weight, power.
+     */
+    ArrayList<Integer> getAttributes();
 
 
 }

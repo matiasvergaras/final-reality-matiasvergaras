@@ -18,6 +18,8 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class AbstractPlayerCharacter extends AbstractCharacter implements IPlayerCharacter {
     protected IWeapon equippedWeapon;
+    private boolean isEquipped; // Added in homework 2 to avoid asking for the weapon when unequipped.
+                                // This did not cause an error, but was not a good practice.
 
     /**
      * Creates a new Player Character
@@ -31,7 +33,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
                                       @NotNull String name,
                                       int HP, int DP) {
         super(turnsQueue, name, HP, DP);
-
+        this.isEquipped = false;
     }
 
     /**
@@ -64,12 +66,21 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
 
     /**
      * {@inheritDoc}
+     * @return true if equiped, false otherwise.
+     */
+    public boolean isEquipped(){
+        return this.isEquipped;
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @param weapon The weapon to be equip
      */
     @Override
     public void equip(IWeapon weapon) {
         equippedWeapon = weapon;
+        this.isEquipped = true;
         weapon.setOwner(this);
     }
 
@@ -83,6 +94,17 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
 
 
     /**
+     * {@inheritDoc}
+     * @param character the character to be attacked.
+     */
+    public void normalAttack(ICPUCharacter character) {
+        if (character.isAlive() && this.isAlive()) {
+            character.receiveNormalAttack(this);
+        }
+    }
+
+
+    /**
      * Receive a non-magic attack
      *
      * @param character the attacking character.
@@ -92,6 +114,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
             this.reduceHP(character.getPower() - getDP());
         }
     }
+
 }
 
 
