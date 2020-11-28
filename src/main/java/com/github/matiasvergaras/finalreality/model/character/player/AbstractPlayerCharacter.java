@@ -6,6 +6,8 @@ import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -21,6 +23,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     private boolean isEquipped; // Added in homework 2 to avoid asking for the weapon when unequipped.
                                 // This did not cause an error, but was not a good practice.
 
+    private PropertyChangeSupport deadCharacter = new PropertyChangeSupport(this);
     /**
      * Creates a new Player Character
      *
@@ -44,6 +47,15 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
         scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
         scheduledExecutor
                 .schedule(super::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
+    }
+
+
+    /**
+     * Property Change Support to observe the eventual death of a Player character
+     * @return Property Change Support to DeathPlayerCharacter
+     */
+    public PropertyChangeSupport deathCharacter(){
+        return this.deadCharacter;
     }
 
     /**
@@ -114,6 +126,22 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
             this.reduceHP(character.getPower() - getDP());
         }
     }
+
+    /**
+     * modify the HP of this character.
+     * And check if it is necessary to notify.
+     * @param diff a positive Integer to rest to the Character HP.
+     */
+    @Override
+    public void reduceHP(double diff) {
+        super.reduceHP(diff);
+        if(!this.isAlive()){
+            deadCharacter.firePropertyChange(new PropertyChangeEvent(this, "Dead Player Character",
+                    "Alive", "Dead"));
+
+        }
+    }
+
 
 }
 

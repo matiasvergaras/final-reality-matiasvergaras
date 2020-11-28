@@ -3,6 +3,7 @@ package com.github.matiasvergaras.finalreality.model.character;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,6 +21,7 @@ public abstract class AbstractCharacter implements ICharacter {
     private final int maxHP;
     private int currentHP;
     private final int DP;
+
 
     protected ScheduledExecutorService scheduledExecutor;
 

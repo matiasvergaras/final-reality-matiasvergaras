@@ -1,7 +1,5 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.model.CPUGamer;
-import com.github.matiasvergaras.finalreality.model.PlayerGamer;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
 import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
@@ -36,10 +34,11 @@ import java.util.concurrent.BlockingQueue;
 public class GameController {
     private PropertyChangeSupport endTurn = new PropertyChangeSupport(this);
     private EndTurnHandler endTurnHandler = new EndTurnHandler(this);
-    private DeathPlayerToGCHandler deathPlayerToGCHandler = new DeathPlayerToGCHandler(this);
-    private int numOfCharacters;
-    private PlayerGamer userPlayer;
-    private CPUGamer cpuPlayer;
+    private DeathPlayerCharacterHandler deathCharacterHandler = new DeathPlayerCharacterHandler(this);
+    private final int numOfPlayerCharacters;
+    private ArrayList<IPlayerCharacter> playerParty;
+    private ArrayList<ICPUCharacter> CPUParty;
+    private ArrayList<IWeapon> inventory;
     private BlockingQueue<ICharacter> turns;
 
     /**
@@ -49,11 +48,9 @@ public class GameController {
      *        the number of characters that the player will have
      *
      */
-    public GameController(int numOfCharacters, PlayerGamer userPlayer, CPUGamer cpuPlayer,
+    public GameController(int numOfCharacters,
                           BlockingQueue<ICharacter> turns) {
-        this.numOfCharacters = numOfCharacters;
-        this.userPlayer = userPlayer;
-        this.cpuPlayer = cpuPlayer;
+        this.numOfPlayerCharacters = numOfCharacters;
         this.turns = turns;
     }
 
@@ -62,7 +59,7 @@ public class GameController {
      * @param weapon    The weapon to be added.
      */
     public void addToInventory(IWeapon weapon) {
-        this.userPlayer.addToInventory(weapon);
+        this.inventory.add(weapon);
     }
 
     /**
@@ -70,7 +67,7 @@ public class GameController {
      * @param weapon    The weapon to be removed.
      */
     public void removeFromInventory( IWeapon weapon) {
-        this.userPlayer.removeFromInventory(weapon);
+        this.inventory.remove(weapon);
     }
 
     /**
@@ -78,8 +75,8 @@ public class GameController {
      * @param character The character to be added.
      */
     public void addToPlayerParty(IPlayerCharacter character){
-        if (this.userPlayer.getSizeOfParty() < numOfCharacters){
-            this.userPlayer.addToParty(character);
+        if (this.playerParty.size() < numOfPlayerCharacters){
+            this.playerParty.add(character);
         }
     }
 
@@ -88,7 +85,7 @@ public class GameController {
      * @param character The character to be removed.
      */
     public void removeFromPlayerParty(IPlayerCharacter character){
-        this.userPlayer.removeFromParty(character);
+        this.playerParty.remove(character);
     }
 
     /**
@@ -96,7 +93,7 @@ public class GameController {
      * @param character The character to be added.
      */
     public void addToCPUParty(ICPUCharacter character){
-        this.cpuPlayer.addToParty(character);
+        this.CPUParty.add(character);
     }
 
     /**
@@ -104,7 +101,7 @@ public class GameController {
      * @param character The character to be removed.
      */
     public void removeFromCPUParty(ICPUCharacter character){
-        this.cpuPlayer.removeFromParty(character);
+        this.CPUParty.remove(character);
     }
 
     /**
@@ -112,7 +109,16 @@ public class GameController {
      * @return Player's party
      */
     public ArrayList<IPlayerCharacter> getPlayerParty() {
-        return this.userPlayer.getParty();
+        return this.playerParty;
+    }
+
+
+    /**
+     * Gives the list of the CPUCharacters objects in the CPU's party.
+     * @return CPU's party
+     */
+    public ArrayList<ICPUCharacter> getCPUParty() {
+        return this.CPUParty;
     }
 
     /**
@@ -149,22 +155,14 @@ public class GameController {
         return attributes;
     }
 
-
     /**
      * Gives the list of Weapon object's in the Player's inventory
      * @return Player's inventory
      */
     public ArrayList<IWeapon> getInventory() {
-        return this.userPlayer.getInventory();
+        return this.inventory;
     }
 
-    /**
-     * Gives the list of the CPUCharacters objects in the CPU's party.
-     * @return CPU's party
-     */
-    public ArrayList<ICPUCharacter> getCPUParty() {
-        return this.cpuPlayer.getParty();
-    }
 
     /**
      * Equips a Weapon from the inventory to a Player Character.
@@ -173,7 +171,7 @@ public class GameController {
      * @param character  The character to be equipped.
      */
     public void equipWeapon(int index, IPlayerCharacter character) {
-        character.equipWeapon(this.getInventory().get(index));
+        character.equipWeapon(this.inventory.get(index));
     }
 
     /**
