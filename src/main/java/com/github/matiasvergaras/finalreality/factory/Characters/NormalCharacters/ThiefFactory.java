@@ -7,10 +7,9 @@ import com.github.matiasvergaras.finalreality.model.character.player.normal.Thie
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ThiefFactory extends CharacterFactory {
-    LinkedBlockingQueue<ICharacter> turns;
 
-    public ThiefFactory(LinkedBlockingQueue<ICharacter> turns){
-        this.turns = turns;
+    public ThiefFactory(LinkedBlockingQueue<ICharacter> turns, int hp, int dp){
+        super(turns, hp, dp);
     }
 
     public Thief create(String name){

@@ -6,10 +6,9 @@ import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class EnemyFactory extends CPUCharacterFactory {
-    LinkedBlockingQueue<ICharacter> turns;
 
-    public EnemyFactory(LinkedBlockingQueue<ICharacter> turns){
-        this.turns = turns;
+    public EnemyFactory(LinkedBlockingQueue<ICharacter> turns, int hp, int dp, int weight, int power){
+        super(turns, hp, dp, weight, power);
     }
 
     public Enemy create(String name){

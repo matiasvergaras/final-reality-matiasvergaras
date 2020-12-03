@@ -1,12 +1,15 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
+import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class NullCharacter extends AbstractCharacter{
+public class NullPlayerCharacter extends AbstractPlayerCharacter {
 
     /**
      * Constructor for a new Character.
@@ -14,8 +17,8 @@ public class NullCharacter extends AbstractCharacter{
      * @param turnsQueue the queue with the characters ready to play
      *
      */
-    public NullCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue) {
-        super(turnsQueue, "Null", 0, 0);
+    public NullPlayerCharacter() {
+        super(new LinkedBlockingQueue<>(), "Null", 0, 0);
     }
 
     public void waitTurn() {
@@ -23,5 +26,16 @@ public class NullCharacter extends AbstractCharacter{
         scheduledExecutor
                 .schedule(super::addToQueue, 0, TimeUnit.SECONDS);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipWeapon(IWeapon weapon) {
+        if(this.isAlive()) {
+            weapon.equipToNull(this);
+        }
+    }
+
 
 }

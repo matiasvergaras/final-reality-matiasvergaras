@@ -102,6 +102,15 @@ public abstract class AbstractWeapon implements IWeapon {
      * {@inheritDoc}
      */
     @Override
+    public void equipToNull(IPlayerCharacter character) {
+        setWeaponFree();
+        character.equip(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public IPlayerCharacter getOwner() {
         return owner;
     }

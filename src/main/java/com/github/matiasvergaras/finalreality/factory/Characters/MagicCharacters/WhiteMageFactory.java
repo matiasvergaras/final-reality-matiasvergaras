@@ -7,8 +7,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class WhiteMageFactory extends MagicCharacterFactory {
     LinkedBlockingQueue<ICharacter> turns;
 
-    public WhiteMageFactory(LinkedBlockingQueue<ICharacter> turns){
-        this.turns = turns;
+    public WhiteMageFactory(LinkedBlockingQueue<ICharacter> turns, int hp, int dp, int mana){
+        super(turns, hp, dp, mana);
     }
 
     public WhiteMage create(String name){

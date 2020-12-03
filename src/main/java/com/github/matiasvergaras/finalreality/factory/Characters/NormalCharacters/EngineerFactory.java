@@ -7,10 +7,9 @@ import com.github.matiasvergaras.finalreality.model.character.player.normal.Engi
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class EngineerFactory extends CharacterFactory {
-    LinkedBlockingQueue<ICharacter> turns;
 
-    public EngineerFactory(LinkedBlockingQueue<ICharacter> turns){
-        this.turns = turns;
+    public EngineerFactory(LinkedBlockingQueue<ICharacter> turns, int hp, int dp){
+        super(turns, hp, dp);
     }
 
     public Engineer create(String name){

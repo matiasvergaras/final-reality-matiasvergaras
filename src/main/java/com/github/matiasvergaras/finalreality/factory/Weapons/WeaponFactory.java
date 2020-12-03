@@ -7,7 +7,7 @@ public abstract class WeaponFactory implements IWeaponFactory {
     int power = 80;
     int magicPower = 80;
 
-    public WeaponFactory(){
+    public WeaponFactory(int weight, int power){
     }
 
     public void setWeight(int weight){

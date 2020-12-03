@@ -3,14 +3,12 @@ package com.github.matiasvergaras.finalreality.factory.Characters.MagicCharacter
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
 
-import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class BlackMageFactory extends MagicCharacterFactory {
-    LinkedBlockingQueue<ICharacter> turns;
 
-    public BlackMageFactory(LinkedBlockingQueue<ICharacter> turns){
-        this.turns = turns;
+    public BlackMageFactory(LinkedBlockingQueue<ICharacter> turns, int hp, int dp, int mana){
+        super(turns, hp, dp, mana);
     }
 
     public BlackMage create(String name){

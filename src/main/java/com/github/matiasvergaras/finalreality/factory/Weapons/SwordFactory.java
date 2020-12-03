@@ -6,6 +6,10 @@ import com.github.matiasvergaras.finalreality.model.weapon.normal.Sword;
 public class SwordFactory extends WeaponFactory{
     String name = "Common Sword";
 
+    public SwordFactory(int power, int weight){
+        super(power, weight);
+    }
+
     public Sword create(){
         return new Sword(name, power, weight);
     }

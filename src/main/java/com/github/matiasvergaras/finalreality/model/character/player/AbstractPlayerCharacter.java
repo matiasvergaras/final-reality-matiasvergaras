@@ -2,13 +2,14 @@ package com.github.matiasvergaras.finalreality.model.character.player;
 
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.character.NullPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
@@ -103,7 +104,8 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
      */
     @Override
     public void unequip() {
-        equippedWeapon = null;
+        equippedWeapon.setOwner(new NullPlayerCharacter());
+        equippedWeapon = new NullWeapon();
     }
 
 
