@@ -1,7 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 /**
  *
@@ -34,7 +34,7 @@ public interface IMagicCharacter extends IPlayerCharacter {
      * @return An ArrayList of Integer whit the attributes in the following
      * order: maxHP, currentHP, DP, maxMana, currentMana
      */
-     ArrayList<Integer> getAttributes();
+     Map<String, Object> getAttributes();
 
 
     //Magic attacks not implemented yet.

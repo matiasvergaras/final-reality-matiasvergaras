@@ -8,6 +8,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -142,6 +144,13 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
         }
     }
 
+
+    @Override
+    public Map<String, Object> getAttributes(){
+        Map<String, Object> attributes = super.getAttributes();
+        attributes.put("equippedWeapon", equippedWeapon);
+        return attributes;
+    }
 
 }
 

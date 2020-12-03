@@ -1,25 +1,29 @@
 package com.github.matiasvergaras.finalreality.controller;
 
+import com.github.matiasvergaras.finalreality.factory.Characters.CPUCharacters.EnemyFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.CPUCharacters.ICPUCharacterFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.MagicCharacters.BlackMageFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.MagicCharacters.IMagicCharacterFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.MagicCharacters.WhiteMageFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.NormalCharacters.EngineerFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.NormalCharacters.KnightFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.NormalCharacters.ThiefFactory;
+import com.github.matiasvergaras.finalreality.factory.Weapons.*;
+import com.github.matiasvergaras.finalreality.model.CPUPlayer;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
+import com.github.matiasvergaras.finalreality.model.UserPlayer;
+import com.github.matiasvergaras.finalreality.model.character.NullCharacter;
 import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
-import com.github.matiasvergaras.finalreality.model.character.player.magic.WhiteMage;
-import com.github.matiasvergaras.finalreality.model.character.player.normal.Engineer;
-import com.github.matiasvergaras.finalreality.model.character.player.normal.Knight;
-import com.github.matiasvergaras.finalreality.model.character.player.normal.Thief;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Axe;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Bow;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Knife;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Sword;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.concurrent.BlockingQueue;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Game Controller.
@@ -32,305 +36,264 @@ import java.util.concurrent.BlockingQueue;
  * @author Matías Vergara Silva
  */
 public class GameController {
-    private PropertyChangeSupport endTurn = new PropertyChangeSupport(this);
-    private EndTurnHandler endTurnHandler = new EndTurnHandler(this);
-    private DeathPlayerCharacterHandler deathCharacterHandler = new DeathPlayerCharacterHandler(this);
-    private final int numOfPlayerCharacters;
-    private ArrayList<IPlayerCharacter> playerParty;
-    private ArrayList<ICPUCharacter> CPUParty;
-    private ArrayList<IWeapon> inventory;
-    private BlockingQueue<ICharacter> turns;
+    private static GameController uniqueInstance;
+    private LinkedBlockingQueue<ICharacter> turns = new LinkedBlockingQueue<ICharacter>();
+    private AxeFactory axeFactory = new AxeFactory();
+    private BowFactory bowFactory = new BowFactory();
+    private KnifeFactory knifeFactory = new KnifeFactory();
+    private StaffFactory staffFactory = new StaffFactory();
+    private SwordFactory swordFactory = new SwordFactory();
+    private EngineerFactory engineerFactory = new EngineerFactory(turns);
+    private KnightFactory knightFactory = new KnightFactory(turns);
+    private ThiefFactory thiefFactory = new ThiefFactory(turns);
+    private BlackMageFactory blackMageFactory = new BlackMageFactory(turns);
+    private WhiteMageFactory whiteMageFactory = new WhiteMageFactory(turns);
+    private EnemyFactory enemyFactory = new EnemyFactory(turns);
+    private List<IWeaponFactory> weaponFactories = new ArrayList<>();
+    private List<ICharacterFactory> characterFactories = new ArrayList<>();
+    private List<ICPUCharacterFactory> cpuCharacterFactories = new ArrayList<>();
+    private List<IMagicCharacterFactory> magicCharacterFactories = new ArrayList<>();
+    private UserPlayer userPlayer;
+    private CPUPlayer cpuPlayer;
+    private ICharacter selectedCharacter = new NullCharacter(turns);
+    private IWeapon selectedWeapon = new NullWeapon();
 
-    /**
-     * Constructor for a new controller.
-     *
-     * @param numOfCharacters
-     *        the number of characters that the player will have
-     *
-     */
-    public GameController(int numOfCharacters,
-                          BlockingQueue<ICharacter> turns) {
-        this.numOfPlayerCharacters = numOfCharacters;
-        this.turns = turns;
+    public GameController(int charactersQuantity){
+        this.userPlayer = new UserPlayer(charactersQuantity);
+
+        weaponFactories.add(axeFactory);
+        weaponFactories.add(bowFactory);
+        weaponFactories.add(knifeFactory);
+        weaponFactories.add(staffFactory);
+        weaponFactories.add(swordFactory);
+
+        characterFactories.add(engineerFactory);
+        characterFactories.add(thiefFactory);
+        characterFactories.add(knightFactory);
+        characterFactories.add(blackMageFactory);
+        characterFactories.add(whiteMageFactory);
+        characterFactories.add(enemyFactory);
+
+        cpuCharacterFactories.add(enemyFactory);
+
+        magicCharacterFactories.add(whiteMageFactory);
+        magicCharacterFactories.add(blackMageFactory);
+
     }
 
-    /**
-     * Adds a Weapon object to the Player's inventory.
-     * @param weapon    The weapon to be added.
-     */
-    public void addToInventory(IWeapon weapon) {
-        this.inventory.add(weapon);
+    public static GameController uniqueInstance(int charactersQuantity){
+        if(uniqueInstance == null){
+            uniqueInstance = new GameController(charactersQuantity);
+        }
+        return uniqueInstance;
     }
 
-    /**
-     * Removes a Weapon object from the Player's inventory.
-     * @param weapon    The weapon to be removed.
-     */
-    public void removeFromInventory( IWeapon weapon) {
-        this.inventory.remove(weapon);
+    public void addBlackMageToPlayerParty(String name){
+        userPlayer.addToParty(blackMageFactory.create(name));
     }
 
-    /**
-     * Adds a PlayerCharacter object to the Player's party
-     * @param character The character to be added.
-     */
-    public void addToPlayerParty(IPlayerCharacter character){
-        if (this.playerParty.size() < numOfPlayerCharacters){
-            this.playerParty.add(character);
+    public void addWhiteMageToPlayerParty(String name){
+        userPlayer.addToParty(whiteMageFactory.create(name));
+    }
+
+    public void addEngineerToPlayerParty(String name){
+        userPlayer.addToParty(engineerFactory.create(name));
+    }
+
+    public void addThiefToPlayerParty(String name){
+        userPlayer.addToParty(thiefFactory.create(name));
+    }
+
+    public void addKnightToPlayerParty(String name){
+        userPlayer.addToParty(knightFactory.create(name));
+    }
+
+    public void addEnemyToCPUParty(String name){
+        cpuPlayer.addToParty(enemyFactory.create(name));
+    }
+
+    public void addBowToInventory(){
+        userPlayer.addToInventory(bowFactory.create());
+    }
+
+    public void addBowToInventory(String name){
+        userPlayer.addToInventory(bowFactory.create(name));
+    }
+
+    public void addSwordToInventory(){
+        userPlayer.addToInventory(swordFactory.create());
+    }
+
+    public void addSwordToInventory(String name){
+        userPlayer.addToInventory(swordFactory.create(name));
+    }
+
+    public void addAxeToInventory(){
+        userPlayer.addToInventory(axeFactory.create());
+    }
+
+    public void addAxeToInventory(String name){
+        userPlayer.addToInventory(axeFactory.create(name));
+    }
+
+    public void addStaffToInventory(){
+        userPlayer.addToInventory(staffFactory.create());
+    }
+
+    public void addStaffToInventory(String name){
+        userPlayer.addToInventory(staffFactory.create(name));
+    }
+
+    public void addKnifeToInventory(){
+        userPlayer.addToInventory(knifeFactory.create());
+    }
+
+    public void addKnifeToInventory(String name){
+        userPlayer.addToInventory(knifeFactory.create(name));
+    }
+
+    public void setSelectedWeapon(int index){
+        if(index < userPlayer.getInventorySize()) {
+            this.selectedWeapon = userPlayer.getInventory().get(index);
         }
     }
 
-    /**
-     * Removes a PlayerCharacter object from the Player's party
-     * @param character The character to be removed.
-     */
-    public void removeFromPlayerParty(IPlayerCharacter character){
-        this.playerParty.remove(character);
-    }
-
-    /**
-     * Adds a CPUCharacter object to the CPU's party
-     * @param character The character to be added.
-     */
-    public void addToCPUParty(ICPUCharacter character){
-        this.CPUParty.add(character);
-    }
-
-    /**
-     * Removes a CPUCharacter object from the CPU's party
-     * @param character The character to be removed.
-     */
-    public void removeFromCPUParty(ICPUCharacter character){
-        this.CPUParty.remove(character);
-    }
-
-    /**
-     * Gives the list of the PlayerCharacter objects in the Player's party.
-     * @return Player's party
-     */
-    public ArrayList<IPlayerCharacter> getPlayerParty() {
-        return this.playerParty;
-    }
-
-
-    /**
-     * Gives the list of the CPUCharacters objects in the CPU's party.
-     * @return CPU's party
-     */
-    public ArrayList<ICPUCharacter> getCPUParty() {
-        return this.CPUParty;
-    }
-
-    /**
-     * Creates a dictionary including all the attributes of the player's characters
-     * together, in the following order:
-     * <p> maxHP, currentHP, DP, maxMana (if applicable), currentMana (if applicable) </p>
-     * Where the name of the character is the key.
-     * @return a Dictionary with names as keys and lists of character's attributes as values.
-     */
-    public Hashtable<String, ArrayList<Integer>> getPlayerPartyAttributes(){
-        Hashtable<String, ArrayList<Integer>> attributes = new Hashtable<String, ArrayList<Integer>>();
-        for (IPlayerCharacter p: this.getPlayerParty()){
-            ArrayList<Integer> attr = p.getAttributes();
-            String name = p.getName();
-            attributes.put(name, attr);
+    public void setSelectedCharacter(int index){
+        if(index < userPlayer.getPartySize()){
+            this.selectedCharacter = userPlayer.getParty().get(index);
         }
-        return attributes;
     }
 
-    /**
-     * Creates a dictionary including all the attributes of the CPU's characters
-     * together, in the following order:
-     * <p> maxHP, currentHP, DP, weight, power </p>
-     * Where the name of the character is the key.
-     * @return a Dictionary with names as keys and lists of character's attributes as values.
-     */
-    public Hashtable<String, ArrayList<Integer>> getCPUPartyAttributes(){
-        Hashtable<String, ArrayList<Integer>> attributes = new Hashtable<String, ArrayList<Integer>>();
-        for (ICPUCharacter p: this.getCPUParty()){
-            ArrayList<Integer> attr = p.getAttributes();
-            String name = p.getName();
-            attributes.put(name, attr);
+    public void equipSelectedWeaponToSelectedCharacter(){
+        if(userPlayer.getParty().contains(selectedCharacter)){
+            IPlayerCharacter character = (IPlayerCharacter)this.selectedCharacter;
+            character.equipWeapon(selectedWeapon);
         }
-        return attributes;
     }
 
-    /**
-     * Gives the list of Weapon object's in the Player's inventory
-     * @return Player's inventory
-     */
-    public ArrayList<IWeapon> getInventory() {
-        return this.inventory;
+    public void unequipSelectedCharacter(){
+        if (userPlayer.getParty().contains(selectedCharacter)) {
+            userPlayer.unequipCharacter((IPlayerCharacter)selectedCharacter);
+        }
+    }
+
+    public void removeSelectedCharacterFromItsParty(){
+        if(userPlayer.getParty().contains(selectedCharacter)){
+            userPlayer.removeFromParty((IPlayerCharacter)selectedCharacter);
+        }
+        if(cpuPlayer.getParty().contains(selectedCharacter)){
+            cpuPlayer.removeFromParty((ICPUCharacter)selectedCharacter);
+        }
+    }
+
+    public void removeSelectedWeaponFromInventory(){
+        userPlayer.removeFromInventory(selectedWeapon);
+        selectedWeapon = new NullWeapon();
+    }
+
+    public void selectedCharacterNormalAttack(ICharacter target){
+        if(userPlayer.getParty().contains(selectedCharacter) & cpuPlayer.getParty().contains(target)){
+            IPlayerCharacter character = (IPlayerCharacter)selectedCharacter;
+            ICPUCharacter cpuCharacter = (ICPUCharacter)target;
+            character.normalAttack(cpuCharacter);
+        }
+        if(cpuPlayer.getParty().contains(selectedCharacter) & userPlayer.getParty().contains(target)){
+            IPlayerCharacter character = (IPlayerCharacter)target;
+            ICPUCharacter cpuCharacter = (ICPUCharacter)selectedCharacter;
+            cpuCharacter.normalAttack(character);
+        }
+    }
+
+    Map<String, Object> getSelectedCharacterAttributes(){
+        return selectedCharacter.getAttributes();
+    }
+
+    String getSelectedCharacterName(){
+        return (String)selectedCharacter.getAttributes().get("name");
+    }
+
+    int getSelectedCharacterCurrentHP(){
+        return (Integer)selectedCharacter.getAttributes().get("currentHP");
+    }
+
+    int getSelectedCharacterMaxHP(){
+        return (Integer)selectedCharacter.getAttributes().get("maxHP");
+    }
+
+    int getSelectedCharacterDP(){
+        return (Integer)selectedCharacter.getAttributes().get("DP");
+    }
+
+    IWeapon getSelectedCharacterCurrentWeapon(){
+        return (IWeapon)selectedCharacter.getAttributes().get("equippedWeapon");
+    }
+
+    int getSelectedCharacterCurrentMana(){
+        return (int)selectedCharacter.getAttributes().get("currentMana");
+    }
+
+    int getSelectedCharacterMaxMana(){
+        return (int)selectedCharacter.getAttributes().get("maxMana");
+    }
+
+    int getSelectedCharacterWeight(){
+        return (int)selectedCharacter.getAttributes().get("weight");
+    }
+
+    int getSelectedCharacterPower(){
+        return (int)selectedCharacter.getAttributes().get("Power");
     }
 
 
-    /**
-     * Equips a Weapon from the inventory to a Player Character.
-     *
-     * @param index      The index of the weapon in the inventory.
-     * @param character  The character to be equipped.
-     */
-    public void equipWeapon(int index, IPlayerCharacter character) {
-        character.equipWeapon(this.inventory.get(index));
+    public void setDefaultWeaponWeight(int weight){
+        for(IWeaponFactory factory: weaponFactories){
+            factory.setWeight(weight);
+        }
     }
 
-    /**
-     * Makes a PlayerCharacter attacks a CPUCharacter
-     * <p>
-     *     We decided to separate the attacks in the two directions to remove the user
-     *     from generating attacks between characters on the same side.
-     * </p>
-     *
-     * @param playerCharacter
-     *                       The player character that will performs the attack.
-     * @param cpuCharacter
-     *                       The CPU character that will receive the attack.
-     */
-    public void playerAttacksCPU(IPlayerCharacter playerCharacter, ICPUCharacter cpuCharacter){
-        playerCharacter.normalAttack(cpuCharacter);
+    public void setDefaultWeaponPower(int power){
+        for(IWeaponFactory factory: weaponFactories){
+            factory.setPower(power);
+        }
     }
 
-    /**
-     * Makes a CPUCharacter attacks a PlayerCharacter
-     * <p>
-     *     We decided to separate the attacks in the two directions to remove the user
-     *     from generating attacks between characters on the same side.
-     * </p>
-     *
-     * @param cpuCharacter
-     *                       The CPU character that will performs the attack.
-     * @param playerCharacter
-     *                       The player character that will receive the attack.
-     */
-    public void CPUAttacksPlayer(ICPUCharacter cpuCharacter, IPlayerCharacter playerCharacter){
-        cpuCharacter.normalAttack(playerCharacter);
+    public void setDefaultWeaponMagicPower(int magicPower){
+        for(IWeaponFactory factory: weaponFactories){
+            factory.setMagicPower(magicPower);
+        }
     }
 
-    /**
-     * Adds an Axe to the Player's inventory.
-     * @param name  The name of the weapon.
-     * @param power The normal power of the weapon.
-     * @param weight    The weight of the weapon.
-     */
-    public void addAxeToInventory(String name, int power, int weight){
-        Axe axe = new Axe(name, power, weight);
-        this.addToInventory(axe);
+    public void setDefaultCharactersHP(int hp){
+        for(ICharacterFactory factory: characterFactories){
+            factory.setHP(hp);
+        }
     }
 
-    /**
-     * Adds a Bow to the Player's inventory.
-     * @param name  The name of the weapon.
-     * @param power The normal power of the weapon.
-     * @param weight    The weight of the weapon.
-     */
-    public void addBowToInventory(String name, int power, int weight){
-        Bow bow = new Bow(name, power, weight);
-        this.addToInventory(bow);
+    public void setDefaultCharactersDP(int dp){
+        for(ICharacterFactory factory: characterFactories){
+            factory.setHP(dp);
+        }
     }
 
-    /**
-     * Adds a Knife to the Player's inventory.
-     * @param name  The name of the weapon.
-     * @param power The normal power of the weapon.
-     * @param weight    The weight of the weapon.
-     */
-    public void addKnifeToInventory(String name, int power, int weight){
-        Knife knife = new Knife(name, power, weight);
-        this.addToInventory(knife);
+    public void setDefaultCharactersMana(int mana){
+        for(IMagicCharacterFactory factory: magicCharacterFactories){
+            factory.setMana(mana);
+        }
     }
 
-    /**
-     * Adds a Sword to the Player's inventory.
-     * @param name  The name of the weapon.
-     * @param power The normal power of the weapon.
-     * @param weight    The weight of the weapon.
-     */
-    public void addSwordToInventory(String name, int power, int weight){
-        Sword sword = new Sword(name, power, weight);
-        this.addToInventory(sword);
+    public void setDefaultEnemiesWeight(int weight){
+        for(ICPUCharacterFactory factory: cpuCharacterFactories){
+            factory.setWeight(weight);
+        }
     }
 
-    /**
-     * Adds a Staff to the Player's inventory.
-     * @param name  The name of the weapon.
-     * @param power The normal power of the weapon.
-     * @param weight    The weight of the weapon.
-     */
-    public void addStaffToInventory(String name, int power, int weight, int magicDamage){
-        Staff staff = new Staff(name, power, weight, magicDamage);
-        this.addToInventory(staff);
+    public void setDefaultEnemiesPower(int power){
+        for(ICPUCharacterFactory factory: cpuCharacterFactories){
+            factory.setWeight(power);
+        }
     }
 
-    /**
-     * Adds an Engineer to the Player's party.
-     * @param name  The name of the character.
-     * @param HP The HP of the character.
-     * @param DP    The DP of the character.
-     */
-    public void addEngineerToUserParty(String name, int HP, int DP){
-        Engineer engineer = new Engineer(turns, name, HP, DP);
-        this.addToPlayerParty(engineer);
-    }
 
-    /**
-     * Adds a Knight to the Player's party.
-     * @param name  The name of the character.
-     * @param HP The HP of the character.
-     * @param DP    The DP of the character.
-     */
-    public void addKnightToUserParty(String name, int HP, int DP){
-        Knight knight = new Knight(turns, name, HP, DP);
-        this.addToPlayerParty(knight);
-    }
-
-    /**
-     * Adds a Thief to the Player's party.
-     * @param name  The name of the character.
-     * @param HP The HP of the character.
-     * @param DP    The DP of the character.
-     */
-    public void addThiefToUserParty(String name, int HP, int DP){
-        Thief thief = new Thief(turns, name, HP, DP);
-        this.addToPlayerParty(thief);
-    }
-
-    /**
-     * Adds a BlackMage to the Player's party.
-     * @param name  The name of the character.
-     * @param HP The HP of the character.
-     * @param DP    The DP of the character.
-     * @param mana The mana of the character.
-     */
-    public void addBlackMageToUserParty(String name, int HP, int DP, int mana){
-        BlackMage blackMage = new BlackMage(turns, name, HP, DP, mana);
-        this.addToPlayerParty(blackMage);
-    }
-
-    /**
-     * Adds a WhiteMage to the Player's party.
-     * @param name  The name of the character.
-     * @param HP The HP of the character.
-     * @param DP    The DP of the character.
-     * @param mana The mana of the character.
-     */
-    public void addWhiteMageToUserParty(String name, int HP, int DP, int mana){
-        WhiteMage whiteMage = new WhiteMage(turns, name, HP, DP, mana);
-        this.addToPlayerParty(whiteMage);
-    }
-
-    /**
-     * Adds an Enemy to the CPU's party.
-     * @param name  The name of the character.
-     * @param weight The weight of the character.
-     * @param HP The HP of the character.
-     * @param DP    The DP of the character.
-     * @param power The power of the character.
-
-     */
-    public void addEnemyToCPUParty(String name, int weight, int HP, int DP, int power){
-        Enemy enemy = new Enemy(turns, name, weight, HP, DP, power);
-        this.addToCPUParty(enemy);
-    }
 
 
 }

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -109,10 +109,10 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
      * @return An ArrayList of Integer with the attributes of this character all together,
      * in the following order: maxHP, currentHP, DP, weight, power.
      */
-    public ArrayList<Integer> getAttributes(){
-        ArrayList<Integer> attributes = super.getAttributes();
-        attributes.add(weight);
-        attributes.add(power);
+    public Map<String, Object> getAttributes(){
+        Map<String, Object> attributes = super.getAttributes();
+        attributes.put("weight", weight);
+        attributes.put("power", power);
         return attributes;
     }
 

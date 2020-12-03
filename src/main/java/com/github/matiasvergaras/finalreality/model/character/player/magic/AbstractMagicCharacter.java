@@ -4,8 +4,8 @@ import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -50,17 +50,13 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter imp
      * order: maxHP, currentHP, DP, maxMana, currentMana
      */
     @Override
-    public ArrayList<Integer> getAttributes(){
-        ArrayList<Integer> attributes = super.getAttributes();
-        attributes.add(maxMana);
-        attributes.add(currentMana);
+    public Map<String, Object> getAttributes(){
+        Map<String, Object> attributes = super.getAttributes();
+        attributes.put("maxMana", maxMana);
+        attributes.put("currentMana", currentMana);
         return attributes;
     }
 
-    //Magic attacks not implemented yet.
-    //public void reduceMana(int diff) {
-    //    currentMana -= diff;
-    //}
 
 
 }

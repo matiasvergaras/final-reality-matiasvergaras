@@ -4,6 +4,9 @@ import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
+import java.util.LinkedList;
+import java.util.Map;
+
 
 /**
  *
@@ -63,4 +66,19 @@ public interface IPlayerCharacter extends ICharacter {
      * @return true if equiped, false otherwise.
      */
     boolean isEquipped();
+
+    /**
+     * To get all the attributes of this character together,
+     * adding the equipped Weapon to those of
+     * the parent class.
+     * @return An LinkedLIST of Integer whit the attributes in the following
+     * order: maxHP, currentHP, DP, maxMana, currentMana
+     */
+    Map<String, Object> getAttributes();
+
 }
+
+
+
+
+
