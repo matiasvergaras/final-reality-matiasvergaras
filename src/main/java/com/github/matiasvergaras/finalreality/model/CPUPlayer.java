@@ -6,10 +6,10 @@ import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import java.util.ArrayList;
 
 public class CPUPlayer {
-    private ArrayList<ICPUCharacter> party = new ArrayList<>();
+    private ArrayList<ICPUCharacter> party;
 
     public CPUPlayer(){
-
+        this.party  = new ArrayList<>();
     }
 
     public ArrayList<ICPUCharacter> getParty(){

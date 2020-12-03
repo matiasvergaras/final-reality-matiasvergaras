@@ -6,12 +6,14 @@ import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import java.util.ArrayList;
 
 public class UserPlayer {
-    private ArrayList<IPlayerCharacter> party = new ArrayList<>();
-    private ArrayList<IWeapon> inventory = new ArrayList<>();
+    private ArrayList<IPlayerCharacter> party;
+    private ArrayList<IWeapon> inventory;
     private int characterQuantity;
 
     public UserPlayer(int characterQuantity){
         this.characterQuantity = characterQuantity;
+        this.party = new ArrayList<>();
+        this.inventory = new ArrayList<>();
     }
 
     public ArrayList<IPlayerCharacter> getParty(){

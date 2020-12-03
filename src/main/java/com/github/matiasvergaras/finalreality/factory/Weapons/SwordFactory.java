@@ -1,6 +1,5 @@
 package com.github.matiasvergaras.finalreality.factory.Weapons;
 
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Bow;
 import com.github.matiasvergaras.finalreality.model.weapon.normal.Sword;
 
 public class SwordFactory extends WeaponFactory{

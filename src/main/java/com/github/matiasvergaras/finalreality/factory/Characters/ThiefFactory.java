@@ -1,6 +1,5 @@
-package com.github.matiasvergaras.finalreality.factory.Characters.NormalCharacters;
+package com.github.matiasvergaras.finalreality.factory.Characters;
 
-import com.github.matiasvergaras.finalreality.factory.Characters.CharacterFactory;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.normal.Thief;
 

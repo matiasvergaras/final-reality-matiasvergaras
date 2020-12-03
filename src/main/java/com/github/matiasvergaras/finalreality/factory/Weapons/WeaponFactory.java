@@ -1,13 +1,13 @@
 package com.github.matiasvergaras.finalreality.factory.Weapons;
 
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-
 public abstract class WeaponFactory implements IWeaponFactory {
-    int weight = 10;
-    int power = 80;
-    int magicPower = 80;
+    int weight;
+    int power;
+    int magicPower = 0;
 
     public WeaponFactory(int weight, int power){
+        this.weight = weight;
+        this.power = power;
     }
 
     public void setWeight(int weight){

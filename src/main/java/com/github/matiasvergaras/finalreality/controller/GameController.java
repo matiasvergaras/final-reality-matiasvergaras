@@ -1,14 +1,12 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.factory.Characters.CPUCharacters.EnemyFactory;
-import com.github.matiasvergaras.finalreality.factory.Characters.CPUCharacters.ICPUCharacterFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.EnemyFactory;
 import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
-import com.github.matiasvergaras.finalreality.factory.Characters.MagicCharacters.BlackMageFactory;
-import com.github.matiasvergaras.finalreality.factory.Characters.MagicCharacters.IMagicCharacterFactory;
-import com.github.matiasvergaras.finalreality.factory.Characters.MagicCharacters.WhiteMageFactory;
-import com.github.matiasvergaras.finalreality.factory.Characters.NormalCharacters.EngineerFactory;
-import com.github.matiasvergaras.finalreality.factory.Characters.NormalCharacters.KnightFactory;
-import com.github.matiasvergaras.finalreality.factory.Characters.NormalCharacters.ThiefFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.BlackMageFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.WhiteMageFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.EngineerFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.KnightFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.ThiefFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
 import com.github.matiasvergaras.finalreality.model.CPUPlayer;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
@@ -19,7 +17,6 @@ import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -49,14 +46,15 @@ public class GameController {
     private BlackMageFactory blackMageFactory = new BlackMageFactory(turns, 120, 40, 200);
     private WhiteMageFactory whiteMageFactory = new WhiteMageFactory(turns, 120, 30, 200);
     private EnemyFactory enemyFactory = new EnemyFactory(turns, 130, 100, 12, 100);
-    private List<ICPUCharacterFactory> cpuCharacterFactories = new ArrayList<>();
-    private List<IMagicCharacterFactory> magicCharacterFactories = new ArrayList<>();
     private UserPlayer userPlayer;
     private CPUPlayer cpuPlayer;
     private ICharacter selectedCharacter;
     private IWeapon selectedWeapon;
     private ICharacterFactory selectedCharacterFactory;
     private IWeaponFactory selectedWeaponFactory;
+    private ArrayList<ICharacterFactory> characterFactories = new ArrayList<>();
+    private ArrayList<IWeaponFactory> weaponFactories = new ArrayList<>();
+
 
     /**
      *
@@ -68,9 +66,17 @@ public class GameController {
     private GameController(int charactersQuantity, LinkedBlockingQueue<ICharacter> turns){
         this.userPlayer = new UserPlayer(charactersQuantity);
         this.cpuPlayer = new CPUPlayer();
-        cpuCharacterFactories.add(enemyFactory);
-        magicCharacterFactories.add(whiteMageFactory);
-        magicCharacterFactories.add(blackMageFactory);
+        characterFactories.add(engineerFactory);
+        characterFactories.add(blackMageFactory);
+        characterFactories.add(whiteMageFactory);
+        characterFactories.add(thiefFactory);
+        characterFactories.add(knightFactory);
+        characterFactories.add(enemyFactory);
+        weaponFactories.add(bowFactory);
+        weaponFactories.add(staffFactory);
+        weaponFactories.add(knifeFactory);
+        weaponFactories.add(swordFactory);
+        weaponFactories.add(axeFactory);
     }
 
     /**
@@ -89,10 +95,9 @@ public class GameController {
     /**
      * Request a new BlackMage character to the corresponding factory and add it to the User's party if there is still
      * space left.
-     * <p> the character will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the character will have the default parameters, which can be modified using the set methods </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
-     * @see IMagicCharacterFactory
      */
     public void addBlackMageToPlayerParty(String name){
         userPlayer.addToParty(blackMageFactory.create(name));
@@ -101,10 +106,9 @@ public class GameController {
     /**
      * Request a new WhiteMage character to the corresponding factory and add it to the User's party if there is still
      * space left.
-     * <p> the character will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
-     * @see IMagicCharacterFactory
      */
     public void addWhiteMageToPlayerParty(String name){
         userPlayer.addToParty(whiteMageFactory.create(name));
@@ -113,7 +117,7 @@ public class GameController {
     /**
      * Request a new Engineer character to the corresponding factory and add it to the User's party if there is still
      * space left.
-     * <p> the character will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
      */
@@ -124,7 +128,7 @@ public class GameController {
     /**
      * Request a new Thief character to the corresponding factory and add it to the User's party if there is still
      * space left.
-     * <p> the character will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
      */
@@ -135,7 +139,7 @@ public class GameController {
     /**
      * Request a new Knight character to the corresponding factory and add it to the User's party if there is still
      * space left.
-     * <p> the character will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
      */
@@ -145,10 +149,9 @@ public class GameController {
 
     /**
      * Request a new CPU character to the corresponding factory and add it to the CPU's party.
-     * <p> the character will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
-     * @see ICPUCharacterFactory
      */
     public void addEnemyToCPUParty(String name){
         cpuPlayer.addToParty(enemyFactory.create(name));
@@ -156,7 +159,7 @@ public class GameController {
 
     /**
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * @see IWeaponFactory
      */
     public void addBowToInventory(){
@@ -165,7 +168,7 @@ public class GameController {
 
     /**
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * @param name      The name of the weapon to create.
      * @see IWeaponFactory
      */
@@ -175,7 +178,7 @@ public class GameController {
 
     /**
      * Request a new Sword weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * @see IWeaponFactory
      */
     public void addSwordToInventory(){
@@ -184,7 +187,7 @@ public class GameController {
 
     /**
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
      * @param name      The name of the weapon to create.
      * @see IWeaponFactory
@@ -195,7 +198,7 @@ public class GameController {
 
     /**
      * Request a new Axe weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * @see IWeaponFactory
      */
     public void addAxeToInventory(){
@@ -204,7 +207,7 @@ public class GameController {
 
     /**
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
      * @param name      The name of the weapon to create.
      * @see IWeaponFactory
@@ -215,7 +218,7 @@ public class GameController {
 
     /**
      * Request a new Staff weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * @see IWeaponFactory
      */
     public void addStaffToInventory(){
@@ -224,7 +227,7 @@ public class GameController {
 
     /**
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
      * @param name      The name of the weapon to create.
      * @see IWeaponFactory
@@ -235,7 +238,7 @@ public class GameController {
 
     /**
      * Request a new Knife weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. /p>
+     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * @see IWeaponFactory
      */
     public void addKnifeToInventory(){
@@ -244,7 +247,7 @@ public class GameController {
 
     /**
      * Request a new Knife weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> The weapon will have the default parameters, which can be modified using the set methods. /p>
+     * <p> The weapon will have the default parameters, which can be modified using the set methods. </p>
      * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
      * @param name      The name of the weapon to create.
      * @see IWeaponFactory
@@ -445,49 +448,96 @@ public class GameController {
     }
 
     /**
-     *
-     * @param weight
+     * Change the current SelectedWeaponFactory to the one in weaponFactories at the given index.
+     * <p> The methods checks if the index is in the range of the weaponFactories list, to avoid indexError's. </p>
+     * @param index     The position of the new SelectedWeaponFactory in weaponFactories
+     */
+    public void setSelectedWeaponFactory(int index){
+        if(index < weaponFactories.size()){
+            this.selectedWeaponFactory = weaponFactories.get(index);
+        }
+    }
+
+    /**
+     * Change the current SelectedCharacterFactory to the one in CharacterFactories at the given index.
+     * <p> The methods checks if the index is in the range of the weaponFactories list, to avoid indexError's. </p>
+     * @param index     The position of the new SelectedCharacterFactory in CharacterFactories
+     */
+    public void setSelectedCharacterFactory(int index){
+        if(index < characterFactories.size()){
+            this.selectedCharacterFactory = characterFactories.get(index);
+        }
+    }
+
+    /**
+     * Sets the selectedWeaponFactory default's weight of SelectedWeaponFactory
+     * @param weight        The value to be set as the default weapon weight
      */
     public void setSelectedWeaponFactoryWeight(int weight){
         selectedWeaponFactory.setWeight(weight);
     }
 
+    /**
+     * Sets the selectedWeaponFactory default's power of SelectedWeaponFactory
+     * @param power        The value to be set as the default weapon power
+     * @see ICharacterFactory
+     */
     public void setSelectedWeaponFactoryPower(int power){
         selectedWeaponFactory.setPower(power);
     }
 
-
+    /**
+     * Sets the selectedWeaponFactory default's magicPower
+     * @param magicPower       The value to be set as the default weapon magicPower of SelectedWeaponFactory
+     * @see ICharacterFactory
+     */
     public void setSelectedWeaponFactoryMagicPower(int magicPower){
         selectedWeaponFactory.setMagicPower(magicPower);
     }
 
+    /**
+     * Sets the selectedCharacterFactory default's HP
+     * @param hp       The value to be set as the default HP of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
     public void setSelectedCharacterFactoryHP(int hp){
         selectedCharacterFactory.setHP(hp);
     }
 
+    /**
+     * Sets the selectedCharacterFactory default's DP
+     * @param dp       The value to be set as the default DP of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
     public void setSelectedCharacterFactoryDP(int dp){
         selectedCharacterFactory.setDP(dp);
     }
 
+    /**
+     * Sets the selectedCharacterFactory default's Mana
+     * @param mana      The value to be set as the default mana of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
     public void setSelectedCharacterFactoryMana(int mana){
-        if(magicCharacterFactories.contains(selectedCharacterFactory)){
-            IMagicCharacterFactory selectedCharacterFactory = (IMagicCharacterFactory)this.selectedCharacterFactory;
-            selectedCharacterFactory.setMana(mana);
-        }
+        selectedCharacterFactory.setMana(mana);
     }
 
-    public void setDefaultEnemiesWeight(int weight){
-        if(cpuCharacterFactories.contains(selectedCharacterFactory)){
-            ICPUCharacterFactory selectedCharacterFactory = (ICPUCharacterFactory)this.selectedCharacterFactory;
-            selectedCharacterFactory.setWeight(weight);
-        }
+    /**
+     * Sets the selectedCharacterFactory default's weight
+     * @param weight      The value to be set as the default weight of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
+    public void setSelectedCharacterFactoryWeight(int weight){
+        selectedCharacterFactory.setWeight(weight);
     }
 
-    public void setDefaultEnemiesPower(int power){
-        if(cpuCharacterFactories.contains(selectedCharacterFactory)){
-            ICPUCharacterFactory selectedCharacterFactory = (ICPUCharacterFactory)this.selectedCharacterFactory;
-            selectedCharacterFactory.setWeight(power);
-        }
+    /**
+     * Sets the selectedCharacterFactory default's pwoer
+     * @param power      The value to be set as the default power of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
+    public void setSelectedCharacterFactoryPower(int power){
+        selectedCharacterFactory.setPower(power);
     }
 
 }
