@@ -1,11 +1,10 @@
 package com.github.matiasvergaras.finalreality.model.character.player;
 
+import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.NullPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;
@@ -42,6 +41,9 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
         this.isEquipped = false;
     }
 
+    public void addToParty(IMastermind mastermind){
+        mastermind.addPlayerCharacter(this);
+    }
     /**
      * {@inheritDoc}
      */
@@ -99,13 +101,13 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
         weapon.setOwner(this);
     }
 
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void unequip() {
-        equippedWeapon.setOwner(new NullPlayerCharacter());
-        equippedWeapon = new NullWeapon();
+        equippedWeapon = null;
     }
 
 

@@ -71,14 +71,6 @@ public interface IWeapon {
      */
     void equipToWhiteMage(IPlayerCharacter character);
 
-
-    /**
-     * Equips this weapon to a given Null Character.
-     *
-     * @param character the Null Character that will be equipped with this weapon.
-     */
-    void equipToNull(IPlayerCharacter character);
-
     /**
      * Get the character that is using this weapon. Useful for testing.
      *

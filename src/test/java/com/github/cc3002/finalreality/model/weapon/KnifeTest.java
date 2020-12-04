@@ -42,6 +42,9 @@ public class KnifeTest extends AbstractWeaponTest {
         exampleKnife.setWeaponFree();
         checkEquipUnequip(exampleKnife, exampleKnight,
                 exampleThief);
+        exampleKnife.setWeaponFree();
+        checkEquipUnequip(exampleKnife, exampleBlackMage,
+                exampleThief);
     }
 
     /**

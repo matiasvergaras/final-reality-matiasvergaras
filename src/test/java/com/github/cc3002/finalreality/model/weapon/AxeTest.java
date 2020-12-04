@@ -40,6 +40,9 @@ public class AxeTest extends AbstractWeaponTest {
     void equipUnequipTest() {
         checkEquipUnequip(exampleAxe, exampleKnight,
                 exampleEngineer);
+        exampleAxe.setWeaponFree();
+        checkEquipUnequip(exampleAxe, exampleEngineer,
+                exampleKnight);
     }
 
     /**

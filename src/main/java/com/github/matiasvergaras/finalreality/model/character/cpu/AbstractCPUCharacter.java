@@ -1,5 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.cpu;
 
+import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
@@ -44,6 +45,13 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
         this.power = power;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param mastermind        The mastermind that will receive the character in its party.
+     */
+    public void addToParty(IMastermind mastermind){
+        mastermind.addCPUCharacter(this);
+    }
     /**
      * {@inheritDoc}
      */

@@ -1,16 +1,8 @@
 package com.github.cc3002.finalreality.model.character;
 
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.magic.IMagicCharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Axe;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Bow;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Knife;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Sword;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;

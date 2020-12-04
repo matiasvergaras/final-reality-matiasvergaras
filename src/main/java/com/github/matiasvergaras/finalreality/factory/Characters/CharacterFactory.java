@@ -6,7 +6,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Character Factory.
- * <p> An Abstract Character Factory that holds the common methods for the creation of every kind of character.</p>
+ * <p> An Abstract Character Factory that holds the common methods related to the production of every kind of character.
+ * </p>
  * <p> To avoid overcomplicating the code at a stage when it is not necessary yet, all specific character factories will
  * inherit the setWeight, setPower and setMana methods from this class, even if their creations do not use them. This
  * will also allow us to avoid using downcast at the Controller. </p>
@@ -37,6 +38,7 @@ public abstract class CharacterFactory implements ICharacterFactory{
         this.hp = hp;
         this.dp = dp;
     }
+
 
     /**
      * Sets the HP default value to another one, given as parameter.

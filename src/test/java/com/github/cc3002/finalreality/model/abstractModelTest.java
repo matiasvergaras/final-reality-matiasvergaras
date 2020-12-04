@@ -22,7 +22,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public abstract class abstractModelTest {
 
-    //--------------------------------------SET-UP OF SOME VARIABLES--------------------------------------------------//
+    //--------------------------------------SET-UP OF ATTRIBUTES VARIABLES---------------------------------------------//
     protected BlockingQueue<ICharacter> turns;
     protected int DAMAGE = 240;
     protected int POWERFUL_DAMAGE=310;

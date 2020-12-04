@@ -8,13 +8,12 @@ import com.github.matiasvergaras.finalreality.factory.Characters.EngineerFactory
 import com.github.matiasvergaras.finalreality.factory.Characters.KnightFactory;
 import com.github.matiasvergaras.finalreality.factory.Characters.ThiefFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
-import com.github.matiasvergaras.finalreality.model.CPUPlayer;
+import com.github.matiasvergaras.finalreality.model.Mastermind.CPUPlayer;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.UserPlayer;
+import com.github.matiasvergaras.finalreality.model.Mastermind.UserPlayer;
 import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -35,11 +34,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class GameController {
     private static GameController uniqueInstance;
     private LinkedBlockingQueue<ICharacter> turns;
-    private AxeFactory axeFactory = new AxeFactory(120, 13);
-    private BowFactory bowFactory = new BowFactory(90, 10);
-    private KnifeFactory knifeFactory = new KnifeFactory(100, 9);
-    private StaffFactory staffFactory = new StaffFactory(10, 11, 120);
-    private SwordFactory swordFactory = new SwordFactory(110, 11);
+    private AxeFactory axeFactory = new AxeFactory("Common Axe", 120, 13);
+    private BowFactory bowFactory = new BowFactory("Common Bow", 90, 10);
+    private KnifeFactory knifeFactory = new KnifeFactory("Common Knife",100, 9);
+    private StaffFactory staffFactory = new StaffFactory("Common Staff", 10, 11, 120);
+    private SwordFactory swordFactory = new SwordFactory("Common Sword", 110, 11);
     private EngineerFactory engineerFactory = new EngineerFactory(turns, 125, 70);
     private KnightFactory knightFactory = new KnightFactory(turns, 180, 100);
     private ThiefFactory thiefFactory = new ThiefFactory(turns,90, 50);
@@ -63,8 +62,8 @@ public class GameController {
      * @param charactersQuantity    the number of characters that the user will have.
      * @param turns                 a linked blocking queue for keeping the turns.
      */
-    private GameController(int charactersQuantity, LinkedBlockingQueue<ICharacter> turns){
-        this.userPlayer = new UserPlayer(charactersQuantity);
+    private GameController(int charactersQuantity, LinkedBlockingQueue<ICharacter> turns, String playerName){
+        this.userPlayer = new UserPlayer(playerName, charactersQuantity);
         this.cpuPlayer = new CPUPlayer();
         characterFactories.add(engineerFactory);
         characterFactories.add(blackMageFactory);
@@ -85,9 +84,10 @@ public class GameController {
      * @param turns                 a linked blocking queue for keeping the turns.
      * @return an instance of GameController if it has not been instantiated before. Null otherwise.
      */
-    public static GameController uniqueInstance(int charactersQuantity, LinkedBlockingQueue<ICharacter> turns){
+    public static GameController uniqueInstance(int charactersQuantity, LinkedBlockingQueue<ICharacter> turns, String
+                                                playerName){
         if(uniqueInstance == null){
-            uniqueInstance = new GameController(charactersQuantity,  turns);
+            uniqueInstance = new GameController(charactersQuantity,  turns, playerName);
         }
         return uniqueInstance;
     }
@@ -303,7 +303,7 @@ public class GameController {
     public void equipSelectedWeaponToSelectedCharacter(){
         if(userPlayer.getParty().contains(selectedCharacter)){
             IPlayerCharacter character = (IPlayerCharacter)this.selectedCharacter;
-            character.equipWeapon(selectedWeapon);
+            userPlayer.equipCharacter(selectedWeapon, character);
         }
     }
 
@@ -333,7 +333,7 @@ public class GameController {
      */
     public void removeSelectedWeaponFromInventory(){
         userPlayer.removeFromInventory(selectedWeapon);
-        selectedWeapon = new NullWeapon();
+        selectedWeapon = null;
     }
 
     /**
@@ -347,14 +347,14 @@ public class GameController {
      */
     public void selectedCharacterNormalAttack(ICharacter target){
         if(userPlayer.getParty().contains(selectedCharacter) & cpuPlayer.getParty().contains(target)){
-            IPlayerCharacter character = (IPlayerCharacter)selectedCharacter;
+            IPlayerCharacter playerCharacter = (IPlayerCharacter)selectedCharacter;
             ICPUCharacter cpuCharacter = (ICPUCharacter)target;
-            character.normalAttack(cpuCharacter);
+            userPlayer.makeNormalAttack(playerCharacter, cpuCharacter);
         }
         if(cpuPlayer.getParty().contains(selectedCharacter) & userPlayer.getParty().contains(target)){
-            IPlayerCharacter character = (IPlayerCharacter)target;
+            IPlayerCharacter playerCharacter = (IPlayerCharacter)target;
             ICPUCharacter cpuCharacter = (ICPUCharacter)selectedCharacter;
-            cpuCharacter.normalAttack(character);
+            cpuPlayer.makeNormalAttack(cpuCharacter, playerCharacter);
         }
     }
 
@@ -407,7 +407,7 @@ public class GameController {
      * <p> If the character does not have the attribute, method returns null. </p>
      * @return      the selectedCharacter equipped Weapon, as IWeapon.
      */
-    IWeapon getSelectedCharacterCurrentWeapon(){
+    IWeapon getSelectedCharacterEquippedWeapon(){
         return (IWeapon)selectedCharacter.getAttributes().get("equippedWeapon");
     }
 
@@ -470,15 +470,24 @@ public class GameController {
     }
 
     /**
-     * Sets the selectedWeaponFactory default's weight of SelectedWeaponFactory
+     * Sets the selectedWeaponFactory default's weight value.
      * @param weight        The value to be set as the default weapon weight
      */
     public void setSelectedWeaponFactoryWeight(int weight){
         selectedWeaponFactory.setWeight(weight);
     }
 
+
     /**
-     * Sets the selectedWeaponFactory default's power of SelectedWeaponFactory
+     * Sets the selectedWeaponFactory default's name value.
+     * @param weight        The value to be set as the default weapon weight
+     */
+    public void setSelectedWeaponFactoryName(String name){
+        selectedWeaponFactory.setName(name);
+    }
+
+    /**
+     * Sets the selectedWeaponFactory default's power value.
      * @param power        The value to be set as the default weapon power
      * @see ICharacterFactory
      */
@@ -487,7 +496,7 @@ public class GameController {
     }
 
     /**
-     * Sets the selectedWeaponFactory default's magicPower
+     * Sets the selectedWeaponFactory default's magicPower value.
      * @param magicPower       The value to be set as the default weapon magicPower of SelectedWeaponFactory
      * @see ICharacterFactory
      */
@@ -539,6 +548,35 @@ public class GameController {
     public void setSelectedCharacterFactoryPower(int power){
         selectedCharacterFactory.setPower(power);
     }
+
+    /**
+     * Gives the SelectedCharacter ICharacter Object.
+     * @return      The selectedCharacter ICharacter Object.
+     */
+    ICharacter getSelectedCharacter(){
+        return this.selectedCharacter;
+    }
+
+    /**
+     * Gives the SelectedWeapon IWeapon Object.
+     * @return      The selectedWeapon IWeapon Object.
+     */
+    IWeapon getSelectedWeapon(){
+        return this.selectedWeapon;
+    }
+
+    /**
+     * Gives the SelectedWeaponFactory IWeaponFactory Object.
+     * @return      The selectedWeaponFactory IWeaponFactory Object.
+     */
+    IWeaponFactory getSelectedWeaponFactory(){
+        return this.selectedWeaponFactory;
+    }
+
+    ICharacterFactory getSelectedCharacterFactory(){
+        return this.selectedCharacterFactory;
+    }
+
 
 }
 

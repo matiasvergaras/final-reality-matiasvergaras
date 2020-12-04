@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
 
+import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -22,8 +23,6 @@ public abstract class AbstractCharacter implements ICharacter {
     private final int maxHP;
     private int currentHP;
     private final int DP;
-
-
     protected ScheduledExecutorService scheduledExecutor;
 
     /**
@@ -44,6 +43,11 @@ public abstract class AbstractCharacter implements ICharacter {
         this.DP = DP;
     }
 
+    /**
+     * {@inheritDoc}
+     * @param mastermind        The mastermind that will receive this character in its party.
+     */
+    public abstract void addToParty(IMastermind mastermind);
     /**
      * Adds this character to the turns queue.
      */

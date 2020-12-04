@@ -26,7 +26,6 @@ public abstract class AbstractWeapon implements IWeapon {
         this.name = name;
         this.power = power;
         this.weight = weight;
-        this.owner = null;
     }
 
     /**
@@ -102,15 +101,6 @@ public abstract class AbstractWeapon implements IWeapon {
      * {@inheritDoc}
      */
     @Override
-    public void equipToNull(IPlayerCharacter character) {
-        setWeaponFree();
-        character.equip(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public IPlayerCharacter getOwner() {
         return owner;
     }
@@ -133,4 +123,5 @@ public abstract class AbstractWeapon implements IWeapon {
         }
     }
 }
+
 

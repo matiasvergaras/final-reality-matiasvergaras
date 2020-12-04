@@ -1,5 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.cpu;
 
+import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
@@ -18,6 +19,13 @@ import java.util.Map;
  * @author Matías Vergara Silva
  */
 public interface ICPUCharacter extends ICharacter {
+
+    /**
+     * Adds this character to a mastermind party's.
+     * @param mastermind        The mastermind that will receive the character in its party.
+     */
+    public void addToParty(IMastermind mastermind);
+
     /**
      * Get the power of this enemy.
      *

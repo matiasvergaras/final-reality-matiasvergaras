@@ -1,10 +1,10 @@
 package com.github.matiasvergaras.finalreality.model.character.player;
 
+import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
-import java.util.LinkedList;
 import java.util.Map;
 
 
@@ -18,6 +18,13 @@ import java.util.Map;
  * @author Matías Vergara Silva
  */
 public interface IPlayerCharacter extends ICharacter {
+
+    /**
+     * Adds this character to a Mastermind party's.
+     * @param mastermind        The mastermind that will receive this character in it's party.
+     */
+    void addToParty(IMastermind mastermind);
+
     /**
      * Starts the process of equip a weapon to this character,
      * checking if it is possible via double dispatch.
