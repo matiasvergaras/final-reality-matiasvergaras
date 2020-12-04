@@ -1,29 +1,29 @@
 package com.github.matiasvergaras.finalreality.model.Mastermind;
 
-import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
+import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
 import java.util.ArrayList;
 
 /**
- * A class to hold all the information of a userPlayer.
+ * A class to hold all the information of a PlayerMastermind.
  * <p> Since the party and the inventory are of the player and not of the Controller, we decided to create this class
  * to hold it. </p>
- * <p> User Player does have a name and a maximum number of characters. </p>
+ * <p> PlayerMastermind does have a name and a maximum number of characters. </p>
  */
-public class PlayerMastermind implements AbstractMastermind {
+public class PlayerMastermind extends AbstractMastermind {
     private ArrayList<IPlayerCharacter> party;
     private ArrayList<IWeapon> inventory;
     private final int characterQuantity;
     private final String name;
 
     /**
-     * Constructor for a new UserPlayer
+     * Constructor for a new PlayerMastermind.
      * @param name                  The name of the Player in this game.
      * @param characterQuantity     The number of characters that the player will have.
      */
-    public UserPlayer(String name, int characterQuantity){
+    public PlayerMastermind(String name, int characterQuantity){
         this.characterQuantity = characterQuantity;
         this.party = new ArrayList<>();
         this.inventory = new ArrayList<>();
@@ -32,72 +32,50 @@ public class PlayerMastermind implements AbstractMastermind {
 
     /**
      * Gives the actual player name.
-     * @return  The name of the UserPlayer.
+         * @return  The name of the PlayerMastermind.
      */
     public String getPlayerName(){
         return name;
     }
 
     /**
-     * Gives the number of characters that this userPlayer must have at the start of the game.
-     * @return      The number of characters that this userPlayer must have at the start of the game.
+     * Gives the number of characters that this PlayerMastermind must have at the start of the game.
+     * @return      The number of characters that this PlayerMastermind must have at the start of the game.
      */
     public int getCharacterQuantity(){
         return characterQuantity;
     }
 
-    /**
-     * Gives the number of characters in the userPlayer party.
-     * @return  the number of characters in the userPlayer party.
-     */
-    public int getPartySize(){
-        return party.size();
-    }
 
     /**
-     * Gives the party of the userPlayer.
-     * @return  An ArrayList of IPlayerCharacter representing all the characters of the userPlayer together.
+     * Adds a character to the party of the PlayerMastermind if there is space.
+     * @param character     The IPlayerCharacter character to be added to the PlayerMastermind party.
      */
-    public ArrayList<IPlayerCharacter> getParty(){
-        return party;
-    }
-
-    /**
-     * Adds a character to the party of the userPlayer if there is space.
-     * @param character     The IPlayerCharacter character to be added to the userPlayer party.
-     */
-    public void addToParty(IPlayerCharacter character) {
+    public void addToPlayerParty(ICharacter character) {
         if (this.getPartySize() < characterQuantity) {
             this.getParty().add(character);
         }
     }
 
     /**
-     * Removes a character from the UserPlayer party.
-     * @param character     The IPlayerCharacter character to be removed.
-     */
-    public void removeFromParty(IPlayerCharacter character){
-        this.getParty().remove(character);
-    }
-
-    /**
-     * Returns the number of elements in the userPlayer inventory.
-     * @return      The number of elements in the userPlayer inventory.
+     * Returns the number of elements in the PlayerMastermind inventory.
+     * @return      The number of elements in the PlayerMastermind inventory.
      */
     public int getInventorySize(){
         return inventory.size();
     }
 
     /**
-     * Gives the inventory of this userPlayer.
-     * @return      An ArrayList of IWeapon representing all the weapons in the inventory of the userPlayer together.
+     * Gives the inventory of this PlayerMastermind
+     * @return      An ArrayList of IWeapon representing all the weapons in the inventory of the PlayerMastermind
+     * together.
      */
     public ArrayList<IWeapon> getInventory(){
         return inventory;
     }
 
     /**
-     * Adds a given weapon to the inventory of this userPlayer.
+     * Adds a given weapon to the inventory of this PlayerMastermind.
      * @param weapon        The IWeapon  weapon to be added to the inventory.
      */
     public void addToInventory(IWeapon weapon){
@@ -105,7 +83,7 @@ public class PlayerMastermind implements AbstractMastermind {
     }
 
     /**
-     * Removes a given weapon from the userPlyer inventory.
+     * Removes a given weapon from the PlayerMastermind inventory.
      * @param weapon        The IWeapon weapon to be removed from the inventory.
      */
     public void removeFromInventory(IWeapon weapon){
@@ -127,15 +105,6 @@ public class PlayerMastermind implements AbstractMastermind {
      */
     public void unequipCharacter(IPlayerCharacter character){
         character.unequip();
-    }
-
-    /**
-     * Makes a character performs a normal attack against an enemy.
-     * @param character     The IPlayerCharacter character that will perform the attack.
-     * @param target        The ICPUCharacter character that will receive the attack.
-     */
-    public void makeNormalAttack(IPlayerCharacter character, ICPUCharacter target){
-        character.normalAttack(target);
     }
 
 

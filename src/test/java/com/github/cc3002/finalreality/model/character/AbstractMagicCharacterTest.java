@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 
 public abstract class AbstractMagicCharacterTest extends AbstractPlayerCharacterTest {
-    //This far we have implemented only the max mana getter
 
     /**
      * Checks that the Magic Character getMaxMana method works properly.

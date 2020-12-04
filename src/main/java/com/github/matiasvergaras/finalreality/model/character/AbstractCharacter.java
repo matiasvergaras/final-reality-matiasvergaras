@@ -48,14 +48,34 @@ public abstract class AbstractCharacter implements ICharacter {
      * @param mastermind        The mastermind that will receive this character in its party.
      */
     public abstract void addToParty(IMastermind mastermind);
+
+
     /**
-     * Adds this character to the turns queue.
+     * {@inheritDoc}
+     * @param character the character to be attacked.
      */
+    public void normalAttack(ICharacter character) {
+        if (character.isAlive() && this.isAlive()) {
+            character.receiveNormalAttack(this);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param character         The ICharacter character that is performing the attack.
+     */
+    public abstract void receiveNormalAttack(ICharacter character);
+
     protected void addToQueue() {
         turnsQueue.add(this);
         scheduledExecutor.shutdown();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public abstract int getAttackPower();
     /**
      * {@inheritDoc}
      */

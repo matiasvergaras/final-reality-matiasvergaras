@@ -55,20 +55,6 @@ public interface IPlayerCharacter extends ICharacter {
 
 
     /**
-     * Performs a non-magic attack
-     *
-     * @param character the character to be attacked.
-     */
-    void normalAttack(ICPUCharacter character);
-
-    /**
-     * Receive a non-magic attack
-     *
-     * @param character the character that attacks.
-     */
-    void receiveNormalAttack(ICPUCharacter character);
-
-    /**
      * A boolean telling if this character has a weapon equipped
      * @return true if equiped, false otherwise.
      */

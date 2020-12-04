@@ -50,7 +50,7 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
      * @param mastermind        The mastermind that will receive the character in its party.
      */
     public void addToParty(IMastermind mastermind){
-        mastermind.addCPUCharacter(this);
+        mastermind.addToCPUParty(this);
     }
     /**
      * {@inheritDoc}
@@ -82,23 +82,19 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
 
     /**
      * {@inheritDoc}
+     *
      */
-    @Override
-    public void normalAttack(IPlayerCharacter character) {
-        if( this.isAlive()) {
-            if (character.isAlive()) {
-                character.receiveNormalAttack(this);
-            }
-        }
+    public int getAttackPower(){
+        return this.getPower();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void receiveNormalAttack(IPlayerCharacter character) {
-        if (character.isEquipped() & character.getEquippedWeapon().getPower()>this.getDP()) {
-            reduceHP(character.getEquippedWeapon().getPower() - getDP());
+    public void receiveNormalAttack(ICharacter character) {
+        if (character.getAttackPower()>this.getDP()) {
+            reduceHP(character.getAttackPower() - getDP());
         }
     }
 

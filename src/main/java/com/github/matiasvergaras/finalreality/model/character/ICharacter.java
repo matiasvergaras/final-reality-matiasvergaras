@@ -19,6 +19,26 @@ public interface ICharacter {
     void waitTurn();
 
     /**
+     * {@inheritDoc}
+     * @param character         The character that will receive the attack.
+     */
+    void normalAttack(ICharacter character);
+
+    /**
+     * Receive a non-magic attack
+     *
+     * @param character         The ICharacter that is performing the attack.
+     */
+    void receiveNormalAttack(ICharacter character);
+
+    /**
+     * Returns the attack power of this unit calculated based on its type:
+     * <p> With the power for the cpuCharacters </p>
+     * <p> With the weapon for the playerCharacters </p>
+     */
+    int getAttackPower();
+
+    /**
      * A method to get the name of this character.
      *
      * @return this character's name.

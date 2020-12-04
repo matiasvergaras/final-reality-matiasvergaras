@@ -3,7 +3,6 @@ package com.github.matiasvergaras.finalreality.model.character.player;
 import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
@@ -42,7 +41,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     }
 
     public void addToParty(IMastermind mastermind){
-        mastermind.addPlayerCharacter(this);
+        mastermind.addToPlayerParty(this);
     }
     /**
      * {@inheritDoc}
@@ -110,26 +109,27 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
         equippedWeapon = null;
     }
 
-
     /**
      * {@inheritDoc}
-     * @param character the character to be attacked.
+     *
      */
-    public void normalAttack(ICPUCharacter character) {
-        if (character.isAlive() && this.isAlive()) {
-            character.receiveNormalAttack(this);
+    public int getAttackPower(){
+        if(this.isEquipped()){
+            return this.getEquippedWeapon().getPower();
+        }
+        else{
+            return 0;
         }
     }
-
 
     /**
      * Receive a non-magic attack
      *
      * @param character the attacking character.
      */
-    public void receiveNormalAttack(ICPUCharacter character) {
-        if(character.getPower()>this.getDP()) {
-            this.reduceHP(character.getPower() - getDP());
+    public void receiveNormalAttack(ICharacter character) {
+        if(character.getAttackPower()>this.getDP()) {
+            this.reduceHP(character.getAttackPower() - getDP());
         }
     }
 

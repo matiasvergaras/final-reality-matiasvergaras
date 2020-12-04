@@ -8,10 +8,9 @@ import com.github.matiasvergaras.finalreality.factory.Characters.EngineerFactory
 import com.github.matiasvergaras.finalreality.factory.Characters.KnightFactory;
 import com.github.matiasvergaras.finalreality.factory.Characters.ThiefFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
-import com.github.matiasvergaras.finalreality.model.Mastermind.CPUPlayer;
+import com.github.matiasvergaras.finalreality.model.Mastermind.CPUMastermind;
+import com.github.matiasvergaras.finalreality.model.Mastermind.PlayerMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.Mastermind.UserPlayer;
-import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
@@ -45,8 +44,8 @@ public class GameController {
     private BlackMageFactory blackMageFactory = new BlackMageFactory(turns, 120, 40, 200);
     private WhiteMageFactory whiteMageFactory = new WhiteMageFactory(turns, 120, 30, 200);
     private EnemyFactory enemyFactory = new EnemyFactory(turns, 130, 100, 12, 100);
-    private UserPlayer userPlayer;
-    private CPUPlayer cpuPlayer;
+    private PlayerMastermind player;
+    private CPUMastermind cpu;
     private ICharacter selectedCharacter;
     private IWeapon selectedWeapon;
     private ICharacterFactory selectedCharacterFactory;
@@ -63,8 +62,8 @@ public class GameController {
      * @param turns                 a linked blocking queue for keeping the turns.
      */
     private GameController(int charactersQuantity, LinkedBlockingQueue<ICharacter> turns, String playerName){
-        this.userPlayer = new UserPlayer(playerName, charactersQuantity);
-        this.cpuPlayer = new CPUPlayer();
+        this.player = new PlayerMastermind(playerName, charactersQuantity);
+        this.cpu = new CPUMastermind();
         characterFactories.add(engineerFactory);
         characterFactories.add(blackMageFactory);
         characterFactories.add(whiteMageFactory);
@@ -100,7 +99,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addBlackMageToPlayerParty(String name){
-        userPlayer.addToParty(blackMageFactory.create(name));
+        blackMageFactory.create(name).addToParty(player);
     }
 
     /**
@@ -111,7 +110,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addWhiteMageToPlayerParty(String name){
-        userPlayer.addToParty(whiteMageFactory.create(name));
+        whiteMageFactory.create(name).addToParty(player);
     }
 
     /**
@@ -122,7 +121,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addEngineerToPlayerParty(String name){
-        userPlayer.addToParty(engineerFactory.create(name));
+        engineerFactory.create(name).addToParty(player);
     }
 
     /**
@@ -133,7 +132,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addThiefToPlayerParty(String name){
-        userPlayer.addToParty(thiefFactory.create(name));
+        thiefFactory.create(name).addToParty(player);
     }
 
     /**
@@ -144,7 +143,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addKnightToPlayerParty(String name){
-        userPlayer.addToParty(knightFactory.create(name));
+        knightFactory.create(name).addToParty(player);
     }
 
     /**
@@ -154,7 +153,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addEnemyToCPUParty(String name){
-        cpuPlayer.addToParty(enemyFactory.create(name));
+        enemyFactory.create(name).addToParty(cpu);
     }
 
     /**
@@ -163,7 +162,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addBowToInventory(){
-        userPlayer.addToInventory(bowFactory.create());
+        player.addToInventory(bowFactory.create());
     }
 
     /**
@@ -173,7 +172,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addBowToInventory(String name){
-        userPlayer.addToInventory(bowFactory.create(name));
+        player.addToInventory(bowFactory.create(name));
     }
 
     /**
@@ -182,7 +181,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addSwordToInventory(){
-        userPlayer.addToInventory(swordFactory.create());
+        player.addToInventory(swordFactory.create());
     }
 
     /**
@@ -193,7 +192,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addSwordToInventory(String name){
-        userPlayer.addToInventory(swordFactory.create(name));
+        player.addToInventory(swordFactory.create(name));
     }
 
     /**
@@ -202,7 +201,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addAxeToInventory(){
-        userPlayer.addToInventory(axeFactory.create());
+        player.addToInventory(axeFactory.create());
     }
 
     /**
@@ -213,7 +212,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addAxeToInventory(String name){
-        userPlayer.addToInventory(axeFactory.create(name));
+        player.addToInventory(axeFactory.create(name));
     }
 
     /**
@@ -222,7 +221,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addStaffToInventory(){
-        userPlayer.addToInventory(staffFactory.create());
+        player.addToInventory(staffFactory.create());
     }
 
     /**
@@ -233,7 +232,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addStaffToInventory(String name){
-        userPlayer.addToInventory(staffFactory.create(name));
+        player.addToInventory(staffFactory.create(name));
     }
 
     /**
@@ -242,7 +241,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addKnifeToInventory(){
-        userPlayer.addToInventory(knifeFactory.create());
+        player.addToInventory(knifeFactory.create());
     }
 
     /**
@@ -253,7 +252,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addKnifeToInventory(String name){
-        userPlayer.addToInventory(knifeFactory.create(name));
+        player.addToInventory(knifeFactory.create(name));
     }
 
     /**
@@ -264,8 +263,8 @@ public class GameController {
      * @param index     The position of the weapon that will be selected in the userPlayer Inventory.
      */
     public void setSelectedWeapon(int index){
-        if(index < userPlayer.getInventorySize()) {
-            this.selectedWeapon = userPlayer.getInventory().get(index);
+        if(index < player.getInventorySize()) {
+            this.selectedWeapon = player.getInventory().get(index);
         }
     }
 
@@ -277,8 +276,8 @@ public class GameController {
      * @param index     The position of the character that will be selected in the userPlayer Party.
      */
     public void setSelectedCharacterFromPlayerParty(int index){
-        if(index < userPlayer.getPartySize()){
-            this.selectedCharacter = userPlayer.getParty().get(index);
+        if(index < player.getPartySize()){
+            this.selectedCharacter = player.getCharacterFromParty(index);
         }
     }
 
@@ -290,8 +289,8 @@ public class GameController {
      * @param index     The position of the character that will be selected in the cpuPlayer Party.
      */
     public void setSelectedCharacterFromCPUParty(int index){
-        if(index < cpuPlayer.getPartySize()){
-            this.selectedCharacter = userPlayer.getParty().get(index);
+        if(index < cpu.getPartySize()){
+            this.selectedCharacter = cpu.getParty().get(index);
         }
     }
 
@@ -301,9 +300,9 @@ public class GameController {
      * who cannot equip weapons. </p>
      */
     public void equipSelectedWeaponToSelectedCharacter(){
-        if(userPlayer.getParty().contains(selectedCharacter)){
+        if(player.getParty().contains(selectedCharacter)){
             IPlayerCharacter character = (IPlayerCharacter)this.selectedCharacter;
-            userPlayer.equipCharacter(selectedWeapon, character);
+            player.equipCharacter(selectedWeapon, character);
         }
     }
 
@@ -313,8 +312,8 @@ public class GameController {
      * who cannot equip weapons. </p>
      */
     public void unequipSelectedCharacter(){
-        if (userPlayer.getParty().contains(selectedCharacter)) {
-            userPlayer.unequipCharacter((IPlayerCharacter)selectedCharacter);
+        if (player.getParty().contains(selectedCharacter)) {
+            player.unequipCharacter((IPlayerCharacter)selectedCharacter);
         }
     }
 
@@ -324,37 +323,36 @@ public class GameController {
      * <p> The method removes the character if it is present in any of the teams, and do nothing otherwise. </p>
      */
     public void removeSelectedCharacterFromItsParty(){
-        userPlayer.removeFromParty((IPlayerCharacter)selectedCharacter);
-        cpuPlayer.removeFromParty((ICPUCharacter)selectedCharacter);
+        player.removeFromParty(selectedCharacter);
+        cpu.removeFromParty(selectedCharacter);
+        selectedCharacter = null;
     }
 
     /**
      * Removes the selectedWeapon from the userPlayer inventory and sets the selectedWeapon as the NullWeapon.
      */
     public void removeSelectedWeaponFromInventory(){
-        userPlayer.removeFromInventory(selectedWeapon);
+        player.removeFromInventory(selectedWeapon);
         selectedWeapon = null;
     }
 
     /**
-     * This method receives a target, and makes the selectedCharacter performs a normall attack against him.
+     * This method receives a target, and makes the selectedCharacter performs a normal attack against him.
      * <p> The method checks that any of the following cases are true:</p>
      * <p> selectedCharacter is in userPlayer party and target is in CPUPlayer Party, or </p>
      * <p> selectedCharacter is in CPUPlayer Party and selectedCharacter in userPlayer
      * Party. </p>
      * <p> If so, it sends the attack message in the corresponding direction. Otherwise, it has no effect.</p>
+     * <p> In this way, the if's fulfill a double function: they ensure that the attacking and receiving characters
+     * are in the teams (to avoid bugs) and at the same time they avoid attacks between the same team. </p>
      * @param target        The ICharacter that is going to be attacked.
      */
     public void selectedCharacterNormalAttack(ICharacter target){
-        if(userPlayer.getParty().contains(selectedCharacter) & cpuPlayer.getParty().contains(target)){
-            IPlayerCharacter playerCharacter = (IPlayerCharacter)selectedCharacter;
-            ICPUCharacter cpuCharacter = (ICPUCharacter)target;
-            userPlayer.makeNormalAttack(playerCharacter, cpuCharacter);
+        if(player.getParty().contains(selectedCharacter) & cpu.getParty().contains(target)){
+            player.makeNormalAttack(selectedCharacter, target);
         }
-        if(cpuPlayer.getParty().contains(selectedCharacter) & userPlayer.getParty().contains(target)){
-            IPlayerCharacter playerCharacter = (IPlayerCharacter)target;
-            ICPUCharacter cpuCharacter = (ICPUCharacter)selectedCharacter;
-            cpuPlayer.makeNormalAttack(cpuCharacter, playerCharacter);
+        if(player.getParty().contains(selectedCharacter) & player.getParty().contains(target)){
+            cpu.makeNormalAttack(selectedCharacter, target);
         }
     }
 
@@ -373,7 +371,7 @@ public class GameController {
      * Gets the selectedCharacter name.
      * @return      the name of the selectedCharacter, as a String.
      */
-    String getSelectedCharacterName(){
+    public String getSelectedCharacterName(){
         return (String)selectedCharacter.getAttributes().get("name");
     }
 
@@ -381,7 +379,7 @@ public class GameController {
      * Gets the selectedCharacter current HP.
      * @return      the current HP of the selectedCharacter, as an int.
      */
-    int getSelectedCharacterCurrentHP(){
+    public int getSelectedCharacterCurrentHP(){
         return (Integer)selectedCharacter.getAttributes().get("currentHP");
     }
 
@@ -389,7 +387,7 @@ public class GameController {
      * Gets the selectedCharacter maxHP.
      * @return      the maxHP of the selectedCharacter, as an int.
      */
-    int getSelectedCharacterMaxHP(){
+    public int getSelectedCharacterMaxHP(){
         return (Integer)selectedCharacter.getAttributes().get("maxHP");
     }
 
@@ -398,7 +396,7 @@ public class GameController {
      * Gets the selectedCharacter DP.
      * @return      the DP of the selectedCharacter, as an int.
      */
-    int getSelectedCharacterDP(){
+    public int getSelectedCharacterDP(){
         return (Integer)selectedCharacter.getAttributes().get("DP");
     }
 
@@ -407,7 +405,7 @@ public class GameController {
      * <p> If the character does not have the attribute, method returns null. </p>
      * @return      the selectedCharacter equipped Weapon, as IWeapon.
      */
-    IWeapon getSelectedCharacterEquippedWeapon(){
+    public IWeapon getSelectedCharacterEquippedWeapon(){
         return (IWeapon)selectedCharacter.getAttributes().get("equippedWeapon");
     }
 
@@ -416,7 +414,7 @@ public class GameController {
      * <p> If the character does not have the attribute, method returns null. </p>
      * @return      the CurrentMana of the selectedCharacter, as an int.
      */
-    int getSelectedCharacterCurrentMana(){
+    public int getSelectedCharacterCurrentMana(){
         return (int)selectedCharacter.getAttributes().get("currentMana");
     }
 
@@ -425,7 +423,7 @@ public class GameController {
      * <p> If the character does not have the attribute, method returns null. </p>
      * @return      the MaxMana of the selectedCharacter, as an int.
      */
-    int getSelectedCharacterMaxMana(){
+    public int getSelectedCharacterMaxMana(){
         return (int)selectedCharacter.getAttributes().get("maxMana");
     }
 
@@ -434,7 +432,7 @@ public class GameController {
      * <p> If the character does not have the attribute, method returns null. </p>
      * @return      the weight of the selectedCharacter, as an int.
      */
-    int getSelectedCharacterWeight(){
+    public int getSelectedCharacterWeight(){
         return (int)selectedCharacter.getAttributes().get("weight");
     }
 
@@ -443,7 +441,7 @@ public class GameController {
      * <p> If the character does not have the attribute, method returns null. </p>
      * @return      the power of the selectedCharacter, as an int.
      */
-    int getSelectedCharacterPower(){
+    public  int getSelectedCharacterPower(){
         return (int)selectedCharacter.getAttributes().get("Power");
     }
 
@@ -480,7 +478,7 @@ public class GameController {
 
     /**
      * Sets the selectedWeaponFactory default's name value.
-     * @param weight        The value to be set as the default weapon weight
+     * @param name        The value to be set as the default weapon name
      */
     public void setSelectedWeaponFactoryName(String name){
         selectedWeaponFactory.setName(name);
@@ -553,7 +551,7 @@ public class GameController {
      * Gives the SelectedCharacter ICharacter Object.
      * @return      The selectedCharacter ICharacter Object.
      */
-    ICharacter getSelectedCharacter(){
+    public ICharacter getSelectedCharacter(){
         return this.selectedCharacter;
     }
 
@@ -561,7 +559,7 @@ public class GameController {
      * Gives the SelectedWeapon IWeapon Object.
      * @return      The selectedWeapon IWeapon Object.
      */
-    IWeapon getSelectedWeapon(){
+    public IWeapon getSelectedWeapon(){
         return this.selectedWeapon;
     }
 
@@ -569,11 +567,11 @@ public class GameController {
      * Gives the SelectedWeaponFactory IWeaponFactory Object.
      * @return      The selectedWeaponFactory IWeaponFactory Object.
      */
-    IWeaponFactory getSelectedWeaponFactory(){
+    public IWeaponFactory getSelectedWeaponFactory(){
         return this.selectedWeaponFactory;
     }
 
-    ICharacterFactory getSelectedCharacterFactory(){
+    public ICharacterFactory getSelectedCharacterFactory(){
         return this.selectedCharacterFactory;
     }
 

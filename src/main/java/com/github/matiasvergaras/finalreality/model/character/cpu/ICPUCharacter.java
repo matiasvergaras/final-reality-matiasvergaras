@@ -41,20 +41,6 @@ public interface ICPUCharacter extends ICharacter {
     int getWeight();
 
     /**
-     * Performs a normal attack against a player's character.
-     *
-     * @param character the character to be attacked.
-     */
-    void normalAttack(IPlayerCharacter character);
-
-    /**
-     * Receive a normal attack from a player's character.
-     *
-     * @param character the attacking character.
-     */
-    void receiveNormalAttack(IPlayerCharacter character);
-
-    /**
      * To get all the attributes of this character together, adding those
      * exclusives of an CPU character.
      * @return An ArrayList of Integer whit the attributes in the following
