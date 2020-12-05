@@ -1,33 +1,27 @@
 package controller;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
-import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import org.junit.After;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Test that the SetSelectedFactory{Attribute} methods works properly.
+ * Class to test that the SetSelectedFactory{Attribute} methods works properly.
  * <p> First we set a new value for each variable of the selectedCharacterFactory.
  * Then we add a new character from that factory to its correspondent party, we select it
  * and we test its values to be equal to the given by the new factory settings.</p>
+ * @since Homework 2
+ * @author Matías Vergara Silva
  */
-public class FactorySettingsTest {
+public class CharacterFactoriesSettingsTest {
     private GameController gameController;
-    private LinkedBlockingQueue<ICharacter> turns;
 
 
 
     /**
      * Sets a new configuration for the SelectedCharacterFactory.
-     * @param index     The index of the factory to set in the GameController CharacterFactories
+     * @param index     The index of the factory to configure in the GameController CharacterFactories
      *                  list.
      * @param seed      An int that will be used to set new values.
      */
@@ -92,11 +86,10 @@ public class FactorySettingsTest {
     }
 
     /**
-     * Basic set-up: a turns queue and a GameController instance.
+     * Basic set-up: a GameController instance.
      */
     @BeforeEach
     void setUp(){
-        turns = new LinkedBlockingQueue<>();
         gameController = new GameController();
     }
 

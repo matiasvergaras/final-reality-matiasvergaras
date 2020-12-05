@@ -1,6 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
-import com.github.matiasvergaras.finalreality.model.AttributeSet;
+import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 
 /**
  * This represents a character from the game.
@@ -84,7 +84,7 @@ public interface ICharacter {
      * @return An ArrayList of Integer whit the attributes in the following
      * order: maxHP, currentHP, DP, maxMana (if applicable), currentMana (if applicable)
      */
-    AttributeSet getAttributes();
+    CharacterAttributeSet getAttributes();
 
 
 

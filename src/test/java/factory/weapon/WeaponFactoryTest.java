@@ -1,12 +1,10 @@
 package factory.weapon;
-import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.IWeaponFactory;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.IMagicWeapon;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -77,15 +75,15 @@ public abstract class WeaponFactoryTest {
         IMagicWeapon initialProduction = (IMagicWeapon) testFactory.create();
         testFactory.setMagicPower(newMagicPower);
         IMagicWeapon finalProduction = (IMagicWeapon) testFactory.create();
-        if(initialProduction.getMagicDamage()!=newMagicPower){
-            assertNotEquals(initialProduction.getMagicDamage(), finalProduction.getMagicDamage(), "The " +
+        if(initialProduction.getMagicPower()!=newMagicPower){
+            assertNotEquals(initialProduction.getMagicPower(), finalProduction.getMagicPower(), "The " +
                     "factory products did not change after using setMagicPower.");
         }
         else{
-            assertEquals(initialProduction.getMagicDamage(), finalProduction.getMagicDamage(), "Factory products" +
+            assertEquals(initialProduction.getMagicPower(), finalProduction.getMagicPower(), "Factory products" +
                     "did change after using setMagicPower, but they should not have.");
         }
-        assertEquals(newMagicPower, finalProduction.getMagicDamage(), "The factory new default " +
+        assertEquals(newMagicPower, finalProduction.getMagicPower(), "The factory new default " +
                 "MagicDamage value was not set up properly.");
     }
 

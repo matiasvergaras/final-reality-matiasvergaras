@@ -1,11 +1,9 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
 
-import com.github.matiasvergaras.finalreality.model.AttributeSet;
+import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -126,7 +124,7 @@ public abstract class AbstractCharacter implements ICharacter {
      * @return An ArrayList of Integer with the attributes in the following
      * order: maxHP, currentHP, DP.
      */
-    public abstract AttributeSet getAttributes();
+    public abstract CharacterAttributeSet getAttributes();
 
 }
 

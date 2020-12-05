@@ -1,28 +1,26 @@
 package controller;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
-import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * A class to check that the attack order of GameController works properly.
  * <p> Controller is in charge of avoiding friendly-fire, and we will check that.</p>
+ * @since Homework 2
+ * @author Matías Vergara Silva
  */
+
 public class attackTest {
     private GameController gameController;
-    private LinkedBlockingQueue<ICharacter> turns;
 
     /**
-     * Basic set-up: a turns queue and a Controller.
+     * Basic set-up: a Controller.
      */
     @BeforeEach
     void setUp() {
-        turns = new LinkedBlockingQueue<>();
         gameController = new GameController();
     }
 

@@ -1,6 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.player;
 
-import com.github.matiasvergaras.finalreality.model.AttributeSet;
+import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
@@ -58,7 +58,7 @@ public interface IPlayerCharacter extends ICharacter {
      * @return An LinkedLIST of Integer whit the attributes in the following
      * order: maxHP, currentHP, DP, maxMana, currentMana
      */
-    AttributeSet getAttributes();
+    CharacterAttributeSet getAttributes();
 
 }
 

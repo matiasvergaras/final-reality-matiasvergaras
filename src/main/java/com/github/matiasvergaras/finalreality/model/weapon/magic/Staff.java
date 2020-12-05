@@ -57,7 +57,7 @@ public class Staff extends AbstractMagicWeapon {
         return this.getName().equals(that.getName()) &&
                 this.getPower() == that.getPower() &&
                 this.getWeight() == that.getWeight() &&
-                this.getMagicDamage() == that.getMagicDamage();
+                this.getMagicPower() == that.getMagicPower();
     }
 
     /**
@@ -69,7 +69,7 @@ public class Staff extends AbstractMagicWeapon {
     @Override
     public int hashCode() {
         return Objects.hash(this.getName(), this.getPower(),
-                this.getWeight(), this.getMagicDamage());
+                this.getWeight(), this.getMagicPower());
     }
 
 }

@@ -1,5 +1,5 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
-import com.github.matiasvergaras.finalreality.model.AttributeSet;
+import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 /**
@@ -34,7 +34,7 @@ public interface IMagicCharacter extends IPlayerCharacter {
      * order: maxHP, currentHP, DP, maxMana, currentMana
      */
     @Override
-    AttributeSet getAttributes();
+    CharacterAttributeSet getAttributes();
 
 
     //Magic attacks not implemented yet.

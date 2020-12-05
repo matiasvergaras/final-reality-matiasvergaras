@@ -1,6 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
 
-import com.github.matiasvergaras.finalreality.model.AttributeSet;
+import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
@@ -49,8 +49,8 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter imp
      * order: maxHP, currentHP, DP, maxMana, currentMana
      */
     @Override
-    public AttributeSet getAttributes(){
-        return new AttributeSet(this.getName(), this.getMaxHP(), this.getCurrentHP(), this.getDP(), this.getMaxMana(),
+    public CharacterAttributeSet getAttributes(){
+        return new CharacterAttributeSet(this.getName(), this.getMaxHP(), this.getCurrentHP(), this.getDP(), this.getMaxMana(),
                 this.getCurrentMana(), this.getEquippedWeapon());
     }
 

@@ -1,4 +1,5 @@
 package com.github.matiasvergaras.finalreality.model.weapon.magic;
+import com.github.matiasvergaras.finalreality.model.WeaponAttributeSet;
 import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
 
 
@@ -12,7 +13,7 @@ import com.github.matiasvergaras.finalreality.model.weapon.AbstractWeapon;
  * </p>
  */
 public abstract class AbstractMagicWeapon extends AbstractWeapon implements IMagicWeapon {
-    private final int magicDamage;
+    private final int magicPower;
 
     /**
      * Creates a default Magic Weapon with a name, base damage, weight and magic damage.
@@ -25,7 +26,7 @@ public abstract class AbstractMagicWeapon extends AbstractWeapon implements IMag
     public AbstractMagicWeapon(final String name, final int power, final int weight,
                                int magicDamage) {
         super(name, power, weight);
-        this.magicDamage = magicDamage;
+        this.magicPower = magicDamage;
     }
 
     /**
@@ -33,9 +34,18 @@ public abstract class AbstractMagicWeapon extends AbstractWeapon implements IMag
      *
      * @return this weapon's magic damage.
      */
-    public int getMagicDamage() {
-        return magicDamage;
+    public int getMagicPower() {
+        return magicPower;
     }
 
+    /**
+     * {@inheritDoc}
+     * @return a WeaponAttributeSet with the attributes of this weapon.
+     */
+    @Override
+    public WeaponAttributeSet getAttributes(){
+        return new WeaponAttributeSet(this.getName(), this.getPower(), this.getWeight(),
+                                        this.getMagicPower());
+    }
 
 }

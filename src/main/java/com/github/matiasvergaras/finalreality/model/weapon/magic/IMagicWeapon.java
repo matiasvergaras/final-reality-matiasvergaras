@@ -20,5 +20,5 @@ public interface IMagicWeapon extends IWeapon {
      *
      * @return this weapon's magic damage.
      */
-    int getMagicDamage();
+    int getMagicPower();
 }

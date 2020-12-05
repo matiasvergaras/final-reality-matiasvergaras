@@ -16,12 +16,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Class to test the Controller methods to add characters to the playerParty.
+ * Class to test the Controller methods to add characters to the playerParty
+ * @since Homework 2
+ * @author Matías Vergara Silva
  */
 public class PlayerPartyTest {
     private GameController gameController;
     private LinkedBlockingQueue<ICharacter> turns;
-    private int rivalInitPartySize;
 
     /**
      * Basic set-up: a turns queue and a Controller.
@@ -30,7 +31,6 @@ public class PlayerPartyTest {
     void setUp(){
         turns = new LinkedBlockingQueue<>();
         gameController = new GameController();
-        rivalInitPartySize = gameController.getCPUPartySize();
 
     }
 
@@ -130,7 +130,7 @@ public class PlayerPartyTest {
      */
     @Test
     void testRivalPartySize(){
-        assertEquals(gameController.getCPUPartySize(), rivalInitPartySize);
+        assertEquals(gameController.getCPUPartySize(), 0);
     }
 
 

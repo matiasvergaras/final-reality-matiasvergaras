@@ -1,5 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.weapon;
 
+import com.github.matiasvergaras.finalreality.model.WeaponAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 /**
@@ -14,6 +15,13 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
  * @author Matías Vergara Silva
  */
 public interface IWeapon {
+
+    /**
+     * Returns a WeaponAttributeSet with all the attributes of this
+     * weapon and its values. If a weapon does not have an special attribute,
+     * the WeaponAttributeSet will keep a record of 0 as value for the said attribute.
+     */
+    WeaponAttributeSet getAttributes();
 
     /**
      * Method to get the weight of this weapon.

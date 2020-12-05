@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CPUPartyTest {
     private GameController gameController;
     private LinkedBlockingQueue<ICharacter> turns;
-    int cpuInitNumber;
 
     /**
      * Basic set-up: a turns queue and a Controller.
@@ -26,7 +25,7 @@ public class CPUPartyTest {
     void setUp() {
         turns = new LinkedBlockingQueue<>();
         gameController = new GameController();
-        int cpuInitNumber = gameController.getCPUPartySize();
+
     }
 
     /**
@@ -51,7 +50,7 @@ public class CPUPartyTest {
      */
     @AfterEach
     void testRivalPartySize(){
-        assertEquals(gameController.getPlayerPartySize(), cpuInitNumber);
+        assertEquals(gameController.getPlayerPartySize(), 0);
     }
 
 }

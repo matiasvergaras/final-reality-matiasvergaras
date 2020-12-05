@@ -8,7 +8,7 @@ import com.github.matiasvergaras.finalreality.factory.Characters.EngineerFactory
 import com.github.matiasvergaras.finalreality.factory.Characters.KnightFactory;
 import com.github.matiasvergaras.finalreality.factory.Characters.ThiefFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
-import com.github.matiasvergaras.finalreality.model.AttributeSet;
+import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.Mastermind.CPUMastermind;
 import com.github.matiasvergaras.finalreality.model.Mastermind.PlayerMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
@@ -443,7 +443,7 @@ public class GameController {
      * not have, it will return 0 (except for equippedWeapon, in which case it will return null). </p>
      * @return  an AttributeSet representing all the attributes of the character.
      */
-    private AttributeSet getSelectedCharacterAttributes(){
+    private CharacterAttributeSet getSelectedCharacterAttributes(){
         return selectedCharacter.getAttributes();
     }
 
@@ -653,6 +653,38 @@ public class GameController {
     }
 
     /**
+     * Gives the SelectedWeapon name.
+     * @return      The selectedWeapon name String.
+     */
+    public String getSelectedWeaponName(){
+        return getSelectedWeapon().getAttributes().getName();
+    }
+
+    /**
+     * Gives the SelectedWeapon power.
+     * @return      The selectedWeapon power.
+     */
+    public int getSelectedWeaponPower(){
+        return getSelectedWeapon().getAttributes().getPower();
+    }
+
+    /**
+     * Gives the SelectedWeapon weight.
+     * @return      The selectedWeapon weight.
+     */
+    public int getSelectedWeaponWeight(){
+        return getSelectedWeapon().getAttributes().getWeight();
+    }
+
+    /**
+     * Gives the SelectedWeapon magicPower.
+     * @return      The selectedWeapon magicPower.
+     */
+    public int getSelectedWeaponMagicPower(){
+        return getSelectedWeapon().getAttributes().getMagicPower();
+    }
+
+    /**
      * Gives the SelectedWeaponFactory IWeaponFactory Object.
      * @return      The selectedWeaponFactory IWeaponFactory Object.
      */
@@ -660,6 +692,10 @@ public class GameController {
         return this.selectedWeaponFactory;
     }
 
+    /**
+     * Gives the SelectedCharacterFactory ICharacterFactory Object.
+     * @return      The selectedCharacterFactory ICharacterFactory Object.
+     */
     public ICharacterFactory getSelectedCharacterFactory(){
         return this.selectedCharacterFactory;
     }

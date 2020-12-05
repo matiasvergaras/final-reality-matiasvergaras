@@ -1,6 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.cpu;
 
-import com.github.matiasvergaras.finalreality.model.AttributeSet;
+import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
 /**
@@ -37,7 +37,7 @@ public interface ICPUCharacter extends ICharacter {
      * @return An ArrayList of Integer whit the attributes in the following
      * order: maxHP, currentHP, DP, weight, power.
      */
-    AttributeSet getAttributes();
+    CharacterAttributeSet getAttributes();
 
 
 }
