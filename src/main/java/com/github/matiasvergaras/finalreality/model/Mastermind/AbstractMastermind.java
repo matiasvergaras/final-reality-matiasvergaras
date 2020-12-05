@@ -12,6 +12,15 @@ import java.util.Map;
  */
 public abstract class AbstractMastermind implements  IMastermind{
     protected ArrayList<ICharacter> party;
+    protected String name;
+
+    /**
+     * Basic constructor for a Mastermind
+     */
+    public AbstractMastermind(String name){
+        this.name = name;
+        this.party = new ArrayList<ICharacter>();
+    }
 
     /**
      * Adds a character to the Player's Party.
@@ -74,5 +83,16 @@ public abstract class AbstractMastermind implements  IMastermind{
             character.normalAttack(target);
         }
     }
+
+
+    /**
+     * Gives the actual player name.
+     * @return  The name of the PlayerMastermind.
+     */
+    @Override
+    public String getName(){
+        return name;
+    }
+
 
 }

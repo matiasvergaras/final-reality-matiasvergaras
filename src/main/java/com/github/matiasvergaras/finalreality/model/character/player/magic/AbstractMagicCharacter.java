@@ -1,11 +1,10 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
 
+import com.github.matiasvergaras.finalreality.model.AttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.LinkedList;
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -50,11 +49,9 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter imp
      * order: maxHP, currentHP, DP, maxMana, currentMana
      */
     @Override
-    public Map<String, Object> getAttributes(){
-        Map<String, Object> attributes = super.getAttributes();
-        attributes.put("maxMana", maxMana);
-        attributes.put("currentMana", currentMana);
-        return attributes;
+    public AttributeSet getAttributes(){
+        return new AttributeSet(this.getName(), this.getMaxHP(), this.getCurrentHP(), this.getDP(), this.getMaxMana(),
+                this.getCurrentMana(), this.getEquippedWeapon());
     }
 
 

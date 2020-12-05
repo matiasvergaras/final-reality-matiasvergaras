@@ -1,9 +1,8 @@
 package com.github.matiasvergaras.finalreality.model.character.cpu;
 
-import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
+import com.github.matiasvergaras.finalreality.model.AttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;
@@ -106,11 +105,9 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
      * @return An ArrayList of Integer with the attributes of this character all together,
      * in the following order: maxHP, currentHP, DP, weight, power.
      */
-    public Map<String, Object> getAttributes(){
-        Map<String, Object> attributes = super.getAttributes();
-        attributes.put("weight", weight);
-        attributes.put("power", power);
-        return attributes;
+    public AttributeSet getAttributes(){
+        return new AttributeSet(this.getName(), this.getMaxHP(), this.getCurrentHP(), this.getDP(), this.getWeight(),
+                this.getPower());
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.github.cc3002.finalreality.model.Mastermind;
 
+import com.github.matiasvergaras.finalreality.factory.Characters.ThiefFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.SwordFactory;
 import com.github.matiasvergaras.finalreality.model.Mastermind.PlayerMastermind;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
@@ -22,11 +23,31 @@ public class PlayerMastermindTest extends AbstractMastermindTest{
     }
 
     /**
+     * Test the constructor, equals and hashcode
+     */
+    @Test
+    void equalsTest(){
+        super.checkEquals(player, new PlayerMastermind(playerName, characterQuantity), cpu);
+    }
+
+    /**
      * Test the AddToParty method.
      */
     @Test
     void addToPartyTest(){
         super.checkAddToParty(player, exampleEngineer);
+    }
+
+    /**
+     * Test that the player will not have more characters than characterQuantity
+     */
+    @Test
+    void overflowAddingTest(){
+        ThiefFactory factory = new ThiefFactory(turns, 100, 120);
+        for(int i=0; i<characterQuantity*2; i++){
+            player.addToParty(factory.create("A Thief"));
+        }
+        assertEquals(player.getPartySize(), characterQuantity);
     }
 
     /**
@@ -82,7 +103,7 @@ public class PlayerMastermindTest extends AbstractMastermindTest{
     @Test
     void playerMastermindGettersTest(){
         PlayerMastermind player = (PlayerMastermind) this.player;
-        assertEquals(player.getPlayerName(), playerName);
+        assertEquals(player.getName(), playerName);
         assertEquals(player.getCharacterQuantity(), characterQuantity);
     }
 

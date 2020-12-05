@@ -8,6 +8,7 @@ import com.github.matiasvergaras.finalreality.factory.Characters.EngineerFactory
 import com.github.matiasvergaras.finalreality.factory.Characters.KnightFactory;
 import com.github.matiasvergaras.finalreality.factory.Characters.ThiefFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
+import com.github.matiasvergaras.finalreality.model.AttributeSet;
 import com.github.matiasvergaras.finalreality.model.Mastermind.CPUMastermind;
 import com.github.matiasvergaras.finalreality.model.Mastermind.PlayerMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
@@ -33,6 +34,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class GameController {
     private static GameController uniqueInstance;
     private LinkedBlockingQueue<ICharacter> turns;
+    private int charactersQuantity;
+    private String playerName;
     private AxeFactory axeFactory = new AxeFactory("Common Axe", 120, 13);
     private BowFactory bowFactory = new BowFactory("Common Bow", 90, 10);
     private KnifeFactory knifeFactory = new KnifeFactory("Common Knife",100, 9);
@@ -57,13 +60,14 @@ public class GameController {
     /**
      *
      * Real constructor of the GameController.
-     * Private to prevent access bypassing the UniqueInstance
-     * @param charactersQuantity    the number of characters that the user will have.
-     * @param turns                 a linked blocking queue for keeping the turns.
+     * Private to prevent access bypassing the UniqueInstance.
      */
-    private GameController(int charactersQuantity, LinkedBlockingQueue<ICharacter> turns, String playerName){
+    private GameController(){
+        this.turns = new LinkedBlockingQueue<>();
+        this.charactersQuantity = 7;
+        this.playerName = "Player 1";
         this.player = new PlayerMastermind(playerName, charactersQuantity);
-        this.cpu = new CPUMastermind();
+        this.cpu = new CPUMastermind("CPU");
         characterFactories.add(engineerFactory);
         characterFactories.add(blackMageFactory);
         characterFactories.add(whiteMageFactory);
@@ -75,6 +79,10 @@ public class GameController {
         weaponFactories.add(knifeFactory);
         weaponFactories.add(swordFactory);
         weaponFactories.add(axeFactory);
+        this.selectedCharacterFactory = null;
+        this.selectedWeaponFactory = null;
+        this.selectedCharacter = null;
+        this.selectedWeapon = null;
     }
 
     /**
@@ -83,12 +91,64 @@ public class GameController {
      * @param turns                 a linked blocking queue for keeping the turns.
      * @return an instance of GameController if it has not been instantiated before. Null otherwise.
      */
-    public static GameController uniqueInstance(int charactersQuantity, LinkedBlockingQueue<ICharacter> turns, String
-                                                playerName){
+    public static GameController getInstance(){
         if(uniqueInstance == null){
-            uniqueInstance = new GameController(charactersQuantity,  turns, playerName);
+            uniqueInstance = new GameController();
         }
         return uniqueInstance;
+    }
+
+    /**
+     * Gives the player party.
+     */
+    public ArrayList<ICharacter> getPlayerParty(){
+        return player.getParty();
+    }
+
+    /**
+     * Gives the cpu party.
+     */
+    public ArrayList<ICharacter> getCPUParty(){
+        return cpu.getParty();
+    }
+
+    /**
+     * Gives the number of characters in the player party.
+     * @return      An int representing the number of characters in the party.
+     */
+    public int getPlayerPartySize(){
+        return player.getPartySize();
+    }
+
+    /**
+     * Gives the number of characters in the cpu party.
+     * @return      An int representing the number of characters in the party.
+     */
+    public int getCPUPartySize(){
+        return cpu.getPartySize();
+    }
+    /**
+     * A method to overwrite the default name and character number that the player will have.
+     * <p> Has to be available only at the start of the game, since it will overwrite the player with a
+     * completely new one. </p>
+     * <p> Defaults values are: </p>
+     * <p> Name: Player 1 </p>
+     * <p> Characters quantity: 7 </p>
+     * @param playerName            The new name that the player will have.
+     * @param newQuantity           The number of characters the player will play with.
+     */
+    public void setNewPlayerValues(String playerName, int newQuantity){
+        this.playerName = playerName;
+        this.charactersQuantity = newQuantity;
+        this.player = new PlayerMastermind(playerName, newQuantity);
+    }
+
+    /**
+     * Getter to the actual player.
+     * @return      PlayerMastermind player.
+     */
+    public PlayerMastermind getPlayer(){
+        return this.player;
     }
 
     /**
@@ -110,7 +170,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addWhiteMageToPlayerParty(String name){
-        player.addToParty(blackMageFactory.create(name));
+        player.addToParty(whiteMageFactory.create(name));
     }
 
     /**
@@ -363,7 +423,7 @@ public class GameController {
      * specific methods that call this one but returns the values in their right type. </p>
      * @return  a Map<String, Object> representing the attributes of the selectedCharacter.
      */
-    private Map<String, Object> getSelectedCharacterAttributes(){
+    private AttributeSet getSelectedCharacterAttributes(){
         return selectedCharacter.getAttributes();
     }
 
@@ -372,7 +432,7 @@ public class GameController {
      * @return      the name of the selectedCharacter, as a String.
      */
     public String getSelectedCharacterName(){
-        return (String)selectedCharacter.getAttributes().get("name");
+        return selectedCharacter.getAttributes().getName();
     }
 
     /**
@@ -380,7 +440,7 @@ public class GameController {
      * @return      the current HP of the selectedCharacter, as an int.
      */
     public int getSelectedCharacterCurrentHP(){
-        return (Integer)selectedCharacter.getAttributes().get("currentHP");
+        return selectedCharacter.getAttributes().getCurrentHP();
     }
 
     /**
@@ -388,7 +448,7 @@ public class GameController {
      * @return      the maxHP of the selectedCharacter, as an int.
      */
     public int getSelectedCharacterMaxHP(){
-        return (Integer)selectedCharacter.getAttributes().get("maxHP");
+        return selectedCharacter.getAttributes().getMaxHP();
     }
 
 
@@ -397,7 +457,7 @@ public class GameController {
      * @return      the DP of the selectedCharacter, as an int.
      */
     public int getSelectedCharacterDP(){
-        return (Integer)selectedCharacter.getAttributes().get("DP");
+        return selectedCharacter.getAttributes().getDP();
     }
 
     /**
@@ -406,7 +466,7 @@ public class GameController {
      * @return      the selectedCharacter equipped Weapon, as IWeapon.
      */
     public IWeapon getSelectedCharacterEquippedWeapon(){
-        return (IWeapon)selectedCharacter.getAttributes().get("equippedWeapon");
+        return selectedCharacter.getAttributes().getEquippedWeapon();
     }
 
     /**
@@ -415,7 +475,7 @@ public class GameController {
      * @return      the CurrentMana of the selectedCharacter, as an int.
      */
     public int getSelectedCharacterCurrentMana(){
-        return (int)selectedCharacter.getAttributes().get("currentMana");
+        return selectedCharacter.getAttributes().getCurrentMana();
     }
 
     /**
@@ -424,7 +484,7 @@ public class GameController {
      * @return      the MaxMana of the selectedCharacter, as an int.
      */
     public int getSelectedCharacterMaxMana(){
-        return (int)selectedCharacter.getAttributes().get("maxMana");
+        return selectedCharacter.getAttributes().getMaxMana();
     }
 
     /**
@@ -433,7 +493,7 @@ public class GameController {
      * @return      the weight of the selectedCharacter, as an int.
      */
     public int getSelectedCharacterWeight(){
-        return (int)selectedCharacter.getAttributes().get("weight");
+        return selectedCharacter.getAttributes().getWeight();
     }
 
     /**
@@ -442,7 +502,7 @@ public class GameController {
      * @return      the power of the selectedCharacter, as an int.
      */
     public  int getSelectedCharacterPower(){
-        return (int)selectedCharacter.getAttributes().get("Power");
+        return selectedCharacter.getAttributes().getPower();
     }
 
     /**

@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
-import java.util.LinkedList;
-import java.util.Map;
+import com.github.matiasvergaras.finalreality.model.AttributeSet;
 
 /**
  * This represents a character from the game.
@@ -85,7 +84,7 @@ public interface ICharacter {
      * @return An ArrayList of Integer whit the attributes in the following
      * order: maxHP, currentHP, DP, maxMana (if applicable), currentMana (if applicable)
      */
-    Map<String, Object> getAttributes();
+    AttributeSet getAttributes();
 
 
 

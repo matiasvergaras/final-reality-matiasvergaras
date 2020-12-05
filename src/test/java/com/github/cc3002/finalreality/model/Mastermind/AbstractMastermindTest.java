@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public abstract class AbstractMastermindTest extends abstractModelTest {
     IMastermind player;
     IMastermind cpu;
-    String playerName = "Player Name";
-    int characterQuantity = 5;
+    protected String playerName = "Player Name";
+    protected int characterQuantity = 5;
 
     /**
      * Basic Set-Up to check Masterminds behavior.
@@ -23,9 +23,22 @@ public abstract class AbstractMastermindTest extends abstractModelTest {
     protected void setUp(){
         super.turnSetUp();
         this.player = new PlayerMastermind(playerName, characterQuantity);
-        this.cpu = new CPUMastermind();
+        this.cpu = new CPUMastermind("CPU");
 
     }
+
+    /**
+     * Constructor test
+     * <p> Checks the equal and hashcode methods</p>
+     *
+     */
+    protected void checkEquals(IMastermind toCheck, IMastermind sameMastermind, IMastermind anotherMastermind){
+        assertEquals(toCheck, sameMastermind);
+        assertNotEquals(toCheck, anotherMastermind);
+        assertEquals(toCheck.hashCode(), sameMastermind.hashCode());
+        assertNotEquals(toCheck.hashCode(), anotherMastermind.hashCode());
+    }
+
     /**
      * Checks that the addToParty works properly.
      * <p> It tries to add a character at the end of the party, and checks if it worked. </p>

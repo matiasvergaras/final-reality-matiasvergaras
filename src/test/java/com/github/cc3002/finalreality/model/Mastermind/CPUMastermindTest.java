@@ -1,5 +1,6 @@
 package com.github.cc3002.finalreality.model.Mastermind;
 
+import com.github.matiasvergaras.finalreality.model.Mastermind.CPUMastermind;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +13,14 @@ public class CPUMastermindTest extends AbstractMastermindTest {
     void CPUSetUp(){
         super.setUp();
 
+    }
+
+    /**
+     * Test the constructor, equals and hashcode
+     */
+    @Test
+    void equalsTest(){
+        super.checkEquals(cpu, new CPUMastermind("CPU"), player);
     }
 
     /**

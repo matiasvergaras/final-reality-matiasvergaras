@@ -1,10 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.cpu;
 
-import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
+import com.github.matiasvergaras.finalreality.model.AttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-
-import java.util.Map;
 
 /**
  *
@@ -40,7 +37,7 @@ public interface ICPUCharacter extends ICharacter {
      * @return An ArrayList of Integer whit the attributes in the following
      * order: maxHP, currentHP, DP, weight, power.
      */
-    Map<String, Object> getAttributes();
+    AttributeSet getAttributes();
 
 
 }

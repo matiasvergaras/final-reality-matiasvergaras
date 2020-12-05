@@ -49,4 +49,9 @@ public interface IMastermind {
      */
     void makeNormalAttack(ICharacter character, ICharacter target);
 
+    /**
+     * Gives the actual player name.
+     * @return  The name of the Mastermind.
+     */
+    public String getName();
 }

@@ -1,6 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.player;
 
-import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
+import com.github.matiasvergaras.finalreality.model.AttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
@@ -147,10 +147,9 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
 
 
     @Override
-    public Map<String, Object> getAttributes(){
-        Map<String, Object> attributes = super.getAttributes();
-        attributes.put("equippedWeapon", equippedWeapon);
-        return attributes;
+    public AttributeSet getAttributes(){
+        return new AttributeSet(this.getName(), this.getMaxHP(), this.getCurrentHP(), this.getDP(),
+                this.getEquippedWeapon());
     }
 
 }

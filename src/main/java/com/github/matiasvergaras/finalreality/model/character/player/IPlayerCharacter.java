@@ -1,11 +1,8 @@
 package com.github.matiasvergaras.finalreality.model.character.player;
 
-import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
+import com.github.matiasvergaras.finalreality.model.AttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-
-import java.util.Map;
 
 
 /**
@@ -61,7 +58,7 @@ public interface IPlayerCharacter extends ICharacter {
      * @return An LinkedLIST of Integer whit the attributes in the following
      * order: maxHP, currentHP, DP, maxMana, currentMana
      */
-    Map<String, Object> getAttributes();
+    AttributeSet getAttributes();
 
 }
 
