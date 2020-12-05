@@ -21,12 +21,6 @@ import java.util.Map;
 public interface ICPUCharacter extends ICharacter {
 
     /**
-     * Adds this character to a mastermind party's.
-     * @param mastermind        The mastermind that will receive the character in its party.
-     */
-    public void addToParty(IMastermind mastermind);
-
-    /**
      * Get the power of this enemy.
      *
      * @return the power of this enemy.

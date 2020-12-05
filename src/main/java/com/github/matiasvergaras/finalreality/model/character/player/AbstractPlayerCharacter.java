@@ -40,9 +40,6 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
         this.isEquipped = false;
     }
 
-    public void addToParty(IMastermind mastermind){
-        mastermind.addToPlayerParty(this);
-    }
     /**
      * {@inheritDoc}
      */
@@ -85,7 +82,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
      * @return true if equiped, false otherwise.
      */
     public boolean isEquipped(){
-        return this.isEquipped;
+        return this.equippedWeapon!=null;
     }
 
     /**

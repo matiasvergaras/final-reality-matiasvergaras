@@ -20,12 +20,6 @@ import java.util.Map;
 public interface IPlayerCharacter extends ICharacter {
 
     /**
-     * Adds this character to a Mastermind party's.
-     * @param mastermind        The mastermind that will receive this character in it's party.
-     */
-    void addToParty(IMastermind mastermind);
-
-    /**
      * Starts the process of equip a weapon to this character,
      * checking if it is possible via double dispatch.
      *

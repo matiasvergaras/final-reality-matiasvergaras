@@ -1,4 +1,6 @@
 package com.github.cc3002.finalreality.model;
+import com.github.matiasvergaras.finalreality.factory.Characters.EnemyFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.KnightFactory;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
 import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
@@ -23,7 +25,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public abstract class abstractModelTest {
 
     //--------------------------------------SET-UP OF ATTRIBUTES VARIABLES---------------------------------------------//
-    protected BlockingQueue<ICharacter> turns;
+    protected LinkedBlockingQueue<ICharacter> turns;
     protected int DAMAGE = 240;
     protected int POWERFUL_DAMAGE=310;
     protected int WEAK_DAMAGE= 5;
@@ -88,7 +90,9 @@ public abstract class abstractModelTest {
     protected Knight deadKnight = new Knight(turns, "Zombie Knight", 0, 200);
     protected Enemy deadEnemy= new Enemy(turns, "Zombie Enemy", 0, 0, 100, 100);
 
-
+    //--------------------------------------SET-UP OF SOME FACTORIES--------------------------------------------//
+    protected KnightFactory knightFactory = new KnightFactory(turns, 200, 120);
+    protected EnemyFactory enemyFactory = new EnemyFactory(turns, 200, 120, 12, 114);
     /*
      * Basic set-up : A turns queue
      */

@@ -13,7 +13,6 @@ import java.util.ArrayList;
  * <p> PlayerMastermind does have a name and a maximum number of characters. </p>
  */
 public class PlayerMastermind extends AbstractMastermind {
-    private ArrayList<IPlayerCharacter> party;
     private ArrayList<IWeapon> inventory;
     private final int characterQuantity;
     private final String name;
@@ -31,6 +30,25 @@ public class PlayerMastermind extends AbstractMastermind {
     }
 
     /**
+     * Checks if it is enough space in the party. If so, it adds the given character.
+     * <p> In case that the character to add is already equipped, we will also add its weapon
+     * to the inventory. However, this should not be necessary in this version of the game,
+     * since we have not implemented the in-game recruitment yet. </p>
+     * @param character     The ICharacter character to be added.
+     */
+    @Override
+    public void addToParty(ICharacter character){
+        if(this.getPartySize()<this.characterQuantity){
+            super.addToParty(character);
+            IPlayerCharacter asPlayer = (IPlayerCharacter) character;
+            if (asPlayer.isEquipped()){
+                this.addToInventory(asPlayer.getEquippedWeapon());
+            }
+
+        }
+    }
+
+    /**
      * Gives the actual player name.
          * @return  The name of the PlayerMastermind.
      */
@@ -44,17 +62,6 @@ public class PlayerMastermind extends AbstractMastermind {
      */
     public int getCharacterQuantity(){
         return characterQuantity;
-    }
-
-
-    /**
-     * Adds a character to the party of the PlayerMastermind if there is space.
-     * @param character     The IPlayerCharacter character to be added to the PlayerMastermind party.
-     */
-    public void addToPlayerParty(ICharacter character) {
-        if (this.getPartySize() < characterQuantity) {
-            this.getParty().add(character);
-        }
     }
 
     /**
@@ -87,25 +94,43 @@ public class PlayerMastermind extends AbstractMastermind {
      * @param weapon        The IWeapon weapon to be removed from the inventory.
      */
     public void removeFromInventory(IWeapon weapon){
-        this.inventory.remove(weapon);
+        this.getInventory().remove(weapon);
     }
 
     /**
      * Equips a given character with a given weapon.
+     * <p> This method should work only if the weapon to equip is in the inventory and the
+     * character in the party. So
+     * we will add a condition for that. </p>
      * @param weapon        The IWeapon weapon to be equipped.
      * @param character     The IPlayerCharacter character that will equip the weapon.
      */
     public void equipCharacter(IWeapon weapon, IPlayerCharacter character){
-        character.equipWeapon(weapon);
+        if(getParty().contains(character) & getInventory().contains(weapon)) {
+            character.equipWeapon(weapon);
+        }
     }
 
     /**
      * Unequips a given character, if it is equipped. Otherwise it has no effect.
+     * <p> In order to unequip a character, it has to be in the playerParty. </p>
      * @param character     The character to be unequipped.
      */
     public void unequipCharacter(IPlayerCharacter character){
-        character.unequip();
+        if(getParty().contains(character)){
+            character.getEquippedWeapon().setWeaponFree();
+        }
     }
 
+    /**
+     * Gives the weapon in the inventory at the given index.
+     * <p> Controller will be in charge of avoid passing an index greater than the size-1. </p>
+     * <p> Therefore, this method will not verify it. </p>
+     * @param index     The index of the weapon in the inventory.
+     * @return  IWeapon weapon if the index is in correct range.
+     */
+    public IWeapon getWeaponFromInventory(int index){
+        return getInventory().get(index);
+    }
 
 }

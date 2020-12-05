@@ -11,14 +11,13 @@ import java.util.ArrayList;
  * <p> CPUMastermind does not have a name. To instantiate it is enough with an empty constructor. </p>
  */
 public class CPUMastermind extends AbstractMastermind {
-    private ArrayList<ICharacter> party;
 
     /**
      * Constructor of a new CPUPMastermind.
      * It assigns a new empty party to this CPUMastermind.
      */
     public CPUMastermind(){
-        this.party  = new ArrayList<>();
+        party  = new ArrayList<ICharacter>();
     }
 
 

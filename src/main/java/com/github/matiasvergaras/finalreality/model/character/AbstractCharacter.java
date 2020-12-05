@@ -45,13 +45,6 @@ public abstract class AbstractCharacter implements ICharacter {
 
     /**
      * {@inheritDoc}
-     * @param mastermind        The mastermind that will receive this character in its party.
-     */
-    public abstract void addToParty(IMastermind mastermind);
-
-
-    /**
-     * {@inheritDoc}
      * @param character the character to be attacked.
      */
     public void normalAttack(ICharacter character) {

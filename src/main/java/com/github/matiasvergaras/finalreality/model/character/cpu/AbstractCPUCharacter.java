@@ -47,13 +47,6 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
 
     /**
      * {@inheritDoc}
-     * @param mastermind        The mastermind that will receive the character in its party.
-     */
-    public void addToParty(IMastermind mastermind){
-        mastermind.addToCPUParty(this);
-    }
-    /**
-     * {@inheritDoc}
      */
     @Override
     public void waitTurn() {

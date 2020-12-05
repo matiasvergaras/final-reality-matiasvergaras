@@ -99,7 +99,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addBlackMageToPlayerParty(String name){
-        blackMageFactory.create(name).addToParty(player);
+        player.addToParty(blackMageFactory.create(name));
     }
 
     /**
@@ -110,7 +110,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addWhiteMageToPlayerParty(String name){
-        whiteMageFactory.create(name).addToParty(player);
+        player.addToParty(blackMageFactory.create(name));
     }
 
     /**
@@ -121,7 +121,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addEngineerToPlayerParty(String name){
-        engineerFactory.create(name).addToParty(player);
+        player.addToParty(engineerFactory.create(name));
     }
 
     /**
@@ -132,7 +132,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addThiefToPlayerParty(String name){
-        thiefFactory.create(name).addToParty(player);
+        player.addToParty(thiefFactory.create(name));
     }
 
     /**
@@ -143,7 +143,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addKnightToPlayerParty(String name){
-        knightFactory.create(name).addToParty(player);
+        player.addToParty(knightFactory.create(name));
     }
 
     /**
@@ -153,7 +153,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addEnemyToCPUParty(String name){
-        enemyFactory.create(name).addToParty(cpu);
+        cpu.addToParty(enemyFactory.create(name));
     }
 
     /**

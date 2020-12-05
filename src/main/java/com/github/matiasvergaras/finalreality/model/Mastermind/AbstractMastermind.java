@@ -11,15 +11,15 @@ import java.util.Map;
  * @author Matías Vergara Silva.
  */
 public abstract class AbstractMastermind implements  IMastermind{
+    protected ArrayList<ICharacter> party;
 
-    private ArrayList<ICharacter> party;
     /**
      * Adds a character to the Player's Party.
      * @param character     The ICharacter character to be added.
      */
     @Override
     public void addToParty(ICharacter character){
-        this.party.add(character);
+        this.getParty().add(character);
     }
 
     /**
@@ -51,6 +51,8 @@ public abstract class AbstractMastermind implements  IMastermind{
 
     /**
      * {@inheritDoc}
+     * <p> Controller will be in charge of avoid passing an index grater than the size-1. </p>
+     * <p> Therefore, this method will not verify it. </p>
      * @param index     The position of the character to be returned in the party.
      * @return          The character in the 'index' position of the party.
      */
@@ -61,12 +63,16 @@ public abstract class AbstractMastermind implements  IMastermind{
 
     /**
      * Makes a character performs a normal attack against another.
+     * <p> Controller will be in charge of check that the characters are in different teams.
+     * Mastermind will only check that the attacker character is in his party. </p>
      * @param character     The character that will perform the attack.
      * @param target        The character that will receive the attack.
      */
     @Override
     public void makeNormalAttack(ICharacter character, ICharacter target){
-        character.normalAttack(target);
+        if(this.getParty().contains(character)){
+            character.normalAttack(target);
+        }
     }
 
 }
