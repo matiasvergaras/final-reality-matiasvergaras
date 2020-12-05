@@ -15,16 +15,31 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Class to test the Controller methods to add characters to the playerParty.
+ */
 public class PlayerPartyTest {
     private GameController gameController;
     private LinkedBlockingQueue<ICharacter> turns;
+    private int rivalInitPartySize;
 
+    /**
+     * Basic set-up: a turns queue and a Controller.
+     */
     @BeforeEach
     void setUp(){
         turns = new LinkedBlockingQueue<>();
-        gameController = GameController.getInstance();
+        gameController = new GameController();
+        rivalInitPartySize = gameController.getCPUPartySize();
+
     }
 
+    /**
+     * Test the addBlackMage method.
+     * <p> Adds a new blackMage to the player party and checks that it is correctly added
+     * by checking the equality between a copy of the created character and the last character
+     * added to the party, and by checking that the size of the party increased by 1. </p>
+     */
     @Test
     void addBlackMageTest(){
         IMastermind player = gameController.getPlayer();
@@ -36,6 +51,12 @@ public class PlayerPartyTest {
         assertEquals(initSize+1, gameController.getPlayerPartySize());
     }
 
+    /**
+     * Test the addWhiteMage method.
+     * <p> Adds a new whiteMage to the player party and checks that it is correctly added
+     * by checking the equality between a copy of the created character and the last character
+     * added to the party, and by checking that the size of the party increased by 1. </p>
+     */
     @Test
     void addWhiteMageTest(){
         IMastermind player = gameController.getPlayer();
@@ -48,6 +69,12 @@ public class PlayerPartyTest {
 
     }
 
+    /**
+     * Test the addEngineer method.
+     * <p> Adds a new Engineer to the player party and checks that it is correctly added
+     * by checking the equality between a copy of the created character and the last character
+     * added to the party, and by checking that the size of the party increased by 1. </p>
+     */
     @Test
     void addEngineerTest(){
         IMastermind player = gameController.getPlayer();
@@ -60,6 +87,12 @@ public class PlayerPartyTest {
 
     }
 
+    /**
+     * Test the addKnight method.
+     * <p> Adds a new Knight to the player party and checks that it is correctly added
+     * by checking the equality between a copy of the created character and the last character
+     * added to the party, and by checking that the size of the party increased by 1. </p>
+     */
     @Test
     void addKnightTest(){
         IMastermind player = gameController.getPlayer();
@@ -72,7 +105,12 @@ public class PlayerPartyTest {
 
     }
 
-
+    /**
+     * Test the addThief method.
+     * <p> Adds a new Thief to the player party and checks that it is correctly added
+     * by checking the equality between a copy of the created character and the last character
+     * added to the party, and by checking that the size of the party increased by 1. </p>
+     */
     @Test
     void addThiefTest(){
         IMastermind player = gameController.getPlayer();
@@ -86,9 +124,13 @@ public class PlayerPartyTest {
 
     }
 
+    /**
+     * Test that when adding characters to the player's party, nothing has been accidentally
+     * added to the cpu party.
+     */
     @Test
-    void testPartySizes(){
-        assertEquals(gameController.getCPUPartySize(), 0);
+    void testRivalPartySize(){
+        assertEquals(gameController.getCPUPartySize(), rivalInitPartySize);
     }
 
 

@@ -16,7 +16,6 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -26,8 +25,6 @@ import java.util.concurrent.LinkedBlockingQueue;
  * and redirecting those that are necessary.
  * <p> User will communicate with Controller, and Controller will do with
  * userPlayer/cpuPlayer. </p>
- * <p> We will use the Singleton Pattern with Game Controller, since there should not be more than 1 instance
- * of controller at the same time. </p>
  * @since Homework 2
  * @author Matías Vergara Silva
  */
@@ -50,6 +47,7 @@ public class GameController {
     private PlayerMastermind player;
     private CPUMastermind cpu;
     private ICharacter selectedCharacter;
+    private ICharacter attackTarget;
     private IWeapon selectedWeapon;
     private ICharacterFactory selectedCharacterFactory;
     private IWeaponFactory selectedWeaponFactory;
@@ -62,7 +60,7 @@ public class GameController {
      * Real constructor of the GameController.
      * Private to prevent access bypassing the UniqueInstance.
      */
-    private GameController(){
+    public GameController(){
         this.turns = new LinkedBlockingQueue<>();
         this.charactersQuantity = 7;
         this.playerName = "Player 1";
@@ -83,19 +81,7 @@ public class GameController {
         this.selectedWeaponFactory = null;
         this.selectedCharacter = null;
         this.selectedWeapon = null;
-    }
-
-    /**
-     * Calls to the constructor if the Singleton Pattern condition is met.
-     * @param charactersQuantity    the number of characters that the user will have.
-     * @param turns                 a linked blocking queue for keeping the turns.
-     * @return an instance of GameController if it has not been instantiated before. Null otherwise.
-     */
-    public static GameController getInstance(){
-        if(uniqueInstance == null){
-            uniqueInstance = new GameController();
-        }
-        return uniqueInstance;
+        this.attackTarget = null;
     }
 
     /**
@@ -126,6 +112,14 @@ public class GameController {
      */
     public int getCPUPartySize(){
         return cpu.getPartySize();
+    }
+
+    /**
+     * Gives the player inventory size.
+     * return       An int representing the number of elements in the player's inventory.
+     */
+    public int getInventorySize(){
+        return player.getInventorySize();
     }
     /**
      * A method to overwrite the default name and character number that the player will have.
@@ -355,6 +349,32 @@ public class GameController {
     }
 
     /**
+     * Sets the attackTarget at a Character in the userPlayer party, given an index representing its position
+     * at the party.
+     * <p> The method checks if the index is in the range (0, size of user Player Party), in order to avoid
+     * IndexError's. </p>
+     * @param index     The position of the character that will be targeted in the userPlayer Party.
+     */
+    public void setAttackTargetFromPlayerParty(int index){
+        if(index < player.getPartySize()){
+            this.attackTarget= player.getCharacterFromParty(index);
+        }
+    }
+
+    /**
+     * Sets the attackTarget at a Character in the cpuPlayer party, given an index representing its position
+     * at the party.
+     * <p> The method checks if the index is in the range (0, size of cpu Player Party), in order to avoid
+     * IndexError's. </p>
+     * @param index     The position of the character that will be selected in the cpuPlayer Party.
+     */
+    public void setAttackTargetFromCPUParty(int index){
+        if(index < cpu.getPartySize()){
+            this.attackTarget = cpu.getParty().get(index);
+        }
+    }
+
+    /**
      * Launch the equipping process of the selectedWeapon to the SelectedCharacter.
      * <p> The method checks if the SelectedCharacter is in the PlayerParty since if not it will be an CPUCharacter,
      * who cannot equip weapons. </p>
@@ -411,17 +431,17 @@ public class GameController {
         if(player.getParty().contains(selectedCharacter) & cpu.getParty().contains(target)){
             player.makeNormalAttack(selectedCharacter, target);
         }
-        if(player.getParty().contains(selectedCharacter) & player.getParty().contains(target)){
+        if(cpu.getParty().contains(selectedCharacter) & player.getParty().contains(target)){
             cpu.makeNormalAttack(selectedCharacter, target);
         }
     }
 
     /**
-     * Gets the attributes of the SelectedCharacter as a Map where the keys are the attribute description as String
-     * (i.e. maxHP, DP, maxMana, weight, equippedWeapon, etc) and the values are the attributes.
-     * <p> Since it will return values as Object, we decided to keep this method as private as well we created
-     * specific methods that call this one but returns the values in their right type. </p>
-     * @return  a Map<String, Object> representing the attributes of the selectedCharacter.
+     * Gets the attributes of the SelectedCharacter as an AttributeSet.
+     * <p> AttributeSet is a new class that we created to keep the attributes of the different types of
+     * characters. It has getters for every possible attribute.  If it is asked for an attribute that the character does
+     * not have, it will return 0 (except for equippedWeapon, in which case it will return null). </p>
+     * @return  an AttributeSet representing all the attributes of the character.
      */
     private AttributeSet getSelectedCharacterAttributes(){
         return selectedCharacter.getAttributes();
@@ -614,6 +634,15 @@ public class GameController {
     public ICharacter getSelectedCharacter(){
         return this.selectedCharacter;
     }
+
+    /**
+     * Gives the attackTarget ICharacter Object.
+     * @return      The attackTarget ICharacter Object.
+     */
+    public ICharacter getAttackTargetCharacter(){
+        return this.attackTarget;
+    }
+
 
     /**
      * Gives the SelectedWeapon IWeapon Object.

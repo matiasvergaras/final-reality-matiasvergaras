@@ -147,7 +147,7 @@ public abstract class CharacterFactoryTest {
         testFactory.setPower(newPower);
         ICharacter finalProduction = testFactory.create(charactersName);
         assertEquals(initialProduction.getAttributes(), finalProduction.getAttributes(), "Changed a parameter" +
-                "that should not influence this production, but it did.");
+                "that were not supposed to influence this production, but it did.");
     }
 
     /**
@@ -160,7 +160,7 @@ public abstract class CharacterFactoryTest {
         testFactory.setWeight(newWeight);
         ICharacter finalProduction = testFactory.create(charactersName);
         assertEquals(initialProduction.getAttributes(), finalProduction.getAttributes(), "Changed a parameter" +
-                "that should not influence this production, but it did.");
+                "that were not supposed to influence this production, but it did.");
     }
 
 
@@ -174,7 +174,7 @@ public abstract class CharacterFactoryTest {
         testFactory.setMana(newMana);
         ICharacter finalProduction = testFactory.create(charactersName);
         assertEquals(initialProduction.getAttributes(), finalProduction.getAttributes(), "Changed a parameter" +
-                "that should not influence this production, but it did.");
+                "that were not supposed to influence this production, but it did.");
     }
 
 }
