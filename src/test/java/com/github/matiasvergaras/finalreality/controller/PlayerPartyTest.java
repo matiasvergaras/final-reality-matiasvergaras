@@ -1,8 +1,8 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
 import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
 import com.github.matiasvergaras.finalreality.model.character.player.magic.WhiteMage;
 import com.github.matiasvergaras.finalreality.model.character.player.normal.Engineer;
@@ -11,6 +11,7 @@ import com.github.matiasvergaras.finalreality.model.character.player.normal.Thie
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +32,6 @@ public class PlayerPartyTest {
     void setUp(){
         turns = new LinkedBlockingQueue<>();
         gameController = new GameController();
-
     }
 
     /**
@@ -47,6 +47,8 @@ public class PlayerPartyTest {
         gameController.addBlackMageToPlayerParty("Alef");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
         BlackMage sameCharacter = new BlackMage(turns, "Alef", 120, 40, 200);
+        assertEquals(gameController.getSelectedCharacterName(), "Alef");
+        assertEquals(gameController.getSelectedCharacterAttributes(),sameCharacter.getAttributes());
         assertEquals(gameController.getSelectedCharacter(), sameCharacter);
         assertEquals(initSize+1, gameController.getPlayerPartySize());
     }
@@ -131,6 +133,44 @@ public class PlayerPartyTest {
     @Test
     void testRivalPartySize(){
         assertEquals(gameController.getCPUPartySize(), 0);
+    }
+
+    /**
+     * Test that the getPlayerParty method works properly.
+     * <p> It add some characters to the playerParty and to a copyList, and then
+     * it checks that the list are equals. </p>
+     */
+    @Test
+    void getPlayerPartyTest(){
+        ArrayList<ICharacter> copy = new ArrayList<>();
+        gameController.addBlackMageToPlayerParty("Azelf");
+        gameController.addWhiteMageToPlayerParty("Lowe");
+        gameController.addKnightToPlayerParty("Gort");
+        gameController.addEngineerToPlayerParty("Balbaroy");
+        gameController.addThiefToPlayerParty("Arthur");
+        copy.add(new BlackMage(turns, "Azelf", 120, 40, 200));
+        copy.add(new WhiteMage(turns, "Lowe", 120, 30, 200));
+        copy.add(new Knight(turns, "Gort", 180, 100));
+        copy.add(new Engineer(turns, "Balbaroy", 125, 70));
+        copy.add(new Thief(turns, "Arthur", 90, 50));
+        assertEquals(gameController.getPlayerParty(), copy);
+    }
+
+    /**
+     * Test that the getCPUParty method works properly.
+     * <p> It add some characters to the CPUParty and a copy of them to a copyList, and then
+     * it checks that the list are equals. </p>
+     */
+    @Test
+    void getCPUPartyTest(){
+        ArrayList<ICharacter> copy = new ArrayList<>();
+        gameController.addEnemyToCPUParty("Azelf");
+        gameController.addEnemyToCPUParty("Lowe");
+        gameController.addEnemyToCPUParty("Gort");
+        copy.add(new Enemy(turns, "Azelf", 180, 100, 12, 100));
+        copy.add(new Enemy(turns, "Lowe", 180, 100, 12, 100));
+        copy.add(new Enemy(turns, "Gort", 180, 100, 12, 100));
+        assertEquals(gameController.getCPUParty(), copy);
     }
 
 

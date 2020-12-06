@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * A class to check that the attack order of GameController works properly.
+ * It also checks equip and unequip methods.
  * <p> Controller is in charge of avoiding friendly-fire, and we will check that.</p>
  * @since Homework 2
  * @author Matías Vergara Silva
@@ -49,6 +50,9 @@ public class attackTest {
         gameController.selectedCharacterNormalAttack(gameController.getAttackTargetCharacter());
         //Check that the enemy died.
         assertFalse(gameController.getAttackTargetCharacter().isAlive());
+        //Send the unequip message and check that it is correctly done.
+        gameController.unequipSelectedCharacter();
+        assertNull(gameController.getSelectedCharacterEquippedWeapon());
     }
 
     /**
@@ -76,6 +80,9 @@ public class attackTest {
         gameController.selectedCharacterNormalAttack(gameController.getAttackTargetCharacter());
         //Check that the thief is still alive (if he was attacked, he would be already dead).
         assertTrue(gameController.getAttackTargetCharacter().isAlive());
+        //Send the unequip message and check that it is correctly done.
+        gameController.unequipSelectedCharacter();
+        assertNull(gameController.getSelectedCharacterEquippedWeapon());
     }
 
     /**
@@ -121,4 +128,5 @@ public class attackTest {
         //Check that the second enemy did not receive the attack (i.e. he did not died).
         assertTrue(gameController.getAttackTargetCharacter().isAlive());
     }
+
 }

@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.controller;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -129,7 +130,18 @@ public class WeaponFactoriesSettingsTest {
         testFactorySettingForMagic(5, "Guardian Staff");
     }
 
+    /**
+     * Test the equal method of WeaponAttributeSet
+     */
+    @Test
+    void equalHashCodeAttributeTest(){
+        setFactoryForTesting(1, 5);
+        IWeapon weapon = gameController.getSelectedWeaponFactory().create();
+        IWeapon copy = gameController.getSelectedWeaponFactory().create();
+        assertEquals(weapon, copy);
+        assertEquals(weapon.hashCode(), copy.hashCode());
 
+    }
 
 
 

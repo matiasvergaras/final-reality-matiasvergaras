@@ -35,7 +35,7 @@ public class CPUPartyTest {
      * added to the party, and by checking that the size of the party increased by 1. </p>
      */
     @Test
-    void addBlackMageTest() {
+    void addEnemyTest() {
         int initSize = gameController.getCPUPartySize();
         gameController.addEnemyToCPUParty("Darksol");
         gameController.setSelectedCharacterFromCPUParty(gameController.getCPUPartySize() - 1);
@@ -43,6 +43,7 @@ public class CPUPartyTest {
         assertEquals(gameController.getSelectedCharacter(), sameCharacter);
         assertEquals(initSize + 1, gameController.getCPUPartySize());
     }
+
 
     /**
      * Test that when adding characters to the CPU's party, nothing has been accidentally

@@ -443,7 +443,7 @@ public class GameController {
      * not have, it will return 0 (except for equippedWeapon, in which case it will return null). </p>
      * @return  an AttributeSet representing all the attributes of the character.
      */
-    private CharacterAttributeSet getSelectedCharacterAttributes(){
+    public CharacterAttributeSet getSelectedCharacterAttributes(){
         return selectedCharacter.getAttributes();
     }
 
@@ -452,7 +452,7 @@ public class GameController {
      * @return      the name of the selectedCharacter, as a String.
      */
     public String getSelectedCharacterName(){
-        return selectedCharacter.getAttributes().getName();
+        return getSelectedCharacterAttributes().getName();
     }
 
     /**
@@ -460,7 +460,7 @@ public class GameController {
      * @return      the current HP of the selectedCharacter, as an int.
      */
     public int getSelectedCharacterCurrentHP(){
-        return selectedCharacter.getAttributes().getCurrentHP();
+        return getSelectedCharacterAttributes().getCurrentHP();
     }
 
     /**
@@ -468,7 +468,7 @@ public class GameController {
      * @return      the maxHP of the selectedCharacter, as an int.
      */
     public int getSelectedCharacterMaxHP(){
-        return selectedCharacter.getAttributes().getMaxHP();
+        return getSelectedCharacterAttributes().getMaxHP();
     }
 
 
@@ -477,7 +477,7 @@ public class GameController {
      * @return      the DP of the selectedCharacter, as an int.
      */
     public int getSelectedCharacterDP(){
-        return selectedCharacter.getAttributes().getDP();
+        return getSelectedCharacterAttributes().getDP();
     }
 
     /**
@@ -486,7 +486,7 @@ public class GameController {
      * @return      the selectedCharacter equipped Weapon, as IWeapon.
      */
     public IWeapon getSelectedCharacterEquippedWeapon(){
-        return selectedCharacter.getAttributes().getEquippedWeapon();
+        return getSelectedCharacterAttributes().getEquippedWeapon();
     }
 
     /**
@@ -495,7 +495,7 @@ public class GameController {
      * @return      the CurrentMana of the selectedCharacter, as an int.
      */
     public int getSelectedCharacterCurrentMana(){
-        return selectedCharacter.getAttributes().getCurrentMana();
+        return getSelectedCharacterAttributes().getCurrentMana();
     }
 
     /**
@@ -504,7 +504,7 @@ public class GameController {
      * @return      the MaxMana of the selectedCharacter, as an int.
      */
     public int getSelectedCharacterMaxMana(){
-        return selectedCharacter.getAttributes().getMaxMana();
+        return getSelectedCharacterAttributes().getMaxMana();
     }
 
     /**
@@ -513,7 +513,7 @@ public class GameController {
      * @return      the weight of the selectedCharacter, as an int.
      */
     public int getSelectedCharacterWeight(){
-        return selectedCharacter.getAttributes().getWeight();
+        return getSelectedCharacterAttributes().getWeight();
     }
 
     /**
@@ -522,7 +522,7 @@ public class GameController {
      * @return      the power of the selectedCharacter, as an int.
      */
     public  int getSelectedCharacterPower(){
-        return selectedCharacter.getAttributes().getPower();
+        return getSelectedCharacterAttributes().getPower();
     }
 
     /**

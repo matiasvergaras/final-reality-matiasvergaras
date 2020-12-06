@@ -1,6 +1,8 @@
 package com.github.matiasvergaras.finalreality.controller;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
+import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -158,5 +160,20 @@ public class CharacterFactoriesSettingsTest {
         gameController.setSelectedCharacterFromCPUParty(gameController.getCPUPartySize()-1);
         testFactorySettingForCPU(9);
     }
+
+    /**
+     * Test the equal method of WeaponAttributeSet
+     */
+    @Test
+    void equalHashCodeAttributeTest(){
+        setFactoryForTesting(1, 5);
+        ICharacter character = gameController.getSelectedCharacterFactory().create("Zylo");
+        ICharacter copy = gameController.getSelectedCharacterFactory().create("Zylo");
+        assertEquals(character.getAttributes(), copy.getAttributes());
+        assertEquals(character.getAttributes().hashCode(), copy.getAttributes().hashCode());
+
+    }
+
+
 
 }
