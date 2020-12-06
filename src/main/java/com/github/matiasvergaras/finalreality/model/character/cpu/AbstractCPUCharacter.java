@@ -79,15 +79,6 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
         return this.getPower();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void receiveNormalAttack(ICharacter character) {
-        if (character.getAttackPower()>this.getDP()) {
-            reduceHP(character.getAttackPower() - getDP());
-        }
-    }
 
     /**
      * {@inheritDoc}

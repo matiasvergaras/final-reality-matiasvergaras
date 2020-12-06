@@ -31,7 +31,7 @@ public class PlayerPartyTest {
     @BeforeEach
     void setUp(){
         turns = new LinkedBlockingQueue<>();
-        gameController = new GameController();
+        gameController = new GameController("Max", 9);
     }
 
     /**
@@ -42,7 +42,6 @@ public class PlayerPartyTest {
      */
     @Test
     void addBlackMageTest(){
-        IMastermind player = gameController.getPlayer();
         int initSize = gameController.getPlayerPartySize();
         gameController.addBlackMageToPlayerParty("Alef");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
@@ -61,7 +60,6 @@ public class PlayerPartyTest {
      */
     @Test
     void addWhiteMageTest(){
-        IMastermind player = gameController.getPlayer();
         int initSize = gameController.getPlayerPartySize();
         gameController.addWhiteMageToPlayerParty("Tao");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
@@ -79,7 +77,6 @@ public class PlayerPartyTest {
      */
     @Test
     void addEngineerTest(){
-        IMastermind player = gameController.getPlayer();
         int initSize = gameController.getPlayerPartySize();
         gameController.addEngineerToPlayerParty("Vankar");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
@@ -97,7 +94,6 @@ public class PlayerPartyTest {
      */
     @Test
     void addKnightTest(){
-        IMastermind player = gameController.getPlayer();
         int initSize = gameController.getPlayerPartySize();
         gameController.addKnightToPlayerParty("Gort");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
@@ -115,7 +111,6 @@ public class PlayerPartyTest {
      */
     @Test
     void addThiefTest(){
-        IMastermind player = gameController.getPlayer();
         int initSize = gameController.getPlayerPartySize();
         gameController.addThiefToPlayerParty("Hanzou");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);

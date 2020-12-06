@@ -1,9 +1,12 @@
 package com.github.matiasvergaras.finalreality.model.Mastermind;
 
+import com.github.matiasvergaras.finalreality.controller.DeathCharacterToMMHandler;
+import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * Class to hold the common behavior of both CPUMastermind and PlayerMastermind.
@@ -13,6 +16,9 @@ import java.util.Map;
 public abstract class AbstractMastermind implements  IMastermind{
     protected ArrayList<ICharacter> party;
     protected String name;
+    protected PropertyChangeSupport deadCharacter = new PropertyChangeSupport(this);
+    protected DeathCharacterToMMHandler deadCharacterHandler = new DeathCharacterToMMHandler(this);
+    protected int aliveCharacters;
 
     /**
      * Basic constructor for a Mastermind
@@ -22,13 +28,29 @@ public abstract class AbstractMastermind implements  IMastermind{
         this.party = new ArrayList<ICharacter>();
     }
 
+    @Override
+    public CharacterAttributeSet getCharacterAttributes(ICharacter character){
+        return character.getAttributes();
+    }
+
     /**
-     * Adds a character to the Player's Party.
+     * Adds a character to the Mastermind's Party.
      * @param character     The ICharacter character to be added.
      */
     @Override
     public void addToParty(ICharacter character){
+        this.aliveCharacters++;
         this.getParty().add(character);
+        character.getDeadCharacter().addPropertyChangeListener(deadCharacterHandler);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @return
+     */
+    @Override
+    public int getAliveCharacters(){
+        return this.aliveCharacters;
     }
 
     /**
@@ -84,9 +106,8 @@ public abstract class AbstractMastermind implements  IMastermind{
         }
     }
 
-
     /**
-     * Gives the actual player name.
+     *{@inheritDoc}
      * @return  The name of the PlayerMastermind.
      */
     @Override
@@ -94,5 +115,20 @@ public abstract class AbstractMastermind implements  IMastermind{
         return name;
     }
 
+    /**
+     * Alerts the gameController that a character died.
+     */
+    public void deadCharacter(){
+        this.aliveCharacters--;
+        deadCharacter.firePropertyChange(new PropertyChangeEvent(this, this.name,
+                aliveCharacters+1, aliveCharacters));
+    }
 
+    /**
+     *
+     * @return propertyChangeSupport of Character's death, in order to be able to use it outside of this class.
+     */
+    public PropertyChangeSupport getDeadCharacter(){
+        return deadCharacter;
+    }
 }

@@ -1,7 +1,9 @@
 package com.github.matiasvergaras.finalreality.model.Mastermind;
 
+import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 /**
@@ -11,6 +13,23 @@ import java.util.ArrayList;
  * @author Matías Vergara Silva.
  */
 public interface IMastermind {
+
+    /**
+     * Gets the attributes of the given character as an AttributeSet.
+     * <p> AttributeSet is a new class that we created to keep the attributes of the different types of
+     * characters. It has getters for every possible attribute.  If it is asked for an attribute that the character does
+     * not have, it will return 0 (except for equippedWeapon, in which case it will return null). </p>
+     * @param   character       The character whose attributes will be returned.
+     * @return  an AttributeSet representing all the attributes of the character.
+     */
+    CharacterAttributeSet getCharacterAttributes(ICharacter character);
+
+    /**
+     * Gives the number of characters alive of this mastermind.
+     * @return      int alive characters.
+     */
+    int getAliveCharacters();
+
     /**
      * Adds a character to the mastermind's Party.
      * @param character     The ICharacter character to be added.
@@ -54,4 +73,8 @@ public interface IMastermind {
      * @return  The name of the Mastermind.
      */
     public String getName();
+
+    public void deadCharacter();
+
+    public PropertyChangeSupport getDeadCharacter();
 }

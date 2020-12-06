@@ -4,6 +4,7 @@ import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -151,3 +152,5 @@ public class PlayerMastermind extends AbstractMastermind {
 
 
 }
+
+

@@ -4,6 +4,8 @@ package com.github.matiasvergaras.finalreality.model.character;
 import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import org.jetbrains.annotations.NotNull;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -21,6 +23,8 @@ public abstract class AbstractCharacter implements ICharacter {
     private int currentHP;
     private final int DP;
     protected ScheduledExecutorService scheduledExecutor;
+    private PropertyChangeSupport deadCharacter = new PropertyChangeSupport(this);
+
 
     /**
      * Constructor for a new Character.
@@ -41,6 +45,16 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     /**
+     *
+     * @return propertyChangeSupport of Character's death,
+     * in order to be able to assign listeners to it outside of this class.
+     */
+    public PropertyChangeSupport getDeadCharacter(){
+        return deadCharacter;
+    }
+
+
+    /**
      * {@inheritDoc}
      * @param character the character to be attacked.
      */
@@ -54,7 +68,12 @@ public abstract class AbstractCharacter implements ICharacter {
      * {@inheritDoc}
      * @param character         The ICharacter character that is performing the attack.
      */
-    public abstract void receiveNormalAttack(ICharacter character);
+    public void receiveNormalAttack(ICharacter character){
+        if(character.getAttackPower()>this.getDP()) {
+        this.reduceHP(character.getAttackPower() - getDP());
+        }
+    }
+
 
     protected void addToQueue() {
         turnsQueue.add(this);
@@ -116,6 +135,9 @@ public abstract class AbstractCharacter implements ICharacter {
         if(this.currentHP<0){
             //To avoid characters of having negative HP.
             this.currentHP=0;
+            deadCharacter.firePropertyChange(new PropertyChangeEvent(this,
+                    "Dead Character", "Alive", "Death"));
+
         }
     }
 

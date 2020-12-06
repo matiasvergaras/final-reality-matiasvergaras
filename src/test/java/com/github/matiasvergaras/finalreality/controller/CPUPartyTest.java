@@ -24,7 +24,7 @@ public class CPUPartyTest {
     @BeforeEach
     void setUp() {
         turns = new LinkedBlockingQueue<>();
-        gameController = new GameController();
+        gameController = new GameController("Chase", 5);
 
     }
 

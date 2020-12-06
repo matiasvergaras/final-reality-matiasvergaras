@@ -2,6 +2,8 @@ package com.github.matiasvergaras.finalreality.model.character;
 
 import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 
+import java.beans.PropertyChangeSupport;
+
 /**
  * This represents a character from the game.
  * A character can be controlled by the player or by the CPU (an enemy).
@@ -86,6 +88,7 @@ public interface ICharacter {
      */
     CharacterAttributeSet getAttributes();
 
+    PropertyChangeSupport getDeadCharacter();
 
 
 }

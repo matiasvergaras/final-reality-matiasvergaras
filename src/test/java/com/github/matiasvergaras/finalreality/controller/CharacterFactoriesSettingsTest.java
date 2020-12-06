@@ -92,7 +92,7 @@ public class CharacterFactoriesSettingsTest {
      */
     @BeforeEach
     void setUp(){
-        gameController = new GameController();
+        gameController = new GameController("Cuddy", 4);
     }
 
     /**

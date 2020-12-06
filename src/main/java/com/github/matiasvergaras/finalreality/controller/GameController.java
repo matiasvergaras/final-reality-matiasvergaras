@@ -10,11 +10,13 @@ import com.github.matiasvergaras.finalreality.factory.Characters.ThiefFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
 import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.Mastermind.CPUMastermind;
+import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.Mastermind.PlayerMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -53,6 +55,12 @@ public class GameController {
     private IWeaponFactory selectedWeaponFactory;
     private ArrayList<ICharacterFactory> characterFactories = new ArrayList<>();
     private ArrayList<IWeaponFactory> weaponFactories = new ArrayList<>();
+    private IMastermind winner;
+    private PropertyChangeSupport
+            deadCPUCharacter = new PropertyChangeSupport(this),
+            deadPlayerCharacter = new PropertyChangeSupport(this);
+    private boolean gameEnded;
+    private DeathMMToGCHandler deadCharacterHandler = new DeathMMToGCHandler(this);
 
 
     /**
@@ -60,12 +68,12 @@ public class GameController {
      * Real constructor of the GameController.
      * Private to prevent access bypassing the UniqueInstance.
      */
-    public GameController(){
+    public GameController(String playerName, int charactersQuantity){
         this.turns = new LinkedBlockingQueue<>();
-        this.charactersQuantity = 7;
-        this.playerName = "Player 1";
         this.player = new PlayerMastermind(playerName, charactersQuantity);
         this.cpu = new CPUMastermind("CPU");
+        this.player.getDeadCharacter().addPropertyChangeListener(deadCharacterHandler);
+        this.cpu.getDeadCharacter().addPropertyChangeListener(deadCharacterHandler);
         characterFactories.add(engineerFactory);
         characterFactories.add(blackMageFactory);
         characterFactories.add(whiteMageFactory);
@@ -82,6 +90,41 @@ public class GameController {
         this.selectedCharacter = null;
         this.selectedWeapon = null;
         this.attackTarget = null;
+        this.winner = null;
+        this.gameEnded = false;
+    }
+
+    /**
+     * A method to remove a Character from the queue.
+     * <p> It identifies the character by its name. This is why is so important
+     * to respect the condition of unique names, even for the CPU Characters. </p>
+     * @param name      The name of the character to be removed.
+     */
+    public void removeCharacterFromQueue(String name, int charactersAlive){
+        turns.removeIf(c -> c.getAttributes().getName().equals(name));
+        checkForWinner(charactersAlive);
+    }
+
+    private void checkForWinner(int charactersAlive){
+        if (charactersAlive==0){
+            winner = ((charactersAlive == cpu.getAliveCharacters()) ? cpu : player);
+        }
+    }
+
+    /**
+     * Getter for Character Quantity of this GameController.
+     * @return      int CharactersQuantity.
+     */
+    public int getCharactersQuantity(){
+        return player.getCharacterQuantity();
+    }
+
+    /**
+     * Getter for the name of the player of this GameController
+     * @return      String playerName.
+     */
+    public String getPlayerName(){
+        return player.getName();
     }
 
     /**
@@ -121,29 +164,7 @@ public class GameController {
     public int getInventorySize(){
         return player.getInventorySize();
     }
-    /**
-     * A method to overwrite the default name and character number that the player will have.
-     * <p> Has to be available only at the start of the game, since it will overwrite the player with a
-     * completely new one. </p>
-     * <p> Defaults values are: </p>
-     * <p> Name: Player 1 </p>
-     * <p> Characters quantity: 7 </p>
-     * @param playerName            The new name that the player will have.
-     * @param newQuantity           The number of characters the player will play with.
-     */
-    public void setNewPlayerValues(String playerName, int newQuantity){
-        this.playerName = playerName;
-        this.charactersQuantity = newQuantity;
-        this.player = new PlayerMastermind(playerName, newQuantity);
-    }
 
-    /**
-     * Getter to the actual player.
-     * @return      PlayerMastermind player.
-     */
-    public PlayerMastermind getPlayer(){
-        return this.player;
-    }
 
     /**
      * Request a new BlackMage character to the corresponding factory and add it to the User's party if there is still
@@ -417,22 +438,21 @@ public class GameController {
     }
 
     /**
-     * This method receives a target, and makes the selectedCharacter performs a normal attack against him.
+     * This method makes the selectedCharacter performs a normal attack against the attackTarget character.
      * <p> The method checks that any of the following cases are true:</p>
-     * <p> selectedCharacter is in userPlayer party and target is in CPUPlayer Party, or </p>
-     * <p> selectedCharacter is in CPUPlayer Party and selectedCharacter in userPlayer
+     * <p> selectedCharacter is in userPlayer Party and attackTarget is in CPUPlayer Party, or </p>
+     * <p> selectedCharacter is in CPUPlayer Party and attackTarget in userPlayer Party.
      * Party. </p>
      * <p> If so, it sends the attack message in the corresponding direction. Otherwise, it has no effect.</p>
      * <p> In this way, the if's fulfill a double function: they ensure that the attacking and receiving characters
-     * are in the teams (to avoid bugs) and at the same time they avoid attacks between the same team. </p>
-     * @param target        The ICharacter that is going to be attacked.
+     * are in the game (to avoid bugs) and at the same time they avoid attacks between the same team. </p>
      */
-    public void selectedCharacterNormalAttack(ICharacter target){
-        if(player.getParty().contains(selectedCharacter) & cpu.getParty().contains(target)){
-            player.makeNormalAttack(selectedCharacter, target);
+    public void selectedCharacterNormalAttackTarget(){
+        if(player.getParty().contains(selectedCharacter) & cpu.getParty().contains(attackTarget)){
+            player.makeNormalAttack(selectedCharacter, attackTarget);
         }
-        if(cpu.getParty().contains(selectedCharacter) & player.getParty().contains(target)){
-            cpu.makeNormalAttack(selectedCharacter, target);
+        if(cpu.getParty().contains(selectedCharacter) & player.getParty().contains(attackTarget)){
+            cpu.makeNormalAttack(selectedCharacter, attackTarget);
         }
     }
 

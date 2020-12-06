@@ -21,6 +21,7 @@ public class CPUMastermind extends AbstractMastermind {
         super(name);
     }
 
+
     /**
      * Check if this is equal to a given object o.
      *

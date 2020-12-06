@@ -119,17 +119,6 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     }
 
     /**
-     * Receive a non-magic attack
-     *
-     * @param character the attacking character.
-     */
-    public void receiveNormalAttack(ICharacter character) {
-        if(character.getAttackPower()>this.getDP()) {
-            this.reduceHP(character.getAttackPower() - getDP());
-        }
-    }
-
-    /**
      * modify the HP of this character.
      * And check if it is necessary to notify.
      * @param diff a positive Integer to rest to the Character HP.

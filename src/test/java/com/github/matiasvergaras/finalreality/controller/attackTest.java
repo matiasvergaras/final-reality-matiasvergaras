@@ -22,7 +22,7 @@ public class attackTest {
      */
     @BeforeEach
     void setUp() {
-        gameController = new GameController();
+        gameController = new GameController("Lisa", 6);
     }
 
     /**
@@ -47,7 +47,7 @@ public class attackTest {
         //First we make sure that the enemy is alive before getting attacked
         assertTrue(gameController.getAttackTargetCharacter().isAlive());
         //Send attack message
-        gameController.selectedCharacterNormalAttack(gameController.getAttackTargetCharacter());
+        gameController.selectedCharacterNormalAttackTarget();;
         //Check that the enemy died.
         assertFalse(gameController.getAttackTargetCharacter().isAlive());
         //Send the unequip message and check that it is correctly done.
@@ -77,7 +77,7 @@ public class attackTest {
         //First we make sure that the enemy is alive before getting attacked
         assertTrue(gameController.getAttackTargetCharacter().isAlive());
         //Send attack message
-        gameController.selectedCharacterNormalAttack(gameController.getAttackTargetCharacter());
+        gameController.selectedCharacterNormalAttackTarget();
         //Check that the thief is still alive (if he was attacked, he would be already dead).
         assertTrue(gameController.getAttackTargetCharacter().isAlive());
         //Send the unequip message and check that it is correctly done.
@@ -102,7 +102,7 @@ public class attackTest {
         //First we make sure that the engineer is alive before getting attacked
         assertTrue(gameController.getAttackTargetCharacter().isAlive());
         //Send attack message
-        gameController.selectedCharacterNormalAttack(gameController.getAttackTargetCharacter());
+        gameController.selectedCharacterNormalAttackTarget();
         //Check that the engineer received the mega powerful attack (i.e. he died).
         assertFalse(gameController.getAttackTargetCharacter().isAlive());
     }
@@ -124,7 +124,7 @@ public class attackTest {
         //First we make sure that the engineer is alive before getting attacked
         assertTrue(gameController.getAttackTargetCharacter().isAlive());
         //Send attack message
-        gameController.selectedCharacterNormalAttack(gameController.getAttackTargetCharacter());
+        gameController.selectedCharacterNormalAttackTarget();
         //Check that the second enemy did not receive the attack (i.e. he did not died).
         assertTrue(gameController.getAttackTargetCharacter().isAlive());
     }

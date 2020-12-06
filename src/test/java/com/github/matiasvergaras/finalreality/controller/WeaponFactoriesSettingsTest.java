@@ -69,7 +69,7 @@ public class WeaponFactoriesSettingsTest {
      */
     @BeforeEach
     void setUp(){
-        gameController = new GameController();
+        gameController = new GameController("Foreman", 3);
     }
 
 

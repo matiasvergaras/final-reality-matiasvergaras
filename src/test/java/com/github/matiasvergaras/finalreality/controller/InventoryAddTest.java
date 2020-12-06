@@ -30,7 +30,7 @@ public class InventoryAddTest {
     @BeforeEach
     void setUp(){
         turns = new LinkedBlockingQueue<>();
-        gameController = new GameController();
+        gameController = new GameController("Greg", 9);
     }
 
     /**
