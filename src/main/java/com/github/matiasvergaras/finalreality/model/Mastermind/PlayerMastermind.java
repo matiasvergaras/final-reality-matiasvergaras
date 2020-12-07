@@ -3,6 +3,7 @@ package com.github.matiasvergaras.finalreality.model.Mastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
 
 import java.util.ArrayList;
@@ -31,20 +32,13 @@ public class PlayerMastermind extends AbstractMastermind {
 
     /**
      * Checks if it is enough space in the party. If so, it adds the given character.
-     * <p> In case that the character to add is already equipped, we will also add its weapon
-     * to the inventory. However, this should not be necessary in this version of the game,
-     * since we have not implemented the in-game recruitment yet. </p>
      * @param character     The ICharacter character to be added.
      */
     @Override
     public void addToParty(ICharacter character){
         if(this.getPartySize()<this.characterQuantity){
+            IPlayerCharacter playerCharacter= (IPlayerCharacter) character;
             super.addToParty(character);
-            IPlayerCharacter asPlayer = (IPlayerCharacter) character;
-            if (asPlayer.isEquipped()){
-                this.addToInventory(asPlayer.getEquippedWeapon());
-            }
-
         }
     }
 
@@ -98,7 +92,7 @@ public class PlayerMastermind extends AbstractMastermind {
      * @param character     The IPlayerCharacter character that will equip the weapon.
      */
     public void equipCharacter(IWeapon weapon, IPlayerCharacter character){
-        if(getParty().contains(character) & getInventory().contains(weapon)) {
+        if(getParty().contains(character) && getInventory().contains(weapon)) {
             character.equipWeapon(weapon);
         }
     }

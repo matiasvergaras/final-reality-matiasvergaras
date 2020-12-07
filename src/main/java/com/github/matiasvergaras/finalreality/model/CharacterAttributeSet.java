@@ -38,7 +38,7 @@ public class CharacterAttributeSet {
         this.equippedWeapon = equippedWeapon;
         this.maxMana = 0; this.currentMana = 0;
         this.weight = 0; this.power = 0;
-        this.equippedWeapon = null;
+        this.equippedWeapon = equippedWeapon;
     }
 
     /**

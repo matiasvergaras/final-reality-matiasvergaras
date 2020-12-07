@@ -4,6 +4,7 @@ import com.github.matiasvergaras.finalreality.State.Active;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -22,7 +23,7 @@ public class attackTest {
      */
     @BeforeEach
     void setUp() {
-        gameController = new GameController("Lisa", "Runefaust", 6);
+        gameController = new GameController("Lisa", "Runefaust", 1);
     }
 
     /**
@@ -51,16 +52,16 @@ public class attackTest {
         Thread.sleep(500);
         //Send attack message
         gameController.setSelectedCharacterFromPlayerParty(0);
+        assertTrue(gameController.isActive());
         gameController.selectedCharacterNormalAttackTarget();
         //Check that the enemy died.
         //SIG LINEA DA ERROR QE NO DEBERIA
-        System.out.println(gameController.getSelectedCharacterEquippedWeapon().getPower());
-        System.out.println(gameController.getAttackTargetCharacter().getName());
         assertFalse(gameController.getAttackTargetCharacter().isAlive());
         //Send the unequip message and check that it is correctly done.
         gameController.unequipSelectedCharacter();
-        System.out.println(gameController.getSelectedCharacter().getName());
         assertNull(gameController.getSelectedCharacterEquippedWeapon());
+        assertTrue(gameController.isFinished());
+        assertEquals(gameController.getWinner().getName(), gameController.getPlayerName());
     }
 
     /**
@@ -97,7 +98,7 @@ public class attackTest {
      * Checks an effective attack from cpu to player.
      */
     @Test
-    void EffectiveCPUToPlayerAttackTest(){
+    void EffectiveCPUToPlayerAttackTest() throws InterruptedException {
         //Adds an Engineer to the player party and selects him as target.
         gameController.addEngineerToPlayerParty("Domingo Egg");
         gameController.setAttackTargetFromPlayerParty(gameController.getPlayerPartySize()-1);
@@ -109,6 +110,9 @@ public class attackTest {
         gameController.setSelectedCharacterFromCPUParty(gameController.getCPUPartySize()-1);
         //First we make sure that the engineer is alive before getting attacked
         assertTrue(gameController.getAttackTargetCharacter().isAlive());
+        //Starts the game by force to bypass the turns queue.
+        gameController.startGame();
+        Thread.sleep(500);
         //Send attack message
         gameController.selectedCharacterNormalAttackTarget();
         //Check that the engineer received the mega powerful attack (i.e. he died).

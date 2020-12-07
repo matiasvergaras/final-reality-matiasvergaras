@@ -4,6 +4,7 @@ import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;
@@ -20,13 +21,12 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class AbstractPlayerCharacter extends AbstractCharacter implements IPlayerCharacter {
     protected IWeapon equippedWeapon;
-    private boolean isEquipped; // Added in homework 2 to avoid asking for the weapon when unequipped.
-                                // This did not cause an error, but was not a good practice.
+
 
     private PropertyChangeSupport deadCharacter = new PropertyChangeSupport(this);
     /**
      * Creates a new Player Character
-     *
+     * <p> Every playerCharacter will start equipped with a NullWeapon. </p>
      * @param name       the character's name
      * @param turnsQueue the queue with the characters ready to play
      * @param HP         the character's max heal points
@@ -36,7 +36,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
                                       @NotNull String name,
                                       int HP, int DP) {
         super(turnsQueue, name, HP, DP);
-        this.isEquipped = false;
+        this.equipWeapon(new NullWeapon());
     }
 
     /**
@@ -73,7 +73,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
      * @return true if equiped, false otherwise.
      */
     public boolean isEquipped(){
-        return this.equippedWeapon!=null;
+        return !this.equippedWeapon.equals(new NullWeapon());
     }
 
     /**
@@ -84,7 +84,6 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     @Override
     public void equip(IWeapon weapon) {
         equippedWeapon = weapon;
-        this.isEquipped = true;
         weapon.setOwner(this);
     }
 
@@ -102,12 +101,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
      *
      */
     public int getAttackPower(){
-        if(this.isEquipped()){
-            return this.getEquippedWeapon().getPower();
-        }
-        else{
-            return 0;
-        }
+        return this.getEquippedWeapon().getPower();
     }
 
     /**

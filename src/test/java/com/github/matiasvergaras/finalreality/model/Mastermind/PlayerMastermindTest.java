@@ -3,6 +3,7 @@ package com.github.matiasvergaras.finalreality.model.Mastermind;
 import com.github.matiasvergaras.finalreality.factory.Characters.ThiefFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.SwordFactory;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -171,7 +172,7 @@ public class PlayerMastermindTest extends AbstractMastermindTest{
         PlayerMastermind player = (PlayerMastermind)this.player;
         player.addToParty(exampleKnight);
         player.equipCharacter(exampleAxe, exampleKnight);
-        assertNull(exampleKnight.getEquippedWeapon());
+        assertEquals(exampleKnight.getEquippedWeapon(), new NullWeapon());
         assertNull(exampleAxe.getOwner());
     }
 
@@ -183,20 +184,10 @@ public class PlayerMastermindTest extends AbstractMastermindTest{
         PlayerMastermind player = (PlayerMastermind)this.player;
         player.addToInventory(exampleAxe);
         player.equipCharacter(exampleAxe, exampleKnight);
-        assertNull(exampleKnight.getEquippedWeapon());
+        assertEquals(exampleKnight.getEquippedWeapon(), new NullWeapon());
         assertNull(exampleAxe.getOwner());
     }
 
-    /**
-     * Test the characterToParty addition with an already equipped character.
-     */
-    @Test
-    void addWithWeaponTest(){
-        PlayerMastermind player = (PlayerMastermind)this.player;
-        exampleKnight.equipWeapon(exampleAxe);
-        player.addToParty(exampleKnight);
-        assertTrue(player.getInventory().contains(exampleAxe));
-    }
 
     /**
      * Test the PlayerMastermind's unequip method with a party character.

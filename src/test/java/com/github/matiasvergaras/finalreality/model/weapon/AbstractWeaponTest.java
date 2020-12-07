@@ -60,6 +60,7 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
     protected void checkEquipUnequip(IWeapon weapon,
                                      IPlayerCharacter characterA,
                                      IPlayerCharacter characterB) {
+        System.out.println(characterA.isEquipped());
         assertFalse(characterA.isEquipped(), "Character 'isEquipped' attribute started as true");
         characterA.equipWeapon(weapon);
     }
@@ -75,8 +76,8 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
         weapon.setWeaponFree();
         character.equipWeapon(weapon);
         assertNull(weapon.getOwner(), "Weapon was not supposed to be equipped, but it got an owner.");
-        assertNull(character.getEquippedWeapon(), "Character was not supossed to be equipped with this " +
-                "weapon, but he got an equippedWeapon.");
+        assertEquals(character.getEquippedWeapon(), new NullWeapon(), "Character was not supossed " +
+                "to be equipped with this weapon, but he got a weapon different from NullWeapon.");
     }
 
     /**

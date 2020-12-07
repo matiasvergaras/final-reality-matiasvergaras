@@ -109,7 +109,7 @@ public class GameController {
      * @param state     The new state.
      */
     public void setState(GameState state){
-        this.gameState = state;
+        gameState = state;
     }
 
     /**
@@ -197,9 +197,9 @@ public class GameController {
      *      startTurn, which does throws said exception. </p>
      */
     public void endTurn() throws InterruptedException {
-        if(this.isActive()) {
+        if(isActive()) {
             activeCharacter.waitTurn();
-            this.startTurn();
+            startTurn();
         }
     }
 
@@ -213,8 +213,8 @@ public class GameController {
      * @throws InterruptedException
      */
     public void startTurn() throws InterruptedException {
-        if(this.isActive()) {
-            activeCharacter = turns.take();
+        if(isActive()) {
+            activeCharacter = turns.poll();
         }
     }
 
@@ -227,8 +227,7 @@ public class GameController {
      * @param charactersAlive   The number of remaining characters in the dead character's team.
      */
     public void removeDeadCharacter(ICharacter deadCharacter, int charactersAlive){
-        if(this.isActive()) {
-            this.selectedCharacter = deadCharacter;
+        if(isActive()) {
             turns.remove(deadCharacter);
             if (charactersAlive == 0) setWinner();
         }
@@ -241,7 +240,7 @@ public class GameController {
      * when some team has every member dead, condition trapped by removeCharacterFromQueue. </p>
      */
     private void setWinner(){
-        if(this.isActive()) {
+        if(isActive()) {
             winner = ((0 == getCPUAliveNumber()) ? player : cpu);
             endGame();
         }
@@ -341,7 +340,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addBlackMageToPlayerParty(String name){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToParty(blackMageFactory.create(name));
         }
     }
@@ -354,7 +353,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addWhiteMageToPlayerParty(String name){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToParty(whiteMageFactory.create(name));
         }
     }
@@ -367,7 +366,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addEngineerToPlayerParty(String name){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToParty(engineerFactory.create(name));
         }
     }
@@ -380,7 +379,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addThiefToPlayerParty(String name){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToParty(thiefFactory.create(name));
         }
     }
@@ -393,7 +392,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addKnightToPlayerParty(String name){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToParty(knightFactory.create(name));
         }
     }
@@ -405,7 +404,7 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addEnemyToCPUParty(String name){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             cpu.addToParty(enemyFactory.create(name));
         }
     }
@@ -416,7 +415,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addBowToInventory(){
-        if(this.isInitializing()) {
+        if(isInitializing()){
             player.addToInventory(bowFactory.create());
         }
     }
@@ -428,7 +427,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addBowToInventory(String name){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToInventory(bowFactory.create(name));
         }
     }
@@ -439,7 +438,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addSwordToInventory(){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToInventory(swordFactory.create());
         }
     }
@@ -452,7 +451,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addSwordToInventory(String name){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToInventory(swordFactory.create(name));
         }
     }
@@ -463,7 +462,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addAxeToInventory(){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToInventory(axeFactory.create());
         }
     }
@@ -476,7 +475,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addAxeToInventory(String name){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToInventory(axeFactory.create(name));
         }
     }
@@ -487,7 +486,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addStaffToInventory(){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToInventory(staffFactory.create());
         }
     }
@@ -500,7 +499,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addStaffToInventory(String name){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToInventory(staffFactory.create(name));
         }
     }
@@ -511,7 +510,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addKnifeToInventory(){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToInventory(knifeFactory.create());
         }
     }
@@ -524,7 +523,7 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addKnifeToInventory(String name){
-        if(this.isInitializing()) {
+        if(isInitializing()) {
             player.addToInventory(knifeFactory.create(name));
         }
     }
@@ -538,7 +537,7 @@ public class GameController {
      */
     public void setSelectedWeapon(int index){
         try{
-            this.selectedWeapon = player.getInventory().get(index);
+            selectedWeapon = player.getInventory().get(index);
         }
         catch(IndexOutOfBoundsException ignored){
         }
@@ -554,7 +553,7 @@ public class GameController {
      */
     public void setSelectedCharacterFromPlayerParty(int index){
         try{
-            this.selectedCharacter = player.getCharacterFromParty(index);
+            selectedCharacter = player.getCharacterFromParty(index);
         }
         catch(IndexOutOfBoundsException ignored){
         }
@@ -569,7 +568,7 @@ public class GameController {
      */
     public void setSelectedCharacterFromCPUParty(int index){
         try{
-            this.selectedCharacter = cpu.getParty().get(index);
+            selectedCharacter = cpu.getParty().get(index);
         }
         catch(IndexOutOfBoundsException ignored){
         }
@@ -584,7 +583,7 @@ public class GameController {
      */
     public void setAttackTargetFromPlayerParty(int index){
         try{
-            this.attackTarget= player.getCharacterFromParty(index);
+            attackTarget= player.getCharacterFromParty(index);
         }
         catch(IndexOutOfBoundsException ignored){
         }
@@ -599,7 +598,7 @@ public class GameController {
      */
     public void setAttackTargetFromCPUParty(int index){
         try{
-            this.attackTarget = cpu.getParty().get(index);
+            attackTarget = cpu.getParty().get(index);
         }
         catch(IndexOutOfBoundsException ignored){
         }
@@ -611,12 +610,8 @@ public class GameController {
      * no weapon will be equipped. </p>
      */
     public void equipSelectedWeaponToSelectedCharacter(){
-            try{
                 IPlayerCharacter character = (IPlayerCharacter)this.selectedCharacter;
                 player.equipCharacter(selectedWeapon, character);
-            }
-            catch(IndexOutOfBoundsException ignored){
-            }
     }
 
     /**
@@ -659,11 +654,11 @@ public class GameController {
      * are in the game (to avoid bugs) and at the same time they avoid attacks between the same team. </p>
      */
     public void selectedCharacterNormalAttackTarget(){
-        if(this.isActive()){
-            if(player.getParty().contains(selectedCharacter) & cpu.getParty().contains(attackTarget)){
+        if(isActive()){
+            if(player.getParty().contains(selectedCharacter) && cpu.getParty().contains(attackTarget)){
                 player.makeNormalAttack(selectedCharacter, attackTarget);
             }
-            if(cpu.getParty().contains(selectedCharacter) & player.getParty().contains(attackTarget)){
+            if(cpu.getParty().contains(selectedCharacter) && player.getParty().contains(attackTarget)){
                 cpu.makeNormalAttack(selectedCharacter, attackTarget);
             }
         }
@@ -879,7 +874,7 @@ public class GameController {
      * @return      The attackTarget ICharacter Object.
      */
     public ICharacter getAttackTargetCharacter(){
-        return this.attackTarget;
+        return attackTarget;
     }
 
 
@@ -888,7 +883,7 @@ public class GameController {
      * @return      The selectedWeapon IWeapon Object.
      */
     public IWeapon getSelectedWeapon(){
-        return this.selectedWeapon;
+        return selectedWeapon;
     }
 
     /**
@@ -928,7 +923,7 @@ public class GameController {
      * @return      The selectedWeaponFactory IWeaponFactory Object.
      */
     public IWeaponFactory getSelectedWeaponFactory(){
-        return this.selectedWeaponFactory;
+        return selectedWeaponFactory;
     }
 
     /**
@@ -936,7 +931,7 @@ public class GameController {
      * @return      The selectedCharacterFactory ICharacterFactory Object.
      */
     public ICharacterFactory getSelectedCharacterFactory(){
-        return this.selectedCharacterFactory;
+        return selectedCharacterFactory;
     }
 }
 

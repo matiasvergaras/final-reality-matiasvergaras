@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.controller;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,7 +49,7 @@ public class CharacterFactoriesSettingsTest {
         assertEquals(gameController.getSelectedCharacterCurrentMana(), 310/seed);
         assertEquals(gameController.getSelectedCharacterWeight(), 0);
         assertEquals(gameController.getSelectedCharacterPower(), 0);
-        assertNull(gameController.getSelectedCharacterEquippedWeapon());
+        assertEquals(gameController.getSelectedCharacterEquippedWeapon(), new NullWeapon());
     }
 
     /**
@@ -65,7 +66,7 @@ public class CharacterFactoriesSettingsTest {
         assertEquals(gameController.getSelectedCharacterCurrentMana(), 0);
         assertEquals(gameController.getSelectedCharacterWeight(), 0);
         assertEquals(gameController.getSelectedCharacterPower(), 0);
-        assertNull(gameController.getSelectedCharacterEquippedWeapon());
+        assertEquals(gameController.getSelectedCharacterEquippedWeapon(), new NullWeapon());
     }
 
     /**
@@ -82,7 +83,7 @@ public class CharacterFactoriesSettingsTest {
         assertEquals(gameController.getSelectedCharacterCurrentMana(), 0);
         assertEquals(gameController.getSelectedCharacterWeight(), seed);
         assertEquals(gameController.getSelectedCharacterPower(), seed*5);
-        assertNull(gameController.getSelectedCharacterEquippedWeapon());
+        assertEquals(gameController.getSelectedCharacterEquippedWeapon(), new NullWeapon());
     }
 
     /**

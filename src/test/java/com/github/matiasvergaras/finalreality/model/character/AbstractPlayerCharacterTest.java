@@ -2,6 +2,7 @@ package com.github.matiasvergaras.finalreality.model.character;
 
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,8 @@ abstract public class AbstractPlayerCharacterTest extends AbstractCharacterTest 
     protected void checkEquipWeapon() {
         for (var character :
                 testPlayerCharacters) {
-            assertNull(character.getEquippedWeapon(), "Character started equipped, but that is not right.");
+            assertEquals(character.getEquippedWeapon(), new NullWeapon(), "Character started equipped" +
+                    "with something different from a NullWeapon.");
             for (var weapon : testWeapons) {
                 character.equip(weapon);
                 assertEquals(weapon, character.getEquippedWeapon(), "Weapon was not equipped successfully.");
