@@ -15,12 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
  * @since Homework 2
  */
 public class deathNotificationSystemTest {
-    GameController gameController;
+    GameController gc;
     LinkedBlockingQueue<ICharacter> turns;
 
     @BeforeEach
     void setUp() {
-        gameController = new GameController("Narsha",
+        gc = new GameController("Narsha",
                 "Bustoke", 4);
     }
 
@@ -28,42 +28,76 @@ public class deathNotificationSystemTest {
      * Test the case where the cpu wins.
      */
     @Test
-    void cpuWinsTest(){
+    void cpuWinsTest() throws InterruptedException {
         //Create the player party
-        gameController.addThiefToPlayerParty("Lyle");
-        gameController.addEngineerToPlayerParty("Kokichi");
-        gameController.addKnightToPlayerParty("Gong");
-        gameController.addBlackMageToPlayerParty("Nova");
+        gc.addThiefToPlayerParty("Lyle");
+        gc.addEngineerToPlayerParty("Kokichi");
+        gc.addKnightToPlayerParty("Gong");
+        gc.addBlackMageToPlayerParty("Nova");
         //Overflow the party. Just to check again that it is working.
-        gameController.addWhiteMageToPlayerParty("Khris");
+        gc.addWhiteMageToPlayerParty("Khris");
         //Sets the Enemy factory to create powerful characters
-        gameController.setSelectedCharacterFactory(5);
-        gameController.setSelectedCharacterFactoryPower(600);
-        gameController.addEnemyToCPUParty("Mishaela");
-        gameController.addEnemyToCPUParty("Ramladu");
-        assertNull(gameController.getWinner());
-        assertEquals(gameController.getPlayerAliveNumber(), 4);
-        //Force to make some attacks with the first enemy
-        gameController.setSelectedCharacterFromPlayerParty(0);
-        gameController.activeCharacterNormalAttackSelectedCharacter();
-        assertNull(gameController.getWinner());
-        assertEquals(gameController.getPlayerAliveNumber(), 3);
-        //Change to second enemy. Force him to make some attacks.
-        gameController.setSelectedCharacterFromPlayerParty(1);
-        gameController.activeCharacterNormalAttackSelectedCharacter();
-        assertNull(gameController.getWinner());
-        assertEquals(gameController.getPlayerAliveNumber(), 2);
-        gameController.setSelectedCharacterFromPlayerParty(2);
-        gameController.activeCharacterNormalAttackSelectedCharacter();
-        assertNull(gameController.getWinner());
-        assertEquals(gameController.getPlayerAliveNumber(), 1);
-        gameController.setSelectedCharacterFromPlayerParty(3);
-        gameController.activeCharacterNormalAttackSelectedCharacter();
-        assertEquals(gameController.getPlayerAliveNumber(), 0);
-        //Every player character should be dead by now and the controller
-        //should know who is the winner. We ask for it.
-        assertEquals(gameController.getWinner().getName(), gameController.getCPUName());
-        assertTrue(gameController.isFinished());
+        assertEquals(gc.getCharactersQuantity(), gc.getPlayerPartySize());
+        assertEquals(gc.getPlayerParty().get(gc.getPlayerPartySize()-1).getName(), "Nova");
+        //To make sure that enemies will have only deadly attacks.
+        gc.setSelectedCharacterFactory(5);
+        gc.setSelectedCharacterFactoryPower(600);
+        //To make sure that enemies will attack the first.
+        gc.setSelectedCharacterFactoryWeight(7);
+        gc.addEnemyToCPUParty("Mishaela");
+        gc.addEnemyToCPUParty("Ramladu");
+        gc.addEnemyToCPUParty("Balbazak");
+        gc.addEnemyToCPUParty("Hindel");
+        gc.addEnemyToCPUParty("Pyro");
+        assertNull(gc.getWinner());
+        //Check that the aliveNumber of each masterminds corresponds with the number of
+        //added characters.
+        assertEquals(gc.getPlayerAliveNumber(), 4);
+        assertEquals(gc.getCPUAliveNumber(), 5);
+        //Starts the game
+        gc.startGame();
+        //We will check which character is the first one in attack and will save his name.
+        assertTrue(gc.getCPUParty().contains(gc.getActiveCharacter()));
+        String firstCharacterName = gc.getActiveCharacter().getName();
+        //Kills the first player character.
+        gc.setSelectedCharacterFromPlayerParty(0);
+        gc.activeCharacterNormalAttackSelectedCharacter();
+        assertNull(gc.getWinner());
+        assertEquals(gc.getPlayerAliveNumber(), 3);
+        //Now we should be in the turn of the second cpu player.
+        String secondCharacterName = gc.getActiveCharacter().getName();
+        assertTrue(gc.getCPUParty().contains(gc.getActiveCharacter()));
+        assertNotEquals(firstCharacterName, secondCharacterName);
+        //We will make him attack the second player character.
+        gc.setSelectedCharacterFromPlayerParty(1);
+        gc.activeCharacterNormalAttackSelectedCharacter();
+        assertNull(gc.getWinner());
+        assertEquals(gc.getPlayerAliveNumber(), 2);
+        //Now we should be in the turn of the third cpu player.
+        String thirdCharacterName = gc.getActiveCharacter().getName();
+        assertTrue(gc.getCPUParty().contains(gc.getActiveCharacter()));
+        assertNotEquals(secondCharacterName, thirdCharacterName);
+        assertNotEquals(firstCharacterName, thirdCharacterName);
+        //We will make him attack the third player character.
+        gc.setSelectedCharacterFromPlayerParty(2);
+        gc.activeCharacterNormalAttackSelectedCharacter();
+        assertNull(gc.getWinner());
+        assertEquals(gc.getPlayerAliveNumber(), 1);
+        //Now we should be in the turn of the fourth cpu player.
+        String fourthCharacterName = gc.getActiveCharacter().getName();
+        assertTrue(gc.getCPUParty().contains(gc.getActiveCharacter()));
+        assertNotEquals(firstCharacterName, fourthCharacterName);
+        assertNotEquals(secondCharacterName, fourthCharacterName);
+        assertNotEquals(thirdCharacterName, fourthCharacterName);
+        //We will make him attack the fourth (and last) player character.
+        gc.setSelectedCharacterFromPlayerParty(3);
+        gc.activeCharacterNormalAttackSelectedCharacter();
+        assertEquals(gc.getPlayerAliveNumber(), 0);
+        //Every player character should be dead by now. The controller
+        //should know who is the winner, even if there is a CPU Character
+        // in the queue yet. We will ask for it.
+        assertEquals(gc.getWinner().getName(), gc.getCPUName());
+        assertTrue(gc.isFinished());
     }
 
     /**
@@ -72,69 +106,54 @@ public class deathNotificationSystemTest {
     @Test
     void playerWinsTest() throws InterruptedException {
         //Create the player party
-        gameController.addThiefToPlayerParty("Lyle");
-        gameController.addEngineerToPlayerParty("Kokichi");
-        gameController.addEngineerToPlayerParty("Bleu");
-        gameController.addEngineerToPlayerParty("Jogurt");
+        gc.addThiefToPlayerParty("Lyle");
+        gc.addEngineerToPlayerParty("Kokichi");
+        gc.addEngineerToPlayerParty("Bleu");
+        gc.addEngineerToPlayerParty("Jogurt");
         //Sets the bow factory to create powerful bows
-        gameController.setSelectedWeaponFactory(0);
-        gameController.setSelectedWeaponFactoryPower(700);
+        gc.setSelectedWeaponFactory(0);
+        gc.setSelectedWeaponFactoryPower(700);
         //Equips Lyle
-        gameController.setSelectedCharacterFromPlayerParty(0);
-        gameController.addBowToInventory("Bow of Lyle");
-        gameController.setSelectedWeapon(0);
-        gameController.equipSelectedWeaponToSelectedCharacter();
+        gc.setSelectedCharacterFromPlayerParty(0);
+        gc.addBowToInventory("Bow of Lyle");
+        gc.setSelectedWeapon(0);
+        gc.equipSelectedWeaponToSelectedCharacter();
         //Sets Axe factory to create powerful axes
-        gameController.setSelectedWeaponFactory(4);
-        gameController.setSelectedWeaponFactoryPower(700);
+        gc.setSelectedWeaponFactory(4);
+        gc.setSelectedWeaponFactoryPower(700);
         //Equips Kokichi
-        gameController.addAxeToInventory("Axe of Kokichi");
-        gameController.setSelectedCharacterFromPlayerParty(1);
-        gameController.setSelectedWeapon(1);
-        gameController.equipSelectedWeaponToSelectedCharacter();
-        //Create enemy party
-        gameController.addEnemyToCPUParty("Elliot");
-        gameController.addEnemyToCPUParty("Kane");
-        gameController.addEnemyToCPUParty("Darksol");
-        gameController.addEnemyToCPUParty("Chaos");
-        gameController.addEnemyToCPUParty("Dark Dragon");
-        gameController.addEnemyToCPUParty("Balbazak");
-        //Start game. Bypass the waitTurns time.
-        gameController.startGame();
-        Thread.sleep(500);
-        //Force attacks
-        gameController.setSelectedCharacterFromPlayerParty(0);
-        gameController.setSelectedCharacterFromCPUParty(0);
-        assertNull(gameController.getWinner());
-        assertEquals(gameController.getCPUAliveNumber(), 6);
-        gameController.activeCharacterNormalAttackSelectedCharacter();
-        assertNull(gameController.getWinner());
-        assertEquals(gameController.getCPUAliveNumber(), 5);
-        gameController.setSelectedCharacterFromCPUParty(1);
-        gameController.activeCharacterNormalAttackSelectedCharacter();
-        assertNull(gameController.getWinner());
-        assertEquals(gameController.getCPUAliveNumber(), 4);
-        gameController.setSelectedCharacterFromCPUParty(2);
-        gameController.activeCharacterNormalAttackSelectedCharacter();
-        assertNull(gameController.getWinner());
-        assertEquals(gameController.getCPUAliveNumber(), 3);
-        gameController.setSelectedCharacterFromCPUParty(3);
-        //change attacker
-        gameController.setSelectedCharacterFromPlayerParty(1);
-        gameController.activeCharacterNormalAttackSelectedCharacter();
-        assertNull(gameController.getWinner());
-        assertEquals(gameController.getCPUAliveNumber(), 2);
-        gameController.setSelectedCharacterFromCPUParty(4);
-        gameController.activeCharacterNormalAttackSelectedCharacter();
-        assertNull(gameController.getWinner());
-        assertEquals(gameController.getCPUAliveNumber(), 1);
-        gameController.setSelectedCharacterFromCPUParty(5);
-        gameController.activeCharacterNormalAttackSelectedCharacter();
-        assertEquals(gameController.getCPUAliveNumber(), 0);
-        //Every player character should be dead by now and the controller
-        //should know who is the winner. We ask for it.
-        assertEquals(gameController.getWinner().getName(), gameController.getPlayerName());
-        assertTrue(gameController.isFinished());
+        gc.addAxeToInventory("Axe of Kokichi");
+        gc.setSelectedCharacterFromPlayerParty(1);
+        gc.setSelectedWeapon(1);
+        gc.equipSelectedWeaponToSelectedCharacter();
+        //Equips Bleu
+        gc.addAxeToInventory("Axe of Bleu");
+        gc.setSelectedCharacterFromPlayerParty(2);
+        gc.setSelectedWeapon(2);
+        gc.equipSelectedWeaponToSelectedCharacter();
+        //Equips Jogurt
+        gc.addAxeToInventory("Axe of Jogurt");
+        gc.setSelectedCharacterFromPlayerParty(3);
+        gc.setSelectedWeapon(3);
+        gc.equipSelectedWeaponToSelectedCharacter();
+        //Sets up enemy Team.
+        //Config the factory to produce hyper-weighted characters, so we can be
+        //sure that they wont play before the player characters.
+        gc.setSelectedCharacterFactory(5);
+        gc.setSelectedWeaponFactoryWeight(100);
+        gc.addEnemyToCPUParty("Elliot");
+        gc.addEnemyToCPUParty("Ramladu");
+        //Start game
+        gc.startGame();
+        //Kill Elliot
+        gc.setSelectedCharacterFromCPUParty(0);
+        gc.activeCharacterNormalAttackSelectedCharacter();
+        //Kill Ramladu
+        gc.setSelectedCharacterFromCPUParty(1);
+        gc.activeCharacterNormalAttackSelectedCharacter();
+        //Check for game finished status and winner
+        assertTrue(gc.isFinished());
+        assertEquals(gc.getWinner().getName(), gc.getPlayerName());
     }
 
 

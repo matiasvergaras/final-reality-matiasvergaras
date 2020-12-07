@@ -41,7 +41,7 @@ public class InventoryAddTest {
     @Test
     void AddCommonBowTest(){
         gameController.addBowToInventory();
-        Bow sameBow = new Bow("Common Bow", 90, 10);
+        Bow sameBow = new Bow("Common Bow", 110, 10);
         gameController.setSelectedWeapon(gameController.getInventorySize()-1);
         assertEquals(sameBow, gameController.getSelectedWeapon());
     }
@@ -106,7 +106,7 @@ public class InventoryAddTest {
     @Test
     void AddSpecialBowTest(){
         gameController.addBowToInventory("Buster Shot");
-        Bow sameBow = new Bow("Buster Shot", 90, 10);
+        Bow sameBow = new Bow("Buster Shot", 110, 10);
         gameController.setSelectedWeapon(gameController.getInventorySize()-1);
         assertEquals(sameBow, gameController.getSelectedWeapon());
     }

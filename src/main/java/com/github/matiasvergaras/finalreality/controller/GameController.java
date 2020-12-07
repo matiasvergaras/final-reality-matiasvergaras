@@ -218,6 +218,11 @@ public class GameController {
     public void startTurn() throws InterruptedException {
         if(isActive()) {
             activeCharacter = turns.take();
+            /*
+             * for the next homeworks:
+             * if cpuParty contains activeCharacter : ( ... random attack ... )
+             * if playerParty contains activeCharacter : ( ... wait for action ... )
+             */
         }
     }
 
@@ -590,26 +595,39 @@ public class GameController {
      * Launch the equipping process of the selectedWeapon to the SelectedCharacter.
      * <p> In case of a bad index, the method will catch and ignore the error, and
      * no weapon will be equipped. </p>
+     * <p> This method will be available only in Initializing and Active mode.
+     * In order to use after played a game, it will be necessary to send initializeGame()
+     * message again.</p>
      */
     public void equipSelectedWeaponToSelectedCharacter(){
-                IPlayerCharacter character = (IPlayerCharacter)this.selectedCharacter;
-                player.equipCharacter(selectedWeapon, character);
+        if(!isFinished()) {
+            IPlayerCharacter character = (IPlayerCharacter) this.selectedCharacter;
+            player.equipCharacter(selectedWeapon, character);
+        }
     }
 
     /**
      * Unequip the SelectedCharacter.
      * If the SelectedCharacter is not in the Player's party,
      * it will have no effect.
+     * <p> This method will be available only in Initializing and Active mode.
+     * In order to use after played a game, it will be necessary to send initializeGame()
+     * message again.</p>
      */
     public void unequipSelectedCharacter(){
-        player.unequipCharacter((IPlayerCharacter)selectedCharacter);
-
+        if(!isFinished()) {
+            player.unequipCharacter((IPlayerCharacter) selectedCharacter);
+        }
     }
 
     /**
      * Removes the selectedCharacter from its party.
-     * <p> Note that there will never have a character on both parties, as they receive different types. </p>
+     * <p> Note that there will never have a character on both parties, as Controller does not have
+     * methods to make wrong adds. </p>
      * <p> The method removes the character if it is present in any of the teams, and do nothing otherwise. </p>
+     * <p> This method will be available only in Initializing and Active mode.
+     * In order to use after played a game, it will be necessary to send initializeGame()
+     * message again.</p>
      */
     public void removeSelectedCharacterFromItsParty(){
         player.removeFromParty(selectedCharacter);
@@ -619,6 +637,9 @@ public class GameController {
 
     /**
      * Removes the selectedWeapon from the userPlayer inventory and sets the selectedWeapon as the NullWeapon.
+     * <p> This method will be available only in Initializing and Active mode.
+     * In order to use after played a game, it will be necessary to send initializeGame()
+     * message again.</p>
      */
     public void removeSelectedWeaponFromInventory(){
         player.removeFromInventory(selectedWeapon);
@@ -634,6 +655,7 @@ public class GameController {
      * <p> If so, it sends the attack message in the corresponding direction. Otherwise, it has no effect.</p>
      * <p> In this way, the if's fulfill a double function: they ensure that the attacking and receiving characters
      * are in the game (to avoid bugs) and at the same time they avoid attacks between the same team. </p>
+     * <p> This method will be available only in Active mode. </p>
      */
     public void activeCharacterNormalAttackSelectedCharacter(){
         if(isActive()){
