@@ -1,12 +1,10 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Class to test that the SetSelectedWeaponFactory{Attribute} methods works properly.
@@ -69,7 +67,8 @@ public class WeaponFactoriesSettingsTest {
      */
     @BeforeEach
     void setUp(){
-        gameController = new GameController("Foreman", 3);
+        gameController = new GameController("Foreman",
+                "Urabantol", 3);
     }
 
 

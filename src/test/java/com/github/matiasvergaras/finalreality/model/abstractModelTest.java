@@ -18,9 +18,10 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * Class to test all model features.
+ * Class to hold all the common features for model testing.
  * Set ups the basics for every model tests.
  * @author Matias Vergara Silva.
+ * @since Homework 1
  */
 public abstract class abstractModelTest {
 

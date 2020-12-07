@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.Mastermind;
 
 import com.github.matiasvergaras.finalreality.controller.DeathCharacterToMMHandler;
+import com.github.matiasvergaras.finalreality.controller.EndTurnCharacterToMMHandler;
 import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
@@ -17,7 +18,10 @@ public abstract class AbstractMastermind implements  IMastermind{
     protected ArrayList<ICharacter> party;
     protected String name;
     protected PropertyChangeSupport deadCharacter = new PropertyChangeSupport(this);
+    protected PropertyChangeSupport endTurn = new PropertyChangeSupport(this);
+
     protected DeathCharacterToMMHandler deadCharacterHandler = new DeathCharacterToMMHandler(this);
+    protected EndTurnCharacterToMMHandler endTurnHandler = new EndTurnCharacterToMMHandler(this);
     protected int aliveCharacters;
 
     /**
@@ -28,13 +32,9 @@ public abstract class AbstractMastermind implements  IMastermind{
         this.party = new ArrayList<ICharacter>();
     }
 
-    @Override
-    public CharacterAttributeSet getCharacterAttributes(ICharacter character){
-        return character.getAttributes();
-    }
-
     /**
-     * Adds a character to the Mastermind's Party.
+     * Adds a character to the Mastermind's Party and calls to
+     * his waitTurn method.
      * @param character     The ICharacter character to be added.
      */
     @Override
@@ -42,6 +42,8 @@ public abstract class AbstractMastermind implements  IMastermind{
         this.aliveCharacters++;
         this.getParty().add(character);
         character.getDeadCharacter().addPropertyChangeListener(deadCharacterHandler);
+        character.getEndTurn().addPropertyChangeListener(endTurnHandler);
+
     }
 
     /**
@@ -118,11 +120,21 @@ public abstract class AbstractMastermind implements  IMastermind{
     /**
      * Alerts the gameController that a character died.
      */
-    public void deadCharacter(){
+    public void deadCharacter(ICharacter character){
         this.aliveCharacters--;
-        deadCharacter.firePropertyChange(new PropertyChangeEvent(this, this.name,
+        deadCharacter.firePropertyChange(new PropertyChangeEvent(character, "aliveCharacters Changed",
                 aliveCharacters+1, aliveCharacters));
     }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public void endTurn(){
+        endTurn.firePropertyChange(new PropertyChangeEvent( this, "Active character ended his turn",
+                "Active", "Inactive"));
+    }
+
 
     /**
      *
@@ -130,5 +142,15 @@ public abstract class AbstractMastermind implements  IMastermind{
      */
     public PropertyChangeSupport getDeadCharacter(){
         return deadCharacter;
+    }
+
+
+
+    /**
+     *
+     * @return propertyChangeSupport of Character's death, in order to be able to use it outside of this class.
+     */
+    public PropertyChangeSupport getEndTurn(){
+        return endTurn;
     }
 }

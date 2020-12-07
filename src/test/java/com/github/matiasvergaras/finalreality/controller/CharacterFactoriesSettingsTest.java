@@ -1,8 +1,6 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -92,7 +90,7 @@ public class CharacterFactoriesSettingsTest {
      */
     @BeforeEach
     void setUp(){
-        gameController = new GameController("Cuddy", 4);
+        gameController = new GameController("Cuddy", "Metapha", 4);
     }
 
     /**

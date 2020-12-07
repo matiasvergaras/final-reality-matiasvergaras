@@ -23,7 +23,10 @@ public abstract class AbstractCharacter implements ICharacter {
     private int currentHP;
     private final int DP;
     protected ScheduledExecutorService scheduledExecutor;
-    private PropertyChangeSupport deadCharacter = new PropertyChangeSupport(this);
+    private PropertyChangeSupport
+            deadCharacter = new PropertyChangeSupport(this),
+            endTurn = new PropertyChangeSupport(this);
+
 
 
     /**
@@ -45,12 +48,20 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     /**
-     *
-     * @return propertyChangeSupport of Character's death,
-     * in order to be able to assign listeners to it outside of this class.
+     * {@inheritDoc}
+     * @return PropertyChangeSupport characterDeath
      */
     public PropertyChangeSupport getDeadCharacter(){
         return deadCharacter;
+    }
+
+
+    /**
+     *{@inheritDoc}
+     * @return PropertyChangeSupport endTurn
+     */
+    public PropertyChangeSupport getEndTurn(){
+        return endTurn;
     }
 
 
@@ -61,6 +72,8 @@ public abstract class AbstractCharacter implements ICharacter {
     public void normalAttack(ICharacter character) {
         if (character.isAlive() && this.isAlive()) {
             character.receiveNormalAttack(this);
+            endTurn.firePropertyChange(new PropertyChangeEvent(this,
+                    "Turn ended", "Waiting for action", "Attack performed"));
         }
     }
 
@@ -74,7 +87,9 @@ public abstract class AbstractCharacter implements ICharacter {
         }
     }
 
-
+    /**
+     * Adds this character to the turnsQueue and shuts down the scheduled executor.
+     */
     protected void addToQueue() {
         turnsQueue.add(this);
         scheduledExecutor.shutdown();

@@ -16,7 +16,6 @@ import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -31,35 +30,37 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author Matías Vergara Silva
  */
 public class GameController {
-    private static GameController uniqueInstance;
     private LinkedBlockingQueue<ICharacter> turns;
-    private int charactersQuantity;
-    private String playerName;
     private AxeFactory axeFactory = new AxeFactory("Common Axe", 120, 13);
     private BowFactory bowFactory = new BowFactory("Common Bow", 90, 10);
     private KnifeFactory knifeFactory = new KnifeFactory("Common Knife",100, 9);
     private StaffFactory staffFactory = new StaffFactory("Common Staff", 10, 11, 120);
     private SwordFactory swordFactory = new SwordFactory("Common Sword", 110, 11);
+
     private EngineerFactory engineerFactory = new EngineerFactory(turns, 125, 70);
     private KnightFactory knightFactory = new KnightFactory(turns, 180, 100);
     private ThiefFactory thiefFactory = new ThiefFactory(turns,90, 50);
     private BlackMageFactory blackMageFactory = new BlackMageFactory(turns, 120, 40, 200);
     private WhiteMageFactory whiteMageFactory = new WhiteMageFactory(turns, 120, 30, 200);
     private EnemyFactory enemyFactory = new EnemyFactory(turns, 130, 100, 12, 100);
+
     private PlayerMastermind player;
     private CPUMastermind cpu;
+
     private ICharacter selectedCharacter;
     private ICharacter attackTarget;
     private IWeapon selectedWeapon;
     private ICharacterFactory selectedCharacterFactory;
     private IWeaponFactory selectedWeaponFactory;
+
+    private ICharacter activeCharacter;
+    private IMastermind turnOwner;
+    private IMastermind winner;
+
     private ArrayList<ICharacterFactory> characterFactories = new ArrayList<>();
     private ArrayList<IWeaponFactory> weaponFactories = new ArrayList<>();
-    private IMastermind winner;
-    private PropertyChangeSupport
-            deadCPUCharacter = new PropertyChangeSupport(this),
-            deadPlayerCharacter = new PropertyChangeSupport(this);
-    private boolean gameEnded;
+
+    private boolean gameIsActive;
     private DeathMMToGCHandler deadCharacterHandler = new DeathMMToGCHandler(this);
 
 
@@ -68,10 +69,10 @@ public class GameController {
      * Real constructor of the GameController.
      * Private to prevent access bypassing the UniqueInstance.
      */
-    public GameController(String playerName, int charactersQuantity){
+    public GameController(String playerName, String CPUName, int charactersQuantity){
         this.turns = new LinkedBlockingQueue<>();
         this.player = new PlayerMastermind(playerName, charactersQuantity);
-        this.cpu = new CPUMastermind("CPU");
+        this.cpu = new CPUMastermind(CPUName);
         this.player.getDeadCharacter().addPropertyChangeListener(deadCharacterHandler);
         this.cpu.getDeadCharacter().addPropertyChangeListener(deadCharacterHandler);
         characterFactories.add(engineerFactory);
@@ -88,29 +89,89 @@ public class GameController {
         this.selectedCharacterFactory = null;
         this.selectedWeaponFactory = null;
         this.selectedCharacter = null;
+        this.activeCharacter = null;
         this.selectedWeapon = null;
         this.attackTarget = null;
         this.winner = null;
-        this.gameEnded = false;
+        this.gameIsActive = false;
     }
 
     /**
-     * A method to remove a Character from the queue.
-     * <p> It identifies the character by its name. This is why is so important
-     * to respect the condition of unique names, even for the CPU Characters. </p>
-     * @param name      The name of the character to be removed.
+     *
      */
-    public void removeCharacterFromQueue(String name, int charactersAlive){
-        turns.removeIf(c -> c.getAttributes().getName().equals(name));
-        checkForWinner(charactersAlive);
+    public void endTurn(){
+        activeCharacter = turns.poll();
+        selectedCharacter = activeCharacter;
     }
 
-    private void checkForWinner(int charactersAlive){
-        if (charactersAlive==0){
-            winner = ((charactersAlive == cpu.getAliveCharacters()) ? cpu : player);
-        }
+    /**
+     * This method receives a character (that should be dead) and the number of characters
+     * remaining in his team after his death. It removes the dead character from the turns
+     * queue, and if the remaining characters are 0, it calls to checkForWinner.
+     * @param deadCharacter     The character to remove from queue
+     * @param charactersAlive   The number of remaining characters in the dead character's team.
+     */
+    public void removeCharacterFromQueue(ICharacter deadCharacter, int charactersAlive){
+        turns.removeIf(c -> c==deadCharacter);
+        if(charactersAlive==0) setWinner();
+
     }
 
+
+    /**
+     * <p> Check which team was left without alive characters after the last death and assign
+     * the winner to the opposing player.</p>>
+     * <p> It will be private in order to make sure that it will be called only
+     * when some team has every member dead, condition trapped by removeCharacterFromQueue. </p>
+     */
+    private void setWinner(){
+            winner = ((0 == getCPUAliveNumber()) ? player : cpu);
+            endGame();
+    }
+
+    /**
+     * Ends this game by making the gameEnded variable true.
+     * <p> Private to avoid calls  that does not come from checkForWinner method. </p>
+     */
+    private void endGame(){
+        gameIsActive = false;
+    }
+
+    /**
+     * Returns the winner of the game.
+     * <p> 3 Possible values: null if the game is still in progress,
+     * player, cpu.</p>
+     * @return  IMastermind winner.
+     */
+    public IMastermind getWinner(){
+        return winner;
+    }
+
+    /**
+     * Returns the status of the game.
+     * <p> True if game is active (Characters can fight) </p>
+     * <p> False if game is inactive (Game ended / </p>
+     * @return      boolean gameEnded.
+     */
+    public boolean getGameState(){
+        return gameIsActive;
+    }
+
+    /**
+     * Returns the number of alive characters in the player party.
+     * @return      int AliveCharacters from player.
+     */
+    public int getPlayerAliveNumber(){
+        return player.getAliveCharacters();
+    }
+
+    /**
+     * Returns the number of alive characters in the cpu party.
+     * @return      int AliveCharacters from cpu.
+     */
+    public int getCPUAliveNumber(){
+        return cpu.getAliveCharacters();
+    }
     /**
      * Getter for Character Quantity of this GameController.
      * @return      int CharactersQuantity.
@@ -134,6 +195,13 @@ public class GameController {
         return player.getParty();
     }
 
+    /**
+     * Gives the CPU Name.
+     * @return  String CPUName
+     */
+    public String getCPUName(){
+        return cpu.getName();
+    }
     /**
      * Gives the cpu party.
      */
@@ -165,10 +233,9 @@ public class GameController {
         return player.getInventorySize();
     }
 
-
     /**
-     * Request a new BlackMage character to the corresponding factory and add it to the User's party if there is still
-     * space left.
+     * Request a new BlackMage character to the corresponding factory and tries to add it to the User's party
+     * by calling to addToParty method.
      * <p> the character will have the default parameters, which can be modified using the set methods </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
@@ -178,8 +245,8 @@ public class GameController {
     }
 
     /**
-     * Request a new WhiteMage character to the corresponding factory and add it to the User's party if there is still
-     * space left.
+     * Request a new WhiteMage character to the corresponding factory and tries to add it to the User's party
+     * by calling to addToParty method.
      * <p> the character will have the default parameters, which can be modified using the set methods. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
@@ -189,8 +256,8 @@ public class GameController {
     }
 
     /**
-     * Request a new Engineer character to the corresponding factory and add it to the User's party if there is still
-     * space left.
+     * Request a new Engineer character to the corresponding factory and tries to add it to the User's party
+     * by calling to addToParty method.
      * <p> the character will have the default parameters, which can be modified using the set methods. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
@@ -200,8 +267,8 @@ public class GameController {
     }
 
     /**
-     * Request a new Thief character to the corresponding factory and add it to the User's party if there is still
-     * space left.
+     * Request a new Thief character to the corresponding factory and tries to add it to the User's party
+     * by calling to addToParty method.
      * <p> the character will have the default parameters, which can be modified using the set methods. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
@@ -211,8 +278,8 @@ public class GameController {
     }
 
     /**
-     * Request a new Knight character to the corresponding factory and add it to the User's party if there is still
-     * space left.
+     * Request a new Knight character to the corresponding factory and and tries to add it to the User's party
+     * by calling to addToParty method.
      * <p> the character will have the default parameters, which can be modified using the set methods. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
@@ -338,84 +405,95 @@ public class GameController {
      * @param index     The position of the weapon that will be selected in the userPlayer Inventory.
      */
     public void setSelectedWeapon(int index){
-        if(index < player.getInventorySize()) {
+        try{
             this.selectedWeapon = player.getInventory().get(index);
         }
+        catch(IndexOutOfBoundsException ignored){
+        }
+
     }
 
     /**
      * Sets the SelectedCharacter at a Character in the userPlayer party, given an index representing its position
      * at the party.
-     * <p> The method checks if the index is in the range (0, size of user Player Party), in order to avoid
-     * IndexError's. </p>
+     * <p> In case of a bad index, the method will catch and ignore the error, and keep the
+     * initial selectedCharacter. </p>
      * @param index     The position of the character that will be selected in the userPlayer Party.
      */
     public void setSelectedCharacterFromPlayerParty(int index){
-        if(index < player.getPartySize()){
+        try{
             this.selectedCharacter = player.getCharacterFromParty(index);
+        }
+        catch(IndexOutOfBoundsException ignored){
         }
     }
 
     /**
      * Sets the SelectedCharacter at a Character in the cpuPlayer party, given an index representing its position
      * at the party.
-     * <p> The method checks if the index is in the range (0, size of cpu Player Party), in order to avoid
-     * IndexError's. </p>
+     * <p> In case of a bad index, the method will catch and ignore the error, and keep the
+     * initial selectedCharacter. </p>
      * @param index     The position of the character that will be selected in the cpuPlayer Party.
      */
     public void setSelectedCharacterFromCPUParty(int index){
-        if(index < cpu.getPartySize()){
+        try{
             this.selectedCharacter = cpu.getParty().get(index);
+        }
+        catch(IndexOutOfBoundsException ignored){
         }
     }
 
     /**
      * Sets the attackTarget at a Character in the userPlayer party, given an index representing its position
      * at the party.
-     * <p> The method checks if the index is in the range (0, size of user Player Party), in order to avoid
-     * IndexError's. </p>
+     * <p> In case of a bad index, the method will catch and ignore the error, and keep the
+     * initial attackTarget. </p>
      * @param index     The position of the character that will be targeted in the userPlayer Party.
      */
     public void setAttackTargetFromPlayerParty(int index){
-        if(index < player.getPartySize()){
+        try{
             this.attackTarget= player.getCharacterFromParty(index);
+        }
+        catch(IndexOutOfBoundsException ignored){
         }
     }
 
     /**
      * Sets the attackTarget at a Character in the cpuPlayer party, given an index representing its position
      * at the party.
-     * <p> The method checks if the index is in the range (0, size of cpu Player Party), in order to avoid
-     * IndexError's. </p>
+     * <p> In case of a bad index, the method will catch and ignore the error, and keep the
+     * initial attackTarget. </p>
      * @param index     The position of the character that will be selected in the cpuPlayer Party.
      */
     public void setAttackTargetFromCPUParty(int index){
-        if(index < cpu.getPartySize()){
+        try{
             this.attackTarget = cpu.getParty().get(index);
+        }
+        catch(IndexOutOfBoundsException ignored){
         }
     }
 
     /**
      * Launch the equipping process of the selectedWeapon to the SelectedCharacter.
-     * <p> The method checks if the SelectedCharacter is in the PlayerParty since if not it will be an CPUCharacter,
-     * who cannot equip weapons. </p>
+     * <p> In case of a bad index, the method will catch and ignore the error, and
+     * no weapon will be equipped. </p>
      */
     public void equipSelectedWeaponToSelectedCharacter(){
-        if(player.getParty().contains(selectedCharacter)){
+        try{
             IPlayerCharacter character = (IPlayerCharacter)this.selectedCharacter;
             player.equipCharacter(selectedWeapon, character);
+        }
+        catch(IndexOutOfBoundsException ignored){
         }
     }
 
     /**
      * Unequip the SelectedCharacter.
-     * <p> The method checks if the SelectedCharacter is in the PlayerParty since if not it will be an CPUCharacter,
-     * who cannot equip weapons. </p>
+     * If the SelectedCharacter is not in the Player's party,
+     * it will have no effect.
      */
     public void unequipSelectedCharacter(){
-        if (player.getParty().contains(selectedCharacter)) {
-            player.unequipCharacter((IPlayerCharacter)selectedCharacter);
-        }
+        player.unequipCharacter((IPlayerCharacter)selectedCharacter);
     }
 
     /**
@@ -547,23 +625,29 @@ public class GameController {
 
     /**
      * Change the current SelectedWeaponFactory to the one in weaponFactories at the given index.
-     * <p> The methods checks if the index is in the range of the weaponFactories list, to avoid indexError's. </p>
+     * <p> In case of a bad index, the method will catch and ignore the error, and keep the
+     * initial selectedWeapon. </p>
      * @param index     The position of the new SelectedWeaponFactory in weaponFactories
      */
     public void setSelectedWeaponFactory(int index){
-        if(index < weaponFactories.size()){
+        try{
             this.selectedWeaponFactory = weaponFactories.get(index);
+        }
+        catch(IndexOutOfBoundsException ignored){
         }
     }
 
     /**
      * Change the current SelectedCharacterFactory to the one in CharacterFactories at the given index.
-     * <p> The methods checks if the index is in the range of the weaponFactories list, to avoid indexError's. </p>
+     * <p> In case of a bad index, the method will catch and ignore the error, and keep the
+     * initial selectedCharacterFactory. </p>
      * @param index     The position of the new SelectedCharacterFactory in CharacterFactories
      */
     public void setSelectedCharacterFactory(int index){
-        if(index < characterFactories.size()){
+        try{
             this.selectedCharacterFactory = characterFactories.get(index);
+        }
+        catch(IndexOutOfBoundsException ignored){
         }
     }
 
@@ -719,7 +803,5 @@ public class GameController {
     public ICharacterFactory getSelectedCharacterFactory(){
         return this.selectedCharacterFactory;
     }
-
-
 }
 

@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,19 @@ abstract public class AbstractPlayerCharacterTest extends AbstractCharacterTest 
                 assertEquals(weapon, character.getEquippedWeapon(), "Weapon was not equipped successfully.");
             }
         }
+    }
+
+    /**
+     * Checks that the AttackPower attribute is calculated correctly:
+     * It has to start at 0 if the playerCharacter does not have a weapon,
+     * and be equal to the weapon power if the character is equipped.
+     * @param character         The character to test
+     * @param weapon            The weapon to equip
+     */
+    protected void checkGetAttackPower(IPlayerCharacter character, IWeapon weapon){
+        assertEquals(character.getAttackPower(), 0);
+        character.equipWeapon(weapon);
+        assertEquals(character.getAttackPower(), weapon.getPower());
     }
 
 

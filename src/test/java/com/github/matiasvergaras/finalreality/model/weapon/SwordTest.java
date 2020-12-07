@@ -28,7 +28,9 @@ public class SwordTest extends AbstractWeaponTest {
         exampleThief.equipWeapon(exampleSword);
         checkConstruction(new Sword(SWORD_NAME, DAMAGE, WEIGHT),
                 exampleThief.getEquippedWeapon(),
-                new Sword(SWORD_NAME, DAMAGE * 2, WEIGHT),
+                new Sword("Another", DAMAGE, WEIGHT),
+                new Sword(SWORD_NAME, DAMAGE, WEIGHT*2),
+                new Sword(SWORD_NAME, DAMAGE*2, WEIGHT),
                 new Knife(KNIFE_NAME, DAMAGE, WEIGHT));
     }
 

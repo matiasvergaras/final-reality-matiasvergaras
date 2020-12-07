@@ -1,9 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.Mastermind;
 
-import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
-
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**

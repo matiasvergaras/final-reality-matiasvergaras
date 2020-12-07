@@ -88,8 +88,20 @@ public interface ICharacter {
      */
     CharacterAttributeSet getAttributes();
 
-    PropertyChangeSupport getDeadCharacter();
+    /**
+     * Gives the PropertyChangeSupport of Character's death,
+     * in order to be able to assign listeners to it outside of this class.
+     * @return propertyChangeSupport deadCharacter.
+     */
+    public PropertyChangeSupport getDeadCharacter();
 
+
+    /**
+     * Gives the PropertyChangeSupport of the end of character's turn,
+     * in order to be able to assign listeners to it outside of this class.
+     * @return propertyChangeSupport endTurn
+     */
+    public PropertyChangeSupport getEndTurn();
 
 }
 

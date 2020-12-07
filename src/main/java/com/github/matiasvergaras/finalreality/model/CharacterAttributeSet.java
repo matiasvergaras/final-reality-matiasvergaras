@@ -18,14 +18,14 @@ import java.util.Objects;
  */
 public class CharacterAttributeSet {
     private String name;
-    private int maxHP = 0;
-    private int currentHP = 0;
-    private int DP = 0;
-    private int maxMana = 0;
-    private int currentMana = 0;
-    private int weight = 0;
-    private int power = 0;
-    IWeapon equippedWeapon = null;
+    private int maxHP;
+    private int currentHP;
+    private int DP;
+    private int maxMana;
+    private int currentMana;
+    private int weight;
+    private int power;
+    IWeapon equippedWeapon;
 
     /**
      * Constructor of an AttributeSet for a normal character.
@@ -36,6 +36,9 @@ public class CharacterAttributeSet {
         this.currentHP = currentHP;
         this.DP = DP;
         this.equippedWeapon = equippedWeapon;
+        this.maxMana = 0; this.currentMana = 0;
+        this.weight = 0; this.power = 0;
+        this.equippedWeapon = null;
     }
 
     /**
@@ -49,6 +52,7 @@ public class CharacterAttributeSet {
         this.maxMana = maxMana;
         this.currentMana = currentMana;
         this.equippedWeapon = equippedWeapon;
+        this.weight = 0; this.power = 0;
     }
 
     /**
@@ -61,6 +65,8 @@ public class CharacterAttributeSet {
         this.DP = DP;
         this.weight = weight;
         this.power = power;
+        this.maxMana = 0; this.currentMana = 0;
+        this.equippedWeapon = null;
     }
 
     /**
@@ -137,7 +143,8 @@ public class CharacterAttributeSet {
 
     /**
      * Check if this is equal to a given object o.
-     *
+     * <p> Since a characterAttributeSet is always linked to its character and
+     * characters are identified by its name, it is enough to check for that condition. </p>
      * @param o The target object
      * @return True if are equals, false otherwise
      */
@@ -146,14 +153,7 @@ public class CharacterAttributeSet {
         if (this == o) return true;
         if (!(o instanceof CharacterAttributeSet)) return false;
         CharacterAttributeSet that = (CharacterAttributeSet) o;
-        return this.getName().equals(that.getName()) &&
-                this.getMaxHP() == that.getMaxHP() &&
-                this.getCurrentHP() == that.getCurrentHP() &&
-                this.getDP() == that.getDP() &&
-                this.getMaxMana() == that.getMaxMana() &&
-                this.getCurrentMana() == that.getCurrentMana() &&
-                this.getWeight() == that.getWeight() &&
-                this.getPower() == that.getPower();
+        return this.getName().equals(that.getName());
     }
 
     /**
@@ -164,10 +164,7 @@ public class CharacterAttributeSet {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(), this.getMaxHP(), this.getCurrentHP(),
-                this.getDP(), this.getMaxMana(), this.getCurrentMana(),
-                this.getWeight(), this.getPower());
+        return Objects.hash(this.getName());
     }
-
 
 }

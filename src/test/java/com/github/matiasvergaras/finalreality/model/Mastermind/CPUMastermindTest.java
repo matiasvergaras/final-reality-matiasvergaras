@@ -3,6 +3,11 @@ package com.github.matiasvergaras.finalreality.model.Mastermind;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Class to test a CPUMastermind.
+ * @author Matías Vergara Silva
+ * @since Homework 2
+ */
 public class CPUMastermindTest extends AbstractMastermindTest {
 
     /**

@@ -24,7 +24,8 @@ public class RemoveTest {
     @BeforeEach
     void setUp(){
         turns = new LinkedBlockingQueue<>();
-        gameController = new GameController("Cuddy", 8);
+        gameController = new GameController("Cuddy",
+                "Tower of The Ancients",8);
     }
 
     /**

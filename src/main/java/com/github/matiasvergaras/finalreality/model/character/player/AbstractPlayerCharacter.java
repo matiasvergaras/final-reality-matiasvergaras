@@ -51,14 +51,6 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
 
 
     /**
-     * Property Change Support to observe the eventual death of a Player character
-     * @return Property Change Support to DeathPlayerCharacter
-     */
-    public PropertyChangeSupport deathCharacter(){
-        return this.deadCharacter;
-    }
-
-    /**
      * {@inheritDoc}
      *
      * @param weapon The weapon to equip.

@@ -1,6 +1,5 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.controller.GameController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +21,7 @@ public class attackTest {
      */
     @BeforeEach
     void setUp() {
-        gameController = new GameController("Lisa", 6);
+        gameController = new GameController("Lisa", "Runefaust", 6);
     }
 
     /**
@@ -47,7 +46,7 @@ public class attackTest {
         //First we make sure that the enemy is alive before getting attacked
         assertTrue(gameController.getAttackTargetCharacter().isAlive());
         //Send attack message
-        gameController.selectedCharacterNormalAttackTarget();;
+        gameController.selectedCharacterNormalAttackTarget();
         //Check that the enemy died.
         assertFalse(gameController.getAttackTargetCharacter().isAlive());
         //Send the unequip message and check that it is correctly done.

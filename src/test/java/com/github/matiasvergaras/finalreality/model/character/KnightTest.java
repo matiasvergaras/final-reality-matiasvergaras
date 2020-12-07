@@ -71,5 +71,13 @@ class KnightTest extends AbstractPlayerCharacterTest {
         super.checkGetCurrentHP(exampleKnight, HP);
     }
 
+    /**
+     * Checks that the attack power attribute is calculated correctly.
+     */
+    @Test
+    void attackPowerTest(){
+        checkGetAttackPower(exampleKnight, exampleSword);
+    }
+
 
 }

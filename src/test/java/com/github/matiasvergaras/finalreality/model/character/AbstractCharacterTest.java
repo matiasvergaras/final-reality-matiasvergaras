@@ -69,6 +69,7 @@ public abstract class AbstractCharacterTest extends abstractModelTest {
                                      final ICharacter sameClassDifferentCharacter,
                                      final ICharacter differentClassDifferentName,
                                      final ICharacter differentClassSameName) {
+        assertEquals(expectedCharacter, expectedCharacter);
         assertEquals(expectedCharacter, testEqualCharacter, "ExpectedCharacter differs from EqualCharacter.");
         assertNotEquals(sameClassDifferentCharacter, testEqualCharacter, "sameClassDifferentCharacter is" +
                 " equal to EqualCharacter.");

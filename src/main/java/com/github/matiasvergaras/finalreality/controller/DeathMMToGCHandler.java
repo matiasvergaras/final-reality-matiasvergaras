@@ -1,15 +1,18 @@
 package com.github.matiasvergaras.finalreality.controller;
 
 
+import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeListenerProxy;
 
 /**
  * PropertyChangeListener.
  * <p> This class implements a Handler of a Character Death. </p>
  * <p> His mission is to look for Mastermind's 'characterDead' message, and
  * notify it to the GameController. </p>
+ * @author Matías Vergara Silva
+ * @since Homework 2
  */
 public class DeathMMToGCHandler implements PropertyChangeListener{
     private GameController controller;
@@ -39,6 +42,6 @@ public class DeathMMToGCHandler implements PropertyChangeListener{
      */
     @Override
     public void propertyChange(final PropertyChangeEvent event) {
-        controller.removeCharacterFromQueue(event.getPropertyName(), (Integer) event.getNewValue());
+        controller.removeCharacterFromQueue((ICharacter) event.getSource(), (Integer) event.getNewValue());
     }
 }

@@ -1,6 +1,5 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.normal.Axe;
@@ -30,7 +29,7 @@ public class InventoryAddTest {
     @BeforeEach
     void setUp(){
         turns = new LinkedBlockingQueue<>();
-        gameController = new GameController("Greg", 9);
+        gameController = new GameController("Greg", "Guardiana", 9);
     }
 
     /**

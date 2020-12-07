@@ -1,6 +1,5 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
 import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
@@ -31,7 +30,7 @@ public class PlayerPartyTest {
     @BeforeEach
     void setUp(){
         turns = new LinkedBlockingQueue<>();
-        gameController = new GameController("Max", 9);
+        gameController = new GameController("Max", "Waral",9);
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
 import org.junit.jupiter.api.AfterEach;
@@ -13,6 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Class to test the Controller methods to add characters to the CPUParty.
+ * @author Matías Vergara Silva
+ * @since Homework 2
  */
 public class CPUPartyTest {
     private GameController gameController;
@@ -24,7 +25,7 @@ public class CPUPartyTest {
     @BeforeEach
     void setUp() {
         turns = new LinkedBlockingQueue<>();
-        gameController = new GameController("Chase", 5);
+        gameController = new GameController("Chase", "Alterone", 5);
 
     }
 

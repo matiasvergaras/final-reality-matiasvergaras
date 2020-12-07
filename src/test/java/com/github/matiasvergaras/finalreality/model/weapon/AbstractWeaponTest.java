@@ -28,15 +28,24 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
      */
     protected void checkConstruction(final IWeapon expectedWeapon,
                                      final IWeapon testEqualWeapon,
-                                     final IWeapon sameClassDifferentWeapon,
-                                     final IWeapon differentWeapon) {
+                                     final IWeapon sameClassDifferentName,
+                                     final IWeapon sameClassDifferentWeight,
+                                     final IWeapon sameClassDifferentPower,
+                                     final IWeapon differentClass) {
+        assertEquals(expectedWeapon, expectedWeapon);
         assertEquals(expectedWeapon, testEqualWeapon, "expectedWeapon differs from EqualWeapon.");
-        assertNotEquals(sameClassDifferentWeapon, testEqualWeapon, "sameClassDifferentWeapon equals EqualWeapon.");
-        assertNotEquals(testEqualWeapon, differentWeapon, "EqualWeapon equals differentWeapon.");
-        assertEquals(expectedWeapon.hashCode(), testEqualWeapon.hashCode(), "expectedWeapon hashcode differs" +
-                "from EqualWeapon hashcode.");
-        assertNotEquals(expectedWeapon.hashCode(), differentWeapon.hashCode(), "expectedWeapon hashcode " +
-                "equals differentWeapon hashcode.");
+        assertNotEquals(sameClassDifferentName, expectedWeapon);
+        assertNotEquals(sameClassDifferentWeight, expectedWeapon);
+        assertNotEquals(sameClassDifferentPower, expectedWeapon);
+        assertNotEquals(testEqualWeapon, differentClass);
+        assertEquals(expectedWeapon.hashCode(), testEqualWeapon.hashCode());
+        assertNotEquals(expectedWeapon.hashCode(), sameClassDifferentName.hashCode());
+        assertNotEquals(expectedWeapon.hashCode(), sameClassDifferentWeight.hashCode());
+        assertNotEquals(expectedWeapon.hashCode(), sameClassDifferentPower.hashCode());
+        assertNotEquals(expectedWeapon.hashCode(), differentClass.hashCode());
+
+
+
 
     }
 

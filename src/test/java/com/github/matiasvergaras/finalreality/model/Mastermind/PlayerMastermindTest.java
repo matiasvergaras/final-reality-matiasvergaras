@@ -10,6 +10,11 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Class to test a PlayerMastermind.
+ * @author Matías Vergara Silva
+ * @since Homework 2
+ */
 public class PlayerMastermindTest extends AbstractMastermindTest{
 
     /**

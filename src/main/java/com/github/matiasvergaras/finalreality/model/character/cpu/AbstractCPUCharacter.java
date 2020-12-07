@@ -54,14 +54,6 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
     }
 
     /**
-     * Property Change Support to observe the eventual death of a CPU character
-     * @return Property Change Support to DeathPlayerCharacter
-     */
-    public PropertyChangeSupport deathCharacter(){
-        return this.deadCharacter;
-    }
-
-    /**
      * Get the power of this enemy.
      *
      * @return the power of this enemy.
@@ -98,21 +90,6 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
     public CharacterAttributeSet getAttributes(){
         return new CharacterAttributeSet(this.getName(), this.getMaxHP(), this.getCurrentHP(), this.getDP(), this.getWeight(),
                 this.getPower());
-    }
-
-    /**
-     * modify the HP of this character.
-     * And check if it is necessary to notify.
-     * @param diff a positive Integer to rest to the Character HP.
-     */
-    @Override
-    public void reduceHP(double diff) {
-        super.reduceHP(diff);
-        if(!this.isAlive()){
-            deadCharacter.firePropertyChange(new PropertyChangeEvent(this, "Dead CPU Character",
-                    "Alive", "Dead"));
-
-        }
     }
 
 }

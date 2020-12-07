@@ -8,6 +8,12 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Class to hold the common test for a Mastermind.
+ * <p> Masterminds represents the 'user player' and 'cpu player' in the game. </p>
+ * @author Matías Vergara Silva
+ * @since Homework 2
+ */
 public abstract class AbstractMastermindTest extends abstractModelTest {
     IMastermind player;
     IMastermind cpu;
@@ -30,6 +36,7 @@ public abstract class AbstractMastermindTest extends abstractModelTest {
      *
      */
     protected void checkEquals(IMastermind toCheck, IMastermind sameMastermind, IMastermind anotherMastermind){
+        assertEquals(toCheck, toCheck);
         assertEquals(toCheck, sameMastermind);
         assertNotEquals(toCheck, anotherMastermind);
         assertEquals(toCheck.hashCode(), sameMastermind.hashCode());
@@ -108,8 +115,8 @@ public abstract class AbstractMastermindTest extends abstractModelTest {
      * <p> Since the Controller will be in charge of prevent the friendly-fire, in this
      * tests is normal to have that feature. </p>
      * <p> The attacker attackPower has to be grater than the receptor DP. </p>
-     * @param attacker
-     * @param receptor
+     * @param attacker      The character that is performing the attack.
+     * @param receptor      The character that will receive the attack.
      */
     protected void checkUnarmoredEffectiveAttack(ICharacter attacker, ICharacter receptor, IMastermind mastermind){
         mastermind.addToParty(attacker);
@@ -125,8 +132,8 @@ public abstract class AbstractMastermindTest extends abstractModelTest {
      * <p> Since the Controller will be in charge of prevent the friendly-fire, in this
      * tests is normal to have that feature. </p>
      * <p> The attacker attackPower has to be grater than the receptor DP. </p>
-     * @param attacker
-     * @param receptor
+     * @param attacker      The character that is performing the attack.
+     * @param receptor      The character that will receive the attack.
      */
     protected void checkUnarmoredIneffectiveAttack(ICharacter attacker, ICharacter receptor, IMastermind mastermind){
         int initialHP = receptor.getCurrentHP();

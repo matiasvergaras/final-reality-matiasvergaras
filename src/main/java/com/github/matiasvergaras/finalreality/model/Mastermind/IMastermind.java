@@ -1,6 +1,5 @@
 package com.github.matiasvergaras.finalreality.model.Mastermind;
 
-import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
 import java.beans.PropertyChangeSupport;
@@ -13,16 +12,6 @@ import java.util.ArrayList;
  * @author Matías Vergara Silva.
  */
 public interface IMastermind {
-
-    /**
-     * Gets the attributes of the given character as an AttributeSet.
-     * <p> AttributeSet is a new class that we created to keep the attributes of the different types of
-     * characters. It has getters for every possible attribute.  If it is asked for an attribute that the character does
-     * not have, it will return 0 (except for equippedWeapon, in which case it will return null). </p>
-     * @param   character       The character whose attributes will be returned.
-     * @return  an AttributeSet representing all the attributes of the character.
-     */
-    CharacterAttributeSet getCharacterAttributes(ICharacter character);
 
     /**
      * Gives the number of characters alive of this mastermind.
@@ -72,9 +61,19 @@ public interface IMastermind {
      * Gives the actual player name.
      * @return  The name of the Mastermind.
      */
-    public String getName();
+    String getName();
 
-    public void deadCharacter();
+    /**
+     * Method to be called when a character dies.
+     * Reduces the aliveNumber and fires a notification to GameController.
+     * @param character     The character that just died.
+     */
+    void deadCharacter(ICharacter character);
 
-    public PropertyChangeSupport getDeadCharacter();
+    PropertyChangeSupport getDeadCharacter();
+
+    /**
+     * Alerts the gameController that a character finished his turn.
+     */
+    void endTurn();
 }

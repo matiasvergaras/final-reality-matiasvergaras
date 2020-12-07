@@ -1,7 +1,5 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.controller.GameController;
-import com.github.matiasvergaras.finalreality.model.Mastermind.PlayerMastermind;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,8 +19,10 @@ public class PlayerGetterTest {
      */
     @Test
     void playerGetterTest(){
-        GameController gameController = new GameController("Chimuelo", 9);
+        GameController gameController = new GameController("Chimuelo", "Dragonia",
+                9);
         assertEquals(gameController.getPlayerName(), "Chimuelo");
+        assertEquals(gameController.getCPUName(), "Dragonia");
         assertEquals(gameController.getCharactersQuantity(), 9);
     }
 }
