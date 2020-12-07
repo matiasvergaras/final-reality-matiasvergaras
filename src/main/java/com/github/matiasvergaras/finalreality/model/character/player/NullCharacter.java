@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class NullCharacter extends AbstractPlayerCharacter{
     /**
@@ -16,8 +17,8 @@ public class NullCharacter extends AbstractPlayerCharacter{
      * @param HP         the character's max heal points
      * @param DP         the character's max defense points
      */
-    protected NullCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue, @NotNull String name, int HP, int DP) {
-        super(turnsQueue, "", 0, 0);
+    public NullCharacter() {
+        super(new LinkedBlockingQueue<>(), "", 0, 0);
     }
 
 

@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.model;
 
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
 import java.util.Objects;
 
@@ -66,7 +67,7 @@ public class CharacterAttributeSet {
         this.weight = weight;
         this.power = power;
         this.maxMana = 0; this.currentMana = 0;
-        this.equippedWeapon = null;
+        this.equippedWeapon = new NullWeapon();
     }
 
     /**

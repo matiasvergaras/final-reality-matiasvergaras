@@ -2,6 +2,7 @@ package com.github.matiasvergaras.finalreality.model.Mastermind;
 
 import com.github.matiasvergaras.finalreality.factory.Characters.ThiefFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.SwordFactory;
+import com.github.matiasvergaras.finalreality.model.character.player.NullCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import org.junit.jupiter.api.BeforeEach;
@@ -196,11 +197,14 @@ public class PlayerMastermindTest extends AbstractMastermindTest{
     @Test
     void EffectiveUnequipTest(){
         PlayerMastermind player = (PlayerMastermind)this.player;
-        exampleKnight.equipWeapon(exampleAxe);
         player.addToParty(exampleKnight);
+        player.addToInventory(exampleAxe);
+        player.equipCharacter(exampleAxe, exampleKnight);
+        System.out.println(exampleKnight.getEquippedWeapon());
         player.unequipCharacter(exampleKnight);
+        System.out.println(exampleKnight.getEquippedWeapon());
         assertFalse(exampleKnight.isEquipped());
-        assertNull(exampleAxe.getOwner());
+        assertEquals(exampleAxe.getOwner(), new NullCharacter());
     }
 
     /**

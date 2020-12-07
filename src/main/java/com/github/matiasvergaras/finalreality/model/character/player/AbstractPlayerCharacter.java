@@ -58,6 +58,17 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
     public abstract void equipWeapon(IWeapon weapon);
 
     /**
+     * Equips a NullWeapon.
+     * <p> This method is necessary because it wont check for the character
+     * to be alive, unlike normal equipWeapon method. And to avoid
+     * complicating that method, it is more practical to add this one.</p>
+     */
+    @Override
+    public void equipNull(){
+        this.equip(new NullWeapon());
+    }
+
+    /**
      * Get the equipped weapon.
      *
      * @return the equipped weapon of this character.
@@ -73,7 +84,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
      * @return true if equiped, false otherwise.
      */
     public boolean isEquipped(){
-        return !this.equippedWeapon.equals(new NullWeapon());
+        return !(getEquippedWeapon().equals(new NullWeapon()));
     }
 
     /**
@@ -93,7 +104,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
      */
     @Override
     public void unequip() {
-        equippedWeapon = null;
+        equippedWeapon = new NullWeapon();
     }
 
     /**

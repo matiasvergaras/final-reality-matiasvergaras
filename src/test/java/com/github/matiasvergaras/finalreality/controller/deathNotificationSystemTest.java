@@ -44,23 +44,21 @@ public class deathNotificationSystemTest {
         assertNull(gameController.getWinner());
         assertEquals(gameController.getPlayerAliveNumber(), 4);
         //Force to make some attacks with the first enemy
-        gameController.setSelectedCharacterFromCPUParty(0);
-        gameController.setAttackTargetFromPlayerParty(0);
-        gameController.selectedCharacterNormalAttackTarget();
+        gameController.setSelectedCharacterFromPlayerParty(0);
+        gameController.activeCharacterNormalAttackSelectedCharacter();
         assertNull(gameController.getWinner());
         assertEquals(gameController.getPlayerAliveNumber(), 3);
         //Change to second enemy. Force him to make some attacks.
-        gameController.setSelectedCharacterFromCPUParty(1);
-        gameController.setAttackTargetFromPlayerParty(1);
-        gameController.selectedCharacterNormalAttackTarget();
+        gameController.setSelectedCharacterFromPlayerParty(1);
+        gameController.activeCharacterNormalAttackSelectedCharacter();
         assertNull(gameController.getWinner());
         assertEquals(gameController.getPlayerAliveNumber(), 2);
-        gameController.setAttackTargetFromPlayerParty(2);
-        gameController.selectedCharacterNormalAttackTarget();
+        gameController.setSelectedCharacterFromPlayerParty(2);
+        gameController.activeCharacterNormalAttackSelectedCharacter();
         assertNull(gameController.getWinner());
         assertEquals(gameController.getPlayerAliveNumber(), 1);
-        gameController.setAttackTargetFromPlayerParty(3);
-        gameController.selectedCharacterNormalAttackTarget();
+        gameController.setSelectedCharacterFromPlayerParty(3);
+        gameController.activeCharacterNormalAttackSelectedCharacter();
         assertEquals(gameController.getPlayerAliveNumber(), 0);
         //Every player character should be dead by now and the controller
         //should know who is the winner. We ask for it.
@@ -72,10 +70,12 @@ public class deathNotificationSystemTest {
      * Test the case where the player wins.
      */
     @Test
-    void playerWinsTest(){
+    void playerWinsTest() throws InterruptedException {
         //Create the player party
         gameController.addThiefToPlayerParty("Lyle");
         gameController.addEngineerToPlayerParty("Kokichi");
+        gameController.addEngineerToPlayerParty("Bleu");
+        gameController.addEngineerToPlayerParty("Jogurt");
         //Sets the bow factory to create powerful bows
         gameController.setSelectedWeaponFactory(0);
         gameController.setSelectedWeaponFactoryPower(700);
@@ -99,34 +99,37 @@ public class deathNotificationSystemTest {
         gameController.addEnemyToCPUParty("Chaos");
         gameController.addEnemyToCPUParty("Dark Dragon");
         gameController.addEnemyToCPUParty("Balbazak");
+        //Start game. Bypass the waitTurns time.
+        gameController.startGame();
+        Thread.sleep(500);
         //Force attacks
         gameController.setSelectedCharacterFromPlayerParty(0);
-        gameController.setAttackTargetFromCPUParty(0);
+        gameController.setSelectedCharacterFromCPUParty(0);
         assertNull(gameController.getWinner());
         assertEquals(gameController.getCPUAliveNumber(), 6);
-        gameController.selectedCharacterNormalAttackTarget();
+        gameController.activeCharacterNormalAttackSelectedCharacter();
         assertNull(gameController.getWinner());
         assertEquals(gameController.getCPUAliveNumber(), 5);
-        gameController.setAttackTargetFromCPUParty(1);
-        gameController.selectedCharacterNormalAttackTarget();
+        gameController.setSelectedCharacterFromCPUParty(1);
+        gameController.activeCharacterNormalAttackSelectedCharacter();
         assertNull(gameController.getWinner());
         assertEquals(gameController.getCPUAliveNumber(), 4);
-        gameController.setAttackTargetFromCPUParty(2);
-        gameController.selectedCharacterNormalAttackTarget();
+        gameController.setSelectedCharacterFromCPUParty(2);
+        gameController.activeCharacterNormalAttackSelectedCharacter();
         assertNull(gameController.getWinner());
         assertEquals(gameController.getCPUAliveNumber(), 3);
-        gameController.setAttackTargetFromCPUParty(3);
+        gameController.setSelectedCharacterFromCPUParty(3);
         //change attacker
         gameController.setSelectedCharacterFromPlayerParty(1);
-        gameController.selectedCharacterNormalAttackTarget();
+        gameController.activeCharacterNormalAttackSelectedCharacter();
         assertNull(gameController.getWinner());
         assertEquals(gameController.getCPUAliveNumber(), 2);
-        gameController.setAttackTargetFromCPUParty(4);
-        gameController.selectedCharacterNormalAttackTarget();
+        gameController.setSelectedCharacterFromCPUParty(4);
+        gameController.activeCharacterNormalAttackSelectedCharacter();
         assertNull(gameController.getWinner());
         assertEquals(gameController.getCPUAliveNumber(), 1);
-        gameController.setAttackTargetFromCPUParty(5);
-        gameController.selectedCharacterNormalAttackTarget();
+        gameController.setSelectedCharacterFromCPUParty(5);
+        gameController.activeCharacterNormalAttackSelectedCharacter();
         assertEquals(gameController.getCPUAliveNumber(), 0);
         //Every player character should be dead by now and the controller
         //should know who is the winner. We ask for it.

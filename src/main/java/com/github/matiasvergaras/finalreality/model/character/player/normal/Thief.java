@@ -40,6 +40,9 @@ public class Thief extends AbstractPlayerCharacter {
         if(this.isAlive()) {
             weapon.equipToThief(this);
         }
+        else{
+            equipNull();
+        }
     }
 
     /**

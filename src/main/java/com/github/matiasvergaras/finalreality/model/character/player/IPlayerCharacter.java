@@ -18,7 +18,9 @@ public interface IPlayerCharacter extends ICharacter {
 
     /**
      * Starts the process of equip a weapon to this character,
-     * checking if it is possible via double dispatch.
+     * checking in first place if it is alive. In that case,
+     * it starts the equipment  via double dispatch. Otherwise,
+     * it equips the null weapon.
      *
      * @param weapon The weapon to be equipped
      * @see IWeapon
@@ -60,6 +62,13 @@ public interface IPlayerCharacter extends ICharacter {
      */
     CharacterAttributeSet getAttributes();
 
+    /**
+     * Equips a NullWeapon.
+     * <p> This method is necessary because it wont check for the character
+     * to be alive, unlike normal equipWeapon method. And to avoid
+     * complicating that method, it is more practical to add this one.</p>
+     */
+    void equipNull();
 }
 
 

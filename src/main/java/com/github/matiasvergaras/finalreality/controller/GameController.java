@@ -17,6 +17,7 @@ import com.github.matiasvergaras.finalreality.model.Mastermind.PlayerMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -32,9 +33,9 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author Matías Vergara Silva
  */
 public class GameController {
-    private LinkedBlockingQueue<ICharacter> turns;
+    private LinkedBlockingQueue<ICharacter> turns = new LinkedBlockingQueue<>();
     private AxeFactory axeFactory = new AxeFactory("Common Axe", 120, 13);
-    private BowFactory bowFactory = new BowFactory("Common Bow", 90, 10);
+    private BowFactory bowFactory = new BowFactory("Common Bow", 110, 10);
     private KnifeFactory knifeFactory = new KnifeFactory("Common Knife",100, 9);
     private StaffFactory staffFactory = new StaffFactory("Common Staff", 10, 11, 120);
     private SwordFactory swordFactory = new SwordFactory("Common Sword", 110, 11);
@@ -50,7 +51,6 @@ public class GameController {
     private CPUMastermind cpu;
 
     private ICharacter selectedCharacter;
-    private ICharacter attackTarget;
     private IWeapon selectedWeapon;
     private ICharacterFactory selectedCharacterFactory;
     private IWeaponFactory selectedWeaponFactory;
@@ -71,7 +71,6 @@ public class GameController {
      * Private to prevent access bypassing the UniqueInstance.
      */
     public GameController(String playerName, String CPUName, int charactersQuantity){
-        this.turns = new LinkedBlockingQueue<>();
         this.player = new PlayerMastermind(playerName, charactersQuantity);
         this.cpu = new CPUMastermind(CPUName);
 
@@ -99,7 +98,6 @@ public class GameController {
         this.selectedCharacter = null;
         this.activeCharacter = null;
         this.selectedWeapon = null;
-        this.attackTarget = null;
         this.winner = null;
         this.gameState = new Initializing(this);
     }
@@ -171,8 +169,10 @@ public class GameController {
     }
 
     /**
-     * Sends to every character in both parties the message to start their wait to
+     * For every characters, tries to send the message to start their wait to
      * entry to the turns queue.
+     * <p> If the character is in playerParty and his equipped weapon is different
+     * from the NullWeapon, it will not receive any order. </p>
      * <p> We will assume that the time between iterations is negligible compared
      * to the time that the characters must wait to entry to the queue, so it does not
      * really affect the game behavior. </p>
@@ -181,7 +181,10 @@ public class GameController {
      */
     private void startWaitTurns(){
         for(ICharacter c: getPlayerParty()){
-            c.waitTurn();
+            if(!c.getAttributes().getEquippedWeapon().equals(new NullWeapon())){
+                c.waitTurn();
+            }
+
         }
         for(ICharacter c: getCPUParty()){
             c.waitTurn();
@@ -214,8 +217,16 @@ public class GameController {
      */
     public void startTurn() throws InterruptedException {
         if(isActive()) {
-            activeCharacter = turns.poll();
+            activeCharacter = turns.take();
         }
+    }
+
+    /**
+     * Gives the activeCharacter.
+     * @return ICharacter activeCharacter.
+     */
+    public ICharacter getActiveCharacter(){
+        return activeCharacter;
     }
 
     /**
@@ -574,35 +585,6 @@ public class GameController {
         }
     }
 
-    /**
-     * Sets the attackTarget at a Character in the userPlayer party, given an index representing its position
-     * at the party.
-     * <p> In case of a bad index, the method will catch and ignore the error, and keep the
-     * initial attackTarget. </p>
-     * @param index     The position of the character that will be targeted in the userPlayer Party.
-     */
-    public void setAttackTargetFromPlayerParty(int index){
-        try{
-            attackTarget= player.getCharacterFromParty(index);
-        }
-        catch(IndexOutOfBoundsException ignored){
-        }
-    }
-
-    /**
-     * Sets the attackTarget at a Character in the cpuPlayer party, given an index representing its position
-     * at the party.
-     * <p> In case of a bad index, the method will catch and ignore the error, and keep the
-     * initial attackTarget. </p>
-     * @param index     The position of the character that will be selected in the cpuPlayer Party.
-     */
-    public void setAttackTargetFromCPUParty(int index){
-        try{
-            attackTarget = cpu.getParty().get(index);
-        }
-        catch(IndexOutOfBoundsException ignored){
-        }
-    }
 
     /**
      * Launch the equipping process of the selectedWeapon to the SelectedCharacter.
@@ -644,22 +626,22 @@ public class GameController {
     }
 
     /**
-     * This method makes the selectedCharacter performs a normal attack against the attackTarget character.
+     * This method makes the activeCharacter performs a normal attack against the selectedCharacter character.
      * <p> The method checks that any of the following cases are true:</p>
-     * <p> selectedCharacter is in userPlayer Party and attackTarget is in CPUPlayer Party, or </p>
-     * <p> selectedCharacter is in CPUPlayer Party and attackTarget in userPlayer Party.
+     * <p> activeCharacter is in userPlayer Party and selectedCharacter is in CPUPlayer Party, or </p>
+     * <p> activeCharacter is in CPUPlayer Party and selectedCharacter in userPlayer Party.
      * Party. </p>
      * <p> If so, it sends the attack message in the corresponding direction. Otherwise, it has no effect.</p>
      * <p> In this way, the if's fulfill a double function: they ensure that the attacking and receiving characters
      * are in the game (to avoid bugs) and at the same time they avoid attacks between the same team. </p>
      */
-    public void selectedCharacterNormalAttackTarget(){
+    public void activeCharacterNormalAttackSelectedCharacter(){
         if(isActive()){
-            if(player.getParty().contains(selectedCharacter) && cpu.getParty().contains(attackTarget)){
-                player.makeNormalAttack(selectedCharacter, attackTarget);
+            if(player.getParty().contains(activeCharacter) && cpu.getParty().contains(selectedCharacter)){
+                player.makeNormalAttack(activeCharacter, selectedCharacter);
             }
-            if(cpu.getParty().contains(selectedCharacter) && player.getParty().contains(attackTarget)){
-                cpu.makeNormalAttack(selectedCharacter, attackTarget);
+            if(cpu.getParty().contains(activeCharacter) && player.getParty().contains(selectedCharacter)){
+                cpu.makeNormalAttack(activeCharacter, selectedCharacter);
             }
         }
     }
@@ -867,14 +849,6 @@ public class GameController {
      */
     public ICharacter getSelectedCharacter(){
         return this.selectedCharacter;
-    }
-
-    /**
-     * Gives the attackTarget ICharacter Object.
-     * @return      The attackTarget ICharacter Object.
-     */
-    public ICharacter getAttackTargetCharacter(){
-        return attackTarget;
     }
 
 

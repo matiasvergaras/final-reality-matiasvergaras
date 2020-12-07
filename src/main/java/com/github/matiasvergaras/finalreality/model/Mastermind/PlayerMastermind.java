@@ -37,7 +37,7 @@ public class PlayerMastermind extends AbstractMastermind {
     @Override
     public void addToParty(ICharacter character){
         if(this.getPartySize()<this.characterQuantity){
-            IPlayerCharacter playerCharacter= (IPlayerCharacter) character;
+            IPlayerCharacter playerCharacter = (IPlayerCharacter) character;
             super.addToParty(character);
         }
     }

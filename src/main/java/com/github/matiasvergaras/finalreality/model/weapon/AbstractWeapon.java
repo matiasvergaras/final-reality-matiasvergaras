@@ -3,6 +3,10 @@ package com.github.matiasvergaras.finalreality.model.weapon;
 import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.WeaponAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.NullCharacter;
+
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * A class that holds all the information of a weapon.
@@ -122,8 +126,8 @@ public abstract class AbstractWeapon implements IWeapon {
     public void setWeaponFree() {
         if (getOwner() != null) {
             getOwner().unequip();
-            setOwner(null);
         }
+        setOwner(new NullCharacter());
     }
 
 
