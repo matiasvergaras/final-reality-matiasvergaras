@@ -42,6 +42,6 @@ public class DeathMMToGCHandler implements PropertyChangeListener{
      */
     @Override
     public void propertyChange(final PropertyChangeEvent event) {
-        controller.removeCharacterFromQueue((ICharacter) event.getSource(), (Integer) event.getNewValue());
+        controller.removeDeadCharacter((ICharacter) event.getSource(), (Integer) event.getNewValue());
     }
 }

@@ -1,5 +1,6 @@
 package com.github.matiasvergaras.finalreality.controller;
 
+import com.github.matiasvergaras.finalreality.State.Active;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ public class attackTest {
      * Test an effective attack from player to cpu.
      */
     @Test
-    void EffectivePlayerToCPUAttackTest(){
+    void EffectivePlayerToCPUAttackTest() throws InterruptedException {
         //Adds an Engineer to the player party and selects him.
         gameController.addEngineerToPlayerParty("Domingo Egg");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
@@ -45,12 +46,20 @@ public class attackTest {
         gameController.equipSelectedWeaponToSelectedCharacter();
         //First we make sure that the enemy is alive before getting attacked
         assertTrue(gameController.getAttackTargetCharacter().isAlive());
+        //Starts the game by force to bypass the turns queue.
+        gameController.startGame();
+        Thread.sleep(500);
         //Send attack message
+        gameController.setSelectedCharacterFromPlayerParty(0);
         gameController.selectedCharacterNormalAttackTarget();
         //Check that the enemy died.
+        //SIG LINEA DA ERROR QE NO DEBERIA
+        System.out.println(gameController.getSelectedCharacterEquippedWeapon().getPower());
+        System.out.println(gameController.getAttackTargetCharacter().getName());
         assertFalse(gameController.getAttackTargetCharacter().isAlive());
         //Send the unequip message and check that it is correctly done.
         gameController.unequipSelectedCharacter();
+        System.out.println(gameController.getSelectedCharacter().getName());
         assertNull(gameController.getSelectedCharacterEquippedWeapon());
     }
 

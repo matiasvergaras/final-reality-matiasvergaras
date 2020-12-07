@@ -73,7 +73,8 @@ public abstract class AbstractCharacter implements ICharacter {
         if (character.isAlive() && this.isAlive()) {
             character.receiveNormalAttack(this);
             endTurn.firePropertyChange(new PropertyChangeEvent(this,
-                    "Turn ended", "Waiting for action", "Attack performed"));
+                    "Turn ended", "Waiting for action",
+                    "Attack performed"));
         }
     }
 

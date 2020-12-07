@@ -3,6 +3,14 @@ package com.github.matiasvergaras.finalreality.controller;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * PropertyChangeListener.
+ * <p> This class implements a Handler of a Character endTurn. </p>
+ * <p> His mission is to look for Mastermind's 'endTurn' message, and
+ * notify it to the GameController. </p>
+ * @author Matías Vergara Silva
+ * @since Homework 2
+ */
 public class EndTurnMMToGCHandler implements PropertyChangeListener {
     private GameController controller;
 
@@ -26,7 +34,10 @@ public class EndTurnMMToGCHandler implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent evt) {
-        controller.endTurn();
+        try {
+            controller.endTurn();
+        } catch (InterruptedException ignored) {
+        }
     }
 }
 

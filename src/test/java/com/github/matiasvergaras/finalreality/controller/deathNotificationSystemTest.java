@@ -65,7 +65,7 @@ public class deathNotificationSystemTest {
         //Every player character should be dead by now and the controller
         //should know who is the winner. We ask for it.
         assertEquals(gameController.getWinner().getName(), gameController.getCPUName());
-        assertTrue(gameController.getGameEnded());
+        assertTrue(gameController.isFinished());
     }
 
     /**
@@ -131,7 +131,7 @@ public class deathNotificationSystemTest {
         //Every player character should be dead by now and the controller
         //should know who is the winner. We ask for it.
         assertEquals(gameController.getWinner().getName(), gameController.getPlayerName());
-        assertTrue(gameController.getGameEnded());
+        assertTrue(gameController.isFinished());
     }
 
 

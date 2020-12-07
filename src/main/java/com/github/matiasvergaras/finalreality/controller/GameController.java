@@ -1,5 +1,7 @@
 package com.github.matiasvergaras.finalreality.controller;
 
+import com.github.matiasvergaras.finalreality.State.GameState;
+import com.github.matiasvergaras.finalreality.State.Initializing;
 import com.github.matiasvergaras.finalreality.factory.Characters.EnemyFactory;
 import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
 import com.github.matiasvergaras.finalreality.factory.Characters.BlackMageFactory;
@@ -54,15 +56,14 @@ public class GameController {
     private IWeaponFactory selectedWeaponFactory;
 
     private ICharacter activeCharacter;
-    private IMastermind turnOwner;
     private IMastermind winner;
 
     private ArrayList<ICharacterFactory> characterFactories = new ArrayList<>();
     private ArrayList<IWeaponFactory> weaponFactories = new ArrayList<>();
 
-    private boolean gameIsActive;
     private DeathMMToGCHandler deadCharacterHandler = new DeathMMToGCHandler(this);
-
+    private EndTurnMMToGCHandler endTurnHandler = new EndTurnMMToGCHandler(this);
+    private GameState gameState;
 
     /**
      *
@@ -73,19 +74,26 @@ public class GameController {
         this.turns = new LinkedBlockingQueue<>();
         this.player = new PlayerMastermind(playerName, charactersQuantity);
         this.cpu = new CPUMastermind(CPUName);
+
         this.player.getDeadCharacter().addPropertyChangeListener(deadCharacterHandler);
         this.cpu.getDeadCharacter().addPropertyChangeListener(deadCharacterHandler);
+
+        this.player.getEndTurn().addPropertyChangeListener(endTurnHandler);
+        this.cpu.getEndTurn().addPropertyChangeListener(endTurnHandler);
+
         characterFactories.add(engineerFactory);
         characterFactories.add(blackMageFactory);
         characterFactories.add(whiteMageFactory);
         characterFactories.add(thiefFactory);
         characterFactories.add(knightFactory);
         characterFactories.add(enemyFactory);
+
         weaponFactories.add(bowFactory);
         weaponFactories.add(staffFactory);
         weaponFactories.add(knifeFactory);
         weaponFactories.add(swordFactory);
         weaponFactories.add(axeFactory);
+
         this.selectedCharacterFactory = null;
         this.selectedWeaponFactory = null;
         this.selectedCharacter = null;
@@ -93,30 +101,138 @@ public class GameController {
         this.selectedWeapon = null;
         this.attackTarget = null;
         this.winner = null;
-        this.gameIsActive = false;
+        this.gameState = new Initializing(this);
     }
 
     /**
-     *
+     * Changes the current state to the given one.
+     * @param state     The new state.
      */
-    public void endTurn(){
-        activeCharacter = turns.poll();
-        selectedCharacter = activeCharacter;
+    public void setState(GameState state){
+        this.gameState = state;
     }
 
     /**
-     * This method receives a character (that should be dead) and the number of characters
-     * remaining in his team after his death. It removes the dead character from the turns
-     * queue, and if the remaining characters are 0, it calls to checkForWinner.
+     * Returns true if the current state is Initializing.
+     * @return  boolean isInitializing
+     */
+    public boolean isInitializing(){
+        return gameState.isInitializing();
+    }
+
+    /**
+     * Returns true if the current state is Active
+     * @return  boolean isActive
+     */
+    public boolean isActive(){
+        return gameState.isActive();
+    }
+
+    /**
+     * Returns true if the current state is Finished.
+     * @return  boolean isFinished
+     */
+    public boolean isFinished(){
+        return gameState.isFinished();
+    }
+
+    /**
+     * Changes the current state to Initializing.
+     */
+    public void initializeGame(){
+        gameState.setInitializing();
+    }
+
+
+    /**
+     * Starts the game.
+     * This method will be called only in Initializing state. Otherwise it will have
+     * no effect.
+     * <p> Checks if the player has the correct number of characters
+     * to play, and if that is the case, it changes the state of
+     * the game to Active.</p>
+     * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
+     *      startTurn, which does throws said exception. </p>
+     */
+    public void startGame() throws InterruptedException {
+        if(getPlayerPartySize() == getCharactersQuantity()){
+            gameState.setActive();
+            startWaitTurns();
+            startTurn();
+        }
+    }
+    /**
+     * Ends this game by changing the state of the game to Finished.
+     * <p> This method has to be called while standing in Active state.
+     * Otherwise it will have no effect. </p>
+     */
+    public void endGame(){
+        gameState.setFinished();
+    }
+
+    /**
+     * Sends to every character in both parties the message to start their wait to
+     * entry to the turns queue.
+     * <p> We will assume that the time between iterations is negligible compared
+     * to the time that the characters must wait to entry to the queue, so it does not
+     * really affect the game behavior. </p>
+     * <p> This method should to be called only by the StartGame Controller's method.
+     * We will set it has private to avoid as much as we can another calls. </p>
+     */
+    private void startWaitTurns(){
+        for(ICharacter c: getPlayerParty()){
+            c.waitTurn();
+        }
+        for(ICharacter c: getCPUParty()){
+            c.waitTurn();
+        }
+    }
+
+    /**
+     * Method to be called by an EndTurnHandler.
+     * <p> Sends to the character that just ended his turn the wait for re-entry order. </p>
+     * <p> Calls to StartTurn, in order to start a new Turn. </p>
+     * <p> A character will wait for its turn only if he is alive (new feature in waitTurn). </p>
+     * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
+     *      startTurn, which does throws said exception. </p>
+     */
+    public void endTurn() throws InterruptedException {
+        if(this.isActive()) {
+            activeCharacter.waitTurn();
+            this.startTurn();
+        }
+    }
+
+    /**
+     * Gets the next characters in the queue and set him as activeCharacter
+     * (without removing it from the queue).
+     * <p> If the queue is empty, the take will send the thread to sleep until
+     * an element becomes available. </p>
+     * <p> This method throws InterruptedException hen the interruption occurs
+     * at time of waiting for an element to become available if queue is empty.</p>
+     * @throws InterruptedException
+     */
+    public void startTurn() throws InterruptedException {
+        if(this.isActive()) {
+            activeCharacter = turns.take();
+        }
+    }
+
+    /**
+     * This method receives a dead character and the number of characters
+     * remaining in his team after his death. If the dead character is
+     * in the turns queue, it will remove him, and if the remaining
+     * characters are 0, it calls to checkForWinner.
      * @param deadCharacter     The character to remove from queue
      * @param charactersAlive   The number of remaining characters in the dead character's team.
      */
-    public void removeCharacterFromQueue(ICharacter deadCharacter, int charactersAlive){
-        turns.removeIf(c -> c==deadCharacter);
-        if(charactersAlive==0) setWinner();
-
+    public void removeDeadCharacter(ICharacter deadCharacter, int charactersAlive){
+        if(this.isActive()) {
+            this.selectedCharacter = deadCharacter;
+            turns.remove(deadCharacter);
+            if (charactersAlive == 0) setWinner();
+        }
     }
-
 
     /**
      * <p> Check which team was left without alive characters after the last death and assign
@@ -125,16 +241,10 @@ public class GameController {
      * when some team has every member dead, condition trapped by removeCharacterFromQueue. </p>
      */
     private void setWinner(){
+        if(this.isActive()) {
             winner = ((0 == getCPUAliveNumber()) ? player : cpu);
             endGame();
-    }
-
-    /**
-     * Ends this game by making the gameEnded variable true.
-     * <p> Private to avoid calls  that does not come from checkForWinner method. </p>
-     */
-    private void endGame(){
-        gameIsActive = false;
+        }
     }
 
     /**
@@ -145,16 +255,6 @@ public class GameController {
      */
     public IMastermind getWinner(){
         return winner;
-    }
-
-    /**
-     * Returns the status of the game.
-     * <p> True if game is active (Characters can fight) </p>
-     * <p> False if game is inactive (Game ended / </p>
-     * @return      boolean gameEnded.
-     */
-    public boolean getGameState(){
-        return gameIsActive;
     }
 
     /**
@@ -241,7 +341,9 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addBlackMageToPlayerParty(String name){
-        player.addToParty(blackMageFactory.create(name));
+        if(this.isInitializing()) {
+            player.addToParty(blackMageFactory.create(name));
+        }
     }
 
     /**
@@ -252,7 +354,9 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addWhiteMageToPlayerParty(String name){
-        player.addToParty(whiteMageFactory.create(name));
+        if(this.isInitializing()) {
+            player.addToParty(whiteMageFactory.create(name));
+        }
     }
 
     /**
@@ -263,7 +367,9 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addEngineerToPlayerParty(String name){
-        player.addToParty(engineerFactory.create(name));
+        if(this.isInitializing()) {
+            player.addToParty(engineerFactory.create(name));
+        }
     }
 
     /**
@@ -274,7 +380,9 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addThiefToPlayerParty(String name){
-        player.addToParty(thiefFactory.create(name));
+        if(this.isInitializing()) {
+            player.addToParty(thiefFactory.create(name));
+        }
     }
 
     /**
@@ -285,7 +393,9 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addKnightToPlayerParty(String name){
-        player.addToParty(knightFactory.create(name));
+        if(this.isInitializing()) {
+            player.addToParty(knightFactory.create(name));
+        }
     }
 
     /**
@@ -295,7 +405,9 @@ public class GameController {
      * @see ICharacterFactory
      */
     public void addEnemyToCPUParty(String name){
-        cpu.addToParty(enemyFactory.create(name));
+        if(this.isInitializing()) {
+            cpu.addToParty(enemyFactory.create(name));
+        }
     }
 
     /**
@@ -304,7 +416,9 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addBowToInventory(){
-        player.addToInventory(bowFactory.create());
+        if(this.isInitializing()) {
+            player.addToInventory(bowFactory.create());
+        }
     }
 
     /**
@@ -314,7 +428,9 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addBowToInventory(String name){
-        player.addToInventory(bowFactory.create(name));
+        if(this.isInitializing()) {
+            player.addToInventory(bowFactory.create(name));
+        }
     }
 
     /**
@@ -323,7 +439,9 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addSwordToInventory(){
-        player.addToInventory(swordFactory.create());
+        if(this.isInitializing()) {
+            player.addToInventory(swordFactory.create());
+        }
     }
 
     /**
@@ -334,7 +452,9 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addSwordToInventory(String name){
-        player.addToInventory(swordFactory.create(name));
+        if(this.isInitializing()) {
+            player.addToInventory(swordFactory.create(name));
+        }
     }
 
     /**
@@ -343,7 +463,9 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addAxeToInventory(){
-        player.addToInventory(axeFactory.create());
+        if(this.isInitializing()) {
+            player.addToInventory(axeFactory.create());
+        }
     }
 
     /**
@@ -354,7 +476,9 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addAxeToInventory(String name){
-        player.addToInventory(axeFactory.create(name));
+        if(this.isInitializing()) {
+            player.addToInventory(axeFactory.create(name));
+        }
     }
 
     /**
@@ -363,7 +487,9 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addStaffToInventory(){
-        player.addToInventory(staffFactory.create());
+        if(this.isInitializing()) {
+            player.addToInventory(staffFactory.create());
+        }
     }
 
     /**
@@ -374,7 +500,9 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addStaffToInventory(String name){
-        player.addToInventory(staffFactory.create(name));
+        if(this.isInitializing()) {
+            player.addToInventory(staffFactory.create(name));
+        }
     }
 
     /**
@@ -383,7 +511,9 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addKnifeToInventory(){
-        player.addToInventory(knifeFactory.create());
+        if(this.isInitializing()) {
+            player.addToInventory(knifeFactory.create());
+        }
     }
 
     /**
@@ -394,7 +524,9 @@ public class GameController {
      * @see IWeaponFactory
      */
     public void addKnifeToInventory(String name){
-        player.addToInventory(knifeFactory.create(name));
+        if(this.isInitializing()) {
+            player.addToInventory(knifeFactory.create(name));
+        }
     }
 
     /**
@@ -479,12 +611,12 @@ public class GameController {
      * no weapon will be equipped. </p>
      */
     public void equipSelectedWeaponToSelectedCharacter(){
-        try{
-            IPlayerCharacter character = (IPlayerCharacter)this.selectedCharacter;
-            player.equipCharacter(selectedWeapon, character);
-        }
-        catch(IndexOutOfBoundsException ignored){
-        }
+            try{
+                IPlayerCharacter character = (IPlayerCharacter)this.selectedCharacter;
+                player.equipCharacter(selectedWeapon, character);
+            }
+            catch(IndexOutOfBoundsException ignored){
+            }
     }
 
     /**
@@ -494,6 +626,7 @@ public class GameController {
      */
     public void unequipSelectedCharacter(){
         player.unequipCharacter((IPlayerCharacter)selectedCharacter);
+
     }
 
     /**
@@ -526,11 +659,13 @@ public class GameController {
      * are in the game (to avoid bugs) and at the same time they avoid attacks between the same team. </p>
      */
     public void selectedCharacterNormalAttackTarget(){
-        if(player.getParty().contains(selectedCharacter) & cpu.getParty().contains(attackTarget)){
-            player.makeNormalAttack(selectedCharacter, attackTarget);
-        }
-        if(cpu.getParty().contains(selectedCharacter) & player.getParty().contains(attackTarget)){
-            cpu.makeNormalAttack(selectedCharacter, attackTarget);
+        if(this.isActive()){
+            if(player.getParty().contains(selectedCharacter) & cpu.getParty().contains(attackTarget)){
+                player.makeNormalAttack(selectedCharacter, attackTarget);
+            }
+            if(cpu.getParty().contains(selectedCharacter) & player.getParty().contains(attackTarget)){
+                cpu.makeNormalAttack(selectedCharacter, attackTarget);
+            }
         }
     }
 
@@ -723,7 +858,7 @@ public class GameController {
     }
 
     /**
-     * Sets the selectedCharacterFactory default's pwoer
+     * Sets the selectedCharacterFactory default's power
      * @param power      The value to be set as the default power of selectedCharacterFactory
      * @see ICharacterFactory
      */
