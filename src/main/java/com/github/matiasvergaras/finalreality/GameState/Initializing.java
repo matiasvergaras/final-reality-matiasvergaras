@@ -1,4 +1,4 @@
-package com.github.matiasvergaras.finalreality.State;
+package com.github.matiasvergaras.finalreality.GameState;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.factory.Characters.*;

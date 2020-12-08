@@ -17,11 +17,11 @@ import java.util.concurrent.ScheduledExecutorService;
  */
 public abstract class AbstractCharacter implements ICharacter {
 
-    private final BlockingQueue<ICharacter> turnsQueue;
+    private BlockingQueue<ICharacter> turnsQueue;
     private final String name;
-    private final int maxHP;
+    private int maxHP;
     private int currentHP;
-    private final int DP;
+    private int DP;
     protected ScheduledExecutorService scheduledExecutor;
     private PropertyChangeSupport
             deadCharacter = new PropertyChangeSupport(this),

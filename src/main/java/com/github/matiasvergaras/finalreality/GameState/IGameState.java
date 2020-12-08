@@ -1,9 +1,8 @@
-package com.github.matiasvergaras.finalreality.State;
+package com.github.matiasvergaras.finalreality.GameState;
 
 
 import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.IWeaponFactory;
-import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
 import java.util.ArrayList;

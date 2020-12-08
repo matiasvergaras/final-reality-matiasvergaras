@@ -1,7 +1,6 @@
-package com.github.matiasvergaras.finalreality.State;
+package com.github.matiasvergaras.finalreality.GameState;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
-import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 
 /**
  * A Finished State of the game.

@@ -1,8 +1,8 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.State.AbstractGameState;
-import com.github.matiasvergaras.finalreality.State.IGameState;
-import com.github.matiasvergaras.finalreality.State.Initializing;
+import com.github.matiasvergaras.finalreality.GameState.AbstractGameState;
+import com.github.matiasvergaras.finalreality.GameState.IGameState;
+import com.github.matiasvergaras.finalreality.GameState.Initializing;
 import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
 import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
@@ -102,6 +102,14 @@ public class GameController {
      */
     public void setState(AbstractGameState state){
         gameState = state;
+    }
+
+    /**
+     * Returns the current game state
+     * @return  IGameState gameState.
+     */
+    public IGameState getState(){
+        return gameState;
     }
 
     /**
