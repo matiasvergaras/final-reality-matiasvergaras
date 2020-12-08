@@ -31,7 +31,8 @@ public interface IGameState {
     boolean isFinished();
 
     /**
-     * Changes the current state to Initializing.
+     * Resets the turns queue and changes the
+     * current state to Initializing.
      */
     void setInitializing();
 

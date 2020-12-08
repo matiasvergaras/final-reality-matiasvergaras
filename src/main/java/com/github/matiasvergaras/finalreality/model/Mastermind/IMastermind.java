@@ -51,11 +51,17 @@ public interface IMastermind {
     ICharacter getCharacterFromParty(int index);
 
     /**
-     * Makes an character performs an attack against another.
+     * Makes a character performs an attack against another.
      * @param character     The character that will perform the attack.
      * @param target        The character that will receive the attack.
      */
     void makeNormalAttack(ICharacter character, ICharacter target);
+
+    /**
+     * Makes a character waits for his new turn.
+     * @param character     The character which will wait for a new turn.
+     */
+    public void makeCharacterWait(ICharacter character);
 
     /**
      * Gives the actual player name.

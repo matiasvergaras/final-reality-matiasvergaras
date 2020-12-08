@@ -31,6 +31,7 @@ public class Finished extends AbstractGameState {
      */
     @Override
     public void setInitializing(){
+        gc.getTurns().clear();
         gc.setState(new Initializing(gc));
     }
 
