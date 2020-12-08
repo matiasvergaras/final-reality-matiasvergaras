@@ -117,15 +117,19 @@ The above concludes the new features of the logic of our program. Everything els
 To date the UML diagrams of the model looks like this (showing only class names):
 
 Figure 3. Homework 2 Final Delivery Model UML Diagram
+
 ![Figure 3. Homework 2 Final Delivery Model UML Diagram](/images/UML_T2_Model.png)
 
 Figure 4. Homework 1 Final Delivery State UML Diagram
+
 ![Figure 4. Homework 1 Final Delivery State UML Diagram](/images/UML_T2_State.png)
 
 Figure 5. Homework 1 Final Delivery Factory UML Diagram
+
 ![Figure 5. Homework 1 Final Delivery Factory UML Diagram](/images/UML_T2_Factory.png)
 
 Figure 5. Homework 1 Final Delivery Controller UML Diagram
+
 ![Figure 5. Homework 1 Final Delivery Controller UML Diagram](/images/UML_T2_Controller.png)
 
 To see the complet UML Diagram, check for **UML_Model.pdf**, **UML_State.pdf**, **UML_Factory.pdf**, **UML_Controller.pdf** in the root folder.
