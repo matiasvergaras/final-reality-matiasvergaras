@@ -1,11 +1,14 @@
 package com.github.matiasvergaras.finalreality.model.character.player;
 
+import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import org.jetbrains.annotations.NotNull;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeSupport;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -19,9 +22,11 @@ import java.util.concurrent.TimeUnit;
 public abstract class AbstractPlayerCharacter extends AbstractCharacter implements IPlayerCharacter {
     protected IWeapon equippedWeapon;
 
+
+    private PropertyChangeSupport deadCharacter = new PropertyChangeSupport(this);
     /**
      * Creates a new Player Character
-     *
+     * <p> Every playerCharacter will start equipped with a NullWeapon. </p>
      * @param name       the character's name
      * @param turnsQueue the queue with the characters ready to play
      * @param HP         the character's max heal points
@@ -31,7 +36,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
                                       @NotNull String name,
                                       int HP, int DP) {
         super(turnsQueue, name, HP, DP);
-
+        this.equipWeapon(new NullWeapon());
     }
 
     /**
@@ -44,12 +49,24 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
                 .schedule(super::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
     }
 
+
     /**
      * {@inheritDoc}
      *
      * @param weapon The weapon to equip.
      */
     public abstract void equipWeapon(IWeapon weapon);
+
+    /**
+     * Equips a NullWeapon.
+     * <p> This method is necessary because it wont check for the character
+     * to be alive, unlike normal equipWeapon method. And to avoid
+     * complicating that method, it is more practical to add this one.</p>
+     */
+    @Override
+    public void equipNull(){
+        this.equip(new NullWeapon());
+    }
 
     /**
      * Get the equipped weapon.
@@ -64,6 +81,14 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
 
     /**
      * {@inheritDoc}
+     * @return true if equipped, false otherwise.
+     */
+    public boolean isEquipped(){
+        return !(getEquippedWeapon().equals(new NullWeapon()));
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @param weapon The weapon to be equip
      */
@@ -73,31 +98,48 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
         weapon.setOwner(this);
     }
 
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void unequip() {
-        equippedWeapon = null;
+        equippedWeapon = new NullWeapon();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     */
+    public int getAttackPower(){
+        return this.getEquippedWeapon().getPower();
+    }
 
-    public void normalAttack(ICPUCharacter character) {
-        if (character.isAlive() && this.isAlive()) {
-            character.receiveNormalAttack(this);
+    /**
+     * modify the HP of this character.
+     * And check if it is necessary to notify.
+     * @param diff a positive Integer to rest to the Character HP.
+     */
+    @Override
+    public void reduceHP(double diff) {
+        super.reduceHP(diff);
+        if(!this.isAlive()){
+            deadCharacter.firePropertyChange(new PropertyChangeEvent(this, "Dead Player Character",
+                    "Alive", "Dead"));
+
         }
     }
 
     /**
-     * Receive a non-magic attack
-     *
-     * @param character the attacking character.
+     * {@inheritDoc}
+     * @return a CharacterAttributeSet with the attributes of this character.
      */
-    public void receiveNormalAttack(ICPUCharacter character) {
-        if(character.getPower()>this.getDP()) {
-            this.reduceHP(character.getPower() - getDP());
-        }
+    @Override
+    public CharacterAttributeSet getAttributes(){
+        return new CharacterAttributeSet(this.getName(), this.getMaxHP(), this.getCurrentHP(), this.getDP(),
+                this.getEquippedWeapon());
     }
+
 }
 
 

@@ -1,7 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character.cpu;
 
+import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 /**
  *
@@ -16,6 +16,7 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
  * @author Matías Vergara Silva
  */
 public interface ICPUCharacter extends ICharacter {
+
     /**
      * Get the power of this enemy.
      *
@@ -31,18 +32,12 @@ public interface ICPUCharacter extends ICharacter {
     int getWeight();
 
     /**
-     * Performs a normal attack against a player's character.
-     *
-     * @param character the character to be attacked.
+     * To get all the attributes of this character together, adding those
+     * exclusives of an CPU character.
+     * @return An ArrayList of Integer whit the attributes in the following
+     * order: maxHP, currentHP, DP, weight, power.
      */
-    void normalAttack(IPlayerCharacter character);
-
-    /**
-     * Receive a normal attack from a player's character.
-     *
-     * @param character the attacking character.
-     */
-    void receiveNormalAttack(IPlayerCharacter character);
+    CharacterAttributeSet getAttributes();
 
 
 }

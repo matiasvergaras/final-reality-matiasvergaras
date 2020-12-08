@@ -71,7 +71,13 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
         super.checkGetCurrentHP(exampleThief, HP);
     }
 
-
+    /**
+     * Checks that the attack power attribute is calculated correctly.
+     */
+    @Test
+    void attackPowerTest(){
+        checkGetAttackPower(exampleThief, exampleKnife);
+    }
 
 
 }

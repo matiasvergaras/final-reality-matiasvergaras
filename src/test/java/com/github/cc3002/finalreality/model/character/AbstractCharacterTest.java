@@ -4,11 +4,6 @@ import com.github.cc3002.finalreality.model.abstractModelTest;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Axe;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Bow;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Knife;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Sword;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
@@ -75,6 +70,7 @@ public abstract class AbstractCharacterTest extends abstractModelTest {
                                      final ICharacter sameClassDifferentCharacter,
                                      final ICharacter differentClassDifferentName,
                                      final ICharacter differentClassSameName) {
+        assertEquals(expectedCharacter, expectedCharacter);
         assertEquals(expectedCharacter, testEqualCharacter, "ExpectedCharacter differs from EqualCharacter.");
         assertNotEquals(sameClassDifferentCharacter, testEqualCharacter, "sameClassDifferentCharacter is" +
                 " equal to EqualCharacter.");

@@ -5,6 +5,8 @@ import com.github.matiasvergaras.finalreality.model.weapon.normal.Knife;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 /**
  * Class to test all the features of an Staff weapon.
  * @since Homework 1
@@ -28,9 +30,14 @@ public class StaffTest extends AbstractWeaponTest {
         exampleBlackMage.equipWeapon(exampleStaff);
         checkConstruction(new Staff(STAFF_NAME, DAMAGE, WEIGHT, MAGIC_DAMAGE),
                 exampleBlackMage.getEquippedWeapon(),
-                new Staff(STAFF_NAME, DAMAGE * 2, WEIGHT, MAGIC_DAMAGE),
+                new Staff("Another", DAMAGE, WEIGHT, MAGIC_DAMAGE),
+                new Staff(STAFF_NAME, DAMAGE, WEIGHT*2, MAGIC_DAMAGE),
+                new Staff(STAFF_NAME, DAMAGE*2, WEIGHT, MAGIC_DAMAGE),
                 new Knife(KNIFE_NAME, DAMAGE, WEIGHT));
+        assertNotEquals(new Staff(STAFF_NAME, DAMAGE, WEIGHT, MAGIC_DAMAGE),
+                        new Staff(STAFF_NAME, DAMAGE, WEIGHT, MAGIC_DAMAGE*3));
     }
+
 
     /**
      * Checks that the weapon can be properly equipped an unequipped

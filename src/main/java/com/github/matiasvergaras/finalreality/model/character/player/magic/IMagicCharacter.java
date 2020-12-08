@@ -1,4 +1,5 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
+import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 /**
@@ -25,9 +26,17 @@ public interface IMagicCharacter extends IPlayerCharacter {
      */
     int getCurrentMana();
 
+    /**
+     * To get all the attributes of this character together,
+     * adding the maxMana and the currentMana to those of
+     * the parent class.
+     * @return An ArrayList of Integer whit the attributes in the following
+     * order: maxHP, currentHP, DP, maxMana, currentMana
+     */
+    @Override
+    CharacterAttributeSet getAttributes();
+
 
     //Magic attacks not implemented yet.
     //void reduceMana(int diff);
-
-
 }

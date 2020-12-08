@@ -71,4 +71,12 @@ class EngineerTest extends AbstractPlayerCharacterTest {
         super.checkGetCurrentHP(exampleEngineer, HP);
     }
 
+    /**
+     * Checks that the attack power attribute is calculated correctly.
+     */
+    @Test
+    void attackPowerTest(){
+        checkGetAttackPower(exampleEngineer, exampleBow);
+    }
+
 }

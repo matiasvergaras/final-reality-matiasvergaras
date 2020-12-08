@@ -40,6 +40,9 @@ public class Engineer extends AbstractPlayerCharacter {
         if(this.isAlive()) {
             weapon.equipToEngineer(this);
         }
+        else{
+            equipNull();
+        }
     }
 
 

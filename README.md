@@ -47,8 +47,95 @@ enemies controlled by the computer.
 # #Homework 2 
 
 ---
+### Final Delivery (Partial Delivery 5)
 
-### Partial Delivery 2 & 3
+The Partial Delviery 5 is the final delivery of the Homework 2. The goal is to implement the Game Controller, which will be an intermediary between the user and the model objects, and whose purpose will be to controll all the messages that pass trough him, manipulating and redirecting those that are necessary. More specifically, the controller has to be able to:
+- Create and assign objects of the model (characters, enemies, weapons, etc.),
+- Know which are the player characters and what are their attributes,
+- Know which are the CPU characters and what are their attributes,
+- Manipulate the player inventory,
+- Equip a weapon to a character,
+- Make a character attack another.
+
+Additionally, two more complex tasks that the controller must fulfill are:
+- Know when a character's turn begins and ends,
+- Know inmediately if the player won or lost the game. A player wins when all enemies are knocked out and loses if their characters are knocked out.
+
+We will follow the same format as Release 1: Execution Instructions, assumptions made up to this point, then we will explain the logic and operation added to cover the new features requested, and finally we will present the new UML diagrams.
+
+#### Execution Instructions
+As for the Homework 1,  the game is still under development - so there are no further execution instructions -. However, it is possible to run tests that show that the program logic works as expected.
+
+To do this use IntelliJ's "Run Tests" option, or compile individual tests using ``cp`` and run them with the ``org.junit.runner.JUnitCore`` flag as shown on [this StackOverFlow thread](https://stackoverflow.com/questions/2235276/how-to-run-junit-test-cases-from-the-command-line).
+
+#### Assumptions made so far
+New assumptions:
+- Weapons and character's name will not change with time. That means, those variables can be implemented as finals. 
+- The name of the user, the number of characters that he must have and the name of the stage to be played (name of the CPU) will be delivered as parameters to the GameController.
+- **The Game will have 3 main states: Initializing, Active, and Finished.**
+  - In **Initializing mode**, the user ask the Controller to set's up his team, the CPU team and the weapons that are going to be able in the fight. He is able to ask for new characters, new weapons, adding them to its party/inventory or removing them as well, and the same for the CPU Party. The controller, on the other hand, will wait for the player's team to have the indicated number of characters (which is delivered when creating a new GameController), and will start the game if this condition is met and it receives the ``StartGame()`` message. If the user has already added as many characters to their party as the condition allows, adding more will have no effect, so if he wants to replace a character, he will have to remove him first.
+  - In **Active mode**, the user sends messages to the Controller to fight against the CPU. In this state the player can equip and unequip characters at will, however, he cannot request new characters or weapons. In this state the controller will be attentive to the change of two properties: the end of a character's turn, which occurs when the active character makes an attack, and the death of a character, which can eventually lead to the victory of an opponent. - Which will induce the next state -.
+  - In **Finished mode**,  the user only has three options: see how the game turned out once the game ended, sending the ``selectCharacter ()``, ``selectWeapon ()`` and ``getSelectedCharacter / WeaponAttributes()`` messages to the controller, ask for who was the winner through getWinner () controller's method, or launch the initialization of a new game, requesting it from the gameController through the InitializeGame () method.
+  - It is worth mentioning that the decision to implement these states is due to the fact that, until now, we did not have a way to prevent the controller from taking actions at inappropriate times and that could break the logic of the game, such as adding new characters or weapons while the fight is in progress.
+- **The player inventory will not have a space limit**. It will be infinite for now. 
+- A player character who does not have a weapon can remain in the party, but **cannot enter the turn list until he obtain a weapon**. This decision is because otherwise the player could "cheat" by leaving a character without a weapon who will take the turn first, then equip it on the same turn (since equipping does not end the turn), unequip the rest of its team and then attack. 
+- **If in any turn a character dies, he will be removed from the queue, but  will remain in his corresponding party (as a dead character)**. This decision is due to two reasons: The first, that perhaps in the future we will want to enable resurrection spells or objects with these properties. The second, to avoid that the condition that the player must always have the same number of characters in his group from being broken. 
+    - It is important to note that since a character is ordered to wait for his next turn only when his current turn ends, there is no need to worry about the possibility of a dead character taking the turn eventually. This will never happen, thanks to the way it was implemented: when a character dies, he is removed from the queue, so he will not end a turn never again. 
+- All factories will have the possibilty to set a new value for every attribute of characters/weapons, even if their products do not use them. This is to be able to have a  ``selectedCharacterFactory`` and a ``selectedWeaponFactory``  which is configured using setSelectedFactoryAttribute (int newValue) methods instead of overloading the controller with specific methods to configure each factory.
+- To get the GameController to have a generic way of asking for the attributes of a model entity without the need to upcast / downcast, it will be accepted that a weapon / character that does not have certain property, returns ``0`` when the controller request for it. This does not mean that the character has the attribute - in fact, it does not -. For example: if the ``selectedPlayerCharacter`` is a Knight, the message ``getSelectedPlayerCharacterMana()`` will return ``0``.
+    - Even if this is an effect that we would like to avoid, we will accept it because it allows us to simplify other actions, such as the attack between characters. In fact, to avoid it we would have to have a ``selectedCharacter`` for the player, other for the CPU and other for the magic characters, which would greatly complicate program flow and may induce errors because it would be necessary to downcast the characters getted from the queue to assign them to a ``selected(Specific)Character``, also complicating the code too much).
+- We assume that in general the controller could have null values in its ``Selected`` variables frequently during the game. For this reason, we decided to apply the NullPatern for Weapons and Characters, giving rise to the NullWeapon and NullCharacter classes.
+- We assume that when the win condition is reached, it does not matter if there are characters lefts in the queue: the game will stop right there. And if after finishing a new game initialization is launched using InitializeGame (), the queue will restart, regardless of whether or not there were characters in it.
+
+Assumptions of Partial Delivery 2 that remains in this delivery:
+- Characters and weapons do not change type.
+- Weapons can be equipped to only one character at a time. If the player tries to equip a weapon that is already equipped to another character, the weapon user is updated, so the first one ends without equipped weapon.
+- In the future, we may be interested in add another type of Enemy (So we abstracted all unspecific methods of Enemy in an AbstractCPUCharacter abstract class).
+- We can identify characters by their name, and that works both for CPU and Player characters. There will not be characters with same name, even if they are from different types (Attention: this point is very important, because hashcode only takes in count the names, so if there are a BlackMage and an Enemy with the same name, they will be equals).
+- Initially we considered adding the maximum HP and maximum DP to the features that determine a character, however, we will consider that in the future the characters could 'level up' and increase these characteristics, so the key will be only the name.
+- Related to the character equipment, we decided to take the option that says that a Thief can equip Swords, Thieves and Bows.
+
+#### Logic and operation of the program
+We keep the model logic of the Homework 1, but add some new classes to implement the new features. Among them we have:
+- **CharacterAttributeSet and WeaponAttributeSet**. To maintain the set of possible attributes and values of a weapon we decided to create two small classes ``CharacterAtributeSet`` and ``WeaponAttributeSet``that will implement this objective. We  preferred that over using a dictionary or a list because if not we would have to use Object type to store things of different types - such as name and life points, for example - and then downcast them when asking for those attributes. In addition, if we decided to use a dictionary, we would have to use Strings ("Name", "MaxHP", etc)  as keys, while on the other hand the lists would not have a way to indicate what they are keeping corresponds to - so we would have to set an agreement of the order in which they keep things (like, for example, first value is name, second is maxHP, etc). This would introduce a lot of fragility to the code, so adding a class that met the goal via getters without the need for downcasting was the evaluated as the best option.
+- **GameState**. This feature was already explained in the previous section. Broadly speaking, the controller will be able to receive messages that effect the requested characteristics at any time, but they will only take effect if its gameState instance variable has the correct value. Example: The ``activeCharacterNormalAttackSelectedCharacter()`` message will only take effect if the value of ``gameState``is an instance of ``Active``.
+- **Characters and weapons Factories**. In order to simplify the addition of characters with the same characteristics (eg a group of Globins) we decided to implement the FactoryPattern. The controller configures its factories by choosing a particular one through the variables `` SelectedCharacterFactory`` and ``SelectedWeaponFactory`` and the methods ``SelectCharacterFactory()``, ``SelectWeaponFactory()`` and then he sets the parameters using the methods ``SetSelectedCharacterFactory/Attribute/(int newValue)`` and ``SetSelectedWeaponFactory/Attribute/(int newValue)``. After that, to create a character, its enought to call the corresponding method: ``Add/CharacterType/()``. Player Characters will be added only to playerParty, and CPU Characters to CPUParty. **Since there is no method to add a character by receiving it as parameter, there we will never exist a character in the wrong party.** This is one of the benefits of this implementation.
+    - Factory pattern makes our code more robust, less coupled and easy to extend, in exchange for adding a considerable number of methods and making the code somewhat more complex, but we decided that the benefits are greater.
+- **NullWeapon and NullCharacters**. This feature was also mentioned before, but we will explain it briefly. ``NullWeapon``'s are weapons with `0` power and weight whose name is the empty string, and which can be equipped to any character. The ``NullCharacter`` is analogous. The null weapon extends from magic weapons, so that it can behave like ``IMagicWeapon`` and `IWeapon`. The null character extends from the PlayerCharacter, so that it can behave as ``IPlayerCharacter`` and ``Character``. We do not need a null character that behaves like ``ICPUCharacter`` as we don't have anything of the SelectedCPUCharacter style. This is one of the implementation benefits that would be lost if we specify ``getAttribute()``.
+- **Masterminds**. We added a new group of classes to the game model, the Masterminds. They represents the player (Class ``PlayerMastermind``) and the CPU (Class ``CPUMastermind``) in the game. They extends from ``AbstractMastermind``,which in time implements ``IMastermind``. Its existence is mainly due to the search to delegate tasks that are presented as duties of the controller in other classes that are specifically created for that purpose, and this way the controller will requests they from them when necessary. The inspiration comes from the fact that it seemed strange that the instance variables ``CPUParty``, ``PlayerParty``, ``PlayerInventory``, etc, belonged to the Controller and not to an object of type Player / CPU. In this way we are also adding **extensibility** to the code and respecting the **single responsibility** principle.
+- **Observer for Turn's end and Character's Death**. This is probably the most complex part of the code so far. In order to avoid busy-waitings while waiting for the end of a turn or the death of a character, we decided to implement the ``GameController`` as an **Observer** of properties of their Masterminds in play, who in turn are Observers of the characters in their parties. 
+   - Once a character dies, it will fire an event that will be notified to its Mastermind, which will keep the count of his living characters and will notify to the GameController of the dead The player will notify the controller of the death so that he removes it from the queue. 
+   -  Once a character attacks, it will fire an event that will be notified to its Mastermind, which in time will notify to the GameController so he ends the character's turn by sending to the active character the order of wait for his new turn and taking a new character from the queue, setting him as activeCharacter and waiting for his action.
+   
+ It is important to note that a small change was made to the turns system with respect to the project statement. The statement indicates that the first character is taken from the queue **without removing it**, the controller **waits for an action**, and **then it removes the character from the queue**. If there are more characters in the queue, it **iterates**. Otherwise, it waits for new characters in the queue. We choose to **remove the character at the top of the queue from the first step**, **keep it** in an activeCharacter variable, **wait for his action** and **iterate**. This is to take advantage of the benefits of the ``take ()`` method of a BlockingQueue, which allows us to fully comply with the empty-queue-point of the project: ''If there is no character in the queue, wait until there is one available''. If instead of taking it out from the queue we just grab it, we would have to use ``seek()``, which would eventually grab null characters that could break the program or lead to bugs. To avoid this, to use a busy-waiting loop that constantly checks if there are any characters in the queue, which would not be a good practice in terms of efficiency. Instead, if we accept to remove the characters from the queue from the beginning, we can use the take () method that comes implemented with the feature of sending the thread to sleep until something enters the queue, at which time broadcast is launched and the flow will continue. 
+ - Another possibility was to create an ''added character'' event that reports directly to the controller, but it was a too complex and unnecessary tool considering that we already had ``take()``. For the nature of the problem, we would have get the same result but with with a much more complicated code, and equivalent to use ``take()``in terms of efficiency. 
+ 
+The above concludes the new features of the logic of our program. Everything else remains exactly the same as Homework 1.
+
+### UML Diagrams
+
+To date the UML diagrams of the model looks like this (showing only class names):
+
+Figure 3. Homework 2 Final Delivery Model UML Diagram
+
+![Figure 3. Homework 2 Final Delivery Model UML Diagram](/images/UML_T2_Model.png)
+
+Figure 4. Homework 2 Final Delivery State UML Diagram
+
+![Figure 4. Homework 2 Final Delivery State UML Diagram](/images/UML_T2_State.png)
+
+Figure 5. Homework 2 Final Delivery Factory UML Diagram
+
+![Figure 5. Homework 2 Final Delivery Factory UML Diagram](/images/UML_T2_Factory.png)
+
+Figure 6. Homework 2 Final Delivery Controller UML Diagram
+
+![Figure 6. Homework 2 Final Delivery Controller UML Diagram](/images/UML_T2_Controller.png)
+
+To see the complet UML Diagram, check for **UML_Model.pdf**, **UML_State.pdf**, **UML_Factory.pdf**, **UML_Controller.pdf** in the root folder.
+
+---
+### Partial Delivery 3 & 4
 
 All the features that are not required yet are removed as they were probably wrong  (or at least Slater said that on U-cursitos). So far the code contemplates:
 - The same class hierarchy described in Homework 1
@@ -109,6 +196,7 @@ In addition to what is requested by the statement, we added some fields that all
 #### UML Diagram
 To date the UML diagram of the model looks like this (showing only class names):
 
+Figure 2. Homework 1 Final Delivery UML Diagram
 ![Figure 2. Homework 1 Final Delivery UML Diagram](/images/UML_T1_Final_Delivery.png)
 
 To see the complet UML Diagram, check for **UML.pdf** in the root folder.
@@ -172,6 +260,7 @@ The code provided by the teaching team corresponds to a low-level hierarchy usin
 
 The UML diagram of the initial state is presented below:
 
+Figure 1. Initial state UML Diagram
 ![Figure 1. Initial state UML Diagram](/images/initial_state.png)
 
 We identified several problems: Enemies inherit from the `AbstractCharacter` class, which in turn implements the `equip` and `equippedWeapon` methods, but from their description they cannot use or carry weapons. This first problem immediately breaks the **Liskov substitution principle.**
@@ -218,4 +307,5 @@ Although it is not part of what was requested for this installment, we have crea
 - Weapons do not change type
 - Spells do not change type
 - There is only one type of enemy, i.e, all enemies have the same functionalities.
+
 

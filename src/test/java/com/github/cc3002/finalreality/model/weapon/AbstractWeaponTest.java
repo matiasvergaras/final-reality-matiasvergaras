@@ -3,7 +3,10 @@ package com.github.cc3002.finalreality.model.weapon;
 import com.github.cc3002.finalreality.model.abstractModelTest;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.NullCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
+import org.junit.jupiter.api.Assertions;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,15 +32,24 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
      */
     protected void checkConstruction(final IWeapon expectedWeapon,
                                      final IWeapon testEqualWeapon,
-                                     final IWeapon sameClassDifferentWeapon,
-                                     final IWeapon differentWeapon) {
+                                     final IWeapon sameClassDifferentName,
+                                     final IWeapon sameClassDifferentWeight,
+                                     final IWeapon sameClassDifferentPower,
+                                     final IWeapon differentClass) {
+        assertEquals(expectedWeapon, expectedWeapon);
         assertEquals(expectedWeapon, testEqualWeapon, "expectedWeapon differs from EqualWeapon.");
-        assertNotEquals(sameClassDifferentWeapon, testEqualWeapon, "sameClassDifferentWeapon equals EqualWeapon.");
-        assertNotEquals(testEqualWeapon, differentWeapon, "EqualWeapon equals differentWeapon.");
-        assertEquals(expectedWeapon.hashCode(), testEqualWeapon.hashCode(), "expectedWeapon hashcode differs" +
-                "from EqualWeapon hashcode.");
-        assertNotEquals(expectedWeapon.hashCode(), differentWeapon.hashCode(), "expectedWeapon hashcode " +
-                "equals differentWeapon hashcode.");
+        assertNotEquals(sameClassDifferentName, expectedWeapon);
+        assertNotEquals(sameClassDifferentWeight, expectedWeapon);
+        assertNotEquals(sameClassDifferentPower, expectedWeapon);
+        assertNotEquals(testEqualWeapon, differentClass);
+        assertEquals(expectedWeapon.hashCode(), testEqualWeapon.hashCode());
+        assertNotEquals(expectedWeapon.hashCode(), sameClassDifferentName.hashCode());
+        assertNotEquals(expectedWeapon.hashCode(), sameClassDifferentWeight.hashCode());
+        assertNotEquals(expectedWeapon.hashCode(), sameClassDifferentPower.hashCode());
+        assertNotEquals(expectedWeapon.hashCode(), differentClass.hashCode());
+
+
+
 
     }
 
@@ -52,16 +64,8 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
     protected void checkEquipUnequip(IWeapon weapon,
                                      IPlayerCharacter characterA,
                                      IPlayerCharacter characterB) {
+        assertFalse(characterA.isEquipped(), "Character 'isEquipped' attribute started as true");
         characterA.equipWeapon(weapon);
-        assertEquals(characterA.getEquippedWeapon(), weapon, "Weapon was not equipped successfully.");
-        assertEquals(weapon.getOwner(), characterA, "Weapon owner was not set successfully.");
-        characterB.equipWeapon(weapon);
-        assertNull(characterA.getEquippedWeapon(), "Weapon was not unequipped when tried to equip to another" +
-                "character.");
-        assertEquals(characterB.getEquippedWeapon(), weapon, "Weapon was not equipped successfully when " +
-                "tried to equip from another character.");
-        assertEquals(weapon.getOwner(), characterB, "Weapon owner was not set successfully when tried to" +
-                "equip from another character.");
     }
 
     /**
@@ -74,9 +78,9 @@ public abstract class AbstractWeaponTest extends abstractModelTest {
                                              IPlayerCharacter character) {
         weapon.setWeaponFree();
         character.equipWeapon(weapon);
-        assertNull(weapon.getOwner(), "Weapon was not supposed to be equipped, but it got an owner.");
-        assertNull(character.getEquippedWeapon(), "Character was not supossed to be equipped with this " +
-                "weapon, but he got an equippedWeapon.");
+        assertEquals(weapon.getOwner(), new NullCharacter(), "Weapon was not supposed to have an owner.");
+        Assertions.assertEquals(character.getEquippedWeapon(), new NullWeapon(), "Character was not supossed " +
+                "to be equipped with a not null weapon.");
     }
 
     /**

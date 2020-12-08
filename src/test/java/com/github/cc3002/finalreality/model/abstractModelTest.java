@@ -1,11 +1,15 @@
 package com.github.cc3002.finalreality.model;
+import com.github.matiasvergaras.finalreality.factory.Characters.EnemyFactory;
+import com.github.matiasvergaras.finalreality.factory.Characters.KnightFactory;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
+import com.github.matiasvergaras.finalreality.model.character.player.NullCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
 import com.github.matiasvergaras.finalreality.model.character.player.magic.WhiteMage;
 import com.github.matiasvergaras.finalreality.model.character.player.normal.Engineer;
 import com.github.matiasvergaras.finalreality.model.character.player.normal.Knight;
 import com.github.matiasvergaras.finalreality.model.character.player.normal.Thief;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.normal.Bow;
@@ -16,14 +20,15 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * Class to test all model features.
+ * Class to hold all the common features for model testing.
  * Set ups the basics for every model tests.
  * @author Matias Vergara Silva.
+ * @since Homework 1
  */
 public abstract class abstractModelTest {
 
-    //--------------------------------------SET-UP OF SOME VARIABLES--------------------------------------------------//
-    protected BlockingQueue<ICharacter> turns;
+    //--------------------------------------SET-UP OF ATTRIBUTES VARIABLES---------------------------------------------//
+    protected LinkedBlockingQueue<ICharacter> turns;
     protected int DAMAGE = 240;
     protected int POWERFUL_DAMAGE=310;
     protected int WEAK_DAMAGE= 5;
@@ -88,6 +93,13 @@ public abstract class abstractModelTest {
     protected Knight deadKnight = new Knight(turns, "Zombie Knight", 0, 200);
     protected Enemy deadEnemy= new Enemy(turns, "Zombie Enemy", 0, 0, 100, 100);
 
+    //--------------------------------------SET-UP OF SOME FACTORIES--------------------------------------------//
+    protected KnightFactory knightFactory = new KnightFactory(turns, 200, 120);
+    protected EnemyFactory enemyFactory = new EnemyFactory(turns, 200, 120, 12, 114);
+
+    //-----------------------------------------NULL PATTERN OBJECTS---------------------------------------------//
+    protected NullWeapon nullWeapon = new NullWeapon();
+    protected NullCharacter nullCharacter = new NullCharacter();
 
     /*
      * Basic set-up : A turns queue

@@ -1,6 +1,5 @@
 package com.github.cc3002.finalreality.model.character;
 import com.github.matiasvergaras.finalreality.model.character.cpu.ICPUCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.magic.IMagicCharacter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

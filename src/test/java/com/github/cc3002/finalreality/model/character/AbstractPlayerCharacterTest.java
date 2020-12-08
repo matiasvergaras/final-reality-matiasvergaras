@@ -1,16 +1,10 @@
 package com.github.cc3002.finalreality.model.character;
 
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.magic.IMagicCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Axe;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Bow;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Knife;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Sword;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -37,12 +31,26 @@ abstract public class AbstractPlayerCharacterTest extends AbstractCharacterTest 
     protected void checkEquipWeapon() {
         for (var character :
                 testPlayerCharacters) {
-            assertNull(character.getEquippedWeapon(), "Character started equipped, but that is not right.");
+            assertEquals(character.getEquippedWeapon(), new NullWeapon(), "Character started equipped" +
+                    "with something different from a NullWeapon.");
             for (var weapon : testWeapons) {
                 character.equip(weapon);
                 assertEquals(weapon, character.getEquippedWeapon(), "Weapon was not equipped successfully.");
             }
         }
+    }
+
+    /**
+     * Checks that the AttackPower attribute is calculated correctly:
+     * It has to start at 0 if the playerCharacter does not have a weapon,
+     * and be equal to the weapon power if the character is equipped.
+     * @param character         The character to test
+     * @param weapon            The weapon to equip
+     */
+    protected void checkGetAttackPower(IPlayerCharacter character, IWeapon weapon){
+        assertEquals(character.getAttackPower(), 0);
+        character.equipWeapon(weapon);
+        assertEquals(character.getAttackPower(), weapon.getPower());
     }
 
 

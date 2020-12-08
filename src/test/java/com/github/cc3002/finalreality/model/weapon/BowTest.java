@@ -28,7 +28,9 @@ public class BowTest extends AbstractWeaponTest {
         exampleThief.equipWeapon(exampleBow);
         checkConstruction(new Bow(BOW_NAME, DAMAGE, WEIGHT),
                 exampleThief.getEquippedWeapon(),
-                new Bow(BOW_NAME, DAMAGE * 2, WEIGHT),
+                new Bow("Another", DAMAGE, WEIGHT),
+                new Bow(BOW_NAME, DAMAGE, WEIGHT*2),
+                new Bow(BOW_NAME, DAMAGE*2, WEIGHT),
                 new Axe(AXE_NAME, DAMAGE, WEIGHT));
     }
 

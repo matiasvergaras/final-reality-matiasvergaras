@@ -73,5 +73,13 @@ class BlackMageTest extends AbstractMagicCharacterTest {
 
     }
 
+    /**
+     * Checks that the attack power attribute is calculated correctly.
+     */
+    @Test
+    void attackPowerTest(){
+        checkGetAttackPower(exampleBlackMage, exampleStaff);
+    }
+
 }
 

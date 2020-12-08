@@ -1,7 +1,5 @@
 package com.github.cc3002.finalreality.model.interaction;
 
-import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
-import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

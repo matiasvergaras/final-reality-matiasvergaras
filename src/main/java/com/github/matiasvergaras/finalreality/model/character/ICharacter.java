@@ -1,5 +1,9 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
+import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
+
+import java.beans.PropertyChangeSupport;
+
 /**
  * This represents a character from the game.
  * A character can be controlled by the player or by the CPU (an enemy).
@@ -14,6 +18,26 @@ public interface ICharacter {
      * seconds before adding the character to the queue.
      */
     void waitTurn();
+
+    /**
+     * {@inheritDoc}
+     * @param character         The character that will receive the attack.
+     */
+    void normalAttack(ICharacter character);
+
+    /**
+     * Receive a non-magic attack
+     *
+     * @param character         The ICharacter that is performing the attack.
+     */
+    void receiveNormalAttack(ICharacter character);
+
+    /**
+     * Returns the attack power of this unit calculated based on its type:
+     * <p> With the power for the cpuCharacters </p>
+     * <p> With the weapon for the playerCharacters </p>
+     */
+    int getAttackPower();
 
     /**
      * A method to get the name of this character.
@@ -57,6 +81,27 @@ public interface ICharacter {
      */
     void reduceHP(double diff);
 
+    /**
+     * To get all the attributes of this character together.
+     * @return An ArrayList of Integer whit the attributes in the following
+     * order: maxHP, currentHP, DP, maxMana (if applicable), currentMana (if applicable)
+     */
+    CharacterAttributeSet getAttributes();
+
+    /**
+     * Gives the PropertyChangeSupport of Character's death,
+     * in order to be able to assign listeners to it outside of this class.
+     * @return propertyChangeSupport deadCharacter.
+     */
+    public PropertyChangeSupport getDeadCharacter();
+
+
+    /**
+     * Gives the PropertyChangeSupport of the end of character's turn,
+     * in order to be able to assign listeners to it outside of this class.
+     * @return propertyChangeSupport endTurn
+     */
+    public PropertyChangeSupport getEndTurn();
 
 }
 

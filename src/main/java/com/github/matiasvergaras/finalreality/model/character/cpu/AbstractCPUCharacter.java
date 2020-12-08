@@ -1,9 +1,11 @@
 package com.github.matiasvergaras.finalreality.model.character.cpu;
 
+import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
+
+import java.beans.PropertyChangeSupport;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +19,9 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
 
     private final int weight;
     private final int power;
-    private String state;
+
+    private PropertyChangeSupport deadCharacter = new PropertyChangeSupport(this);
+
 
     /**
      * Basic constructor for an Enemy Character.
@@ -36,7 +40,6 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
         super(turnsQueue, name, HP, DP);
         this.weight = weight;
         this.power = power;
-        this.state = "NORMAL";
     }
 
     /**
@@ -48,7 +51,6 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
         scheduledExecutor
                 .schedule(super::addToQueue, this.getWeight() / 10, TimeUnit.SECONDS);
     }
-
 
     /**
      * Get the power of this enemy.
@@ -62,25 +64,12 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
 
     /**
      * {@inheritDoc}
+     *
      */
-    @Override
-    public void normalAttack(IPlayerCharacter character) {
-        if( this.isAlive()) {
-            if (character.isAlive()) {
-                character.receiveNormalAttack(this);
-            }
-        }
+    public int getAttackPower(){
+        return this.getPower();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void receiveNormalAttack(IPlayerCharacter character) {
-        if (character.getEquippedWeapon().getPower()>this.getDP()) {
-            reduceHP(character.getEquippedWeapon().getPower() - getDP());
-        }
-    }
 
     /**
      * {@inheritDoc}
@@ -89,6 +78,17 @@ public abstract class AbstractCPUCharacter extends AbstractCharacter implements 
      */
     public int getWeight() {
         return weight;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @return An ArrayList of Integer with the attributes of this character all together,
+     * in the following order: maxHP, currentHP, DP, weight, power.
+     */
+    public CharacterAttributeSet getAttributes(){
+        return new CharacterAttributeSet(this.getName(), this.getMaxHP(), this.getCurrentHP(), this.getDP(), this.getWeight(),
+                this.getPower());
     }
 
 }

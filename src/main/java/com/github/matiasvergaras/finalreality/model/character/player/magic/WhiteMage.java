@@ -42,6 +42,9 @@ public class WhiteMage extends AbstractMagicCharacter {
         if(this.isAlive()) {
             weapon.equipToWhiteMage(this);
         }
+        else{
+            equipNull();
+        }
     }
 
     /**

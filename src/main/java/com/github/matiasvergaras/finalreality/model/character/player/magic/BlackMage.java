@@ -39,6 +39,9 @@ public class BlackMage extends AbstractMagicCharacter {
         if(this.isAlive()){
             weapon.equipToBlackMage(this);
         }
+        else{
+            equipNull();
+        }
     }
 
     /**

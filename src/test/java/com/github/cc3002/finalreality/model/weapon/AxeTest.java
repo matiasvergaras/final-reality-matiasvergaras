@@ -28,7 +28,9 @@ public class AxeTest extends AbstractWeaponTest {
         exampleKnight.equipWeapon(exampleAxe);
         checkConstruction(new Axe(AXE_NAME, DAMAGE, WEIGHT),
                 exampleKnight.getEquippedWeapon(),
-                new Axe("Another", DAMAGE * 2, WEIGHT),
+                new Axe("Another", DAMAGE, WEIGHT),
+                new Axe(AXE_NAME, DAMAGE, WEIGHT*2),
+                new Axe(AXE_NAME, DAMAGE*2, WEIGHT),
                 new Sword(SWORD_NAME, DAMAGE, WEIGHT));
     }
 
@@ -40,6 +42,9 @@ public class AxeTest extends AbstractWeaponTest {
     void equipUnequipTest() {
         checkEquipUnequip(exampleAxe, exampleKnight,
                 exampleEngineer);
+        exampleAxe.setWeaponFree();
+        checkEquipUnequip(exampleAxe, exampleEngineer,
+                exampleKnight);
     }
 
     /**

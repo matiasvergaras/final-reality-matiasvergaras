@@ -1,8 +1,10 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
 
+import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.concurrent.BlockingQueue;
 
 /**
@@ -38,11 +40,20 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter imp
     public int getCurrentMana() {
         return currentMana;
     }
-    
 
-    //Magic attacks not implemented yet.
-    //public void reduceMana(int diff) {
-    //    currentMana -= diff;
-    //}
+    /**
+     * To get the attributes of this character,
+     * adding the maxMana and the currentMana to those of
+     * the parent class.
+     * @return An ArrayList of Integer whit the attributes in the following
+     * order: maxHP, currentHP, DP, maxMana, currentMana
+     */
+    @Override
+    public CharacterAttributeSet getAttributes(){
+        return new CharacterAttributeSet(this.getName(), this.getMaxHP(), this.getCurrentHP(), this.getDP(), this.getMaxMana(),
+                this.getCurrentMana(), this.getEquippedWeapon());
+    }
+
+
 
 }
