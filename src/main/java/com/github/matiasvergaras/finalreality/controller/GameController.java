@@ -53,9 +53,10 @@ public class GameController {
     private IGameState gameState;
 
     /**
-     *
-     * Constructor of the GameController.
-     *
+     * Constructor of the GameController
+     * @param playerName            A String representing the name that the player will have.
+     * @param CPUName               A String representing the name that the CPU will have.
+     * @param charactersQuantity    An int for the number of characters that the player will have.
      */
     public GameController(String playerName, String CPUName, int charactersQuantity){
         this.turns = new LinkedBlockingQueue<>();
