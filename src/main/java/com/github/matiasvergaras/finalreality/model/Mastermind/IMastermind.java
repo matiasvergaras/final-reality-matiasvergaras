@@ -58,12 +58,6 @@ public interface IMastermind {
     void makeNormalAttack(ICharacter character, ICharacter target);
 
     /**
-     * Makes a character waits for his new turn.
-     * @param character     The character which will wait for a new turn.
-     */
-    public void makeCharacterWait(ICharacter character);
-
-    /**
      * Gives the actual player name.
      * @return  The name of the Mastermind.
      */
