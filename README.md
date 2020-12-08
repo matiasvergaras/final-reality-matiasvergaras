@@ -115,12 +115,17 @@ The above concludes the new features of the logic of our program. Everything els
 ### UML Diagrams
 
 To date the UML diagrams of the model looks like this (showing only class names):
+
+Figure 3. Homework 2 Final Delivery Model UML Diagram
 ![Figure 3. Homework 2 Final Delivery Model UML Diagram](/images/UML_T2_Model.png)
 
+Figure 4. Homework 1 Final Delivery State UML Diagram
 ![Figure 4. Homework 1 Final Delivery State UML Diagram](/images/UML_T2_State.png)
 
+Figure 5. Homework 1 Final Delivery Factory UML Diagram
 ![Figure 5. Homework 1 Final Delivery Factory UML Diagram](/images/UML_T2_Factory.png)
 
+Figure 5. Homework 1 Final Delivery Controller UML Diagram
 ![Figure 5. Homework 1 Final Delivery Controller UML Diagram](/images/UML_T2_Controller.png)
 
 To see the complet UML Diagram, check for **UML_Model.pdf**, **UML_State.pdf**, **UML_Factory.pdf**, **UML_Controller.pdf** in the root folder.
@@ -187,6 +192,7 @@ In addition to what is requested by the statement, we added some fields that all
 #### UML Diagram
 To date the UML diagram of the model looks like this (showing only class names):
 
+Figure 2. Homework 1 Final Delivery UML Diagram
 ![Figure 2. Homework 1 Final Delivery UML Diagram](/images/UML_T1_Final_Delivery.png)
 
 To see the complet UML Diagram, check for **UML.pdf** in the root folder.
@@ -250,6 +256,7 @@ The code provided by the teaching team corresponds to a low-level hierarchy usin
 
 The UML diagram of the initial state is presented below:
 
+Figure 1. Initial state UML Diagram
 ![Figure 1. Initial state UML Diagram](/images/initial_state.png)
 
 We identified several problems: Enemies inherit from the `AbstractCharacter` class, which in turn implements the `equip` and `equippedWeapon` methods, but from their description they cannot use or carry weapons. This first problem immediately breaks the **Liskov substitution principle.**
