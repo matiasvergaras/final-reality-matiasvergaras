@@ -4,6 +4,7 @@ ChangeLog
 
 Version 4.0
 -----------
+- (RC.1) New stable version. Added GameController with 3 main states: Initializing, Active, Finished. 
 - (A.2) Added explanation messages to more complex tests.
 - (A.1) Removed all implementations that are not yet required. Code cleaning. Normal attacks and state of life.
 
