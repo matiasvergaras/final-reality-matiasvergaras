@@ -47,8 +47,59 @@ enemies controlled by the computer.
 # #Homework 2 
 
 ---
+### Partial Delivery 5
 
-### Partial Delivery 2 & 3
+The Partial Delviery 5 is the final delivery of the Homework 2. The goal is to implement the Game Controller, which will be an intermediary between the user and the model objects, and whose purpose will be to controll all the messages that pass trough him, manipulating and redirecting those that are necessary. More specifically, the controller has to be able to:
+- Create and assign objects of the model (characters, enemies, weapons, etc.),
+- Know which are the player characters and what are their attributes,
+- Know which are the CPU characters and what are their attributes,
+- Manipulate the player inventory,
+- Equip a weapon to a character,
+- Make a character attack another.
+
+Additionally, two more complex tasks that the controller must fulfill are:
+- Know when a character's turn begins and ends,
+- Know inmediately if the player won or lost the game. A player wins when all enemies are knocked out and loses if their characters are knocked out.
+
+We will follow the same format as Release 1: Execution Instructions, assumptions made up to this point, then we will explain the logic and operation added to cover the new features requested, and finally we will present the new UML diagrams.
+
+#### Execution Instructions
+As for the Homework 1,  game is still under development, so there are no further execution instructions. However, it is possible to run tests that show that the program logic works as expected.
+
+To do this use IntelliJ's "Run Tests" option, or compile individual tests using ``cp`` and run them with the ``org.junit.runner.JUnitCore`` flag as shown on [this StackOverFlow thread](https://stackoverflow.com/questions/2235276/how-to-run-junit-test-cases-from-the-command-line).
+
+#### Assumptions made so far
+New assumptions:
+- Weapons and character's name will not change with time. That means, those variables can be implemented as finals. 
+- The name of the user, the number of characters that he must have and the name of the stage to be played (name of the CPU) will be delivered as parameters to the GameController.
+- **The Game will have 3 main states: Initializing, Active, and Finished.**
+-- In **Initializing mode**, the user ask the Controller to set's up his team, the CPU team and the weapons that are going to be able in the fight. He is able to ask for new characters, new weapons, adding them to its party/inventory or removing them as well, and the same for the CPU Party. The controller, on the other hand, will wait for the player's team to have the indicated number of characters (which is delivered when creating a new GameController), and will start the game if this condition is met and it receives the ``StartGame()`` message. If the user has already added as many characters to their party as the condition allows, adding more will have no effect, so if he wants to replace a character, he will have to remove him first.
+- - In **Active mode**, the user sends messages to the Controller to fight against the CPU. In this state the player can equip and unequip characters at will, however, he cannot request new characters or weapons. In this state the controller will be attentive to the change of two properties: the end of a character's turn, which occurs when the active character makes an attack, and the death of a character, which can eventually lead to the victory of an opponent. - Which will induce the next state -.
+- - In **Finished mode**,  the user only has three options: see how the game turned out once the game ended, sending the ``selectCharacter ()``, ``selectWeapon ()`` and ``getSelectedCharacter / WeaponAttributes()`` messages to the controller, ask for who was the winner through getWinner () controller's method, or launch the initialization of a new game, requesting it from the gameController through the InitializeGame () method.
+- - It is worth mentioning that the decision to implement these states is due to the fact that, until now, we did not have a way to prevent the controller from taking actions at inappropriate times and that could break the logic of the game, such as adding new characters or weapons while the fight is in progress.
+- **The player inventory will not have a space limit**. It will be infinite for now. 
+- A player character who does not have a weapon can remain in the party, but **cannot enter the turn list until he obtain a weapon**. This decision is because otherwise the player could "cheat" by leaving a character without a weapon who will take the turn first, then equip it on the same turn (since equipping does not end the turn), unequip the rest of its team and then attack. 
+- **If in any turn a character dies, he will be removed from the queue, but  will remain in his corresponding party (as a dead character)**. This decision is due to two reasons: The first, that perhaps in the future we will want to enable resurrection spells or objects with these properties. The second, to avoid that the condition that the player must always have the same number of characters in his group from being broken. 
+- - It is important to note that since a character is ordered to wait for his next turn only when his current turn ends, there is no need to worry about the possibility of a dead character taking the turn eventually. This will never happen, thanks to the way it was implemented: when a character dies, he is removed from the queue, so he will not end a turn never again. 
+- All factories will have the possibilty to set a new value for every attribute of characters/weapons, even if their products do not use them. This is to be able to have a  ``selectedCharacterFactory`` and a ``selectedWeaponFactory``  which is configured using setSelectedFactoryAttribute (int newValue) methods instead of overloading the controller with specific methods to configure each factory.
+- To get the GameController to have a generic way of asking for the attributes of a model entity without the need to upcast / downcast, it will be accepted that a weapon / character that does not have certain property, returns ``0`` when the controller request for his attributes via 'getAttributes ()'. This does not mean that the character has the attribute - in fact, it does not. For example: if the ``selectedPlayerCharacter`` is a Knight, the message ``getSelectedPlayerCharacterMana()`` will return ``0``.
+
+
+
+Assumptions of Partial Delivery 2 that remains in this delivery:
+- Characters and weapons do not change type.
+- Weapons can be equipped to only one character at a time. If the player tries to equip a weapon that is already equipped to another character, the weapon user is updated, so the first one ends without equipped weapon.
+- In the future, we may be interested in add another type of Enemy (So we abstracted all unspecific methods of Enemy in an AbstractCPUCharacter abstract class).
+- We can identify characters by their name, and that works both for CPU and Player characters. There will not be characters with same name, even if they are from different types (Attention: this point is very important, because hashcode only takes in count the names, so if there are a BlackMage and an Enemy with the same name, they will be equals).
+- Initially we considered adding the maximum HP and maximum DP to the features that determine a character, however, we will consider that in the future the characters could 'level up' and increase these characteristics, so the key will be only the name.
+- Related to the character equipment, we decided to take the option that says that a Thief can equip Swords, Thieves and Bows.
+
+
+
+
+
+---
+### Partial Delivery 3 & 4
 
 All the features that are not required yet are removed as they were probably wrong  (or at least Slater said that on U-cursitos). So far the code contemplates:
 - The same class hierarchy described in Homework 1
@@ -218,4 +269,6 @@ Although it is not part of what was requested for this installment, we have crea
 - Weapons do not change type
 - Spells do not change type
 - There is only one type of enemy, i.e, all enemies have the same functionalities.
+
+
 
