@@ -12,10 +12,10 @@ package com.github.matiasvergaras.finalreality.model;
  * @author Matías Vergara Silva
  */
 public class WeaponAttributeSet {
-    private String name;
-    private int power;
-    private int weight;
-    private int magicPower;
+    private final String name;
+    private final int power;
+    private final int weight;
+    private final int magicPower;
 
     /**
      * Constructor of an AttributeSet for a normal weapon.
@@ -28,7 +28,8 @@ public class WeaponAttributeSet {
     }
 
     /**
-     * Construtor of an AttributeSet for a magic weapon.
+     * Constructor of an AttributeSet for a magic weapon.
+     * Creates a new WeaponAttributeSet.
      */
     public WeaponAttributeSet(String name, int power, int weight, int magicPower){
         this.name = name;

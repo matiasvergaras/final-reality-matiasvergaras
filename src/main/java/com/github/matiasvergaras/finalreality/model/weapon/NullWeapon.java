@@ -1,6 +1,5 @@
 package com.github.matiasvergaras.finalreality.model.weapon;
 
-import com.github.matiasvergaras.finalreality.model.WeaponAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.AbstractMagicWeapon;
 
@@ -12,6 +11,8 @@ import java.util.Objects;
  * null pointers in the game.
  * <p> A NullWeapon does not have a name, and its power,
  * weight and magicPower are 0. It can be equipped to any character. </p>
+ * @author Matías Vergara Silva
+ * @since Homework 2
  */
 public class NullWeapon extends AbstractMagicWeapon {
 
@@ -23,31 +24,56 @@ public class NullWeapon extends AbstractMagicWeapon {
         super("", 0, 0, 0);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param character the Knight to equip with this weapon.
+     */
     @Override
     public void equipToKnight(IPlayerCharacter character) {
         character.equip(this);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param character the Engineer to equip with this weapon.
+     */
     @Override
     public void equipToEngineer(IPlayerCharacter character) {
         character.equip(this);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param character the Thief to equip with this weapon.
+     */
     @Override
     public void equipToThief(IPlayerCharacter character) {
         character.equip(this);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param character the Black Mage to equip with this weapon.
+     */
     @Override
     public void equipToBlackMage(IPlayerCharacter character) {
         character.equip(this);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param character the White Mage to equip with this weapon.
+     */
     @Override
     public void equipToWhiteMage(IPlayerCharacter character) {
         character.equip(this);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param o
+     * @return  True if the given object is equal to this, false otherwise.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

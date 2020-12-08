@@ -1,6 +1,5 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.normal.Bow;
@@ -9,7 +8,6 @@ import com.github.matiasvergaras.finalreality.model.weapon.normal.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.LinkedBlockingQueue;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class InventoryAddTest {
     private GameController gameController;
-    private LinkedBlockingQueue<ICharacter> turns;
 
     /**
      * Basic set-up. An empty turns queue to add the copy of the weapons,
@@ -28,7 +25,6 @@ public class InventoryAddTest {
      */
     @BeforeEach
     void setUp(){
-        turns = new LinkedBlockingQueue<>();
         gameController = new GameController("Greg", "Guardiana", 9);
     }
 

@@ -13,7 +13,7 @@ public class PlayerGetterTest {
     /**
      * Test of player getters:
      * <p> PlayerName, as String </p>
-     * <p> CharantersQuantity of the player, as int. </p>
+     * <p> CharactersQuantity of the player, as int. </p>
      * @since Homework 2
      * @author Matías Vergara Silva
      */

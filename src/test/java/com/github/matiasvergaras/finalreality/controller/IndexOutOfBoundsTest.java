@@ -1,11 +1,14 @@
 package com.github.matiasvergaras.finalreality.controller;
 
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.NullCharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
@@ -27,20 +30,20 @@ public class IndexOutOfBoundsTest {
 
     @Test
     void SelectCharacterTest(){
-        assertNull(gameController.getSelectedCharacter());
+        assertEquals(gameController.getSelectedCharacter(), new NullCharacter());
         gameController.setSelectedCharacterFromPlayerParty(59423);
-        assertNull(gameController.getSelectedCharacter());
+        assertEquals(gameController.getSelectedCharacter(), new NullCharacter());
         gameController.setSelectedCharacterFromCPUParty(0);
-        assertNull(gameController.getSelectedCharacter());
+        assertEquals(gameController.getSelectedCharacter(), new NullCharacter());
     }
 
     @Test
     void SelectWeaponTest(){
-        assertNull(gameController.getSelectedWeapon());
+        assertEquals(gameController.getSelectedWeapon(), new NullWeapon());
         gameController.setSelectedWeapon(123821);
-        assertNull(gameController.getSelectedWeapon());
+        assertEquals(gameController.getSelectedWeapon(), new NullWeapon());
         gameController.setSelectedWeapon(0);
-        assertNull(gameController.getSelectedWeapon());
+        assertEquals(gameController.getSelectedWeapon(), new NullWeapon());
     }
 
     @Test

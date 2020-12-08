@@ -2,7 +2,6 @@ package com.github.matiasvergaras.finalreality.model.Mastermind;
 
 import com.github.matiasvergaras.finalreality.controller.DeathCharacterToMMHandler;
 import com.github.matiasvergaras.finalreality.controller.EndTurnCharacterToMMHandler;
-import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
 import java.beans.PropertyChangeEvent;
@@ -29,7 +28,7 @@ public abstract class AbstractMastermind implements  IMastermind{
      */
     public AbstractMastermind(String name){
         this.name = name;
-        this.party = new ArrayList<ICharacter>();
+        this.party = new ArrayList<>();
     }
 
     /**

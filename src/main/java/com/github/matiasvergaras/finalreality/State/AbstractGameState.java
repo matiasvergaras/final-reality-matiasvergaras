@@ -100,7 +100,7 @@ public abstract class AbstractGameState implements IGameState {
      * {@inheritDoc}
      */
     @Override
-    public void startWaitTurns(){
+    public void startWaitTurns() throws InterruptedException {
 
     }
 
@@ -284,7 +284,7 @@ public abstract class AbstractGameState implements IGameState {
      * {@inheritDoc}
      */
     @Override
-    public void removeSelectedChracterFromItsParty(){
+    public void removeSelectedCharacterFromItsParty(){
 
     }
 

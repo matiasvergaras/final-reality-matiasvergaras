@@ -179,6 +179,10 @@ public class attackTest {
         assertFalse(gc.isActive());
         //Adds a character to reach the condition and retry.
         gc.addKnightToPlayer("Vyrun");
+        gc.setSelectedCharacterFromPlayerParty(0);
+        gc.addAxeToInventory();
+        gc.setSelectedWeapon(0);
+        gc.equipSelectedWeaponToSelectedCharacter();
         gc.startGame();
         assertTrue(gc.isActive());
         // Select Kane as target.

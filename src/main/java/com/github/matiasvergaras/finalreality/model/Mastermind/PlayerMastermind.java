@@ -3,7 +3,6 @@ package com.github.matiasvergaras.finalreality.model.Mastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
 
 import java.util.ArrayList;
@@ -14,6 +13,8 @@ import java.util.Objects;
  * <p> Since the party and the inventory are of the player and not of the Controller, we decided to create this class
  * to hold it. </p>
  * <p> PlayerMastermind does have a name and a maximum number of characters. </p>
+ * @author Matías Vergara Silva
+ * @since Homework 2
  */
 public class PlayerMastermind extends AbstractMastermind {
     private ArrayList<IWeapon> inventory;
@@ -37,7 +38,6 @@ public class PlayerMastermind extends AbstractMastermind {
     @Override
     public void addToParty(ICharacter character){
         if(this.getPartySize()<this.characterQuantity){
-            IPlayerCharacter playerCharacter = (IPlayerCharacter) character;
             super.addToParty(character);
         }
     }

@@ -169,7 +169,7 @@ public class PlayerMastermindTest extends AbstractMastermindTest{
      * Test the PlayerMastermind's equip method with a party character but a weapon that is not in the inventory.
      */
     @Test
-    void UneffectiveWeaponEquipTest(){
+    void IneffectiveWeaponEquipTest(){
         PlayerMastermind player = (PlayerMastermind)this.player;
         player.addToParty(exampleKnight);
         player.equipCharacter(exampleAxe, exampleKnight);
@@ -177,11 +177,12 @@ public class PlayerMastermindTest extends AbstractMastermindTest{
         assertNull(exampleAxe.getOwner());
     }
 
+
     /**
      * Test the PlayerMastermind's equip method with an inventory weapon but a character that is not in the party.
      */
     @Test
-    void UneffectiveCharacterEquipTest(){
+    void IneffectiveCharacterEquipTest(){
         PlayerMastermind player = (PlayerMastermind)this.player;
         player.addToInventory(exampleAxe);
         player.equipCharacter(exampleAxe, exampleKnight);

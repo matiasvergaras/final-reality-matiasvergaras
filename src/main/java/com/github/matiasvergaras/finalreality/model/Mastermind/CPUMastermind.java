@@ -7,6 +7,8 @@ import java.util.Objects;
  * A class to hold all the behavior of a CPUMastermind
  * <p> Since the party is of the CPU and not of the Controller, we decided to create this class to hold it. </p>
  * <p> The name of the CPU Mastermind will be used to identify different game-levels or difficulty. </p>
+ * @author Matías Vergara Silva
+ * @since Homework 2
  */
 public class CPUMastermind extends AbstractMastermind {
 

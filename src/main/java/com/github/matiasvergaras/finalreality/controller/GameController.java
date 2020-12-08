@@ -10,6 +10,7 @@ import com.github.matiasvergaras.finalreality.model.Mastermind.CPUMastermind;
 import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.Mastermind.PlayerMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.NullCharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
@@ -21,15 +22,20 @@ import java.util.concurrent.LinkedBlockingQueue;
  * The controller will be an intermediary between the user and the objects of the model,
  * whose purpose will be to control all the messages that pass through it, manipulating
  * and redirecting those that are necessary.
- * <p> User will communicate with Controller, and Controller will do with
- * userPlayer/cpuPlayer. </p>
+ * <p> User will communicate with Controller, and Controller will do with the Masterminds
+ * CPUMastermind and PlayerMasterminds, which in time will communicate with the rest of the model. </p>
+ * <p> GameController will have a 3-States State Pattern. They are "Initializing", that defines
+ * the time when the user is setting-up the game, his characters, weapons, etc., "Active",
+ * that is when the player is fighting against the CPU, and "Finished", that is when the user is
+ * able to see the final state of the game and to know who wins. In finished mode the user is also
+ * able to config a new game, turning back onto Initializing State. </p>
  * @since Homework 2
  * @author Matías Vergara Silva
  */
 public class GameController {
-    private LinkedBlockingQueue<ICharacter> turns = new LinkedBlockingQueue<>();
-    private PlayerMastermind player;
-    private CPUMastermind cpu;
+    private LinkedBlockingQueue<ICharacter> turns;
+    private final PlayerMastermind player;
+    private final CPUMastermind cpu;
 
     private ICharacter selectedCharacter;
     private IWeapon selectedWeapon;
@@ -39,8 +45,8 @@ public class GameController {
     private ICharacter activeCharacter;
     private IMastermind winner;
 
-    private ArrayList<ICharacterFactory> characterFactories = new ArrayList<>();
-    private ArrayList<IWeaponFactory> weaponFactories = new ArrayList<>();
+    private ArrayList<ICharacterFactory> characterFactories;
+    private ArrayList<IWeaponFactory> weaponFactories;
 
     private DeathMMToGCHandler deadCharacterHandler = new DeathMMToGCHandler(this);
     private EndTurnMMToGCHandler endTurnHandler = new EndTurnMMToGCHandler(this);
@@ -48,10 +54,12 @@ public class GameController {
 
     /**
      *
-     * Real constructor of the GameController.
-     * Private to prevent access bypassing the UniqueInstance.
+     * Constructor of the GameController.
+     *
      */
     public GameController(String playerName, String CPUName, int charactersQuantity){
+        this.turns = new LinkedBlockingQueue<>();
+
         this.player = new PlayerMastermind(playerName, charactersQuantity);
         this.cpu = new CPUMastermind(CPUName);
 
@@ -63,9 +71,9 @@ public class GameController {
 
         this.selectedCharacterFactory = null;
         this.selectedWeaponFactory = null;
-        this.selectedCharacter = null;
-        this.activeCharacter = null;
-        this.selectedWeapon = null;
+        this.selectedCharacter = new NullCharacter();
+        this.activeCharacter = new NullCharacter();
+        this.selectedWeapon = new NullWeapon();
         this.winner = null;
         this.gameState = new Initializing(this);
         this.characterFactories = gameState.getCharacterFactories();
@@ -73,7 +81,7 @@ public class GameController {
     }
 
     /**
-     * Returns the queue
+     * Returns the turns queue
      *
      */
     public LinkedBlockingQueue<ICharacter> getTurns(){
@@ -94,11 +102,6 @@ public class GameController {
      */
     public void setState(AbstractGameState state){
         gameState = state;
-    }
-
-    public void activateGame() throws InterruptedException {
-        gameState.startWaitTurns();
-        gameState.startTurn();
     }
 
     /**
@@ -148,26 +151,16 @@ public class GameController {
     }
 
     /**
-     * For every characters, tries to send the message to start their wait to
-     * entry to the turns queue.
-     * <p> If the character is in playerParty and his equipped weapon is different
-     * from the NullWeapon, it will not receive any order. </p>
-     * <p> We will assume that the time between iterations is negligible compared
-     * to the time that the characters must wait to entry to the queue, so it does not
-     * really affect the game behavior. </p>
-     * <p> This method should to be called only by the StartGame Controller's method.
-     * We will set it has private to avoid as much as we can another calls. </p>
+     * Activates the turns.
+     * <p> First, it sets the game status to Active. </p>
+     * <p> Then, sends the message of start WaitTurn to every character in both teams. </p>
+     * <p> Finally, it send the message to start the first turn. </p>
+     * @throws InterruptedException
      */
-    private void startWaitTurns(){
-        for(ICharacter c: getPlayerParty()){
-            if(!c.getAttributes().getEquippedWeapon().equals(new NullWeapon())){
-                c.waitTurn();
-            }
-
-        }
-        for(ICharacter c: getCPUParty()){
-            c.waitTurn();
-        }
+    public void activateTurns() throws InterruptedException {
+        gameState.setActive();
+        gameState.startWaitTurns();
+        gameState.startTurn();
     }
 
     /**
@@ -183,19 +176,6 @@ public class GameController {
     }
 
     /**
-     * Gets the next characters in the queue and set him as activeCharacter
-     * (without removing it from the queue).
-     * <p> If the queue is empty, the take will send the thread to sleep until
-     * an element becomes available. </p>
-     * <p> This method throws InterruptedException hen the interruption occurs
-     * at time of waiting for an element to become available if queue is empty.</p>
-     * @throws InterruptedException
-     */
-    public void startTurn() throws InterruptedException {
-        gameState.startTurn();
-    }
-
-    /**
      * Gives the activeCharacter.
      * @return ICharacter activeCharacter.
      */
@@ -205,37 +185,47 @@ public class GameController {
 
     /**
      * This method receives a dead character and the number of characters
-     * remaining in his team after his death. If the dead character is
-     * in the turns queue, it will remove him, and if the remaining
-     * characters are 0, it calls to checkForWinner.
+     * remaining in his team after his death. It will remove him from
+     * the turns queue and if the remaining
+     * characters are 0, it will call to checkForWinner.
+     * <p> This method will be effective only in Active mode. </p>
      * @param deadCharacter     The character to remove from queue
      * @param charactersAlive   The number of remaining characters in the dead character's team.
      */
-    public void removeDeadCharacter(ICharacter deadCharacter, int charactersAlive){
+    public void removeDeadCharacterFromQueue(ICharacter deadCharacter, int charactersAlive){
         gameState.removeDeadCharacter(deadCharacter, charactersAlive);
     }
 
     /**
      * <p> Check which team was left without alive characters after the last death and assign
-     * the winner to the opposing player.</p>>
-     * <p> It will be private in order to make sure that it will be called only
-     * when some team has every member dead, condition trapped by removeCharacterFromQueue. </p>
+     * the winner to the opposing player.</p>
+     <p> This method will be effective only in Active mode. </p>
      */
     public void setWinner(IMastermind mastermind){
-
+        winner = mastermind;
     }
 
+    /**
+     * Returns the Player Mastermind.
+     * @return  PlayerMastermind player mastermind.
+     */
     public PlayerMastermind getPlayer(){
-        return this.player;
+        return player;
     }
 
+    /**
+     * Returns the CPU Mastermind.
+     * @return  CPUMastermind cpu mastermind.
+     */
     public CPUMastermind getCPU(){
-        return this.cpu;
+        return cpu;
     }
+
     /**
      * Returns the winner of the game.
      * <p> 3 Possible values: null if the game is still in progress,
      * player, cpu.</p>
+     *  <p> This method will be effective only in Finished mode. </p>
      * @return  IMastermind winner.
      */
     public IMastermind getWinner(){
@@ -322,6 +312,7 @@ public class GameController {
      * Request a new BlackMage character to the corresponding factory and tries to add it to the User's party
      * by calling to addToParty method.
      * <p> the character will have the default parameters, which can be modified using the set methods </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
      */
@@ -333,6 +324,7 @@ public class GameController {
      * Request a new WhiteMage character to the corresponding factory and tries to add it to the User's party
      * by calling to addToParty method.
      * <p> the character will have the default parameters, which can be modified using the set methods. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
      */
@@ -344,6 +336,7 @@ public class GameController {
      * Request a new Engineer character to the corresponding factory and tries to add it to the User's party
      * by calling to addToParty method.
      * <p> the character will have the default parameters, which can be modified using the set methods. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
      */
@@ -355,6 +348,7 @@ public class GameController {
      * Request a new Thief character to the corresponding factory and tries to add it to the User's party
      * by calling to addToParty method.
      * <p> the character will have the default parameters, which can be modified using the set methods. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
      */
@@ -366,6 +360,7 @@ public class GameController {
      * Request a new Knight character to the corresponding factory and and tries to add it to the User's party
      * by calling to addToParty method.
      * <p> the character will have the default parameters, which can be modified using the set methods. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
      */
@@ -376,6 +371,7 @@ public class GameController {
     /**
      * Request a new CPU character to the corresponding factory and add it to the CPU's party.
      * <p> the character will have the default parameters, which can be modified using the set methods. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param name      The name of the character to create.
      * @see ICharacterFactory
      */
@@ -386,6 +382,7 @@ public class GameController {
     /**
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
      * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @see IWeaponFactory
      */
     public void addBowToInventory(){
@@ -395,6 +392,7 @@ public class GameController {
     /**
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
      * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param name      The name of the weapon to create.
      * @see IWeaponFactory
      */
@@ -405,6 +403,7 @@ public class GameController {
     /**
      * Request a new Sword weapon to the corresponding factory and add it to the userPlayer inventory.
      * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @see IWeaponFactory
      */
     public void addSwordToInventory(){
@@ -415,6 +414,7 @@ public class GameController {
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
      * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param name      The name of the weapon to create.
      * @see IWeaponFactory
      */
@@ -425,6 +425,7 @@ public class GameController {
     /**
      * Request a new Axe weapon to the corresponding factory and add it to the userPlayer inventory.
      * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @see IWeaponFactory
      */
     public void addAxeToInventory(){
@@ -435,6 +436,7 @@ public class GameController {
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
      * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param name      The name of the weapon to create.
      * @see IWeaponFactory
      */
@@ -445,6 +447,7 @@ public class GameController {
     /**
      * Request a new Staff weapon to the corresponding factory and add it to the userPlayer inventory.
      * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @see IWeaponFactory
      */
     public void addStaffToInventory(){
@@ -455,6 +458,7 @@ public class GameController {
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
      * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param name      The name of the weapon to create.
      * @see IWeaponFactory
      */
@@ -465,6 +469,7 @@ public class GameController {
     /**
      * Request a new Knife weapon to the corresponding factory and add it to the userPlayer inventory.
      * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @see IWeaponFactory
      */
     public void addKnifeToInventory(){
@@ -475,6 +480,7 @@ public class GameController {
      * Request a new Knife weapon to the corresponding factory and add it to the userPlayer inventory.
      * <p> The weapon will have the default parameters, which can be modified using the set methods. </p>
      * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param name      The name of the weapon to create.
      * @see IWeaponFactory
      */
@@ -533,9 +539,7 @@ public class GameController {
      * Launch the equipping process of the selectedWeapon to the SelectedCharacter.
      * <p> In case of a bad index, the method will catch and ignore the error, and
      * no weapon will be equipped. </p>
-     * <p> This method will be available only in Initializing and Active mode.
-     * In order to use after played a game, it will be necessary to send initializeGame()
-     * message again.</p>
+     * <p> This method will be effective only in Initializing and Active mode. </p>
      */
     public void equipSelectedWeaponToSelectedCharacter(){
         gameState.equipSelectedWeaponToSelectedCharacter();
@@ -545,9 +549,7 @@ public class GameController {
      * Unequip the SelectedCharacter.
      * If the SelectedCharacter is not in the Player's party,
      * it will have no effect.
-     * <p> This method will be available only in Initializing and Active mode.
-     * In order to use after played a game, it will be necessary to send initializeGame()
-     * message again.</p>
+     * <p> This method will be effective only in Initializing and Active mode. </p>
      */
     public void unequipSelectedCharacter(){
         gameState.unequipSelectedCharacter();
@@ -558,25 +560,18 @@ public class GameController {
      * <p> Note that there will never have a character on both parties, as Controller does not have
      * methods to make wrong adds. </p>
      * <p> The method removes the character if it is present in any of the teams, and do nothing otherwise. </p>
-     * <p> This method will be available only in Initializing and Active mode.
-     * In order to use after played a game, it will be necessary to send initializeGame()
-     * message again.</p>
+     * <p> This method will be effective only in Initializing and Active mode. </p>
      */
     public void removeSelectedCharacterFromItsParty(){
-        player.removeFromParty(selectedCharacter);
-        cpu.removeFromParty(selectedCharacter);
-        selectedCharacter = null;
+        gameState.removeSelectedCharacterFromItsParty();
     }
 
     /**
      * Removes the selectedWeapon from the userPlayer inventory and sets the selectedWeapon as the NullWeapon.
-     * <p> This method will be available only in Initializing and Active mode.
-     * In order to use after played a game, it will be necessary to send initializeGame()
-     * message again.</p>
+     * <p> This method will be effective only in Initializing and Active mode. </p>
      */
     public void removeSelectedWeaponFromInventory(){
-        player.removeFromInventory(selectedWeapon);
-        selectedWeapon = null;
+        gameState.removeSelectedWeaponFromInventory();
     }
 
     /**
@@ -586,7 +581,7 @@ public class GameController {
      * <p> activeCharacter is in CPUPlayer Party and selectedCharacter in userPlayer Party.
      * Party. </p>
      * <p> If so, it sends the attack message in the corresponding direction. Otherwise, it has no effect.</p>
-     * <p> In this way, the if's fulfill a double function: they ensure that the attacking and receiving characters
+     * <p> In this way, the conditions fulfill a double function: they ensure that the attacking and receiving characters
      * are in the game (to avoid bugs) and at the same time they avoid attacks between the same team. </p>
      * <p> This method will be available only in Active mode. </p>
      */

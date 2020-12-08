@@ -81,7 +81,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
 
     /**
      * {@inheritDoc}
-     * @return true if equiped, false otherwise.
+     * @return true if equipped, false otherwise.
      */
     public boolean isEquipped(){
         return !(getEquippedWeapon().equals(new NullWeapon()));

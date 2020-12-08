@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.State;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
-import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 /**
  * A Finished State of the game.
@@ -35,22 +34,6 @@ public class Finished extends AbstractGameState {
         gc.setState(new Initializing(gc));
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void equipSelectedWeaponToSelectedCharacter(){
-        IPlayerCharacter character = (IPlayerCharacter) gc.getSelectedCharacter();
-        gc.getPlayer().equipCharacter(gc.getSelectedWeapon(), character);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void unequipSelectedCharacter(){
-        gc.getPlayer().unequipCharacter((IPlayerCharacter) gc.getSelectedCharacter());
-    }
 
     /**
      * {@inheritDoc}

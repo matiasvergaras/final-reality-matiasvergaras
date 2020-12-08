@@ -7,7 +7,6 @@ import com.github.matiasvergaras.finalreality.model.character.player.magic.White
 import com.github.matiasvergaras.finalreality.model.character.player.normal.Engineer;
 import com.github.matiasvergaras.finalreality.model.character.player.normal.Knight;
 import com.github.matiasvergaras.finalreality.model.character.player.normal.Thief;
-import com.github.matiasvergaras.finalreality.model.weapon.normal.Bow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -57,7 +56,6 @@ public class CharacterAttributeSetTest {
                      ICharacter anotherClassDifferentName){
         CharacterAttributeSet attr = character.getAttributes();
         assertTrue(attr.equals(attr));
-        assertFalse(attr.equals(character));
         assertEquals(character.getAttributes(), sameCharacter.getAttributes());
         assertEquals(character.getAttributes().hashCode(), sameCharacter.getAttributes().hashCode());
         assertNotEquals(character.getAttributes(), sameClassDifferentName.getAttributes());

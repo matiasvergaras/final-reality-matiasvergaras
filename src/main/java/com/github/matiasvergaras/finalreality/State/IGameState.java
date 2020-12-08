@@ -53,9 +53,9 @@ public interface IGameState {
      * to play, and if that is the case, it changes the state of
      * the game to Active.</p>
      * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
-     *      startTurn, which does throws said exception. </p>
+     * activateTurns which in time calls to startTurn which does throws said exception. </p>
      */
-    void startWaitTurns();
+    void startWaitTurns() throws InterruptedException;
 
 
     /**
@@ -66,7 +66,7 @@ public interface IGameState {
      * to play, and if that is the case, it changes the state of
      * the game to Active.</p>
      * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
-     *      startTurn, which does throws said exception. </p>
+     *      activateTurns which in time calls to startTurn, which does throws said exception. </p>
      */
     void startGame() throws InterruptedException;
 
@@ -116,12 +116,6 @@ public interface IGameState {
      * when some team has every member dead, condition trapped by removeCharacterFromQueue. </p>
      */
     void setWinner();
-
-    /**
-     * Returns the number of alive characters in the player party.
-     * @return      int AliveCharacters from player.
-     */
-    void getWinner();
 
     /**
      * Request a new BlackMage character to the corresponding factory and tries to add it to the User's party
@@ -280,15 +274,15 @@ public interface IGameState {
      * <p> Note that there will never have a character on both parties, as Controller does not have
      * methods to make wrong adds. </p>
      * <p> The method removes the character if it is present in any of the teams, and do nothing otherwise. </p>
-     * <p> This method will be available only in Initializing and Active mode.
+     * <p> This method will be available only in Initializing mode.
      * In order to use after played a game, it will be necessary to send initializeGame()
      * message again.</p>
      */
-    void removeSelectedChracterFromItsParty();
+    void removeSelectedCharacterFromItsParty();
 
     /**
      * Removes the selectedWeapon from the userPlayer inventory and sets the selectedWeapon as the NullWeapon.
-     * <p> This method will be available only in Initializing and Active mode.
+     * <p> This method will be available only in Initializing mode.
      * In order to use after played a game, it will be necessary to send initializeGame()
      * message again.</p>
      */

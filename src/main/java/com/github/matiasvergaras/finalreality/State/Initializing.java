@@ -4,6 +4,7 @@ import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.factory.Characters.*;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -16,7 +17,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @since Homework 2
  */
 public class Initializing extends AbstractGameState {
-    private LinkedBlockingQueue<ICharacter> turns = new LinkedBlockingQueue<>();
+    private LinkedBlockingQueue<ICharacter> turns = gc.getTurns();
     private AxeFactory axeFactory = new AxeFactory("Common Axe", 120, 13);
     private BowFactory bowFactory = new BowFactory("Common Bow", 110, 10);
     private KnifeFactory knifeFactory = new KnifeFactory("Common Knife",100, 9);
@@ -89,10 +90,9 @@ public class Initializing extends AbstractGameState {
      */
     public void startGame() throws InterruptedException {
         if(gc.getPlayerPartySize() == gc.getCharactersQuantity()){
-            gc.activateGame();
+            gc.activateTurns();
         }
     }
-
 
     /**
      * {@inheritDoc}
@@ -234,5 +234,38 @@ public class Initializing extends AbstractGameState {
         gc.getPlayer().addToInventory(knifeFactory.create(name));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeSelectedCharacterFromItsParty(){
+        gc.getPlayer().removeFromParty(gc.getSelectedCharacter());
+        gc.getCPU().removeFromParty(gc.getSelectedCharacter());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeSelectedWeaponFromInventory(){
+        gc.getPlayer().removeFromInventory(gc.getSelectedWeapon());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipSelectedWeaponToSelectedCharacter(){
+        IPlayerCharacter character = (IPlayerCharacter) gc.getSelectedCharacter();
+        gc.getPlayer().equipCharacter(gc.getSelectedWeapon(), character);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void unequipSelectedCharacter(){
+        gc.getPlayer().unequipCharacter((IPlayerCharacter) gc.getSelectedCharacter());
+    }
 
 }

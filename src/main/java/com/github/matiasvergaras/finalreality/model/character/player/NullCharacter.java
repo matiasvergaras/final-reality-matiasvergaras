@@ -8,19 +8,16 @@ import java.util.concurrent.LinkedBlockingQueue;
 /**
  * A class to represent a NullCharacter.
  * <p> A null character has an empty name, 0 HP and 0 DP. It does not have any other attribute. </p>
- * <p> His mission is to help us keep the numberof NullPointers as low as possible (since it is
+ * <p> His mission is to help us keep the number of NullPointers as low as possible (since it is
  * an implementation of Null Pattern). </p>
  * @author Matías Vergara Silva
  * @since Homework 2
  */
 public class NullCharacter extends AbstractPlayerCharacter{
+
     /**
      * Creates a new Null Character
      *
-     * @param turnsQueue the queue with the characters ready to play
-     * @param name       the character's name
-     * @param HP         the character's max heal points
-     * @param DP         the character's max defense points
      */
     public NullCharacter() {
         super(new LinkedBlockingQueue<>(), "", 0, 0);

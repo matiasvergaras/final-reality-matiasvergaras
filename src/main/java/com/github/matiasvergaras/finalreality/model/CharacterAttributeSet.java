@@ -18,14 +18,14 @@ import java.util.Objects;
  * @author Matías Vergara Silva
  */
 public class CharacterAttributeSet {
-    private String name;
-    private int maxHP;
+    private final String name;
+    private final int maxHP;
     private int currentHP;
-    private int DP;
-    private int maxMana;
+    private final int DP;
+    private final int maxMana;
     private int currentMana;
-    private int weight;
-    private int power;
+    private final int weight;
+    private final int power;
     IWeapon equippedWeapon;
 
     /**

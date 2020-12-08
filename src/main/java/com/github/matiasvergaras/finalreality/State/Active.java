@@ -3,6 +3,8 @@ package com.github.matiasvergaras.finalreality.State;
 import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
+import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
 /**
  * A Finished State of the game.
@@ -49,10 +51,26 @@ public class Active extends AbstractGameState {
 
     /**
      * {@inheritDoc}
+     */
+    public void startWaitTurns(){
+        for(ICharacter c: gc.getPlayerParty()){
+            if(!c.getAttributes().getEquippedWeapon().equals(new NullWeapon())){
+                c.waitTurn();
+            }
+
+        }
+        for(ICharacter c: gc.getCPUParty()){
+            c.waitTurn();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
      * @throws InterruptedException
      */
     public void startTurn() throws InterruptedException {
         gc.setActiveCharacter(gc.getTurns().take());
+
         /*
          * for the next homeworks:
          * if cpuParty contains activeCharacter : ( ... random attack ... )
@@ -90,4 +108,22 @@ public class Active extends AbstractGameState {
             gc.getCPU().makeNormalAttack(gc.getActiveCharacter(), gc.getSelectedCharacter());
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void equipSelectedWeaponToSelectedCharacter(){
+        IPlayerCharacter character = (IPlayerCharacter) gc.getSelectedCharacter();
+        gc.getPlayer().equipCharacter(gc.getSelectedWeapon(), character);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void unequipSelectedCharacter(){
+        gc.getPlayer().unequipCharacter((IPlayerCharacter) gc.getSelectedCharacter());
+    }
+
 }
