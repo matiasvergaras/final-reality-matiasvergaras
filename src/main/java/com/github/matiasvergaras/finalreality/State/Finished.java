@@ -1,6 +1,7 @@
 package com.github.matiasvergaras.finalreality.State;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
+import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 
 /**
  * A Finished State of the game.
@@ -34,12 +35,4 @@ public class Finished extends AbstractGameState {
         gc.setState(new Initializing(gc));
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void initializeGame(){
-        setInitializing();
-    }
 }

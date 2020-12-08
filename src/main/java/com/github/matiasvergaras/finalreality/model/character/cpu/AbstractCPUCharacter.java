@@ -1,11 +1,10 @@
 package com.github.matiasvergaras.finalreality.model.character.cpu;
 
-import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
+import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.AbstractCharacter;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import org.jetbrains.annotations.NotNull;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;

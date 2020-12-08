@@ -5,7 +5,7 @@ import com.github.matiasvergaras.finalreality.State.IGameState;
 import com.github.matiasvergaras.finalreality.State.Initializing;
 import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
-import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
+import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.Mastermind.CPUMastermind;
 import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.Mastermind.PlayerMastermind;
@@ -122,6 +122,7 @@ public class GameController {
 
     /**
      * Returns true if the current state is Finished.
+     * <p> This method will be effective only in Active mode. </p>
      * @return  boolean isFinished
      */
     public boolean isFinished(){
@@ -130,21 +131,21 @@ public class GameController {
 
     /**
      * Changes the current state to Initializing.
+     * <p> This method will be effective only in Finished mode. </p>
      */
     public void initializeGame(){
-        gameState.initializeGame();
+        gameState.setInitializing();
     }
 
 
     /**
      * Starts the game.
-     * This method will be called only in Initializing state. Otherwise it will have
-     * no effect.
      * <p> Checks if the player has the correct number of characters
      * to play, and if that is the case, it changes the state of
      * the game to Active.</p>
      * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
      *      startTurn, which does throws said exception. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      */
     public void startGame() throws InterruptedException {
         gameState.startGame();
@@ -155,6 +156,7 @@ public class GameController {
      * <p> First, it sets the game status to Active. </p>
      * <p> Then, sends the message of start WaitTurn to every character in both teams. </p>
      * <p> Finally, it send the message to start the first turn. </p>
+     * <p> This method will be effective only in Active mode. </p>
      * @throws InterruptedException
      */
     public void activateTurns() throws InterruptedException {
@@ -170,6 +172,7 @@ public class GameController {
      * <p> A character will wait for its turn only if he is alive (new feature in waitTurn). </p>
      * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
      *      startTurn, which does throws said exception. </p>
+     * <p> This method will be effective only in Active mode. </p>
      */
     public void endTurn() throws InterruptedException {
         gameState.endTurn();
@@ -223,9 +226,8 @@ public class GameController {
 
     /**
      * Returns the winner of the game.
-     * <p> 3 Possible values: null if the game is still in progress,
-     * player, cpu.</p>
-     *  <p> This method will be effective only in Finished mode. </p>
+     * <p> 3 Possible values: null if the game has not ended yet,
+     *     IMastermind player if player won, Imastermind cpu if cpu won.</p>
      * @return  IMastermind winner.
      */
     public IMastermind getWinner(){

@@ -1,6 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
-import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
+import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
 
 import java.beans.PropertyChangeSupport;
 

@@ -1,7 +1,7 @@
 package com.github.matiasvergaras.finalreality.model.character;
 
 
-import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
+import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.PropertyChangeEvent;

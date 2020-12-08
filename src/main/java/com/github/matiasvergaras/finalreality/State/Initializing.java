@@ -18,7 +18,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class Initializing extends AbstractGameState {
     private LinkedBlockingQueue<ICharacter> turns = gc.getTurns();
-    private AxeFactory axeFactory = new AxeFactory("Common Axe", 120, 13);
+    private AxeFactory axeFactory = new AxeFactory("Common Axe", 120, 20);
     private BowFactory bowFactory = new BowFactory("Common Bow", 110, 10);
     private KnifeFactory knifeFactory = new KnifeFactory("Common Knife",100, 9);
     private StaffFactory staffFactory = new StaffFactory("Common Staff", 10, 11, 120);

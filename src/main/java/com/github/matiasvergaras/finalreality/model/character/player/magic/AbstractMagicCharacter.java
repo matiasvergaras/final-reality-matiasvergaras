@@ -1,6 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.character.player.magic;
 
-import com.github.matiasvergaras.finalreality.model.CharacterAttributeSet;
+import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.AbstractPlayerCharacter;
 import org.jetbrains.annotations.NotNull;

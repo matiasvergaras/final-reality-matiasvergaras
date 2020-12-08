@@ -3,6 +3,7 @@ package com.github.matiasvergaras.finalreality.State;
 import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.IWeaponFactory;
+import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
 import java.util.ArrayList;
@@ -87,12 +88,6 @@ public abstract class AbstractGameState implements IGameState {
      * {@inheritDoc}
      */
     public void initializeGame(){
-
-    }
-    /**
-     * {@inheritDoc}
-     */
-    public void getWinner(){
 
     }
 

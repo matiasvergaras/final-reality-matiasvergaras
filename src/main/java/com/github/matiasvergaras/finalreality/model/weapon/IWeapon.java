@@ -1,6 +1,6 @@
 package com.github.matiasvergaras.finalreality.model.weapon;
 
-import com.github.matiasvergaras.finalreality.model.WeaponAttributeSet;
+import com.github.matiasvergaras.finalreality.model.AttributeSet.WeaponAttributeSet;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 /**
