@@ -31,10 +31,11 @@ public class attackTest {
      */
     @Test
     void EffectivePlayerToCPUAttackTest() throws InterruptedException {
+        assertTrue(gc.isInitializing());
         //Adds an Engineer to the player party.
-        gc.addEngineerToPlayerParty("Domingo Egg");
+        gc.addEngineerToPlayer("Domingo Egg");
         //Adds an Enemy to the CPU party.
-        gc.addEnemyToCPUParty("Chaos");
+        gc.addEnemyToCPU("Chaos");
         //Sets bow factory to create the definitive bow with 10000 power.
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(10000);
@@ -51,6 +52,7 @@ public class attackTest {
         assertTrue(gc.getSelectedCharacter().isAlive());
         //Starts the game
         gc.startGame();
+        assertFalse(gc.isInitializing());
         //Select Chaos as SelectedCharacter
         gc.setSelectedCharacterFromCPUParty(0);
         //Send attack message
@@ -76,23 +78,25 @@ public class attackTest {
      * Test a ineffective attack from player to player.
      */
     @Test
-    void IneffectivePlayerToPlayerAttackTest(){
+    void IneffectivePlayerToPlayerAttackTest() throws InterruptedException {
+        assertTrue(gc.isInitializing());
         //Adds an Engineer to the player party and selects him.
-        gc.addEngineerToPlayerParty("Domingo Egg");
+        gc.addEngineerToPlayer("Domingo Egg");
         gc.setSelectedCharacterFromPlayerParty(gc.getPlayerPartySize()-1);
         //Adds an Thief to the player party and set him as attack target.
-        gc.addThiefToPlayerParty("Lowe");
-        gc.setSelectedCharacterFromPlayerParty(gc.getPlayerPartySize()-1);
+        gc.addThiefToPlayer("Lowe");
         //Sets bow factory to create the definitive bow with 10000 power.
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(10000);
         //Instantiate a definitive bow and add it to inventory. Select it.
         gc.addBowToInventory();
         gc.setSelectedWeapon(gc.getInventorySize()-1);
-        //Equip the definitive bow to the engineer that we added before
+        //Equip the definitive bow to Domingo the Engineer
         gc.equipSelectedWeaponToSelectedCharacter();
-        //First we make sure that the enemy is alive before getting attacked
+        gc.setSelectedCharacterFromCPUParty(1);
+        //First we make sure that the  thief is alive before getting attacked
         assertTrue(gc.getSelectedCharacter().isAlive());
+        gc.startGame();
         //Send attack message
         gc.activeCharacterNormalAttackSelectedCharacter();
         //Check that the thief is still alive (if he was attacked, he would be already dead).
@@ -107,8 +111,9 @@ public class attackTest {
      */
     @Test
     void EffectiveCPUToPlayerAttackTest() throws InterruptedException {
+        assertTrue(gc.isInitializing());
         //Adds an Engineer to the player party.
-        gc.addEngineerToPlayerParty("Domingo Egg");
+        gc.addEngineerToPlayer("Domingo Egg");
         //Adds a weapon to inventory and equips it to Domingo, in order to
         //make him able to enter to the queue.
         gc.addAxeToInventory();
@@ -118,9 +123,9 @@ public class attackTest {
         //Sets the enemy factories to create mega powerful enemies.
         gc.setSelectedCharacterFactory(5);
         gc.setSelectedCharacterFactoryPower(1000);
-        gc.setSelectedCharacterFactoryWeight(15);
+        gc.setSelectedCharacterFactoryWeight(14);
         //Adds an Enemy to the CPU party.
-        gc.addEnemyToCPUParty("Elliot");
+        gc.addEnemyToCPU("Elliot");
         //Starts the game
         gc.startGame();
         //Since Domingo weapon has weight 13 (default Axe), he will take the turn the first.
@@ -153,18 +158,19 @@ public class attackTest {
      */
     @Test
     void IneffectiveCPUToCPUAttackTest() throws InterruptedException {
+        assertTrue(gc.isInitializing());
         //Sets the enemy factories to create mega powerful enemies.
         gc.setSelectedCharacterFactory(5);
         gc.setSelectedCharacterFactoryPower(10000);
         //To make sure that this enemy will be the first in attack.
         gc.setSelectedCharacterFactoryWeight(1);
         //Adds an Enemy to the CPU party and set him as selectedCharacter.
-        gc.addEnemyToCPUParty("Elliot");
+        gc.addEnemyToCPU("Elliot");
         gc.setSelectedCharacterFromCPUParty(gc.getCPUPartySize()-1);
         //Adds a second instance of the super Enemy to the CPU party.
         // Makes sure that this second instance will not take the first turn.
         gc.setSelectedCharacterFactoryWeight(30);
-        gc.addEnemyToCPUParty("Kane");
+        gc.addEnemyToCPU("Kane");
         //Make sure that Kane is alive before getting attacked
         assertTrue(gc.getSelectedCharacter().isAlive());
         //Try to start the game. Since the condition of charactersNumber for player has
@@ -172,7 +178,7 @@ public class attackTest {
         gc.startGame();
         assertFalse(gc.isActive());
         //Adds a character to reach the condition and retry.
-        gc.addKnightToPlayerParty("Vyrun");
+        gc.addKnightToPlayer("Vyrun");
         gc.startGame();
         assertTrue(gc.isActive());
         // Select Kane as target.

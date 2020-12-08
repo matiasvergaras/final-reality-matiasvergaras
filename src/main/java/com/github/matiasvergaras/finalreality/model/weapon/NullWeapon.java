@@ -24,11 +24,6 @@ public class NullWeapon extends AbstractMagicWeapon {
     }
 
     @Override
-    public WeaponAttributeSet getAttributes() {
-        return null;
-    }
-
-    @Override
     public void equipToKnight(IPlayerCharacter character) {
         character.equip(this);
     }
@@ -58,9 +53,7 @@ public class NullWeapon extends AbstractMagicWeapon {
         if (this == o) return true;
         if (!(o instanceof NullWeapon)) return false;
         NullWeapon that = (NullWeapon) o;
-        return this.getName().equals(that.getName()) &&
-                this.getPower() == that.getPower() &&
-                this.getWeight() == that.getWeight();
+        return this.getName().equals(that.getName());
     }
 
     /**
@@ -71,8 +64,7 @@ public class NullWeapon extends AbstractMagicWeapon {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(this.getName(), this.getPower(),
-                this.getWeight());
+        return Objects.hash(this.getName());
     }
 
 }

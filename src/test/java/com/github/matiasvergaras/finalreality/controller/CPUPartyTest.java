@@ -38,7 +38,7 @@ public class CPUPartyTest {
     @Test
     void addEnemyTest() {
         int initSize = gameController.getCPUPartySize();
-        gameController.addEnemyToCPUParty("Darksol");
+        gameController.addEnemyToCPU("Darksol");
         gameController.setSelectedCharacterFromCPUParty(gameController.getCPUPartySize() - 1);
         Enemy sameCharacter = new Enemy(turns, "Darksol", 130, 100, 12, 100);
         assertEquals(gameController.getSelectedCharacter(), sameCharacter);

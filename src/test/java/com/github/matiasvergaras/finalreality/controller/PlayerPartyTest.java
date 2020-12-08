@@ -42,7 +42,7 @@ public class PlayerPartyTest {
     @Test
     void addBlackMageTest(){
         int initSize = gameController.getPlayerPartySize();
-        gameController.addBlackMageToPlayerParty("Alef");
+        gameController.addBlackMageToPlayer("Alef");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
         BlackMage sameCharacter = new BlackMage(turns, "Alef", 120, 40, 200);
         assertEquals(gameController.getSelectedCharacterName(), "Alef");
@@ -60,7 +60,7 @@ public class PlayerPartyTest {
     @Test
     void addWhiteMageTest(){
         int initSize = gameController.getPlayerPartySize();
-        gameController.addWhiteMageToPlayerParty("Tao");
+        gameController.addWhiteMageToPlayer("Tao");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
         WhiteMage sameCharacter = new WhiteMage(turns, "Tao", 120, 40, 200);
         assertEquals(gameController.getSelectedCharacter(), sameCharacter);
@@ -77,7 +77,7 @@ public class PlayerPartyTest {
     @Test
     void addEngineerTest(){
         int initSize = gameController.getPlayerPartySize();
-        gameController.addEngineerToPlayerParty("Vankar");
+        gameController.addEngineerToPlayer("Vankar");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
         Engineer sameCharacter = new Engineer(turns, "Vankar", 100, 100);
         assertEquals(gameController.getSelectedCharacter(), sameCharacter);
@@ -94,7 +94,7 @@ public class PlayerPartyTest {
     @Test
     void addKnightTest(){
         int initSize = gameController.getPlayerPartySize();
-        gameController.addKnightToPlayerParty("Gort");
+        gameController.addKnightToPlayer("Gort");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
         Knight sameCharacter = new Knight(turns, "Gort", 200, 12);
         assertEquals(gameController.getSelectedCharacter(), sameCharacter);
@@ -111,7 +111,7 @@ public class PlayerPartyTest {
     @Test
     void addThiefTest(){
         int initSize = gameController.getPlayerPartySize();
-        gameController.addThiefToPlayerParty("Hanzou");
+        gameController.addThiefToPlayer("Hanzou");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
         Thief sameCharacter = new Thief(turns, "Hanzou", 200, 12);
         assertEquals(gameController.getSelectedCharacter(), sameCharacter);
@@ -137,11 +137,11 @@ public class PlayerPartyTest {
     @Test
     void getPlayerPartyTest(){
         ArrayList<ICharacter> copy = new ArrayList<>();
-        gameController.addBlackMageToPlayerParty("Azelf");
-        gameController.addWhiteMageToPlayerParty("Lowe");
-        gameController.addKnightToPlayerParty("Gort");
-        gameController.addEngineerToPlayerParty("Balbaroy");
-        gameController.addThiefToPlayerParty("Arthur");
+        gameController.addBlackMageToPlayer("Azelf");
+        gameController.addWhiteMageToPlayer("Lowe");
+        gameController.addKnightToPlayer("Gort");
+        gameController.addEngineerToPlayer("Balbaroy");
+        gameController.addThiefToPlayer("Arthur");
         copy.add(new BlackMage(turns, "Azelf", 120, 40, 200));
         copy.add(new WhiteMage(turns, "Lowe", 120, 30, 200));
         copy.add(new Knight(turns, "Gort", 180, 100));
@@ -158,9 +158,9 @@ public class PlayerPartyTest {
     @Test
     void getCPUPartyTest(){
         ArrayList<ICharacter> copy = new ArrayList<>();
-        gameController.addEnemyToCPUParty("Azelf");
-        gameController.addEnemyToCPUParty("Lowe");
-        gameController.addEnemyToCPUParty("Gort");
+        gameController.addEnemyToCPU("Azelf");
+        gameController.addEnemyToCPU("Lowe");
+        gameController.addEnemyToCPU("Gort");
         copy.add(new Enemy(turns, "Azelf", 180, 100, 12, 100));
         copy.add(new Enemy(turns, "Lowe", 180, 100, 12, 100));
         copy.add(new Enemy(turns, "Gort", 180, 100, 12, 100));

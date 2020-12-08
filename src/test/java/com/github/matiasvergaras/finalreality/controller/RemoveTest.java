@@ -53,7 +53,7 @@ public class RemoveTest {
      */
     @Test
     void removePlayerCharacterTest(){
-        gameController.addBlackMageToPlayerParty("Torasu");
+        gameController.addBlackMageToPlayer("Torasu");
         assertEquals(gameController.getPlayerPartySize(), 1);
         gameController.setSelectedCharacterFromPlayerParty(0);
         gameController.removeSelectedCharacterFromItsParty();
@@ -69,7 +69,7 @@ public class RemoveTest {
      */
     @Test
     void removeCPUCharacterTest(){
-        gameController.addEnemyToCPUParty("Chimera");
+        gameController.addEnemyToCPU("Chimera");
         assertEquals(gameController.getCPUPartySize(), 1);
         gameController.setSelectedCharacterFromCPUParty(0);
         gameController.removeSelectedCharacterFromItsParty();

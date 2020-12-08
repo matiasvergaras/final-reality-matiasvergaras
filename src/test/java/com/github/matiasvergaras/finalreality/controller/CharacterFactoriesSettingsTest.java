@@ -100,7 +100,7 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void EngineerFactorySettingTest(){
         setFactoryForTesting(0, 3);
-        gameController.addEngineerToPlayerParty("Vankar");
+        gameController.addEngineerToPlayer("Vankar");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
         testFactorySettingForNormal(3);
     }
@@ -111,7 +111,7 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void BlackMageFactorySettingTest(){
         setFactoryForTesting(1,6);
-        gameController.addBlackMageToPlayerParty("Azelf");
+        gameController.addBlackMageToPlayer("Azelf");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
         testFactorySettingForMagic(6);
     }
@@ -122,7 +122,7 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void WhiteMageFactorySettingTest(){
         setFactoryForTesting(2, 7);
-        gameController.addWhiteMageToPlayerParty("Tao");
+        gameController.addWhiteMageToPlayer("Tao");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
         testFactorySettingForMagic(7);
     }
@@ -133,7 +133,7 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void ThiefFactorySettingTest(){
         setFactoryForTesting(3, 2);
-        gameController.addThiefToPlayerParty("Hanzou");
+        gameController.addThiefToPlayer("Hanzou");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
         testFactorySettingForNormal(2);
     }
@@ -144,7 +144,7 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void KnightFactorySettingTest(){
         setFactoryForTesting(4,12);
-        gameController.addKnightToPlayerParty("Gort");
+        gameController.addKnightToPlayer("Gort");
         gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
         testFactorySettingForNormal(12);
     }
@@ -155,7 +155,7 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void EnemyFactorySettingTest(){
         setFactoryForTesting(5, 9);
-        gameController.addEnemyToCPUParty("Darksol");
+        gameController.addEnemyToCPU("Darksol");
         gameController.setSelectedCharacterFromCPUParty(gameController.getCPUPartySize()-1);
         testFactorySettingForCPU(9);
     }

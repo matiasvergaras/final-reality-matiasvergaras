@@ -1,13 +1,18 @@
 package com.github.matiasvergaras.finalreality.model.character.player;
 
-import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * A class to represent a NullCharacter.
+ * <p> A null character has an empty name, 0 HP and 0 DP. It does not have any other attribute. </p>
+ * <p> His mission is to help us keep the numberof NullPointers as low as possible (since it is
+ * an implementation of Null Pattern). </p>
+ * @author Matías Vergara Silva
+ * @since Homework 2
+ */
 public class NullCharacter extends AbstractPlayerCharacter{
     /**
      * Creates a new Null Character

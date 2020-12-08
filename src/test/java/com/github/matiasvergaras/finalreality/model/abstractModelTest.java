@@ -3,11 +3,13 @@ import com.github.matiasvergaras.finalreality.factory.Characters.EnemyFactory;
 import com.github.matiasvergaras.finalreality.factory.Characters.KnightFactory;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
+import com.github.matiasvergaras.finalreality.model.character.player.NullCharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
 import com.github.matiasvergaras.finalreality.model.character.player.magic.WhiteMage;
 import com.github.matiasvergaras.finalreality.model.character.player.normal.Engineer;
 import com.github.matiasvergaras.finalreality.model.character.player.normal.Knight;
 import com.github.matiasvergaras.finalreality.model.character.player.normal.Thief;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.magic.Staff;
 import com.github.matiasvergaras.finalreality.model.weapon.normal.Axe;
 import com.github.matiasvergaras.finalreality.model.weapon.normal.Bow;
@@ -94,6 +96,11 @@ public abstract class abstractModelTest {
     //--------------------------------------SET-UP OF SOME FACTORIES--------------------------------------------//
     protected KnightFactory knightFactory = new KnightFactory(turns, 200, 120);
     protected EnemyFactory enemyFactory = new EnemyFactory(turns, 200, 120, 12, 114);
+
+    //-----------------------------------------NULL PATTERN OBJECTS---------------------------------------------//
+    protected NullWeapon nullWeapon = new NullWeapon();
+    protected NullCharacter nullCharacter = new NullCharacter();
+
     /*
      * Basic set-up : A turns queue
      */

@@ -30,12 +30,12 @@ public class deathNotificationSystemTest {
     @Test
     void cpuWinsTest() throws InterruptedException {
         //Create the player party
-        gc.addThiefToPlayerParty("Lyle");
-        gc.addEngineerToPlayerParty("Kokichi");
-        gc.addKnightToPlayerParty("Gong");
-        gc.addBlackMageToPlayerParty("Nova");
+        gc.addThiefToPlayer("Lyle");
+        gc.addEngineerToPlayer("Kokichi");
+        gc.addKnightToPlayer("Gong");
+        gc.addBlackMageToPlayer("Nova");
         //Overflow the party. Just to check again that it is working.
-        gc.addWhiteMageToPlayerParty("Khris");
+        gc.addWhiteMageToPlayer("Khris");
         //Sets the Enemy factory to create powerful characters
         assertEquals(gc.getCharactersQuantity(), gc.getPlayerPartySize());
         assertEquals(gc.getPlayerParty().get(gc.getPlayerPartySize()-1).getName(), "Nova");
@@ -44,11 +44,11 @@ public class deathNotificationSystemTest {
         gc.setSelectedCharacterFactoryPower(600);
         //To make sure that enemies will attack the first.
         gc.setSelectedCharacterFactoryWeight(7);
-        gc.addEnemyToCPUParty("Mishaela");
-        gc.addEnemyToCPUParty("Ramladu");
-        gc.addEnemyToCPUParty("Balbazak");
-        gc.addEnemyToCPUParty("Hindel");
-        gc.addEnemyToCPUParty("Pyro");
+        gc.addEnemyToCPU("Mishaela");
+        gc.addEnemyToCPU("Ramladu");
+        gc.addEnemyToCPU("Balbazak");
+        gc.addEnemyToCPU("Hindel");
+        gc.addEnemyToCPU("Pyro");
         assertNull(gc.getWinner());
         //Check that the aliveNumber of each masterminds corresponds with the number of
         //added characters.
@@ -106,10 +106,10 @@ public class deathNotificationSystemTest {
     @Test
     void playerWinsTest() throws InterruptedException {
         //Create the player party
-        gc.addThiefToPlayerParty("Lyle");
-        gc.addEngineerToPlayerParty("Kokichi");
-        gc.addEngineerToPlayerParty("Bleu");
-        gc.addEngineerToPlayerParty("Jogurt");
+        gc.addThiefToPlayer("Lyle");
+        gc.addEngineerToPlayer("Kokichi");
+        gc.addEngineerToPlayer("Bleu");
+        gc.addEngineerToPlayer("Jogurt");
         //Sets the bow factory to create powerful bows
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(700);
@@ -141,8 +141,8 @@ public class deathNotificationSystemTest {
         //sure that they wont play before the player characters.
         gc.setSelectedCharacterFactory(5);
         gc.setSelectedWeaponFactoryWeight(100);
-        gc.addEnemyToCPUParty("Elliot");
-        gc.addEnemyToCPUParty("Ramladu");
+        gc.addEnemyToCPU("Elliot");
+        gc.addEnemyToCPU("Ramladu");
         //Start game
         gc.startGame();
         //Kill Elliot
