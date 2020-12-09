@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Matías Vergara Silva
  */
 
-public class attackTest {
+public class AttackTest {
     private GameController gc;
 
     /**
@@ -33,7 +33,6 @@ public class attackTest {
      */
     @Test
     void EffectivePlayerToCPUAttackTest() throws InterruptedException {
-        assertTrue(gc.isInitializing());
         //Adds an Engineer to the player party.
         gc.addEngineerToPlayer("Domingo Egg");
         //Adds an Enemy to the CPU party.
@@ -54,7 +53,6 @@ public class attackTest {
         assertTrue(gc.getSelectedCharacter().isAlive());
         //Starts the game
         gc.startGame();
-        assertFalse(gc.isInitializing());
         //Select Chaos as SelectedCharacter
         gc.setSelectedCharacterFromCPUParty(0);
         //Send attack message

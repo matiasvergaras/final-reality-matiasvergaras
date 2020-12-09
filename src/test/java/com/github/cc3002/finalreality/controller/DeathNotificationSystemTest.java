@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Matias Vergara Silva
  * @since Homework 2
  */
-public class deathNotificationSystemTest {
+public class DeathNotificationSystemTest {
     GameController gc;
     LinkedBlockingQueue<ICharacter> turns;
 
@@ -148,17 +148,12 @@ public class deathNotificationSystemTest {
         //Give some time to make sure that there will be characters in
         //the queue (as in ActiveCharacter variable).
         Thread.sleep(2000);
-        System.out.println(gc.getTurns().size());
         //Kill Elliot
         gc.setSelectedCharacterFromCPUParty(0);
-        System.out.println(gc.getActiveCharacter().getName());
         gc.activeCharacterNormalAttackSelectedCharacter();
-        System.out.println(gc.getActiveCharacter().getName());
         //Kill Ramladu
         gc.setSelectedCharacterFromCPUParty(1);
-        System.out.println(gc.getActiveCharacter().getName());
         gc.activeCharacterNormalAttackSelectedCharacter();
-        System.out.println(gc.getCPU().getAliveCharacters());
         //Check for game finished status and winner
         assertTrue(gc.isFinished());
         assertEquals(gc.getWinner().getName(), gc.getPlayerName());

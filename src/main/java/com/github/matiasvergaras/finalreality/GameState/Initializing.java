@@ -31,6 +31,8 @@ public class Initializing extends GameState {
     private WhiteMageFactory whiteMageFactory = new WhiteMageFactory(turns, 120, 30, 200);
     private EnemyFactory enemyFactory = new EnemyFactory(turns, 130, 100, 12, 100);
 
+    private ArrayList<IWeaponFactory> weaponFactories = new ArrayList<>();
+    private ArrayList<ICharacterFactory> characterFactories = new ArrayList<>();
 
     /**
      * Constructor for a new Initialize state.
@@ -38,6 +40,17 @@ public class Initializing extends GameState {
      */
     public Initializing(GameController gameController){
         super(gameController);
+        weaponFactories.add(bowFactory);
+        weaponFactories.add(staffFactory);
+        weaponFactories.add(knifeFactory);
+        weaponFactories.add(swordFactory);
+        weaponFactories.add(axeFactory);
+        characterFactories.add(engineerFactory);
+        characterFactories.add(blackMageFactory);
+        characterFactories.add(whiteMageFactory);
+        characterFactories.add(thiefFactory);
+        characterFactories.add(knightFactory);
+        characterFactories.add(enemyFactory);
     }
 
     /**
@@ -55,34 +68,6 @@ public class Initializing extends GameState {
         gc.setState(new Active(gc));
     }
 
-    /**
-     * Gives the list with all the character factories of this gameController.
-     * @return      ArrayList<ICharacterFactory> character's factories.
-     */
-    public ArrayList<ICharacterFactory> getCharacterFactories(){
-        ArrayList<ICharacterFactory> factories = new ArrayList<>();
-        factories.add(engineerFactory);
-        factories.add(blackMageFactory);
-        factories.add(whiteMageFactory);
-        factories.add(thiefFactory);
-        factories.add(knightFactory);
-        factories.add(enemyFactory);
-        return factories;
-    }
-
-    /**
-     * Gives the list with all the weapon factories of this gameController.
-     * @return      ArrayList<IWeaponFactory> weapon factories.
-     */
-    public ArrayList<IWeaponFactory> getWeaponFactories(){
-        ArrayList<IWeaponFactory> factories = new ArrayList<>();
-        factories.add(bowFactory);
-        factories.add(staffFactory);
-        factories.add(knifeFactory);
-        factories.add(swordFactory);
-        factories.add(axeFactory);
-        return factories;
-    }
 
     /**
      * {@inheritDoc}
@@ -265,6 +250,110 @@ public class Initializing extends GameState {
     @Override
     public void unequipSelectedCharacter(){
         gc.getPlayer().unequipCharacter((IPlayerCharacter) gc.getSelectedCharacter());
+    }
+
+
+    /**
+     * {@inheritDoc}
+     * @param weight        The value to be set as the default weapon weight
+     */
+    @Override
+    public void setSelectedWeaponFactoryWeight(int weight) {
+        gc.getSelectedWeaponFactory().setWeight(weight);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param name        The value to be set as the default weapon name
+     */
+    @Override
+    public void setSelectedWeaponFactoryName(String name) {
+        gc.getSelectedWeaponFactory().setName(name);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param power        The value to be set as the default weapon power
+     */
+    @Override
+    public void setSelectedWeaponFactoryPower(int power) {
+        gc.getSelectedWeaponFactory().setPower(power);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param magicPower       The value to be set as the default weapon magicPower of SelectedWeaponFactory
+     */
+    @Override
+    public void setSelectedWeaponFactoryMagicPower(int magicPower) {
+        gc.getSelectedWeaponFactory().setMagicPower(magicPower);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param hp       The value to be set as the default HP of selectedCharacterFactory
+     */
+    @Override
+    public void setSelectedCharacterFactoryHP(int hp) {
+        gc.getSelectedCharacterFactory().setHP(hp);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param dp       The value to be set as the default DP of selectedCharacterFactory
+     */
+    @Override
+    public void setSelectedCharacterFactoryDP(int dp) {
+        gc.getSelectedCharacterFactory().setDP(dp);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param mana      The value to be set as the default mana of selectedCharacterFactory
+     */
+    @Override
+    public void setSelectedCharacterFactoryMana(int mana) {
+        gc.getSelectedCharacterFactory().setMana(mana);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param weight      The value to be set as the default weight of selectedCharacterFactory
+     */
+    @Override
+    public void setSelectedCharacterFactoryWeight(int weight) {
+        gc.getSelectedCharacterFactory().setWeight(weight);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param power      The value to be set as the default power of selectedCharacterFactory
+     */
+    @Override
+    public void setSelectedCharacterFactoryPower(int power) {
+        gc.getSelectedCharacterFactory().setPower(power);
+    }
+
+    /**
+     * Sets the actual character factory.
+     *
+     * @param index The index of the new selected character factory in the
+     *              character factories list.
+     */
+    @Override
+    public void selectCharacterFactory(int index) {
+        gc.selectedCharacterFactory = characterFactories.get(index);
+    }
+
+    /**
+     * Sets the actual character factory.
+     *
+     * @param index The index of the new selected character factory in the
+     *              character factories list.
+     */
+    @Override
+    public void selectWeaponFactory(int index) {
+        gc.selectedWeaponFactory = weaponFactories.get(index);
     }
 
 }

@@ -5,7 +5,6 @@ import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFacto
 import com.github.matiasvergaras.finalreality.factory.Weapons.IWeaponFactory;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
-import java.util.ArrayList;
 
 /**
  * Interface to hold the common behavior for every single GameState.
@@ -67,14 +66,6 @@ public interface IGameState {
      * the game to Active.</p>
       */
     void startGame();
-
-    /**
-     * Starts the configuration of a new game.
-     * <p> Changes the gameController status to ''initializing''.</p>
-     * <p> This method has to have effect only if called from
-     * Finished state. </p>
-     */
-    void initializeGame();
 
     /**
      * <p> Sends to the character that just ended his turn the wait for re-entry order. </p>
@@ -304,15 +295,89 @@ public interface IGameState {
     void activeCharacterNormalAttackSelectedCharacter();
 
     /**
-     * Gives the list with all the character factories of this gameController.
-     * @return      ArrayList<ICharacterFactory> character's factories.
+     * Sets the selectedWeaponFactory default's weight value.
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param weight        The value to be set as the default weapon weight
+     * @see IWeaponFactory
      */
-    ArrayList<ICharacterFactory> getCharacterFactories();
+    void setSelectedWeaponFactoryWeight(int weight);
 
     /**
-     * Gives the list with all the weapon factories of this gameController.
-     * @return      ArrayList<IWeaponFactory> weapon factories.
+     * Sets the selectedWeaponFactory default's name value.
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param name        The value to be set as the default weapon name
+     * @see IWeaponFactory
      */
-    ArrayList<IWeaponFactory> getWeaponFactories();
+    void setSelectedWeaponFactoryName(String name);
+
+    /**
+     * Sets the selectedWeaponFactory default's power value.
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param power        The value to be set as the default weapon power
+     * @see IWeaponFactory
+     */
+    void setSelectedWeaponFactoryPower(int power);
+
+    /**
+     * Sets the selectedWeaponFactory default's magicPower value.
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param magicPower       The value to be set as the default weapon magicPower of SelectedWeaponFactory
+     * @see IWeaponFactory
+     */
+    void setSelectedWeaponFactoryMagicPower(int magicPower);
+
+    /**
+     * Sets the selectedCharacterFactory default's HP
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param hp       The value to be set as the default HP of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
+    void setSelectedCharacterFactoryHP(int hp);
+
+    /**
+     * Sets the selectedCharacterFactory default's DP
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param dp       The value to be set as the default DP of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
+    void setSelectedCharacterFactoryDP(int dp);
+
+    /**
+     * Sets the selectedCharacterFactory default's Mana
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param mana      The value to be set as the default mana of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
+    void setSelectedCharacterFactoryMana(int mana);
+
+    /**
+     * Sets the selectedCharacterFactory default's weight
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param weight      The value to be set as the default weight of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
+    void setSelectedCharacterFactoryWeight(int weight);
+
+    /**
+     * Sets the selectedCharacterFactory default's power
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param power      The value to be set as the default power of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
+    void setSelectedCharacterFactoryPower(int power);
+
+    /**
+     * Sets the actual character factory.
+     * @param index     The index of the new selected character factory in the
+     *                  character factories list.
+     */
+    void selectCharacterFactory(int index);
+
+    /**
+     * Sets the actual weapon factory.
+     * @param index     The index of the new selected weapon factory in the
+     *                  weapon factories list.
+     */
+    void selectWeaponFactory(int index);
 
 }

@@ -1,7 +1,6 @@
 package com.github.cc3002.finalreality.controller;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * A class to check some border cases of the queue behavior.
  */
-public class queueBehaviorTest {
+public class QueueBehaviorTest {
     GameController gc;
 
 

@@ -247,19 +247,87 @@ public class GameState implements IGameState {
 
     /**
      * {@inheritDoc}
-     * @return
+     * @param weight        The value to be set as the default weapon weight
      */
     @Override
-    public ArrayList<ICharacterFactory> getCharacterFactories(){
-        return null;
+    public void setSelectedWeaponFactoryWeight(int weight) {}
+
+    /**
+     * {@inheritDoc}
+     * @param name        The value to be set as the default weapon name
+     */
+    @Override
+    public void setSelectedWeaponFactoryName(String name) {}
+
+    /**
+     * {@inheritDoc}
+     * @param power        The value to be set as the default weapon power
+     */
+    @Override
+    public void setSelectedWeaponFactoryPower(int power) {}
+
+    /**
+     * {@inheritDoc}
+     * @param magicPower       The value to be set as the default weapon magicPower of SelectedWeaponFactory
+     */
+    @Override
+    public void setSelectedWeaponFactoryMagicPower(int magicPower) { }
+
+    /**
+     * {@inheritDoc}
+     * @param hp       The value to be set as the default HP of selectedCharacterFactory
+     */
+    @Override
+    public void setSelectedCharacterFactoryHP(int hp) {}
+
+    /**
+     * {@inheritDoc}
+     * @param dp       The value to be set as the default DP of selectedCharacterFactory
+     */
+    @Override
+    public void setSelectedCharacterFactoryDP(int dp) {}
+
+    /**
+     * {@inheritDoc}
+     * @param mana      The value to be set as the default mana of selectedCharacterFactory
+     */
+    @Override
+    public void setSelectedCharacterFactoryMana(int mana) {}
+
+    /**
+     * {@inheritDoc}
+     * @param weight      The value to be set as the default weight of selectedCharacterFactory
+     */
+    @Override
+    public void setSelectedCharacterFactoryWeight(int weight) { }
+
+    /**
+     * {@inheritDoc}
+     * @param power      The value to be set as the default power of selectedCharacterFactory
+     */
+    @Override
+    public void setSelectedCharacterFactoryPower(int power) { }
+
+    /**
+     * Sets the actual character factory.
+     *
+     * @param index The index of the new selected character factory in the
+     *              character factories list.
+     */
+    @Override
+    public void selectCharacterFactory(int index) {
     }
 
     /**
-     * Gives the list with all the weapon factories of this gameController.
-     * @return      ArrayList<IWeaponFactory> weapon factories.
+     * Sets the actual weapon factory.
+     *
+     * @param index The index of the new selected weapon factory in the
+     *              weapon factories list.
      */
-    public ArrayList<IWeaponFactory> getWeaponFactories(){
-        return null;
+    @Override
+    public void selectWeaponFactory(int index) {
+
     }
+
 
 }

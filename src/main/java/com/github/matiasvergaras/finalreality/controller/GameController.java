@@ -1,6 +1,5 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.GameState.GameState;
 import com.github.matiasvergaras.finalreality.GameState.IGameState;
 import com.github.matiasvergaras.finalreality.GameState.Initializing;
 import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
@@ -39,8 +38,7 @@ public class GameController {
 
     private ICharacter selectedCharacter;
     private IWeapon selectedWeapon;
-    private ICharacterFactory selectedCharacterFactory;
-    private IWeaponFactory selectedWeaponFactory;
+
 
     private ICharacter activeCharacter;
     private IMastermind winner;
@@ -52,6 +50,10 @@ public class GameController {
     private EndTurnMMToGCHandler endTurnHandler = new EndTurnMMToGCHandler(this);
     private AddQueueMMToGCHandler addToQueueHandler = new AddQueueMMToGCHandler(this);
     private IGameState gameState;
+
+    //Public to be able to change them from Initializing
+    public ICharacterFactory selectedCharacterFactory;
+    public IWeaponFactory selectedWeaponFactory;
 
     /**
      * Constructor of the GameController
@@ -81,8 +83,6 @@ public class GameController {
         this.selectedWeapon = new NullWeapon();
         this.winner = null;
         this.gameState = new Initializing(this);
-        this.characterFactories = gameState.getCharacterFactories();
-        this.weaponFactories = gameState.getWeaponFactories();
     }
 
     /**
@@ -107,14 +107,6 @@ public class GameController {
      */
     public void setState(IGameState state){
         gameState = state;
-    }
-
-    /**
-     * Returns the current game state
-     * @return  IGameState gameState.
-     */
-    public IGameState getState(){
-        return gameState;
     }
 
     /**
@@ -702,11 +694,12 @@ public class GameController {
      * Change the current SelectedWeaponFactory to the one in weaponFactories at the given index.
      * <p> In case of a bad index, the method will catch and ignore the error, and keep the
      * initial selectedWeapon. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param index     The position of the new SelectedWeaponFactory in weaponFactories
      */
     public void setSelectedWeaponFactory(int index){
         try{
-            this.selectedWeaponFactory = weaponFactories.get(index);
+            gameState.selectWeaponFactory(index);
         }
         catch(IndexOutOfBoundsException ignored){
         }
@@ -720,7 +713,7 @@ public class GameController {
      */
     public void setSelectedCharacterFactory(int index){
         try{
-            this.selectedCharacterFactory = characterFactories.get(index);
+            gameState.selectCharacterFactory(index);
         }
         catch(IndexOutOfBoundsException ignored){
         }
@@ -728,82 +721,91 @@ public class GameController {
 
     /**
      * Sets the selectedWeaponFactory default's weight value.
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param weight        The value to be set as the default weapon weight
      */
     public void setSelectedWeaponFactoryWeight(int weight){
-        selectedWeaponFactory.setWeight(weight);
+        gameState.setSelectedWeaponFactoryWeight(weight);
     }
 
 
     /**
      * Sets the selectedWeaponFactory default's name value.
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param name        The value to be set as the default weapon name
      */
     public void setSelectedWeaponFactoryName(String name){
-        selectedWeaponFactory.setName(name);
+        gameState.setSelectedWeaponFactoryName(name);
     }
 
     /**
      * Sets the selectedWeaponFactory default's power value.
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param power        The value to be set as the default weapon power
      * @see ICharacterFactory
      */
     public void setSelectedWeaponFactoryPower(int power){
-        selectedWeaponFactory.setPower(power);
+        gameState.setSelectedWeaponFactoryPower(power);
     }
 
     /**
      * Sets the selectedWeaponFactory default's magicPower value.
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param magicPower       The value to be set as the default weapon magicPower of SelectedWeaponFactory
      * @see ICharacterFactory
      */
     public void setSelectedWeaponFactoryMagicPower(int magicPower){
-        selectedWeaponFactory.setMagicPower(magicPower);
+        gameState.setSelectedWeaponFactoryMagicPower(magicPower);
     }
 
     /**
      * Sets the selectedCharacterFactory default's HP
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param hp       The value to be set as the default HP of selectedCharacterFactory
      * @see ICharacterFactory
      */
     public void setSelectedCharacterFactoryHP(int hp){
-        selectedCharacterFactory.setHP(hp);
+        gameState.setSelectedCharacterFactoryHP(hp);
     }
 
     /**
      * Sets the selectedCharacterFactory default's DP
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param dp       The value to be set as the default DP of selectedCharacterFactory
      * @see ICharacterFactory
      */
     public void setSelectedCharacterFactoryDP(int dp){
-        selectedCharacterFactory.setDP(dp);
+        gameState.setSelectedCharacterFactoryDP(dp);
     }
 
     /**
      * Sets the selectedCharacterFactory default's Mana
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param mana      The value to be set as the default mana of selectedCharacterFactory
      * @see ICharacterFactory
      */
     public void setSelectedCharacterFactoryMana(int mana){
-        selectedCharacterFactory.setMana(mana);
+        gameState.setSelectedCharacterFactoryMana(mana);
     }
 
     /**
      * Sets the selectedCharacterFactory default's weight
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param weight      The value to be set as the default weight of selectedCharacterFactory
      * @see ICharacterFactory
      */
     public void setSelectedCharacterFactoryWeight(int weight){
-        selectedCharacterFactory.setWeight(weight);
+        gameState.setSelectedCharacterFactoryWeight(weight);
     }
 
     /**
      * Sets the selectedCharacterFactory default's power
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param power      The value to be set as the default power of selectedCharacterFactory
      * @see ICharacterFactory
      */
     public void setSelectedCharacterFactoryPower(int power){
-        selectedCharacterFactory.setPower(power);
+        gameState.setSelectedCharacterFactoryPower(power);
     }
 
     /**
