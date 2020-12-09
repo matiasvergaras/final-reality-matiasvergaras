@@ -70,10 +70,31 @@ public interface IMastermind {
      */
     void deadCharacter(ICharacter character);
 
+    /**
+     *
+     * @return propertyChangeSupport of Character's death, in order to be able to use it outside of this class.
+     */
     PropertyChangeSupport getDeadCharacter();
 
+    /**
+     *
+     * @return propertyChangeSupport of Character's death, in order to be able to use it outside of this class.
+     */
+    PropertyChangeSupport getEndTurn();
+
+    /**
+     *
+     * @return propertyChangeSupport of Character added to queue,
+     * in order to be able to use it outside of this class.
+     */
+    PropertyChangeSupport getAddQueue();
     /**
      * Alerts the gameController that a character finished his turn.
      */
     void endTurn();
+
+    /**
+     * Alerts the gameController that a character was added to the queue.
+     */
+    void characterAddedToQueue();
 }

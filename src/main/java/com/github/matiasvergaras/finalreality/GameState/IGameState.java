@@ -47,16 +47,15 @@ public interface IGameState {
     void setFinished();
 
     /**
-     * Starts the game.
-     * This method will be called only in Initializing state. Otherwise it will have
+     * Sends the waitTurn() message to every character in both player and cpu parties.
+     * This method will be called only in Active state. Otherwise it will have
      * no effect.
-     * <p> Checks if the player has the correct number of characters
-     * to play, and if that is the case, it changes the state of
-     * the game to Active.</p>
-     * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
-     * activateTurns which in time calls to startTurn which does throws said exception. </p>
+     * <p> It checks if the character has a non-null weapon equipped or a weight
+     * different from 0, if so, he sends the message. Otherwise, it will not let
+     * the character start to wait until he meets the condition of having some sort
+     * of weight. </p>
      */
-    void startWaitTurns() throws InterruptedException;
+    void startWaitTurns();
 
 
     /**
@@ -66,10 +65,8 @@ public interface IGameState {
      * <p> Checks if the player has the correct number of characters
      * to play, and if that is the case, it changes the state of
      * the game to Active.</p>
-     * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
-     *      activateTurns which in time calls to startTurn, which does throws said exception. </p>
-     */
-    void startGame() throws InterruptedException;
+      */
+    void startGame();
 
     /**
      * Starts the configuration of a new game.
@@ -80,25 +77,29 @@ public interface IGameState {
     void initializeGame();
 
     /**
-     * Method to be called by an EndTurnHandler.
      * <p> Sends to the character that just ended his turn the wait for re-entry order. </p>
      * <p> Calls to StartTurn, in order to start a new Turn. </p>
      * <p> A character will wait for its turn only if he is alive (new feature in waitTurn). </p>
-     * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
-     *      startTurn, which does throws said exception. </p>
+      */
+    void endTurn();
+
+    /**
+     * Sends the message that a character was added to the queue,
+     * so if it was originally empty (the condition
+     * is checked by verifying size of turns queue = 1)
+     * now it is no longer empty, so the game can continue, reason
+     * why it finally sends the startTurn() message.
+     * <p> If the queue was not empty, this method will have no effect. </p>
      */
-    void endTurn() throws InterruptedException;
+    void addToQueue();
 
     /**
      * Gets the next characters in the queue and set him as activeCharacter
      * (without removing it from the queue).
      * <p> If the queue is empty, the take will send the thread to sleep until
      * an element becomes available. </p>
-     * <p> This method throws InterruptedException hen the interruption occurs
-     * at time of waiting for an element to become available if queue is empty.</p>
-     * @throws InterruptedException
      */
-    void startTurn() throws InterruptedException;
+    void startTurn();
 
     /**
      * This method receives a dead character and the number of characters

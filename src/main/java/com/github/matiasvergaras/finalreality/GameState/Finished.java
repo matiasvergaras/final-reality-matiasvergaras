@@ -9,7 +9,7 @@ import com.github.matiasvergaras.finalreality.controller.GameController;
  * @author Matias Vergara Silva
  * @since Homework 2
  */
-public class Finished extends AbstractGameState {
+public class Finished extends GameState {
     /**
      * Constructor for a new Finished state.
      * @param gameController        gameController

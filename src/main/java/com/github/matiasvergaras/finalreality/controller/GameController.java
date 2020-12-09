@@ -1,6 +1,6 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.GameState.AbstractGameState;
+import com.github.matiasvergaras.finalreality.GameState.GameState;
 import com.github.matiasvergaras.finalreality.GameState.IGameState;
 import com.github.matiasvergaras.finalreality.GameState.Initializing;
 import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
@@ -50,6 +50,7 @@ public class GameController {
 
     private DeathMMToGCHandler deadCharacterHandler = new DeathMMToGCHandler(this);
     private EndTurnMMToGCHandler endTurnHandler = new EndTurnMMToGCHandler(this);
+    private AddQueueMMToGCHandler addToQueueHandler = new AddQueueMMToGCHandler(this);
     private IGameState gameState;
 
     /**
@@ -69,6 +70,9 @@ public class GameController {
 
         this.player.getEndTurn().addPropertyChangeListener(endTurnHandler);
         this.cpu.getEndTurn().addPropertyChangeListener(endTurnHandler);
+
+        this.player.getAddQueue().addPropertyChangeListener(addToQueueHandler);
+        this.cpu.getAddQueue().addPropertyChangeListener(addToQueueHandler);
 
         this.selectedCharacterFactory = null;
         this.selectedWeaponFactory = null;
@@ -101,7 +105,7 @@ public class GameController {
      * Changes the current state to the given one.
      * @param state     The new state.
      */
-    public void setState(AbstractGameState state){
+    public void setState(IGameState state){
         gameState = state;
     }
 
@@ -152,11 +156,9 @@ public class GameController {
      * <p> Checks if the player has the correct number of characters
      * to play, and if that is the case, it changes the state of
      * the game to Active.</p>
-     * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
-     *      startTurn, which does throws said exception. </p>
      * <p> This method will be effective only in Initializing mode. </p>
      */
-    public void startGame() throws InterruptedException {
+    public void startGame(){
         gameState.startGame();
     }
 
@@ -165,28 +167,35 @@ public class GameController {
      * <p> First, it sets the game status to Active. </p>
      * <p> Then, sends the message of start WaitTurn to every character in both teams. </p>
      * <p> Finally, it send the message to start the first turn. </p>
-     * <p> This method will be effective only in Active mode. </p>
-     * @throws InterruptedException
+     * <p> This method will be effective only in Initializing mode. </p>
      */
-    public void activateTurns() throws InterruptedException {
+    public void activateTurns() {
         gameState.setActive();
         gameState.startWaitTurns();
-        gameState.startTurn();
     }
 
     /**
-     * Method to be called by an EndTurnHandler.
+     * Method to be called by an EndTurnMMToGCHandler.
      * <p> Sends to the character that just ended his turn the wait for re-entry order. </p>
      * <p> Calls to StartTurn, in order to start a new Turn. </p>
      * <p> A character will wait for its turn only if he is alive (new feature in waitTurn). </p>
-     * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
-     *      startTurn, which does throws said exception. </p>
      * <p> This method will be effective only in Active mode. </p>
      */
-    public void endTurn() throws InterruptedException {
+    public void endTurn() {
         gameState.endTurn();
     }
 
+    /**
+     * Method to be called by an AddQueueMMToGCHandler.
+     * <p> Represents the fact of receiving the notification of a
+     * character added to the turns queue. </p>
+     * <p> Checks if the queue was empty before adding.
+     * If so, sends the start new turn message.</p>
+     * <p> This method will be effective only in Active mode. </p>
+     */
+    public void addToQueue(){
+        gameState.addToQueue();
+    }
     /**
      * Gives the activeCharacter.
      * @return ICharacter activeCharacter.

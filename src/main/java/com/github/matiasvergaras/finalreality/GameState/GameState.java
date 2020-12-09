@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * @since Homework 2
  */
 
-public abstract class AbstractGameState implements IGameState {
+public class GameState implements IGameState {
     protected GameController gc;
 
     /**
@@ -24,7 +24,7 @@ public abstract class AbstractGameState implements IGameState {
      * @param gc        The GameController that will
      *                              have this state.
      */
-    public AbstractGameState(GameController gc){
+    public GameState(GameController gc){
         this.gc = gc;
     }
 
@@ -59,243 +59,191 @@ public abstract class AbstractGameState implements IGameState {
      * Changes the current state to Initializing.
      */
     @Override
-    public void setInitializing(){
-    }
+    public void setInitializing(){}
 
     /**
      * Changes the current state to Active.
      */
     @Override
-    public void setActive(){
-    }
+    public void setActive(){}
 
     /**
      * Changes the current state to Finished.
      */
     @Override
-    public void setFinished(){
-    }
+    public void setFinished(){}
 
     /**
      * {@inheritDoc}
      */
-    public void startGame() throws InterruptedException {
-
-    }
+    public void startGame() {}
 
     /**
      * {@inheritDoc}
      */
-    public void initializeGame(){
-
-    }
+    public void initializeGame(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void startWaitTurns() throws InterruptedException {
-
-    }
+    public void startWaitTurns(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void endTurn() throws InterruptedException {
-
-    }
+    public void endTurn(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void startTurn() throws InterruptedException {
-
-    }
+    public void addToQueue(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void removeDeadCharacter(ICharacter deadCharacter, int charactersAlive){
-
-    }
+    public void startTurn(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setWinner(){
-
-    }
+    public void removeDeadCharacter(ICharacter deadCharacter, int charactersAlive){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addBlackMageToPlayer(String name){
-
-    }
+    public void setWinner(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addWhiteMageToPlayer(String name){
-
-    }
+    public void addBlackMageToPlayer(String name){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addEngineerToPlayer(String name){
-
-    }
+    public void addWhiteMageToPlayer(String name){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addThiefToPlayer(String name){
-
-    }
+    public void addEngineerToPlayer(String name){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addKnightToPlayer(String name){
-
-    }
+    public void addThiefToPlayer(String name){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addEnemyToCPU(String name){
-
-    }
+    public void addKnightToPlayer(String name){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addBowToInventory(){
-
-    }
+    public void addEnemyToCPU(String name){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addBowToInventory(String name){
-
-    }
+    public void addBowToInventory(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addSwordToInventory(){
-
-    }
+    public void addBowToInventory(String name){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addSwordToInventory(String name){
-
-    }
+    public void addSwordToInventory(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addAxeToInventory(){
-
-    }
+    public void addSwordToInventory(String name){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addAxeToInventory(String name){
-
-    }
+    public void addAxeToInventory(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addStaffToInventory(){
-
-    }
+    public void addAxeToInventory(String name){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addStaffToInventory(String name){
-
-    }
+    public void addStaffToInventory(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addKnifeToInventory(){
-
-    }
+    public void addStaffToInventory(String name){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addKnifeToInventory(String name){
-
-    }
+    public void addKnifeToInventory(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void equipSelectedWeaponToSelectedCharacter(){
-
-    }
+    public void addKnifeToInventory(String name){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void unequipSelectedCharacter(){
-
-    }
+    public void equipSelectedWeaponToSelectedCharacter(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void removeSelectedCharacterFromItsParty(){
-
-    }
+    public void unequipSelectedCharacter(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void removeSelectedWeaponFromInventory(){
-
-    }
+    public void removeSelectedCharacterFromItsParty(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void activeCharacterNormalAttackSelectedCharacter(){
-    }
+    public void removeSelectedWeaponFromInventory(){}
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void activeCharacterNormalAttackSelectedCharacter(){}
 
     /**
      * {@inheritDoc}

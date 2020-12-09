@@ -34,10 +34,7 @@ public class EndTurnMMToGCHandler implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent evt) {
-        try {
-            controller.endTurn();
-        } catch (InterruptedException ignored) {
-        }
+        controller.endTurn();
     }
 }
 

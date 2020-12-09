@@ -16,7 +16,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author Matias Vergara Silva
  * @since Homework 2
  */
-public class Initializing extends AbstractGameState {
+public class Initializing extends GameState {
     private LinkedBlockingQueue<ICharacter> turns = gc.getTurns();
     private AxeFactory axeFactory = new AxeFactory("Common Axe", 120, 20);
     private BowFactory bowFactory = new BowFactory("Common Bow", 110, 10);
@@ -86,9 +86,8 @@ public class Initializing extends AbstractGameState {
 
     /**
      * {@inheritDoc}
-     * @throws InterruptedException
      */
-    public void startGame() throws InterruptedException {
+    public void startGame() {
         if(gc.getPlayerPartySize() == gc.getCharactersQuantity()){
             gc.activateTurns();
         }

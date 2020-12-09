@@ -25,7 +25,8 @@ public abstract class AbstractCharacter implements ICharacter {
     protected ScheduledExecutorService scheduledExecutor;
     private PropertyChangeSupport
             deadCharacter = new PropertyChangeSupport(this),
-            endTurn = new PropertyChangeSupport(this);
+            endTurn = new PropertyChangeSupport(this),
+            addQueue = new PropertyChangeSupport(this);
 
 
 
@@ -64,6 +65,9 @@ public abstract class AbstractCharacter implements ICharacter {
         return endTurn;
     }
 
+    public PropertyChangeSupport getAddQueue(){
+        return addQueue;
+    }
 
     /**
      * {@inheritDoc}
@@ -89,11 +93,15 @@ public abstract class AbstractCharacter implements ICharacter {
     }
 
     /**
-     * Adds this character to the turnsQueue and shuts down the scheduled executor.
+     * Adds this character to the turnsQueue, alerts its Mastermind
+     * about it and shuts down the scheduled executor.
      */
     protected void addToQueue() {
         turnsQueue.add(this);
         scheduledExecutor.shutdown();
+        addQueue.firePropertyChange(new PropertyChangeEvent(this,
+                "Added to queue", "Out ot queue",
+                "In queue"));
     }
 
     /**

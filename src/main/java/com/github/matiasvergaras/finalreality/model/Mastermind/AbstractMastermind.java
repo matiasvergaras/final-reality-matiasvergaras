@@ -2,6 +2,7 @@ package com.github.matiasvergaras.finalreality.model.Mastermind;
 
 import com.github.matiasvergaras.finalreality.controller.DeathCharacterToMMHandler;
 import com.github.matiasvergaras.finalreality.controller.EndTurnCharacterToMMHandler;
+import com.github.matiasvergaras.finalreality.controller.AddQueueCharacterToMMHandler;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
 import java.beans.PropertyChangeEvent;
@@ -18,9 +19,10 @@ public abstract class AbstractMastermind implements  IMastermind{
     protected String name;
     protected PropertyChangeSupport deadCharacter = new PropertyChangeSupport(this);
     protected PropertyChangeSupport endTurn = new PropertyChangeSupport(this);
-
+    protected PropertyChangeSupport addQueue = new PropertyChangeSupport(this);
     protected DeathCharacterToMMHandler deadCharacterHandler = new DeathCharacterToMMHandler(this);
     protected EndTurnCharacterToMMHandler endTurnHandler = new EndTurnCharacterToMMHandler(this);
+    protected AddQueueCharacterToMMHandler addQueueHandler = new AddQueueCharacterToMMHandler(this);
     protected int aliveCharacters;
 
     /**
@@ -42,12 +44,13 @@ public abstract class AbstractMastermind implements  IMastermind{
         this.getParty().add(character);
         character.getDeadCharacter().addPropertyChangeListener(deadCharacterHandler);
         character.getEndTurn().addPropertyChangeListener(endTurnHandler);
+        character.getAddQueue().addPropertyChangeListener(addQueueHandler);
 
     }
 
     /**
      * {@inheritDoc}
-     * @return
+     * @return  The number of alive characters of this mastermind.
      */
     @Override
     public int getAliveCharacters(){
@@ -151,5 +154,21 @@ public abstract class AbstractMastermind implements  IMastermind{
      */
     public PropertyChangeSupport getEndTurn(){
         return endTurn;
+    }
+
+
+    /**
+     *
+     * @return propertyChangeSupport of Character added to queue,
+     * in order to be able to use it outside of this class.
+     */
+    public PropertyChangeSupport getAddQueue() { return addQueue;}
+
+    /**
+     * {@inheritDoc}
+     */
+    public void characterAddedToQueue(){
+        addQueue.firePropertyChange(new PropertyChangeEvent(this, "Character added",
+                "Out of queue", "In queue"));
     }
 }
