@@ -1,6 +1,7 @@
 package com.github.cc3002.finalreality.controller;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
+import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Matías Vergara Silva
  */
 
-public class attackTest {
+public class AttackTest {
     private GameController gc;
 
     /**
@@ -32,7 +33,6 @@ public class attackTest {
      */
     @Test
     void EffectivePlayerToCPUAttackTest() throws InterruptedException {
-        assertTrue(gc.isInitializing());
         //Adds an Engineer to the player party.
         gc.addEngineerToPlayer("Domingo Egg");
         //Adds an Enemy to the CPU party.
@@ -53,11 +53,15 @@ public class attackTest {
         assertTrue(gc.getSelectedCharacter().isAlive());
         //Starts the game
         gc.startGame();
-        assertFalse(gc.isInitializing());
         //Select Chaos as SelectedCharacter
         gc.setSelectedCharacterFromCPUParty(0);
         //Send attack message
         assertTrue(gc.isActive());
+        //Give some time to make sure that there will be characters in
+        //the queue (as in ActiveCharacter variable).
+        Thread.sleep(2000);
+        assertEquals(gc.getActiveCharacter().getName(), "Domingo Egg");
+        Thread.sleep(3000);
         assertEquals(gc.getActiveCharacter().getName(), "Domingo Egg");
         gc.activeCharacterNormalAttackSelectedCharacter();
         //Check that the enemy died.
@@ -83,7 +87,7 @@ public class attackTest {
         assertTrue(gc.isInitializing());
         //Adds an Engineer to the player party and selects him.
         gc.addEngineerToPlayer("Domingo Egg");
-        gc.setSelectedCharacterFromPlayerParty(gc.getPlayerPartySize()-1);
+        gc.setSelectedCharacterFromPlayerParty(0);
         //Adds an Thief to the player party and set him as attack target.
         gc.addThiefToPlayer("Lowe");
         //Sets bow factory to create the definitive bow with 10000 power.
@@ -91,14 +95,20 @@ public class attackTest {
         gc.setSelectedWeaponFactoryPower(10000);
         //Instantiate a definitive bow and add it to inventory. Select it.
         gc.addBowToInventory();
-        gc.setSelectedWeapon(gc.getInventorySize()-1);
+        gc.setSelectedWeapon(0);
         //Equip the definitive bow to Domingo the Engineer
         gc.equipSelectedWeaponToSelectedCharacter();
-        gc.setSelectedCharacterFromCPUParty(1);
+        gc.setSelectedCharacterFromPlayerParty(1);
+        gc.addBowToInventory();
+        gc.setSelectedWeapon(1);
+        gc.equipSelectedWeaponToSelectedCharacter();
+        gc.setSelectedCharacterFromPlayerParty(0);
         //First we make sure that the  thief is alive before getting attacked
         assertTrue(gc.getSelectedCharacter().isAlive());
         gc.startGame();
+        Thread.sleep(2000);
         //Send attack message
+        assertEquals(gc.getActiveCharacter().getName(), "Domingo Egg");
         gc.activeCharacterNormalAttackSelectedCharacter();
         //Check that the thief is still alive (if he was attacked, he would be already dead).
         assertTrue(gc.getSelectedCharacter().isAlive());
@@ -129,6 +139,9 @@ public class attackTest {
         gc.addEnemyToCPU("Elliot");
         //Starts the game
         gc.startGame();
+        //Give some time to make sure that there will be characters in
+        //the queue (as in ActiveCharacter variable).
+        Thread.sleep(3000);
         //Since Domingo weapon has weight 13 (default Axe), he will take the turn the first.
         //Well check it and make him attack Elliot.
         assertEquals(gc.getActiveCharacter(), gc.getPlayerParty().get(0));
@@ -185,6 +198,9 @@ public class attackTest {
         gc.setSelectedWeapon(0);
         gc.equipSelectedWeaponToSelectedCharacter();
         gc.startGame();
+        //Give some time to make sure that there will be characters in
+        //the queue (as in ActiveCharacter variable).
+        Thread.sleep(2000);
         assertTrue(gc.isActive());
         // Select Kane as target.
         gc.setSelectedCharacterFromCPUParty(gc.getCPUPartySize()-1);

@@ -5,7 +5,6 @@ import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFacto
 import com.github.matiasvergaras.finalreality.factory.Weapons.IWeaponFactory;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
-import java.util.ArrayList;
 
 /**
  * Interface to hold the common behavior for every single GameState.
@@ -47,58 +46,51 @@ public interface IGameState {
     void setFinished();
 
     /**
+     * Sends the waitTurn() message to every character in both player and cpu parties.
+     * This method will be called only in Active state. Otherwise it will have
+     * no effect.
+     * <p> It checks if the character has a non-null weapon equipped or a weight
+     * different from 0, if so, he sends the message. Otherwise, it will not let
+     * the character start to wait until he meets the condition of having some sort
+     * of weight. </p>
+     */
+    void startWaitTurns();
+
+
+    /**
      * Starts the game.
      * This method will be called only in Initializing state. Otherwise it will have
      * no effect.
      * <p> Checks if the player has the correct number of characters
      * to play, and if that is the case, it changes the state of
      * the game to Active.</p>
-     * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
-     * activateTurns which in time calls to startTurn which does throws said exception. </p>
-     */
-    void startWaitTurns() throws InterruptedException;
-
+      */
+    void startGame();
 
     /**
-     * Starts the game.
-     * This method will be called only in Initializing state. Otherwise it will have
-     * no effect.
-     * <p> Checks if the player has the correct number of characters
-     * to play, and if that is the case, it changes the state of
-     * the game to Active.</p>
-     * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
-     *      activateTurns which in time calls to startTurn, which does throws said exception. </p>
-     */
-    void startGame() throws InterruptedException;
-
-    /**
-     * Starts the configuration of a new game.
-     * <p> Changes the gameController status to ''initializing''.</p>
-     * <p> This method has to have effect only if called from
-     * Finished state. </p>
-     */
-    void initializeGame();
-
-    /**
-     * Method to be called by an EndTurnHandler.
      * <p> Sends to the character that just ended his turn the wait for re-entry order. </p>
      * <p> Calls to StartTurn, in order to start a new Turn. </p>
      * <p> A character will wait for its turn only if he is alive (new feature in waitTurn). </p>
-     * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
-     *      startTurn, which does throws said exception. </p>
+      */
+    void endTurn();
+
+    /**
+     * Sends the message that a character was added to the queue,
+     * so if it was originally empty (the condition
+     * is checked by verifying size of turns queue = 1)
+     * now it is no longer empty, so the game can continue, reason
+     * why it finally sends the startTurn() message.
+     * <p> If the queue was not empty, this method will have no effect. </p>
      */
-    void endTurn() throws InterruptedException;
+    void addToQueue();
 
     /**
      * Gets the next characters in the queue and set him as activeCharacter
      * (without removing it from the queue).
      * <p> If the queue is empty, the take will send the thread to sleep until
      * an element becomes available. </p>
-     * <p> This method throws InterruptedException hen the interruption occurs
-     * at time of waiting for an element to become available if queue is empty.</p>
-     * @throws InterruptedException
      */
-    void startTurn() throws InterruptedException;
+    void startTurn();
 
     /**
      * This method receives a dead character and the number of characters
@@ -303,15 +295,89 @@ public interface IGameState {
     void activeCharacterNormalAttackSelectedCharacter();
 
     /**
-     * Gives the list with all the character factories of this gameController.
-     * @return      ArrayList<ICharacterFactory> character's factories.
+     * Sets the selectedWeaponFactory default's weight value.
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param weight        The value to be set as the default weapon weight
+     * @see IWeaponFactory
      */
-    ArrayList<ICharacterFactory> getCharacterFactories();
+    void setSelectedWeaponFactoryWeight(int weight);
 
     /**
-     * Gives the list with all the weapon factories of this gameController.
-     * @return      ArrayList<IWeaponFactory> weapon factories.
+     * Sets the selectedWeaponFactory default's name value.
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param name        The value to be set as the default weapon name
+     * @see IWeaponFactory
      */
-    ArrayList<IWeaponFactory> getWeaponFactories();
+    void setSelectedWeaponFactoryName(String name);
+
+    /**
+     * Sets the selectedWeaponFactory default's power value.
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param power        The value to be set as the default weapon power
+     * @see IWeaponFactory
+     */
+    void setSelectedWeaponFactoryPower(int power);
+
+    /**
+     * Sets the selectedWeaponFactory default's magicPower value.
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param magicPower       The value to be set as the default weapon magicPower of SelectedWeaponFactory
+     * @see IWeaponFactory
+     */
+    void setSelectedWeaponFactoryMagicPower(int magicPower);
+
+    /**
+     * Sets the selectedCharacterFactory default's HP
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param hp       The value to be set as the default HP of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
+    void setSelectedCharacterFactoryHP(int hp);
+
+    /**
+     * Sets the selectedCharacterFactory default's DP
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param dp       The value to be set as the default DP of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
+    void setSelectedCharacterFactoryDP(int dp);
+
+    /**
+     * Sets the selectedCharacterFactory default's Mana
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param mana      The value to be set as the default mana of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
+    void setSelectedCharacterFactoryMana(int mana);
+
+    /**
+     * Sets the selectedCharacterFactory default's weight
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param weight      The value to be set as the default weight of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
+    void setSelectedCharacterFactoryWeight(int weight);
+
+    /**
+     * Sets the selectedCharacterFactory default's power
+     * <p> This method will be effective only in Initializing mode. </p>
+     * @param power      The value to be set as the default power of selectedCharacterFactory
+     * @see ICharacterFactory
+     */
+    void setSelectedCharacterFactoryPower(int power);
+
+    /**
+     * Sets the actual character factory.
+     * @param index     The index of the new selected character factory in the
+     *                  character factories list.
+     */
+    void selectCharacterFactory(int index);
+
+    /**
+     * Sets the actual weapon factory.
+     * @param index     The index of the new selected weapon factory in the
+     *                  weapon factories list.
+     */
+    void selectWeaponFactory(int index);
 
 }

@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Matias Vergara Silva
  * @since Homework 2
  */
-public class deathNotificationSystemTest {
+public class DeathNotificationSystemTest {
     GameController gc;
     LinkedBlockingQueue<ICharacter> turns;
 
@@ -57,6 +57,8 @@ public class deathNotificationSystemTest {
         assertEquals(gc.getCPUAliveNumber(), 5);
         //Starts the game
         gc.startGame();
+        //Wait for characters in the queue
+        Thread.sleep(3000);
         //We will check which character is the first one in attack and will save his name.
         assertTrue(gc.getCPUParty().contains(gc.getActiveCharacter()));
         String firstCharacterName = gc.getActiveCharacter().getName();
@@ -115,8 +117,10 @@ public class deathNotificationSystemTest {
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(700);
         //Equips Lyle
-        gc.setSelectedCharacterFromPlayerParty(0);
         gc.addBowToInventory("Bow of Lyle");
+        gc.setSelectedCharacterFromPlayerParty(0);
+        gc.setSelectedWeapon(0);
+        gc.equipSelectedWeaponToSelectedCharacter();
         //Equips Kokichi
         gc.addBowToInventory("Bow of Kokichi");
         gc.setSelectedCharacterFromPlayerParty(1);
@@ -133,14 +137,17 @@ public class deathNotificationSystemTest {
         gc.setSelectedWeapon(3);
         gc.equipSelectedWeaponToSelectedCharacter();
         //Sets up enemy Team.
-        //Config the factory to produce hyper-weighted characters, so we can be
+        //Config the factory to produce weighted characters, so we can be
         //sure that they wont play before the player characters.
         gc.setSelectedCharacterFactory(5);
-        gc.setSelectedWeaponFactoryWeight(40);
+        gc.setSelectedWeaponFactoryWeight(15);
         gc.addEnemyToCPU("Elliot");
         gc.addEnemyToCPU("Ramladu");
         //Start game
         gc.startGame();
+        //Give some time to make sure that there will be characters in
+        //the queue (as in ActiveCharacter variable).
+        Thread.sleep(2000);
         //Kill Elliot
         gc.setSelectedCharacterFromCPUParty(0);
         gc.activeCharacterNormalAttackSelectedCharacter();

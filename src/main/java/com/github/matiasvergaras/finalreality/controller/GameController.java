@@ -1,6 +1,5 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.GameState.AbstractGameState;
 import com.github.matiasvergaras.finalreality.GameState.IGameState;
 import com.github.matiasvergaras.finalreality.GameState.Initializing;
 import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
@@ -39,8 +38,7 @@ public class GameController {
 
     private ICharacter selectedCharacter;
     private IWeapon selectedWeapon;
-    private ICharacterFactory selectedCharacterFactory;
-    private IWeaponFactory selectedWeaponFactory;
+
 
     private ICharacter activeCharacter;
     private IMastermind winner;
@@ -50,7 +48,12 @@ public class GameController {
 
     private DeathMMToGCHandler deadCharacterHandler = new DeathMMToGCHandler(this);
     private EndTurnMMToGCHandler endTurnHandler = new EndTurnMMToGCHandler(this);
+    private AddQueueMMToGCHandler addToQueueHandler = new AddQueueMMToGCHandler(this);
     private IGameState gameState;
+
+    //Public to be able to change them from Initializing
+    public ICharacterFactory selectedCharacterFactory;
+    public IWeaponFactory selectedWeaponFactory;
 
     /**
      * Constructor of the GameController
@@ -70,6 +73,9 @@ public class GameController {
         this.player.getEndTurn().addPropertyChangeListener(endTurnHandler);
         this.cpu.getEndTurn().addPropertyChangeListener(endTurnHandler);
 
+        this.player.getAddQueue().addPropertyChangeListener(addToQueueHandler);
+        this.cpu.getAddQueue().addPropertyChangeListener(addToQueueHandler);
+
         this.selectedCharacterFactory = null;
         this.selectedWeaponFactory = null;
         this.selectedCharacter = new NullCharacter();
@@ -77,8 +83,6 @@ public class GameController {
         this.selectedWeapon = new NullWeapon();
         this.winner = null;
         this.gameState = new Initializing(this);
-        this.characterFactories = gameState.getCharacterFactories();
-        this.weaponFactories = gameState.getWeaponFactories();
     }
 
     /**
@@ -101,16 +105,8 @@ public class GameController {
      * Changes the current state to the given one.
      * @param state     The new state.
      */
-    public void setState(AbstractGameState state){
+    public void setState(IGameState state){
         gameState = state;
-    }
-
-    /**
-     * Returns the current game state
-     * @return  IGameState gameState.
-     */
-    public IGameState getState(){
-        return gameState;
     }
 
     /**
@@ -152,11 +148,9 @@ public class GameController {
      * <p> Checks if the player has the correct number of characters
      * to play, and if that is the case, it changes the state of
      * the game to Active.</p>
-     * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
-     *      startTurn, which does throws said exception. </p>
      * <p> This method will be effective only in Initializing mode. </p>
      */
-    public void startGame() throws InterruptedException {
+    public void startGame(){
         gameState.startGame();
     }
 
@@ -165,28 +159,35 @@ public class GameController {
      * <p> First, it sets the game status to Active. </p>
      * <p> Then, sends the message of start WaitTurn to every character in both teams. </p>
      * <p> Finally, it send the message to start the first turn. </p>
-     * <p> This method will be effective only in Active mode. </p>
-     * @throws InterruptedException
+     * <p> This method will be effective only in Initializing mode. </p>
      */
-    public void activateTurns() throws InterruptedException {
+    public void activateTurns() {
         gameState.setActive();
         gameState.startWaitTurns();
-        gameState.startTurn();
     }
 
     /**
-     * Method to be called by an EndTurnHandler.
+     * Method to be called by an EndTurnMMToGCHandler.
      * <p> Sends to the character that just ended his turn the wait for re-entry order. </p>
      * <p> Calls to StartTurn, in order to start a new Turn. </p>
      * <p> A character will wait for its turn only if he is alive (new feature in waitTurn). </p>
-     * <p> This method has to be marked as ''throws InterrumpedException'' since it calls to
-     *      startTurn, which does throws said exception. </p>
      * <p> This method will be effective only in Active mode. </p>
      */
-    public void endTurn() throws InterruptedException {
+    public void endTurn() {
         gameState.endTurn();
     }
 
+    /**
+     * Method to be called by an AddQueueMMToGCHandler.
+     * <p> Represents the fact of receiving the notification of a
+     * character added to the turns queue. </p>
+     * <p> Checks if the queue was empty before adding.
+     * If so, sends the start new turn message.</p>
+     * <p> This method will be effective only in Active mode. </p>
+     */
+    public void addToQueue(){
+        gameState.addToQueue();
+    }
     /**
      * Gives the activeCharacter.
      * @return ICharacter activeCharacter.
@@ -693,11 +694,12 @@ public class GameController {
      * Change the current SelectedWeaponFactory to the one in weaponFactories at the given index.
      * <p> In case of a bad index, the method will catch and ignore the error, and keep the
      * initial selectedWeapon. </p>
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param index     The position of the new SelectedWeaponFactory in weaponFactories
      */
     public void setSelectedWeaponFactory(int index){
         try{
-            this.selectedWeaponFactory = weaponFactories.get(index);
+            gameState.selectWeaponFactory(index);
         }
         catch(IndexOutOfBoundsException ignored){
         }
@@ -711,7 +713,7 @@ public class GameController {
      */
     public void setSelectedCharacterFactory(int index){
         try{
-            this.selectedCharacterFactory = characterFactories.get(index);
+            gameState.selectCharacterFactory(index);
         }
         catch(IndexOutOfBoundsException ignored){
         }
@@ -719,82 +721,91 @@ public class GameController {
 
     /**
      * Sets the selectedWeaponFactory default's weight value.
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param weight        The value to be set as the default weapon weight
      */
     public void setSelectedWeaponFactoryWeight(int weight){
-        selectedWeaponFactory.setWeight(weight);
+        gameState.setSelectedWeaponFactoryWeight(weight);
     }
 
 
     /**
      * Sets the selectedWeaponFactory default's name value.
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param name        The value to be set as the default weapon name
      */
     public void setSelectedWeaponFactoryName(String name){
-        selectedWeaponFactory.setName(name);
+        gameState.setSelectedWeaponFactoryName(name);
     }
 
     /**
      * Sets the selectedWeaponFactory default's power value.
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param power        The value to be set as the default weapon power
      * @see ICharacterFactory
      */
     public void setSelectedWeaponFactoryPower(int power){
-        selectedWeaponFactory.setPower(power);
+        gameState.setSelectedWeaponFactoryPower(power);
     }
 
     /**
      * Sets the selectedWeaponFactory default's magicPower value.
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param magicPower       The value to be set as the default weapon magicPower of SelectedWeaponFactory
      * @see ICharacterFactory
      */
     public void setSelectedWeaponFactoryMagicPower(int magicPower){
-        selectedWeaponFactory.setMagicPower(magicPower);
+        gameState.setSelectedWeaponFactoryMagicPower(magicPower);
     }
 
     /**
      * Sets the selectedCharacterFactory default's HP
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param hp       The value to be set as the default HP of selectedCharacterFactory
      * @see ICharacterFactory
      */
     public void setSelectedCharacterFactoryHP(int hp){
-        selectedCharacterFactory.setHP(hp);
+        gameState.setSelectedCharacterFactoryHP(hp);
     }
 
     /**
      * Sets the selectedCharacterFactory default's DP
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param dp       The value to be set as the default DP of selectedCharacterFactory
      * @see ICharacterFactory
      */
     public void setSelectedCharacterFactoryDP(int dp){
-        selectedCharacterFactory.setDP(dp);
+        gameState.setSelectedCharacterFactoryDP(dp);
     }
 
     /**
      * Sets the selectedCharacterFactory default's Mana
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param mana      The value to be set as the default mana of selectedCharacterFactory
      * @see ICharacterFactory
      */
     public void setSelectedCharacterFactoryMana(int mana){
-        selectedCharacterFactory.setMana(mana);
+        gameState.setSelectedCharacterFactoryMana(mana);
     }
 
     /**
      * Sets the selectedCharacterFactory default's weight
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param weight      The value to be set as the default weight of selectedCharacterFactory
      * @see ICharacterFactory
      */
     public void setSelectedCharacterFactoryWeight(int weight){
-        selectedCharacterFactory.setWeight(weight);
+        gameState.setSelectedCharacterFactoryWeight(weight);
     }
 
     /**
      * Sets the selectedCharacterFactory default's power
+     * <p> This method will be effective only in Initializing mode. </p>
      * @param power      The value to be set as the default power of selectedCharacterFactory
      * @see ICharacterFactory
      */
     public void setSelectedCharacterFactoryPower(int power){
-        selectedCharacterFactory.setPower(power);
+        gameState.setSelectedCharacterFactoryPower(power);
     }
 
     /**

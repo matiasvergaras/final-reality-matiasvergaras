@@ -103,6 +103,14 @@ public interface ICharacter {
      */
     public PropertyChangeSupport getEndTurn();
 
+
+    /**
+     * Gives the PropertyChangeSupport of the add of a character to the turns queue,
+     * in order to be able to assign listeners to it outside of this class.
+     * @return propertyChangeSupport addQueue
+     */
+    public PropertyChangeSupport getAddQueue();
+
 }
 
 

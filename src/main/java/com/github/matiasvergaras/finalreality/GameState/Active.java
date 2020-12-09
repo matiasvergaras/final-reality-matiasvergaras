@@ -13,7 +13,7 @@ import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
  * @author Matias Vergara Silva
  * @since Homework 2
  */
-public class Active extends AbstractGameState {
+public class Active extends GameState {
 
     /**
      * Constructor for a new Active state.
@@ -42,9 +42,9 @@ public class Active extends AbstractGameState {
 
     /**
      * {@inheritDoc}
-     * @throws InterruptedException
      */
-    public void endTurn() throws InterruptedException {
+    public void endTurn(){
+        gc.getTurns().poll();
         gc.getActiveCharacter().waitTurn();
         startTurn();
     }
@@ -52,9 +52,19 @@ public class Active extends AbstractGameState {
     /**
      * {@inheritDoc}
      */
+    public void addToQueue(){
+        if(gc.getTurns().size()>0){
+            startTurn();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public void startWaitTurns(){
         for(ICharacter c: gc.getPlayerParty()){
-            if(!c.getAttributes().getEquippedWeapon().equals(new NullWeapon())){
+            if(!c.getAttributes().getEquippedWeapon().equals(new NullWeapon())
+            || !(c.getAttributes().getWeight()==0)){
                 c.waitTurn();
             }
 
@@ -62,15 +72,16 @@ public class Active extends AbstractGameState {
         for(ICharacter c: gc.getCPUParty()){
             c.waitTurn();
         }
+
     }
 
     /**
      * {@inheritDoc}
-     * @throws InterruptedException
      */
-    public void startTurn() throws InterruptedException {
-        gc.setActiveCharacter(gc.getTurns().take());
-
+    public void startTurn(){
+        if(!gc.getTurns().isEmpty()) {
+            gc.setActiveCharacter(gc.getTurns().peek());
+        }
         /*
          * for the next homeworks:
          * if cpuParty contains activeCharacter : ( ... random attack ... )
