@@ -2,6 +2,7 @@ package com.github.cc3002.finalreality.controller;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
 
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,13 +20,18 @@ public class StateTest {
      * at a time.
      * Test an effective attack from player to cpu.
      */
-    @Test
+    @RepeatedTest(3)
     void EffectivePlayerToCPUAttackTest() throws InterruptedException {
         GameController gc = new GameController("Player", "CPU", 1);
         //Check that the game is only in initializing mode.
         assertTrue(gc.isInitializing());
         assertFalse(gc.isFinished());
         assertFalse(gc.isActive());
+        assertFalse(gc.isSettingNewTurn());
+        assertFalse(gc.isCPUTurn());
+        assertFalse(gc.isPlayerTurn());
+        assertFalse(gc.isPerformingAttack());
+        assertFalse(gc.isSelectingAttackTarget());
         //Adds an Engineer to the player party.
         gc.addEngineerToPlayer("Domingo Egg");
         //Adds an Enemy to the CPU party.
@@ -34,7 +40,7 @@ public class StateTest {
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(10000);
         //To make sure that the engineer will get the turn at first.
-        gc.setSelectedWeaponFactoryWeight(1);
+        gc.setSelectedWeaponFactoryWeight(0);
         //Instantiate a definitive bow and add it to inventory. Select it.
         gc.addBowToInventory();
         gc.setSelectedWeapon(0);
@@ -48,13 +54,20 @@ public class StateTest {
         assertTrue(gc.isActive());
         assertFalse(gc.isFinished());
         assertFalse(gc.isInitializing());
-        //In start mode, the user should not be able to get the factories.
-        //Select Chaos as SelectedCharacter
-        gc.setSelectedCharacterFromCPUParty(0);
-        //Send attack message
         //Give some time to make sure that there will be characters in
         //the queue (as in ActiveCharacter variable).
-        Thread.sleep(2000);
+        Thread.sleep(3000);
+        //Select Chaos as SelectedCharacter
+        gc.setSelectedCharacterFromCPUParty(0);
+        //Start a attack-movement
+        gc.initAttackMove();
+        assertTrue(gc.isSelectingAttackTarget());
+        //Cancel attack-movement
+        gc.cancelAttackMove();
+        assertTrue(gc.isPlayerTurn());
+        //Re-start attack
+        gc.initAttackMove();
+        assertTrue(gc.isSelectingAttackTarget());
         assertEquals(gc.getActiveCharacter().getName(), "Domingo Egg");
         gc.activeCharacterNormalAttackSelectedCharacter();
         //Check that the enemy died.

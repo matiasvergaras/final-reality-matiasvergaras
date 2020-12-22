@@ -1,4 +1,4 @@
-package com.github.matiasvergaras.finalreality.GameState;
+package com.github.matiasvergaras.finalreality.controller.phases;
 
 
 import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
@@ -19,10 +19,41 @@ public interface IGameState {
      */
     boolean isInitializing();
     /**
-     * Returns true if the current state is Active
+     * Returns true if the current state is CPUTurn
+     * @return  boolean isActive
+     */
+    boolean isCPUTurn();
+
+    /**
+     * Returns true if the current state is PlayerTurn
+     * @return boolean isPlayerTurn
+     */
+    boolean isPlayerTurn();
+
+    /**
+     * Returns true if the current state is PerformingAttack
+     * @return  boolean isPerformingAttack
+     */
+    boolean isPerformingAttack();
+
+    /**
+     * Returns true if the current state is SelectingAttackTarget
+     * @return  boolean isSelectingAttackTarget
+     */
+    boolean isSelectingAttackTarget();
+
+    /**
+     * Returns true if the current state is SettingNewTurn
+     * @return  boolean isSettingNewTurn
+     */
+    boolean isSettingNewTurn();
+
+    /**
+     * Returns true if the current state is a subphase of active
      * @return  boolean isActive
      */
     boolean isActive();
+
     /**
      * Returns true if the current state is Finished.
      * @return  boolean isFinished
@@ -34,11 +65,6 @@ public interface IGameState {
      * current state to Initializing.
      */
     void setInitializing();
-
-    /**
-     * Changes the current state to Active.
-     */
-    void setActive();
 
     /**
      * Changes the current state to Finished.
@@ -56,6 +82,11 @@ public interface IGameState {
      */
     void startWaitTurns();
 
+    /**
+     *  Sets the attack decision by changin from "selectingAttackTarget" subphase
+     *  to PerformingAttack, and sending the attack message.
+     */
+    void setAttack();
 
     /**
      * Starts the game.
@@ -73,6 +104,21 @@ public interface IGameState {
      * <p> A character will wait for its turn only if he is alive (new feature in waitTurn). </p>
       */
     void endTurn();
+
+    /**
+     * Starts the selection of the attack target, by changing from CPUTurn/PlayerTurn to
+     * PerformingAttack.
+     * <p> Once this method is called, the <Strong>cancelAttack</Strong> method can be used to revert its effect.</p>
+     */
+    void initAttack();
+
+    /**
+     * Cancels the selection of an attack target by returning from
+     * PerformingAttack state to PlayerTurn state.
+     * <p> It will always return to PlayerTurn because the CPU will never
+     * cancel an attack decision (it decides automatically). </p>
+     */
+    void cancelAttack();
 
     /**
      * Sends the message that a character was added to the queue,

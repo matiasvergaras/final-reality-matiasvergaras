@@ -1,10 +1,12 @@
-package com.github.matiasvergaras.finalreality.GameState;
+package com.github.matiasvergaras.finalreality.controller.phases;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
+import com.github.matiasvergaras.finalreality.controller.phases.activePhases.SettingNewTurn;
 import com.github.matiasvergaras.finalreality.factory.Characters.*;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -62,21 +64,39 @@ public class Initializing extends GameState {
     }
 
     /**
-     * Changes the current state to Active.
-     */
-    public void setActive(){
-        gc.setState(new Active(gc));
-    }
-
-
-    /**
      * {@inheritDoc}
      */
     public void startGame() {
         if(gc.getPlayerPartySize() == gc.getCharactersQuantity()){
-            gc.activateTurns();
+            startWaitTurns();
+            setNewTurn();
+            gc.startTurn();
         }
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void startWaitTurns(){
+        for(ICharacter c: gc.getPlayerParty()){
+            if(!c.getAttributes().getEquippedWeapon().equals(new NullWeapon())){
+                c.waitTurn();
+            }
+
+        }
+        for(ICharacter c: gc.getCPUParty()){
+            c.waitTurn();
+        }
+
+    }
+
+    /**
+     * Changes the current state to Active.
+     */
+    public void setNewTurn(){
+        gc.setState(new SettingNewTurn(gc));
+    }
+
 
     /**
      * {@inheritDoc}

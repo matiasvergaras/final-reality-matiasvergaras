@@ -1,5 +1,4 @@
-package com.github.matiasvergaras.finalreality.controller;
-
+package com.github.matiasvergaras.finalreality.controller.handlers;
 
 import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 
@@ -8,12 +7,12 @@ import java.beans.PropertyChangeListener;
 
 /**
  * PropertyChangeListener.
- * <p> This class implements a Handler of the addition of a character to the turns queue. </p>
- * <p> His mission is to look for character's addQueue, and notify to their Mastermind. </p>
+ * <p> This class implements a Handler of a Character endTurn.. </p>
+ * <p> His mission is to look for character's endTurn, and notify to their Mastermind. </p>
  * @author Matias Vergara Silva
  * @since Homework 2
  */
-public class AddQueueCharacterToMMHandler implements PropertyChangeListener {
+public class EndTurnCharacterToMMHandler implements PropertyChangeListener {
     IMastermind mastermind;
 
     /**
@@ -22,7 +21,7 @@ public class AddQueueCharacterToMMHandler implements PropertyChangeListener {
      * @param mastermind
      *     The object to be notified of the change.
      */
-    public AddQueueCharacterToMMHandler(IMastermind mastermind){
+    public EndTurnCharacterToMMHandler(IMastermind mastermind){
         this.mastermind = mastermind;
     }
 
@@ -35,6 +34,8 @@ public class AddQueueCharacterToMMHandler implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent event) {
-        mastermind.characterAddedToQueue();
+        mastermind.endTurn();
     }
 }
+
+

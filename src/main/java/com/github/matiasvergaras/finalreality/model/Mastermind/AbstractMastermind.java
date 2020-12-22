@@ -1,8 +1,8 @@
 package com.github.matiasvergaras.finalreality.model.Mastermind;
 
-import com.github.matiasvergaras.finalreality.controller.DeathCharacterToMMHandler;
-import com.github.matiasvergaras.finalreality.controller.EndTurnCharacterToMMHandler;
-import com.github.matiasvergaras.finalreality.controller.AddQueueCharacterToMMHandler;
+import com.github.matiasvergaras.finalreality.controller.handlers.DeathCharacterToMMHandler;
+import com.github.matiasvergaras.finalreality.controller.handlers.EndTurnCharacterToMMHandler;
+import com.github.matiasvergaras.finalreality.controller.handlers.AddQueueCharacterToMMHandler;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
 import java.beans.PropertyChangeEvent;

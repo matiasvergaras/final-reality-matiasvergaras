@@ -1,4 +1,6 @@
-package com.github.matiasvergaras.finalreality.controller;
+package com.github.matiasvergaras.finalreality.controller.handlers;
+
+import com.github.matiasvergaras.finalreality.controller.GameController;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

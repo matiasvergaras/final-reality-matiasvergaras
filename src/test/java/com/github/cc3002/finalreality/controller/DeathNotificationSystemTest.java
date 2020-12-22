@@ -3,6 +3,7 @@ package com.github.cc3002.finalreality.controller;
 import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.LinkedBlockingQueue;
@@ -44,7 +45,7 @@ public class DeathNotificationSystemTest {
         gc.setSelectedCharacterFactory(5);
         gc.setSelectedCharacterFactoryPower(600);
         //To make sure that enemies will attack the first.
-        gc.setSelectedCharacterFactoryWeight(7);
+        gc.setSelectedCharacterFactoryWeight(0);
         gc.addEnemyToCPU("Mishaela");
         gc.addEnemyToCPU("Ramladu");
         gc.addEnemyToCPU("Balbazak");
@@ -59,46 +60,8 @@ public class DeathNotificationSystemTest {
         gc.startGame();
         //Wait for characters in the queue
         Thread.sleep(3000);
-        //We will check which character is the first one in attack and will save his name.
-        assertTrue(gc.getCPUParty().contains(gc.getActiveCharacter()));
-        String firstCharacterName = gc.getActiveCharacter().getName();
-        //Kills the first player character.
-        gc.setSelectedCharacterFromPlayerParty(0);
-        gc.activeCharacterNormalAttackSelectedCharacter();
-        assertNull(gc.getWinner());
-        assertEquals(gc.getPlayerAliveNumber(), 3);
-        //Now we should be in the turn of the second cpu player.
-        String secondCharacterName = gc.getActiveCharacter().getName();
-        assertTrue(gc.getCPUParty().contains(gc.getActiveCharacter()));
-        assertNotEquals(firstCharacterName, secondCharacterName);
-        //We will make him attack the second player character.
-        gc.setSelectedCharacterFromPlayerParty(1);
-        gc.activeCharacterNormalAttackSelectedCharacter();
-        assertNull(gc.getWinner());
-        assertEquals(gc.getPlayerAliveNumber(), 2);
-        //Now we should be in the turn of the third cpu player.
-        String thirdCharacterName = gc.getActiveCharacter().getName();
-        assertTrue(gc.getCPUParty().contains(gc.getActiveCharacter()));
-        assertNotEquals(secondCharacterName, thirdCharacterName);
-        assertNotEquals(firstCharacterName, thirdCharacterName);
-        //We will make him attack the third player character.
-        gc.setSelectedCharacterFromPlayerParty(2);
-        gc.activeCharacterNormalAttackSelectedCharacter();
-        assertNull(gc.getWinner());
-        assertEquals(gc.getPlayerAliveNumber(), 1);
-        //Now we should be in the turn of the fourth cpu player.
-        String fourthCharacterName = gc.getActiveCharacter().getName();
-        assertTrue(gc.getCPUParty().contains(gc.getActiveCharacter()));
-        assertNotEquals(firstCharacterName, fourthCharacterName);
-        assertNotEquals(secondCharacterName, fourthCharacterName);
-        assertNotEquals(thirdCharacterName, fourthCharacterName);
-        //We will make him attack the fourth (and last) player character.
-        gc.setSelectedCharacterFromPlayerParty(3);
-        gc.activeCharacterNormalAttackSelectedCharacter();
-        assertEquals(gc.getPlayerAliveNumber(), 0);
-        //Every player character should be dead by now. The controller
-        //should know who is the winner, even if there is a CPU Character
-        // in the queue yet. We will ask for it.
+        //Since enemies are the first to attack, and their attacks are automatic,
+        // there should be no need to do anything else. The game should end and the winner should be the CPU.
         assertEquals(gc.getWinner().getName(), gc.getCPUName());
         assertTrue(gc.isFinished());
     }
@@ -140,7 +103,7 @@ public class DeathNotificationSystemTest {
         //Config the factory to produce weighted characters, so we can be
         //sure that they wont play before the player characters.
         gc.setSelectedCharacterFactory(5);
-        gc.setSelectedWeaponFactoryWeight(15);
+        gc.setSelectedWeaponFactoryWeight(0);
         gc.addEnemyToCPU("Elliot");
         gc.addEnemyToCPU("Ramladu");
         //Start game
@@ -148,10 +111,12 @@ public class DeathNotificationSystemTest {
         //Give some time to make sure that there will be characters in
         //the queue (as in ActiveCharacter variable).
         Thread.sleep(2000);
+        gc.initAttackMove();
         //Kill Elliot
         gc.setSelectedCharacterFromCPUParty(0);
         gc.activeCharacterNormalAttackSelectedCharacter();
         //Kill Ramladu
+        gc.initAttackMove();
         gc.setSelectedCharacterFromCPUParty(1);
         gc.activeCharacterNormalAttackSelectedCharacter();
         //Check for game finished status and winner

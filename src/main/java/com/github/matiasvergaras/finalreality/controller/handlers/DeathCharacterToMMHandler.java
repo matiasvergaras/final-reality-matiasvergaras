@@ -1,4 +1,4 @@
-package com.github.matiasvergaras.finalreality.controller;
+package com.github.matiasvergaras.finalreality.controller.handlers;
 
 import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;

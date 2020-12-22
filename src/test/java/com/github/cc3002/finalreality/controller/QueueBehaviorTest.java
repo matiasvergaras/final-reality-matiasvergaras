@@ -69,7 +69,7 @@ public class QueueBehaviorTest {
         //Adds weapons for each character. Bow is faster than axe.
         gc.addBowToInventory();
         gc.addAxeToInventory();
-        //Equip the  bow to Domingo the Engineer
+        //Equip the  bow to Domingo The Egg
         gc.setSelectedWeapon(0);
         gc.setSelectedCharacterFromPlayerParty(0);
         gc.equipSelectedWeaponToSelectedCharacter();
@@ -78,6 +78,7 @@ public class QueueBehaviorTest {
         gc.setSelectedCharacterFromPlayerParty(1);
         gc.equipSelectedWeaponToSelectedCharacter();
         gc.startGame();
+        assertTrue(gc.isSettingNewTurn());
         Thread.sleep(1500);
         //Checks that the active character is Domingo
         assertEquals(gc.getActiveCharacter().getName(), "Domingo Egg");
@@ -86,11 +87,17 @@ public class QueueBehaviorTest {
         Thread.sleep(2000);
         //Checks that the Gort was added but the active character is still Domingo
         assertEquals(gc.getTurns().size(), 2);
+                    //System.out.println(gc.getTurns().poll().getName());
+                    //System.out.println(gc.getTurns().poll().getName());
         assertEquals(gc.getActiveCharacter().getName(), "Domingo Egg");
         Thread.sleep(2000);
+                    //System.out.println(gc.getTurns().poll().getName());
         //Checks that the Balbazak was added but the active character is still Domingo
         assertEquals(gc.getTurns().size(), 3);
         assertEquals(gc.getActiveCharacter().getName(), "Domingo Egg");
+        //Init an attack
+        gc.initAttackMove();
+        assertTrue(gc.isSelectingAttackTarget());
         //Checks that if an attack is performed, then the next character in the queue
         //will be the next active character (should be Gort since he arrived the 2nd)
         gc.setSelectedCharacterFromCPUParty(0);
@@ -98,6 +105,7 @@ public class QueueBehaviorTest {
         assertEquals(gc.getActiveCharacter().getName(), "Gort");
         //Checks that if an attack is performed, then the next character in the game
         //will be the next active character (should be Balbazak since he arrived the 3rd)
+        gc.initAttackMove();
         gc.activeCharacterNormalAttackSelectedCharacter();
         assertEquals(gc.getActiveCharacter().getName(), "Balbazak");
         //Make Balbazak attack in order to end his turn.

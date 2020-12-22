@@ -1,11 +1,7 @@
-package com.github.matiasvergaras.finalreality.GameState;
+package com.github.matiasvergaras.finalreality.controller.phases;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
-import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
-import com.github.matiasvergaras.finalreality.factory.Weapons.IWeaponFactory;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
-
-import java.util.ArrayList;
 
 /**
  * State of the game.
@@ -28,6 +24,7 @@ public class GameState implements IGameState {
         this.gc = gc;
     }
 
+
     /**
      * Returns true if the current state is Initializing.
      * @return  boolean isInitializing
@@ -38,11 +35,50 @@ public class GameState implements IGameState {
     }
 
     /**
-     * Returns true if the current state is Active
-     * @return  boolean isActive
+     * {@inheritDoc}
      */
     @Override
-    public boolean isActive(){
+    public boolean isCPUTurn() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isPlayerTurn() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isPerformingAttack() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isSelectingAttackTarget() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isSettingNewTurn() {
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isActive() {
         return false;
     }
 
@@ -61,11 +97,24 @@ public class GameState implements IGameState {
     @Override
     public void setInitializing(){}
 
+
     /**
-     * Changes the current state to Active.
+     * {@inheritDoc}
      */
     @Override
-    public void setActive(){}
+    public void initAttack(){}
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void cancelAttack(){}
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAttack(){}
 
     /**
      * Changes the current state to Finished.
@@ -77,11 +126,6 @@ public class GameState implements IGameState {
      * {@inheritDoc}
      */
     public void startGame() {}
-
-    /**
-     * {@inheritDoc}
-     */
-    public void initializeGame(){}
 
     /**
      * {@inheritDoc}

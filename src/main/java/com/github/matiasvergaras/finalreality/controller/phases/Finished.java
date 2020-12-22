@@ -1,4 +1,4 @@
-package com.github.matiasvergaras.finalreality.GameState;
+package com.github.matiasvergaras.finalreality.controller.phases;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
 
@@ -10,6 +10,7 @@ import com.github.matiasvergaras.finalreality.controller.GameController;
  * @since Homework 2
  */
 public class Finished extends GameState {
+
     /**
      * Constructor for a new Finished state.
      * @param gameController        gameController

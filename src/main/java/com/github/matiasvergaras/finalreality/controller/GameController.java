@@ -1,7 +1,10 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.GameState.IGameState;
-import com.github.matiasvergaras.finalreality.GameState.Initializing;
+import com.github.matiasvergaras.finalreality.controller.phases.IGameState;
+import com.github.matiasvergaras.finalreality.controller.phases.Initializing;
+import com.github.matiasvergaras.finalreality.controller.handlers.AddQueueMMToGCHandler;
+import com.github.matiasvergaras.finalreality.controller.handlers.DeathMMToGCHandler;
+import com.github.matiasvergaras.finalreality.controller.handlers.EndTurnMMToGCHandler;
 import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
 import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
@@ -117,13 +120,6 @@ public class GameController {
         return gameState.isInitializing();
     }
 
-    /**
-     * Returns true if the current state is Active
-     * @return  boolean isActive
-     */
-    public boolean isActive(){
-        return gameState.isActive();
-    }
 
     /**
      * Returns true if the current state is Finished.
@@ -132,6 +128,56 @@ public class GameController {
      */
     public boolean isFinished(){
         return gameState.isFinished();
+    }
+
+    /**
+     * Returns true if the current phase is a CPUTurn.
+     * @return   boolean current phase is CPUTurn
+     */
+    public boolean isCPUTurn() {
+        return gameState.isCPUTurn();
+    }
+
+    /**
+     * Returns true if the current phase is a PlayerTurn.
+     * @return   boolean current phase is PlayerTurn
+     */
+    public boolean isPlayerTurn() {
+        return gameState.isPlayerTurn();
+    }
+
+    /**
+     * Returns true if the current phase is a SelectingAttackTarget.
+     * @return   boolean current phase is SelectingAttackTarget
+     */
+    public boolean isSelectingAttackTarget() {
+        return gameState.isSelectingAttackTarget();
+    }
+
+    /**
+     * Returns true if the current phase is a SettingNewTurn.
+     * @return   boolean current phase is SettingNewTurn
+     */
+    public boolean isSettingNewTurn() {
+        return gameState.isSettingNewTurn();
+    }
+
+    /**
+     * Returns true if the current phase is a PerformingAttack.
+     * @return   boolean current phase is PerformingAttack
+     */
+    public boolean isPerformingAttack(){
+        return gameState.isPerformingAttack();
+    }
+
+    /**
+     * Returns true if the current phase is an Active subphase.
+     * <p> Active subphases are CPUTurn, PlayerTurn, PerformingAttack,
+     * SelectingAttackTarget, SettingNewTurn </p>
+     * @return   boolean current phase is PlayerTurn
+     */
+    public boolean isActive(){
+        return gameState.isActive();
     }
 
     /**
@@ -154,17 +200,6 @@ public class GameController {
         gameState.startGame();
     }
 
-    /**
-     * Activates the turns.
-     * <p> First, it sets the game status to Active. </p>
-     * <p> Then, sends the message of start WaitTurn to every character in both teams. </p>
-     * <p> Finally, it send the message to start the first turn. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     */
-    public void activateTurns() {
-        gameState.setActive();
-        gameState.startWaitTurns();
-    }
 
     /**
      * Method to be called by an EndTurnMMToGCHandler.
@@ -178,6 +213,33 @@ public class GameController {
     }
 
     /**
+     * Starts a new turn.
+     * <p> This method will only have effect in SettingNewTurn phase.</p>
+     */
+    public void startTurn() {
+        gameState.startTurn();
+    }
+
+    /**
+     * Starts an attack movement, by changing the current phase to
+     * selectingAttackTarget.
+     * <p> This method will be effective only in CPUTurn / PlayerTurn</p>
+     */
+    public void initAttackMove() {
+        gameState.initAttack();
+    }
+
+    /**
+     * Cancels an attack movement, by returning from the SelectingAttackTarget phase
+     * to the PlayerTurn phase.
+     * <p> It will only return to PlayerTurn phase because of that is, in fact, the only possibility,
+     * since CPU will never regret of starting an attack (given that it decides automatically). </p>
+     */
+    public void cancelAttackMove() {
+        gameState.cancelAttack();
+    }
+
+    /**
      * Method to be called by an AddQueueMMToGCHandler.
      * <p> Represents the fact of receiving the notification of a
      * character added to the turns queue. </p>
@@ -188,6 +250,7 @@ public class GameController {
     public void addToQueue(){
         gameState.addToQueue();
     }
+
     /**
      * Gives the activeCharacter.
      * @return ICharacter activeCharacter.
@@ -598,8 +661,11 @@ public class GameController {
      * <p> This method will be available only in Active mode. </p>
      */
     public void activeCharacterNormalAttackSelectedCharacter(){
+        gameState.setAttack();
         gameState.activeCharacterNormalAttackSelectedCharacter();
     }
+
+
 
     /**
      * Gets the attributes of the SelectedCharacter as an AttributeSet.

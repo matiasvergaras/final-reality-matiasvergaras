@@ -1,0 +1,60 @@
+package com.github.matiasvergaras.finalreality.controller.phases.activePhases;
+
+import com.github.matiasvergaras.finalreality.controller.GameController;
+import com.github.matiasvergaras.finalreality.controller.phases.Active;
+
+import java.util.concurrent.ThreadLocalRandom;
+
+/**
+ * A CPUTurn state of the game.
+ * <p> CPUTurn is a kind of Active state. </p>
+ * <p> It represents the state in which a CPU Mastermind is 'choosing'
+ * what to do, but actually, it is only an intermediate phase between
+ * the automatic actions of the CPU.</p>
+ * @author Matias Vergara Silva
+ * @since Homework 3
+ */
+public class CPUTurn extends Active {
+
+    /**
+     * Constructor for a new CPUTurn state.
+     *
+     * @param gameController gameController
+     */
+    public CPUTurn(GameController gameController) {
+        super(gameController);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void initAttack(){
+        gc.setState(new SelectingAttackTarget(gc));
+        attackRandom();
+    }
+
+    /**
+     * Selects a random character from the player party, checks if it is alive,
+     * and if that is the case, it sends the message to perform an attack.
+     * <p> In case the chosen character is not alive, then it will iterate
+     * recursively until it gets an alive character. </p>
+     */
+    public void attackRandom(){
+        int randomIndex = ThreadLocalRandom.current().nextInt(0, gc.getPlayerPartySize());
+        if(gc.getPlayerParty().get(randomIndex).isAlive()){
+            gc.setSelectedCharacterFromPlayerParty(randomIndex);
+            gc.activeCharacterNormalAttackSelectedCharacter();
+        }
+        else{
+            attackRandom();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isCPUTurn() {
+        return true;
+    }
+}

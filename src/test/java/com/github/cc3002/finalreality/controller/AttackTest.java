@@ -4,6 +4,7 @@ import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 
@@ -54,15 +55,19 @@ public class AttackTest {
         //Starts the game
         gc.startGame();
         //Select Chaos as SelectedCharacter
-        gc.setSelectedCharacterFromCPUParty(0);
-        //Send attack message
-        assertTrue(gc.isActive());
+        assertTrue(gc.isPlayerTurn());
         //Give some time to make sure that there will be characters in
         //the queue (as in ActiveCharacter variable).
         Thread.sleep(2000);
+        gc.unequipSelectedCharacter();
+        gc.equipSelectedWeaponToSelectedCharacter();;
+        gc.setSelectedCharacterFromCPUParty(0);
         assertEquals(gc.getActiveCharacter().getName(), "Domingo Egg");
-        Thread.sleep(3000);
+        //And to be sure that the selectedCharacter will not be overwritten
+        Thread.sleep(2000);
         assertEquals(gc.getActiveCharacter().getName(), "Domingo Egg");
+        gc.initAttackMove();
+        assertTrue(gc.isSelectingAttackTarget());
         gc.activeCharacterNormalAttackSelectedCharacter();
         //Check that the enemy died.
         assertFalse(gc.getSelectedCharacter().isAlive());
@@ -120,7 +125,7 @@ public class AttackTest {
     /**
      * Checks an effective attack from cpu to player.
      */
-    @Test
+    @RepeatedTest(4)
     void EffectiveCPUToPlayerAttackTest() throws InterruptedException {
         assertTrue(gc.isInitializing());
         //Adds an Engineer to the player party.
@@ -134,84 +139,35 @@ public class AttackTest {
         //Sets the enemy factories to create mega powerful enemies.
         gc.setSelectedCharacterFactory(5);
         gc.setSelectedCharacterFactoryPower(1000);
-        gc.setSelectedCharacterFactoryWeight(30);
+        gc.setSelectedCharacterFactoryWeight(32);
         //Adds an Enemy to the CPU party.
         gc.addEnemyToCPU("Elliot");
         //Starts the game
         gc.startGame();
+        gc.unequipSelectedCharacter();
+        gc.equipSelectedWeaponToSelectedCharacter();
+        assertTrue(gc.isSettingNewTurn());
         //Give some time to make sure that there will be characters in
         //the queue (as in ActiveCharacter variable).
         Thread.sleep(3000);
         //Since Domingo weapon has weight 13 (default Axe), he will take the turn the first.
         //Well check it and make him attack Elliot.
         assertEquals(gc.getActiveCharacter(), gc.getPlayerParty().get(0));
+        //Start an attack move, changing to selectingAttackTarget phase
+        gc.initAttackMove();
+        assertTrue(gc.isSelectingAttackTarget());
         gc.setSelectedCharacterFromCPUParty(0);
         gc.activeCharacterNormalAttackSelectedCharacter();
-        //Winner should not been assigned yet
-        assertNull(gc.getWinner());
+        //Once player has attacked, his turn should end, and an automatic turn of enemy should start.
+        //Since there is just Domingo Egg in the player side, Elliot will attack him, and since Elliot has
+        //power 1000, it will end with him. So there should be a winner. We will wait for 500ms in order
+        //to give the time to do those things.
+        Thread.sleep(500);
+        assertEquals(gc.getWinner().getName(), "Runefaust");
         //Elliot HP should have changed when received the attack (Elliot DP:100, Bow Power:110).
         assertNotEquals(gc.getSelectedCharacterMaxHP(), gc.getSelectedCharacterCurrentHP());
-        //Now is turn of Elliot to attack.
-        //We set Domingo as selectedCharacter and make sure that he is alive before getting attacked
-        gc.setSelectedCharacterFromPlayerParty(0);
-        assertTrue(gc.getSelectedCharacter().isAlive());
-        //Now active character has to be Elliot, since he's the next in the queue.
-        assertEquals(gc.getActiveCharacter(), gc.getCPUParty().get(0));
-        //Send attack message
-        gc.activeCharacterNormalAttackSelectedCharacter();
-        //Check that Domingo received the mega powerful attack (i.e. he died).
-        assertFalse(gc.getSelectedCharacter().isAlive());
-        //Domingo was the only player character, so once he died, the game should have ended,
-        //and the winner should be Runefaust.
         assertTrue(gc.isFinished());
         assertEquals(gc.getWinner().getName(), "Runefaust");
-    }
-
-    /**
-     * Checks an ineffective attack from cpu to player.
-     */
-    @Test
-    void IneffectiveCPUToCPUAttackTest() throws InterruptedException {
-        assertTrue(gc.isInitializing());
-        //Sets the enemy factories to create mega powerful enemies.
-        gc.setSelectedCharacterFactory(5);
-        gc.setSelectedCharacterFactoryPower(10000);
-        //To make sure that this enemy will be the first in attack.
-        gc.setSelectedCharacterFactoryWeight(1);
-        //Adds an Enemy to the CPU party and set him as selectedCharacter.
-        gc.addEnemyToCPU("Elliot");
-        gc.setSelectedCharacterFromCPUParty(gc.getCPUPartySize()-1);
-        //Adds a second instance of the super Enemy to the CPU party.
-        // Makes sure that this second instance will not take the first turn.
-        gc.setSelectedCharacterFactoryWeight(30);
-        gc.addEnemyToCPU("Kane");
-        //Make sure that Kane is alive before getting attacked
-        assertTrue(gc.getSelectedCharacter().isAlive());
-        //Try to start the game. Since the condition of charactersNumber for player has
-        //not been reached yet, it should not work.
-        gc.startGame();
-        assertFalse(gc.isActive());
-        //Adds a character to reach the condition and retry.
-        gc.addKnightToPlayer("Vyrun");
-        gc.setSelectedCharacterFromPlayerParty(0);
-        gc.addAxeToInventory();
-        gc.setSelectedWeapon(0);
-        gc.equipSelectedWeaponToSelectedCharacter();
-        gc.startGame();
-        //Give some time to make sure that there will be characters in
-        //the queue (as in ActiveCharacter variable).
-        Thread.sleep(2000);
-        assertTrue(gc.isActive());
-        // Select Kane as target.
-        gc.setSelectedCharacterFromCPUParty(gc.getCPUPartySize()-1);
-        // Checks that the turn belongs to Elliot.
-        assertEquals(gc.getActiveCharacter().getName(), "Elliot");
-        //Send attack message
-        gc.activeCharacterNormalAttackSelectedCharacter();
-        //Check that the second enemy did not receive the attack (i.e. he did not died).
-        assertTrue(gc.getSelectedCharacter().isAlive());
-        //The game should be still active.
-        assertTrue(gc.isActive());
     }
 
 }
