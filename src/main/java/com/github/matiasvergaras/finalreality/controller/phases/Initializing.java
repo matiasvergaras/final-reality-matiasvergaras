@@ -20,11 +20,11 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class Initializing extends GameState {
     private LinkedBlockingQueue<ICharacter> turns = gc.getTurns();
-    private AxeFactory axeFactory = new AxeFactory("Common Axe", 120, 20);
-    private BowFactory bowFactory = new BowFactory("Common Bow", 110, 10);
-    private KnifeFactory knifeFactory = new KnifeFactory("Common Knife",100, 9);
-    private StaffFactory staffFactory = new StaffFactory("Common Staff", 10, 11, 120);
-    private SwordFactory swordFactory = new SwordFactory("Common Sword", 110, 11);
+    private AxeFactory axeFactory = new AxeFactory(120, 20);
+    private BowFactory bowFactory = new BowFactory(110, 10);
+    private KnifeFactory knifeFactory = new KnifeFactory(100, 9);
+    private StaffFactory staffFactory = new StaffFactory(10, 11, 120);
+    private SwordFactory swordFactory = new SwordFactory(110, 11);
 
     private EngineerFactory engineerFactory = new EngineerFactory(turns, 125, 70);
     private KnightFactory knightFactory = new KnightFactory(turns, 180, 100);
@@ -53,11 +53,6 @@ public class Initializing extends GameState {
         characterFactories.add(thiefFactory);
         characterFactories.add(knightFactory);
         characterFactories.add(enemyFactory);
-    }
-
-    @Override
-    public void selectedCharacterFactoryProduce(String name) {
-        gc.getPlayer().addToParty(gc.getSelectedCharacterFactory().create(name));
     }
 
     /**
@@ -112,14 +107,6 @@ public class Initializing extends GameState {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addBowToInventory(){
-        gc.getPlayer().addToInventory(bowFactory.create());
-
-    }
 
     /**
      * {@inheritDoc}
@@ -130,14 +117,6 @@ public class Initializing extends GameState {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addSwordToInventory(){
-        gc.getPlayer().addToInventory(swordFactory.create());
-
-    }
 
     /**
      * {@inheritDoc}
@@ -148,14 +127,6 @@ public class Initializing extends GameState {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addAxeToInventory(){
-        gc.getPlayer().addToInventory(axeFactory.create());
-
-    }
 
     /**
      * {@inheritDoc}
@@ -166,14 +137,7 @@ public class Initializing extends GameState {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addStaffToInventory(){
-        gc.getPlayer().addToInventory(staffFactory.create());
 
-    }
 
     /**
      * {@inheritDoc}
@@ -184,14 +148,6 @@ public class Initializing extends GameState {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addKnifeToInventory(){
-        gc.getPlayer().addToInventory(knifeFactory.create());
-
-    }
 
     /**
      * {@inheritDoc}
@@ -243,15 +199,6 @@ public class Initializing extends GameState {
     @Override
     public void setSelectedWeaponFactoryWeight(int weight) {
         gc.getSelectedWeaponFactory().setWeight(weight);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @param name        The value to be set as the default weapon name
-     */
-    @Override
-    public void setSelectedWeaponFactoryName(String name) {
-        gc.getSelectedWeaponFactory().setName(name);
     }
 
     /**
@@ -339,4 +286,14 @@ public class Initializing extends GameState {
         gc.selectedWeaponFactory = weaponFactories.get(index);
     }
 
+
+    @Override
+    public void selectedCharacterFactoryProduce(String name) {
+        gc.getPlayer().addToParty(gc.getSelectedCharacterFactory().create(name));
+    }
+
+    @Override
+    public void selectedWeaponFactoryProduce(String name) {
+        gc.getPlayerInventory().add(gc.getSelectedWeaponFactory().create(name));
+    }
 }

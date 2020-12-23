@@ -71,4 +71,12 @@ public class Bow extends AbstractWeapon {
                 this.getWeight());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isBow(){
+        return true;
+    }
+
 }

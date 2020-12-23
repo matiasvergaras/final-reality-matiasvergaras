@@ -17,17 +17,10 @@ public class KnifeFactory extends WeaponFactory {
      * @param power     The default Power value that the weapons produced by this factory will have.
      * @param weight    The default Weight value that the weapons produced by this factory will have.
      */
-    public KnifeFactory(String name, int power, int weight){
-        super(name, power, weight);
+    public KnifeFactory(int power, int weight){
+        super(power, weight);
     }
 
-    /**
-     * {@inheritDoc}
-     * @return      a new Knife Object with the default values and name.
-     */
-    public Knife create(){
-        return new Knife(name, power, weight);
-    }
 
     /**
      * {@inheritDoc}

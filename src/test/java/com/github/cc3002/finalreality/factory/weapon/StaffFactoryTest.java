@@ -18,8 +18,7 @@ public class StaffFactoryTest extends WeaponFactoryTest{
     @BeforeEach
     void setUp(){
         this.expectedWeapon = new Staff(weaponsName, 135, 14, 100);
-        this.factory = new StaffFactory(weaponsName, 135, 14, 100);
-        this.factory.setName(weaponsName);
+        this.factory = new StaffFactory(135, 14, 100);
     }
 
     /**

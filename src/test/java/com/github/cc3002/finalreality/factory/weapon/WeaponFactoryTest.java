@@ -26,7 +26,7 @@ public abstract class WeaponFactoryTest {
     protected void checkFactoryCreate(IWeaponFactory testFactory, IWeapon expectedWeapon){
         assertEquals(testFactory.create(weaponsName), expectedWeapon, "WeaponFactory create with name method" +
                 " created something different from the given expected character.");
-        assertEquals(testFactory.create(), expectedWeapon,"WeaponFactory create without parameters method " +
+        assertEquals(testFactory.create(weaponsName), expectedWeapon,"WeaponFactory create without parameters method " +
                 "created something different from the given expected character." );
     }
 
@@ -34,9 +34,9 @@ public abstract class WeaponFactoryTest {
      * A method to check that the FactorySetWeight method sets the new default weight correctly.
      */
     protected void checkFactorySetWeight(IWeaponFactory testFactory, int newWeight){
-        IWeapon initialProduction = testFactory.create();
+        IWeapon initialProduction = testFactory.create(weaponsName);
         testFactory.setWeight(newWeight);
-        IWeapon finalProduction = testFactory.create();
+        IWeapon finalProduction = testFactory.create(weaponsName);
         if(initialProduction.getWeight()!=newWeight){
             assertNotEquals(initialProduction.getWeight(), finalProduction.getWeight(), "The " +
                     "factory products did not change after using setWeight.");
@@ -53,9 +53,9 @@ public abstract class WeaponFactoryTest {
      * A method to check that the FactorySetPower method sets the new default Power correctly.
      */
     protected void checkFactorySetPower(IWeaponFactory testFactory, int newPower){
-        IWeapon initialProduction = testFactory.create();
+        IWeapon initialProduction = testFactory.create(weaponsName);
         testFactory.setPower(newPower);
-        IWeapon finalProduction = testFactory.create();
+        IWeapon finalProduction = testFactory.create(weaponsName);
         if(initialProduction.getPower()!=newPower){
             assertNotEquals(initialProduction.getPower(), finalProduction.getPower(), "The " +
                     "factory products did not change after using setPower.");
@@ -72,9 +72,9 @@ public abstract class WeaponFactoryTest {
      * A method to check that the FactorySetMagicPower method sets the new default MagicPower correctly.
      */
     protected void checkFactorySetMagicPower(IWeaponFactory testFactory, int newMagicPower){
-        IMagicWeapon initialProduction = (IMagicWeapon) testFactory.create();
+        IMagicWeapon initialProduction = (IMagicWeapon) testFactory.create(weaponsName);
         testFactory.setMagicPower(newMagicPower);
-        IMagicWeapon finalProduction = (IMagicWeapon) testFactory.create();
+        IMagicWeapon finalProduction = (IMagicWeapon) testFactory.create(weaponsName);
         if(initialProduction.getMagicPower()!=newMagicPower){
             assertNotEquals(initialProduction.getMagicPower(), finalProduction.getMagicPower(), "The " +
                     "factory products did not change after using setMagicPower.");
@@ -94,9 +94,9 @@ public abstract class WeaponFactoryTest {
      * <p> It has to be used with a no-magic weapons factory. </p>
      */
     protected void checkIneffectiveSetMagicPower(IWeaponFactory testFactory, int newMagicPower){
-        IWeapon initialProduction = testFactory.create();
+        IWeapon initialProduction = testFactory.create(weaponsName);
         testFactory.setMagicPower(newMagicPower);
-        IWeapon finalProduction = testFactory.create();
+        IWeapon finalProduction = testFactory.create(weaponsName);
         assertEquals(initialProduction, finalProduction, "Changed a parameter" +
                 "that should not influence this production, but it did.");
     }

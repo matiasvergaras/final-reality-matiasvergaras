@@ -45,7 +45,7 @@ public class AttackTest {
         //To make sure that the engineer will get the turn at first.
         gc.setSelectedWeaponFactoryWeight(0);
         //Instantiate a definitive bow and add it to inventory. Select it.
-        gc.addBowToInventory();
+        gc.addBowToInventory("Common Bow");
         gc.setSelectedWeapon(gc.getInventorySize()-1);
         //Sets Domingo Egg as selectedCharacter
         gc.setSelectedCharacterFromPlayerParty(0);
@@ -101,12 +101,12 @@ public class AttackTest {
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(10000);
         //Instantiate a definitive bow and add it to inventory. Select it.
-        gc.addBowToInventory();
+        gc.addBowToInventory("Common Bow");
         gc.setSelectedWeapon(0);
         //Equip the definitive bow to Domingo the Engineer
         gc.equipSelectedWeaponToSelectedCharacter();
         gc.setSelectedCharacterFromPlayerParty(1);
-        gc.addBowToInventory();
+        gc.addBowToInventory("Common Bow");
         gc.setSelectedWeapon(1);
         gc.equipSelectedWeaponToSelectedCharacter();
         gc.setSelectedCharacterFromPlayerParty(0);
@@ -135,7 +135,7 @@ public class AttackTest {
         gc.selectedCharacterFactoryProduce("Domingo Egg");
         //Adds a weapon to inventory and equips it to Domingo, in order to
         //make him able to enter to the queue.
-        gc.addAxeToInventory();
+        gc.addAxeToInventory("Common Axe");
         gc.setSelectedWeapon(0);
         gc.setSelectedCharacterFromPlayerParty(0);
         gc.equipSelectedWeaponToSelectedCharacter();

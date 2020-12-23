@@ -18,8 +18,7 @@ public class KnifeFactoryTest extends WeaponFactoryTest{
     @BeforeEach
     void setUp(){
         this.expectedWeapon = new Knife(weaponsName, 135, 14);
-        this.factory = new KnifeFactory(weaponsName,135, 14);
-        this.factory.setName(weaponsName);
+        this.factory = new KnifeFactory(135, 14);
     }
 
     /**

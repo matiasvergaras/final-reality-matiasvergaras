@@ -70,5 +70,14 @@ public class Axe extends AbstractWeapon {
         return Objects.hash(this.getName(), this.getPower(),
                 this.getWeight());
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isAxe(){
+        return true;
+    }
+
 }
 

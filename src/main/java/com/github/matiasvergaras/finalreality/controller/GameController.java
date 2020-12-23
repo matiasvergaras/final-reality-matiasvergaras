@@ -376,6 +376,13 @@ public class GameController {
     }
 
     /**
+     * Gives the inventory of the player.
+     * @return An ArrayList of IWeapon representing the inventory of the player.
+     */
+    public ArrayList<IWeapon> getPlayerInventory(){
+        return player.getInventory();
+    }
+    /**
      * Gives the player inventory size.
      * return       An int representing the number of elements in the player's inventory.
      */
@@ -385,6 +392,10 @@ public class GameController {
 
     public void selectedCharacterFactoryProduce(String name){
         gameState.selectedCharacterFactoryProduce(name);
+    }
+
+    public void selectedWeaponFactoryProduce(String name) {
+        gameState.selectedWeaponFactoryProduce(name);
     }
 
     /**
@@ -398,114 +409,6 @@ public class GameController {
         gameState.addEnemyToCPU(name);
     }
 
-    /**
-     * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @see IWeaponFactory
-     */
-    public void addBowToInventory(){
-        gameState.addBowToInventory();
-    }
-
-    /**
-     * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the weapon to create.
-     * @see IWeaponFactory
-     */
-    public void addBowToInventory(String name){
-        gameState.addBowToInventory(name);
-    }
-
-    /**
-     * Request a new Sword weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @see IWeaponFactory
-     */
-    public void addSwordToInventory(){
-        gameState.addSwordToInventory();
-    }
-
-    /**
-     * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the weapon to create.
-     * @see IWeaponFactory
-     */
-    public void addSwordToInventory(String name){
-        gameState.addSwordToInventory(name);
-    }
-
-    /**
-     * Request a new Axe weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @see IWeaponFactory
-     */
-    public void addAxeToInventory(){
-        gameState.addAxeToInventory();
-    }
-
-    /**
-     * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the weapon to create.
-     * @see IWeaponFactory
-     */
-    public void addAxeToInventory(String name){
-        gameState.addAxeToInventory(name);
-    }
-
-    /**
-     * Request a new Staff weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @see IWeaponFactory
-     */
-    public void addStaffToInventory(){
-        gameState.addStaffToInventory();
-    }
-
-    /**
-     * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the weapon to create.
-     * @see IWeaponFactory
-     */
-    public void addStaffToInventory(String name){
-        gameState.addStaffToInventory(name);
-    }
-
-    /**
-     * Request a new Knife weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @see IWeaponFactory
-     */
-    public void addKnifeToInventory(){
-        gameState.addKnifeToInventory();
-    }
-
-    /**
-     * Request a new Knife weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> The weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the weapon to create.
-     * @see IWeaponFactory
-     */
-    public void addKnifeToInventory(String name){
-        gameState.addKnifeToInventory(name );
-    }
 
     /**
      * Sets the SelectedWeapon at a Weapon in the userPlayer Inventory, given an index representing its position
@@ -740,15 +643,6 @@ public class GameController {
 
 
     /**
-     * Sets the selectedWeaponFactory default's name value.
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name        The value to be set as the default weapon name
-     */
-    public void setSelectedWeaponFactoryName(String name){
-        gameState.setSelectedWeaponFactoryName(name);
-    }
-
-    /**
      * Sets the selectedWeaponFactory default's power value.
      * <p> This method will be effective only in Initializing mode. </p>
      * @param power        The value to be set as the default weapon power
@@ -910,6 +804,27 @@ public class GameController {
     public boolean selectedCharacterIsEnemy(){
         return selectedCharacter.isEnemy();
     }
+
+    public boolean selectedWeaponIsAxe() {
+        return selectedWeapon.isAxe();
+    }
+
+    public boolean selectedWeaponIsSword() {
+        return selectedWeapon.isSword();
+    }
+
+    public boolean selectedWeaponIsKnife() {
+        return selectedWeapon.isKnife();
+    }
+
+    public boolean selectedWeaponIsBow() {
+        return selectedWeapon.isBow();
+    }
+
+    public boolean selectedWeaponIsStaff() {
+        return selectedWeapon.isStaff();
+    }
+
 
 }
 

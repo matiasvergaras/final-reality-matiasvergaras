@@ -26,8 +26,6 @@ public class GameState implements IGameState {
     }
 
 
-    @Override
-    public void selectedCharacterFactoryProduce(String name) {}
 
     /**
      * Returns true if the current state is Initializing.
@@ -173,11 +171,6 @@ public class GameState implements IGameState {
     @Override
     public void addEnemyToCPU(String name){}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addBowToInventory(){}
 
     /**
      * {@inheritDoc}
@@ -185,11 +178,6 @@ public class GameState implements IGameState {
     @Override
     public void addBowToInventory(String name){}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addSwordToInventory(){}
 
     /**
      * {@inheritDoc}
@@ -201,31 +189,14 @@ public class GameState implements IGameState {
      * {@inheritDoc}
      */
     @Override
-    public void addAxeToInventory(){}
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void addAxeToInventory(String name){}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addStaffToInventory(){}
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void addStaffToInventory(String name){}
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addKnifeToInventory(){}
 
     /**
      * {@inheritDoc}
@@ -347,5 +318,11 @@ public class GameState implements IGameState {
 
     }
 
+    @Override
+    public void selectedCharacterFactoryProduce(String name) {}
+
+
+    @Override
+    public void selectedWeaponFactoryProduce(String name) {}
 
 }

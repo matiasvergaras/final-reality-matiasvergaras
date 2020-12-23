@@ -136,6 +136,47 @@ public abstract class AbstractWeapon implements IWeapon {
         return new WeaponAttributeSet(this.getName(), this.getPower(), this.getWeight());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isAxe(){
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isSword(){
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isStaff(){
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isKnife(){
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isBow(){
+        return false;
+    }
+
+
 }
 
 

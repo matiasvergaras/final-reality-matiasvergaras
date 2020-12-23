@@ -26,7 +26,6 @@ public class WeaponFactoriesSettingsTest {
      */
     void setFactoryForTesting(int index, int seed){
         gameController.setSelectedWeaponFactory(index);
-        gameController.setSelectedWeaponFactoryName("New Name");
         gameController.setSelectedWeaponFactoryPower(seed*51);
         gameController.setSelectedWeaponFactoryWeight(seed*2);
         gameController.setSelectedWeaponFactoryMagicPower(seed*11);
@@ -37,11 +36,8 @@ public class WeaponFactoriesSettingsTest {
      * given by the seed that was used to configure its factory.
      * <p> This test is specific to the Magic Weapons. </p>
      * @param seed              The seed used to configure the factory. Has to be exactly the same.
-     * @param defaultName       The default name that the factory keeps for its products or
-     *                          the given special name, if produced with it.
      */
-    void testFactorySettingForMagic(int seed, String defaultName){
-        assertEquals(gameController.getSelectedWeaponName(), defaultName);
+    void testFactorySettingForMagic(int seed){
         assertEquals(gameController.getSelectedWeaponPower(), seed*51);
         assertEquals(gameController.getSelectedWeaponWeight(), seed*2);
         assertEquals(gameController.getSelectedWeaponMagicPower(), seed*11);
@@ -127,7 +123,7 @@ public class WeaponFactoriesSettingsTest {
         setFactoryForTesting(1, 5);
         gameController.addStaffToInventory("Guardian Staff");
         gameController.setSelectedWeapon(gameController.getInventorySize()-1);
-        testFactorySettingForMagic(5, "Guardian Staff");
+        testFactorySettingForMagic(5);
     }
 
     /**
@@ -136,8 +132,8 @@ public class WeaponFactoriesSettingsTest {
     @Test
     void equalHashCodeAttributeTest(){
         setFactoryForTesting(1, 5);
-        IWeapon weapon = gameController.getSelectedWeaponFactory().create();
-        IWeapon copy = gameController.getSelectedWeaponFactory().create();
+        IWeapon weapon = gameController.getSelectedWeaponFactory().create("A weapon");
+        IWeapon copy = gameController.getSelectedWeaponFactory().create("A weapon");
         assertEquals(weapon, copy);
         assertEquals(weapon.hashCode(), copy.hashCode());
 

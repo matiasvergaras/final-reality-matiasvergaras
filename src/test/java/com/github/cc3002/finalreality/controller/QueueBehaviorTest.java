@@ -33,7 +33,7 @@ public class QueueBehaviorTest {
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(10000);
         //Instantiate a definitive bow and add it to inventory. Select it.
-        gc.addBowToInventory();
+        gc.addBowToInventory("Strong Bow");
         gc.setSelectedWeapon(0);
         //Equip the definitive bow to Domingo the Engineer
         gc.equipSelectedWeaponToSelectedCharacter();
@@ -69,8 +69,8 @@ public class QueueBehaviorTest {
         gc.setSelectedCharacterFactoryWeight(40);
         gc.addEnemyToCPU("Balbazak");
         //Adds weapons for each character. Bow is faster than axe.
-        gc.addBowToInventory();
-        gc.addAxeToInventory();
+        gc.addBowToInventory("Strong Bow");
+        gc.addAxeToInventory("Strong Axe");
         //Equip the  bow to Domingo The Egg
         gc.setSelectedWeapon(0);
         gc.setSelectedCharacterFromPlayerParty(0);

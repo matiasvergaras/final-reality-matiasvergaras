@@ -169,24 +169,11 @@ public interface IGameState {
     /**
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
      * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * @see IWeaponFactory
-     */
-    void addBowToInventory();
-
-    /**
-     * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * @param name      The name of the weapon to create.
      * @see IWeaponFactory
      */
     void addBowToInventory(String name);
 
-    /**
-     * Request a new Sword weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * @see IWeaponFactory
-     */
-    void addSwordToInventory();
 
     /**
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
@@ -197,12 +184,6 @@ public interface IGameState {
      */
     void addSwordToInventory(String name);
 
-    /**
-     * Request a new Axe weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * @see IWeaponFactory
-     */
-    void addAxeToInventory();
 
     /**
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
@@ -214,13 +195,6 @@ public interface IGameState {
     void addAxeToInventory(String name);
 
     /**
-     * Request a new Staff weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * @see IWeaponFactory
-     */
-    void addStaffToInventory();
-
-    /**
      * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
      * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
      * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
@@ -229,12 +203,6 @@ public interface IGameState {
      */
     void addStaffToInventory(String name);
 
-    /**
-     * Request a new Knife weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * @see IWeaponFactory
-     */
-    void addKnifeToInventory();
 
     /**
      * Request a new Knife weapon to the corresponding factory and add it to the userPlayer inventory.
@@ -383,4 +351,5 @@ public interface IGameState {
      */
     void selectWeaponFactory(int index);
 
+    void selectedWeaponFactoryProduce(String name);
 }
