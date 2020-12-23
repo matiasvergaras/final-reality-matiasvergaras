@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @since Homework 2
  */
 public class RemoveTest {
-    private GameController gameController;
+    private GameController gc;
     private LinkedBlockingQueue<ICharacter> turns;
 
     /**
@@ -25,7 +25,7 @@ public class RemoveTest {
     @BeforeEach
     void setUp(){
         turns = new LinkedBlockingQueue<>();
-        gameController = new GameController("Cuddy",
+        gc = new GameController("Cuddy",
                 "Tower of The Ancients",8);
     }
 
@@ -38,11 +38,11 @@ public class RemoveTest {
      */
     @Test
     void removeWeaponTest(){
-        gameController.addAxeToInventory();
-        assertEquals(gameController.getInventorySize(),1);
-        gameController.setSelectedWeapon(0);
-        gameController.removeSelectedWeaponFromInventory();
-        assertEquals(gameController.getInventorySize(), 0);
+        gc.addAxeToInventory();
+        assertEquals(gc.getInventorySize(),1);
+        gc.setSelectedWeapon(0);
+        gc.removeSelectedWeaponFromInventory();
+        assertEquals(gc.getInventorySize(), 0);
     }
 
     /**
@@ -54,11 +54,12 @@ public class RemoveTest {
      */
     @Test
     void removePlayerCharacterTest(){
-        gameController.addBlackMageToPlayer("Torasu");
-        assertEquals(gameController.getPlayerPartySize(), 1);
-        gameController.setSelectedCharacterFromPlayerParty(0);
-        gameController.removeSelectedCharacterFromItsParty();
-        assertEquals(gameController.getPlayerPartySize(), 0);
+        gc.setSelectedCharacterFactory(1);
+        gc.selectedCharacterFactoryProduce("Torasu");
+        assertEquals(gc.getPlayerPartySize(), 1);
+        gc.setSelectedCharacterFromPlayerParty(0);
+        gc.removeSelectedCharacterFromItsParty();
+        assertEquals(gc.getPlayerPartySize(), 0);
     }
 
     /**
@@ -70,10 +71,10 @@ public class RemoveTest {
      */
     @Test
     void removeCPUCharacterTest(){
-        gameController.addEnemyToCPU("Chimera");
-        assertEquals(gameController.getCPUPartySize(), 1);
-        gameController.setSelectedCharacterFromCPUParty(0);
-        gameController.removeSelectedCharacterFromItsParty();
-        assertEquals(gameController.getCPUPartySize(), 0);
+        gc.addEnemyToCPU("Chimera");
+        assertEquals(gc.getCPUPartySize(), 1);
+        gc.setSelectedCharacterFromCPUParty(0);
+        gc.removeSelectedCharacterFromItsParty();
+        assertEquals(gc.getCPUPartySize(), 0);
     }
 }

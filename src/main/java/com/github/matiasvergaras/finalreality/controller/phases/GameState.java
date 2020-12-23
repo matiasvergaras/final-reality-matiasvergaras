@@ -15,6 +15,7 @@ import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 public class GameState implements IGameState {
     protected GameController gc;
 
+
     /**
      * Constructor for a new GameState
      * @param gc        The GameController that will
@@ -24,6 +25,9 @@ public class GameState implements IGameState {
         this.gc = gc;
     }
 
+
+    @Override
+    public void selectedCharacterFactoryProduce(String name) {}
 
     /**
      * Returns true if the current state is Initializing.
@@ -162,36 +166,6 @@ public class GameState implements IGameState {
      */
     @Override
     public void setWinner(){}
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addBlackMageToPlayer(String name){}
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addWhiteMageToPlayer(String name){}
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addEngineerToPlayer(String name){}
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addThiefToPlayer(String name){}
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addKnightToPlayer(String name){}
 
     /**
      * {@inheritDoc}

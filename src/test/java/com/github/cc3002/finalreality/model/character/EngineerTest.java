@@ -5,6 +5,8 @@ import com.github.matiasvergaras.finalreality.model.character.player.normal.Thie
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 /**
  * Class to test basics features of a Engineer Character.
  * @since Homework 1
@@ -37,6 +39,7 @@ class EngineerTest extends AbstractPlayerCharacterTest {
                 new Engineer(turns, "Another Engineer", 110, 200),
                 new Thief(turns, THIEF_NAME, 100, 200),
                 new Thief(turns, ENGINEER_NAME, 100, 200));
+        assertFalse(exampleEngineer.isMagic());
     }
 
     /**

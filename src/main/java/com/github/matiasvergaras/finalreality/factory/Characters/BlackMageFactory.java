@@ -37,4 +37,12 @@ public class BlackMageFactory extends CharacterFactory {
         return new BlackMage(turns, name, hp, dp, mana);
     }
 
-}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isMagicFactory(){
+        return true;
+    }
+
+    }

@@ -5,6 +5,8 @@ import com.github.matiasvergaras.finalreality.model.character.player.normal.Thie
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 /**
  * Class to test basics features of a Knight Character.
  * @since Homework 1
@@ -37,6 +39,7 @@ class KnightTest extends AbstractPlayerCharacterTest {
                 new Knight(turns, "Another Knight", 11, 200),
                 new Thief(turns, THIEF_NAME, 11, 200),
                 new Thief(turns, KNIGHT_NAME, 11, 200));
+        assertFalse(exampleKnight.isMagic());
     }
 
     /**

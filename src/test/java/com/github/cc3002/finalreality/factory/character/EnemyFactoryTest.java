@@ -5,6 +5,8 @@ import com.github.matiasvergaras.finalreality.model.character.cpu.Enemy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 /**
  * Class to tests the features of the EnemyFactory class.
  *
@@ -32,6 +34,7 @@ public class EnemyFactoryTest extends CharacterFactoryTest {
     @Test
     void factoryCreateTest() {
         checkFactoryCreate(this.factory, this.expectedCharacter);
+        assertFalse(this.factory.isMagicFactory());
     }
 
     /**

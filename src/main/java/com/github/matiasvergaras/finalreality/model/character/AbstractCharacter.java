@@ -172,6 +172,37 @@ public abstract class AbstractCharacter implements ICharacter {
      */
     public abstract CharacterAttributeSet getAttributes();
 
+    /**
+     * {@inheritDoc}
+     * <p> Base behavior, to be overwritten by mages. </p>
+     */
+    public boolean isMagic(){
+        return false;
+    }
+
+    public boolean isBlackMage(){
+        return false;
+    }
+
+    public boolean isWhiteMage(){
+        return false;
+    }
+
+    public boolean isEngineer(){
+        return false;
+    }
+
+    public boolean isKnight(){
+        return false;
+    }
+
+    public boolean isThief(){
+        return false;
+    }
+
+    public boolean isEnemy(){
+        return false;
+    }
 }
 
 

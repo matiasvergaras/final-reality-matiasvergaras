@@ -69,4 +69,7 @@ public class BlackMage extends AbstractMagicCharacter {
         return Objects.hash(this.getName());
     }
 
+    public boolean isBlackMage(){
+        return true;
+    }
 }

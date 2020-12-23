@@ -13,6 +13,8 @@ import com.github.matiasvergaras.finalreality.model.character.ICharacter;
  */
 public interface IGameState {
 
+    void selectedCharacterFactoryProduce(String name);
+
     /**
      * Returns true if the current state is Initializing.
      * @return  boolean isInitializing
@@ -155,51 +157,6 @@ public interface IGameState {
      * when some team has every member dead, condition trapped by removeCharacterFromQueue. </p>
      */
     void setWinner();
-
-    /**
-     * Request a new BlackMage character to the corresponding factory and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    void addBlackMageToPlayer(String name);
-
-    /**
-     * Request a new WhiteMage character to the corresponding factory and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    void addWhiteMageToPlayer(String name);
-
-    /**
-     * Request a new Engineer character to the corresponding factory and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    void addEngineerToPlayer(String name);
-
-    /**
-     * Request a new Thief character to the corresponding factory and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    void addThiefToPlayer(String name);
-
-    /**
-     * Request a new Knight character to the corresponding factory and and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    void addKnightToPlayer(String name);
 
     /**
      * Request a new CPU character to the corresponding factory and add it to the CPU's party.

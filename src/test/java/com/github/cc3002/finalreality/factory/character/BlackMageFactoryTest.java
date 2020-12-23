@@ -3,8 +3,13 @@ package com.github.cc3002.finalreality.factory.character;
 
 import com.github.matiasvergaras.finalreality.factory.Characters.BlackMageFactory;
 import com.github.matiasvergaras.finalreality.model.character.player.magic.BlackMage;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 /**
  * Class to tests the features of the BlackMageFactory class.
@@ -33,6 +38,7 @@ public class BlackMageFactoryTest extends CharacterFactoryTest {
     @Test
     void factoryCreateTest() {
         checkFactoryCreate(this.factory, this.expectedCharacter);
+        assertTrue(this.factory.isMagicFactory());
     }
 
     /**

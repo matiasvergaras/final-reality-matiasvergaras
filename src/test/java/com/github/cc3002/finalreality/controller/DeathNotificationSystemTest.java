@@ -31,13 +31,22 @@ public class DeathNotificationSystemTest {
      */
     @Test
     void cpuWinsTest() throws InterruptedException {
-        //Create the player party
-        gc.addThiefToPlayer("Lyle");
-        gc.addEngineerToPlayer("Kokichi");
-        gc.addKnightToPlayer("Gong");
-        gc.addBlackMageToPlayer("Nova");
+        //Create the player party an add a thief
+        gc.setSelectedCharacterFactory(3);
+        gc.selectedCharacterFactoryProduce("Lyle");
+        //add an engineer
+        gc.setSelectedCharacterFactory(0);
+        gc.selectedCharacterFactoryProduce("Kokichi");
+        //add a knight
+        gc.setSelectedCharacterFactory(4);
+        gc.selectedCharacterFactoryProduce("Gong");
+        //add a blackmage
+        gc.setSelectedCharacterFactory(1);
+        gc.selectedCharacterFactoryProduce("Nova");
         //Overflow the party. Just to check again that it is working.
-        gc.addWhiteMageToPlayer("Khris");
+        //add a white mage
+        gc.setSelectedCharacterFactory(3);
+        gc.selectedCharacterFactoryProduce("Khris");
         //Sets the Enemy factory to create powerful characters
         assertEquals(gc.getCharactersQuantity(), gc.getPlayerPartySize());
         assertEquals(gc.getPlayerParty().get(gc.getPlayerPartySize()-1).getName(), "Nova");
@@ -72,10 +81,12 @@ public class DeathNotificationSystemTest {
     @Test
     void playerWinsTest() throws InterruptedException {
         //Create the player party
-        gc.addThiefToPlayer("Lyle");
-        gc.addEngineerToPlayer("Kokichi");
-        gc.addEngineerToPlayer("Bleu");
-        gc.addEngineerToPlayer("Jogurt");
+        gc.setSelectedCharacterFactory(3);
+        gc.selectedCharacterFactoryProduce("Lyle");
+        gc.setSelectedCharacterFactory(0);
+        gc.selectedCharacterFactoryProduce("Kokichi");
+        gc.selectedCharacterFactoryProduce("Bleu");
+        gc.selectedCharacterFactoryProduce("Jogurt");
         //Sets the bow factory to create powerful bows
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(700);

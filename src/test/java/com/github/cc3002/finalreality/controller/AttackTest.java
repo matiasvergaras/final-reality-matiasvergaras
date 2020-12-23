@@ -34,15 +34,16 @@ public class AttackTest {
      */
     @Test
     void EffectivePlayerToCPUAttackTest() throws InterruptedException {
-        //Adds an Engineer to the player party.
-        gc.addEngineerToPlayer("Domingo Egg");
+        gc.setSelectedCharacterFactory(0);
+        //Adds an Engineer to the player party
+        gc.selectedCharacterFactoryProduce("Domingo Egg");
         //Adds an Enemy to the CPU party.
         gc.addEnemyToCPU("Chaos");
         //Sets bow factory to create the definitive bow with 10000 power.
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(10000);
         //To make sure that the engineer will get the turn at first.
-        gc.setSelectedWeaponFactoryWeight(1);
+        gc.setSelectedWeaponFactoryWeight(0);
         //Instantiate a definitive bow and add it to inventory. Select it.
         gc.addBowToInventory();
         gc.setSelectedWeapon(gc.getInventorySize()-1);
@@ -54,7 +55,6 @@ public class AttackTest {
         assertTrue(gc.getSelectedCharacter().isAlive());
         //Starts the game
         gc.startGame();
-        //Select Chaos as SelectedCharacter
         assertTrue(gc.isPlayerTurn());
         //Give some time to make sure that there will be characters in
         //the queue (as in ActiveCharacter variable).
@@ -90,11 +90,13 @@ public class AttackTest {
     @Test
     void IneffectivePlayerToPlayerAttackTest() throws InterruptedException {
         assertTrue(gc.isInitializing());
+        gc.setSelectedCharacterFactory(0);
         //Adds an Engineer to the player party and selects him.
-        gc.addEngineerToPlayer("Domingo Egg");
+        gc.selectedCharacterFactoryProduce("Domingo Egg");
         gc.setSelectedCharacterFromPlayerParty(0);
         //Adds an Thief to the player party and set him as attack target.
-        gc.addThiefToPlayer("Lowe");
+        gc.setSelectedCharacterFactory(3);
+        gc.selectedCharacterFactoryProduce("Lowe");
         //Sets bow factory to create the definitive bow with 10000 power.
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(10000);
@@ -128,8 +130,9 @@ public class AttackTest {
     @RepeatedTest(4)
     void EffectiveCPUToPlayerAttackTest() throws InterruptedException {
         assertTrue(gc.isInitializing());
+        gc.setSelectedCharacterFactory(0);
         //Adds an Engineer to the player party.
-        gc.addEngineerToPlayer("Domingo Egg");
+        gc.selectedCharacterFactoryProduce("Domingo Egg");
         //Adds a weapon to inventory and equips it to Domingo, in order to
         //make him able to enter to the queue.
         gc.addAxeToInventory();

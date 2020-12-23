@@ -80,6 +80,13 @@ public abstract class CharacterFactory implements ICharacterFactory{
         this.mana = mana;
     }
 
-
+    /**
+     * {@inheritDoc}
+     * @return
+     */
+    @Override
+    public boolean isMagicFactory(){
+        return false;
+    }
 
 }

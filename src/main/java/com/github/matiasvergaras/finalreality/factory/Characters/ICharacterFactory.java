@@ -9,6 +9,7 @@ import com.github.matiasvergaras.finalreality.model.character.ICharacter;
  */
 public interface ICharacterFactory {
 
+
     /**
      * Set default Heal Points of this Factory.
      * @param hp    The new default Heal Points.
@@ -45,4 +46,11 @@ public interface ICharacterFactory {
      * @return          A new Character, whose type depend of the factory that receives the message.
      */
     ICharacter create(String name);
+
+    /**
+     * Indicates if the current factory produces magic characters,
+     * i.e, it uses the mana value.
+     * @return  boolean isMagicFactory
+     */
+    boolean isMagicFactory();
 }

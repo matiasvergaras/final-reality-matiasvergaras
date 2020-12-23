@@ -21,8 +21,9 @@ public class QueueBehaviorTest {
     void addWhileInTurnTest() throws InterruptedException {
         gc = new GameController("Player", "CPU", 1);
         assertTrue(gc.isInitializing());
+        gc.setSelectedCharacterFactory(0);
         //Adds an Engineer to the player party and selects him.
-        gc.addEngineerToPlayer("Domingo Egg");
+        gc.selectedCharacterFactoryProduce("Domingo Egg");
         gc.setSelectedCharacterFromPlayerParty(0);
         //Adds an Thief to the player party and set him as attack target.
         gc.setSelectedCharacterFactory(5);
@@ -60,8 +61,9 @@ public class QueueBehaviorTest {
         gc = new GameController("Player", "CPU", 2);
         assertTrue(gc.isInitializing());
         //Adds an Engineer to the player party and selects him.
-        gc.addEngineerToPlayer("Domingo Egg");
-        gc.addEngineerToPlayer("Gort");
+        gc.setSelectedCharacterFactory(0);
+        gc.selectedCharacterFactoryProduce("Domingo Egg");
+        gc.selectedCharacterFactoryProduce("Gort");
         //Adds an Thief to the player party and set him as attack target.
         gc.setSelectedCharacterFactory(5);
         gc.setSelectedCharacterFactoryWeight(40);

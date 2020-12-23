@@ -36,17 +36,17 @@ public class CPUTurn extends Active {
     /**
      * Selects a random character from the player party, checks if it is alive,
      * and if that is the case, it sends the message to perform an attack.
-     * <p> In case the chosen character is not alive, then it will iterate
-     * recursively until it gets an alive character. </p>
+     * <p> In case the chosen character is not alive, then it will iterate. </p>
      */
     public void attackRandom(){
-        int randomIndex = ThreadLocalRandom.current().nextInt(0, gc.getPlayerPartySize());
-        if(gc.getPlayerParty().get(randomIndex).isAlive()){
-            gc.setSelectedCharacterFromPlayerParty(randomIndex);
-            gc.activeCharacterNormalAttackSelectedCharacter();
-        }
-        else{
-            attackRandom();
+        boolean targetFound = false;
+        while(!targetFound){
+            int randomIndex = ThreadLocalRandom.current().nextInt(0, gc.getPlayerPartySize());
+            if(gc.getPlayerParty().get(randomIndex).isAlive()){
+                gc.setSelectedCharacterFromPlayerParty(randomIndex);
+                gc.activeCharacterNormalAttackSelectedCharacter();
+                targetFound = true;
+            }
         }
     }
 

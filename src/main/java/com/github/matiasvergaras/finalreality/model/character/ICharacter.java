@@ -111,6 +111,23 @@ public interface ICharacter {
      */
     public PropertyChangeSupport getAddQueue();
 
+    /**
+     * Returns true if this character is magic (i.e. a black mage or white mage).
+     * @return  boolean isMagic
+     */
+    boolean isMagic();
+
+    boolean isBlackMage();
+
+    boolean isWhiteMage();
+
+    boolean isEngineer();
+
+    boolean isKnight();
+
+    boolean isThief();
+
+    boolean isEnemy();
 }
 
 

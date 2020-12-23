@@ -55,6 +55,11 @@ public class Initializing extends GameState {
         characterFactories.add(enemyFactory);
     }
 
+    @Override
+    public void selectedCharacterFactoryProduce(String name) {
+        gc.getPlayer().addToParty(gc.getSelectedCharacterFactory().create(name));
+    }
+
     /**
      * Returns true if the current state is Initializing.
      * @return  boolean isInitializing
@@ -97,48 +102,6 @@ public class Initializing extends GameState {
         gc.setState(new SettingNewTurn(gc));
     }
 
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addBlackMageToPlayer(String name){
-        gc.getPlayer().addToParty(blackMageFactory.create(name));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addWhiteMageToPlayer(String name){
-        gc.getPlayer().addToParty(whiteMageFactory.create(name));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addEngineerToPlayer(String name){
-        gc.getPlayer().addToParty(engineerFactory.create(name));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addThiefToPlayer(String name){
-        gc.getPlayer().addToParty(thiefFactory.create(name));
-
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addKnightToPlayer(String name){
-        gc.getPlayer().addToParty(knightFactory.create(name));
-
-    }
 
     /**
      * {@inheritDoc}

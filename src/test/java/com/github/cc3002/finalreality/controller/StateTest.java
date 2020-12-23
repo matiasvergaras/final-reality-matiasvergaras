@@ -33,7 +33,8 @@ public class StateTest {
         assertFalse(gc.isPerformingAttack());
         assertFalse(gc.isSelectingAttackTarget());
         //Adds an Engineer to the player party.
-        gc.addEngineerToPlayer("Domingo Egg");
+        gc.setSelectedCharacterFactory(0);
+        gc.selectedCharacterFactoryProduce("Domingo Egg");
         //Adds an Enemy to the CPU party.
         gc.addEnemyToCPU("Chaos");
         //Sets bow factory to create the definitive bow with 10000 power.

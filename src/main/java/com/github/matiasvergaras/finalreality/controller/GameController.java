@@ -383,64 +383,8 @@ public class GameController {
         return player.getInventorySize();
     }
 
-    /**
-     * Request a new BlackMage character to the corresponding factory and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    public void addBlackMageToPlayer(String name){
-        gameState.addBlackMageToPlayer(name);
-    }
-
-    /**
-     * Request a new WhiteMage character to the corresponding factory and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    public void addWhiteMageToPlayer(String name){
-        gameState.addWhiteMageToPlayer(name);
-    }
-
-    /**
-     * Request a new Engineer character to the corresponding factory and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    public void addEngineerToPlayer(String name){
-        gameState.addEngineerToPlayer(name);
-    }
-
-    /**
-     * Request a new Thief character to the corresponding factory and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    public void addThiefToPlayer(String name){
-        gameState.addThiefToPlayer(name);
-    }
-
-    /**
-     * Request a new Knight character to the corresponding factory and and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    public void addKnightToPlayer(String name){
-        gameState.addKnightToPlayer(name);
+    public void selectedCharacterFactoryProduce(String name){
+        gameState.selectedCharacterFactoryProduce(name);
     }
 
     /**
@@ -938,5 +882,34 @@ public class GameController {
     public ICharacterFactory getSelectedCharacterFactory(){
         return selectedCharacterFactory;
     }
+
+    public boolean selectedCharacterIsMagic() {
+        return selectedCharacter.isMagic();
+    }
+
+    public boolean selectedCharacterIsBlackMage() {
+        return selectedCharacter.isBlackMage();
+    }
+
+    public boolean selectedCharacterIsWhiteMage() {
+        return selectedCharacter.isWhiteMage();
+    }
+
+    public boolean selectedCharacterIsEngineer(){
+        return selectedCharacter.isEngineer();
+    }
+
+    public boolean selectedCharacterIsKnight(){
+        return selectedCharacter.isKnight();
+    }
+
+    public boolean selectedCharacterIsThief(){
+        return selectedCharacter.isThief();
+    }
+
+    public boolean selectedCharacterIsEnemy(){
+        return selectedCharacter.isEnemy();
+    }
+
 }
 

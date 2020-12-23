@@ -70,5 +70,7 @@ public class Thief extends AbstractPlayerCharacter {
         return Objects.hash(this.getName());
     }
 
-
+    public boolean isThief(){
+        return true;
+    }
 }
