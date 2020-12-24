@@ -53,4 +53,10 @@ public interface ICharacterFactory {
      * @return  boolean isMagicFactory
      */
     boolean isMagicFactory();
+
+    /**
+     * Indicates if the current factory produces CPU characters.
+     * @return boolean isCPUFactory
+     */
+    boolean isCPUFactory();
 }

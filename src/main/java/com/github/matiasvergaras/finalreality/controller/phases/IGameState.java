@@ -13,7 +13,6 @@ import com.github.matiasvergaras.finalreality.model.character.ICharacter;
  */
 public interface IGameState {
 
-    void selectedCharacterFactoryProduce(String name);
 
     /**
      * Returns true if the current state is Initializing.
@@ -352,4 +351,8 @@ public interface IGameState {
     void selectWeaponFactory(int index);
 
     void selectedWeaponFactoryProduce(String name);
+
+    void selectedCharacterFactoryProduce(String name);
+
+
 }

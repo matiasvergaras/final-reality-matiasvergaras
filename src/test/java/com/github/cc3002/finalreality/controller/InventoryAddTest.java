@@ -35,7 +35,8 @@ public class InventoryAddTest {
      */
     @Test
     void AddSpecialBowTest(){
-        gameController.addBowToInventory("Buster Shot");
+        gameController.setSelectedWeaponFactory(0);
+        gameController.selectedWeaponFactoryProduce("Buster Shot");
         Bow sameBow = new Bow("Buster Shot", 110, 10);
         gameController.setSelectedWeapon(gameController.getInventorySize()-1);
         assertEquals(sameBow, gameController.getSelectedWeapon());
@@ -47,7 +48,8 @@ public class InventoryAddTest {
      */
     @Test
     void AddSpecialSwordTest(){
-        gameController.addSwordToInventory("Doom Blade");
+        gameController.setSelectedWeaponFactory(3);
+        gameController.selectedWeaponFactoryProduce("Doom Blade");
         Sword sameSword = new Sword("Doom Blade", 110, 11);
         gameController.setSelectedWeapon(gameController.getInventorySize()-1);
         assertEquals(sameSword, gameController.getSelectedWeapon());
@@ -59,7 +61,8 @@ public class InventoryAddTest {
      */
     @Test
     void AddSpecialAxeTest(){
-        gameController.addAxeToInventory("Atlas Axe");
+        gameController.setSelectedWeaponFactory(4);
+        gameController.selectedWeaponFactoryProduce("Atlas Axe");
         Axe sameAxe = new Axe("Atlas Axe", 120, 20);
         gameController.setSelectedWeapon(gameController.getInventorySize()-1);
         assertEquals(sameAxe, gameController.getSelectedWeapon());
@@ -72,7 +75,8 @@ public class InventoryAddTest {
      */
     @Test
     void AddSpecialStaffTest(){
-        gameController.addStaffToInventory("Demon Rod");
+        gameController.setSelectedWeaponFactory(1);
+        gameController.selectedWeaponFactoryProduce("Demon Rod");
         Staff sameStaff = new Staff("Demon Rod", 10, 11, 120);
         gameController.setSelectedWeapon(gameController.getInventorySize()-1);
         assertEquals(sameStaff, gameController.getSelectedWeapon());
@@ -84,7 +88,8 @@ public class InventoryAddTest {
      */
     @Test
     void AddSpecialKnifeTest(){
-        gameController.addKnifeToInventory("Chaos Breaker");
+        gameController.setSelectedWeaponFactory(2);
+        gameController.selectedWeaponFactoryProduce("Chaos Breaker");
         Knife sameKnife = new Knife("Chaos Breaker", 100, 9);
         gameController.setSelectedWeapon(gameController.getInventorySize()-1);
         assertEquals(sameKnife, gameController.getSelectedWeapon());

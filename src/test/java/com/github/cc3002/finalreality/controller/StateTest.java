@@ -43,7 +43,7 @@ public class StateTest {
         //To make sure that the engineer will get the turn at first.
         gc.setSelectedWeaponFactoryWeight(0);
         //Instantiate a definitive bow and add it to inventory. Select it.
-        gc.addBowToInventory("Elbow");
+        gc.selectedWeaponFactoryProduce("Elbow");
         gc.setSelectedWeapon(0);
         //Sets Domingo Egg as selectedCharacter
         gc.setSelectedCharacterFromPlayerParty(0);

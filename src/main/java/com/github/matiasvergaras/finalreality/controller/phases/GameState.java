@@ -318,10 +318,17 @@ public class GameState implements IGameState {
 
     }
 
+    /**
+     * {@inheritDoc}
+     * @param name      The name of the character to be created.
+     */
     @Override
     public void selectedCharacterFactoryProduce(String name) {}
 
-
+    /**
+     * {@inheritDoc}
+     * @param name      The name of the weapon to be created.
+     */
     @Override
     public void selectedWeaponFactoryProduce(String name) {}
 

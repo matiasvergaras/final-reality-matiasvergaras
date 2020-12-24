@@ -38,7 +38,8 @@ public class RemoveTest {
      */
     @Test
     void removeWeaponTest(){
-        gc.addAxeToInventory();
+        gc.setSelectedWeaponFactory(4);
+        gc.selectedWeaponFactoryProduce("Common Axe");
         assertEquals(gc.getInventorySize(),1);
         gc.setSelectedWeapon(0);
         gc.removeSelectedWeaponFromInventory();

@@ -29,7 +29,7 @@ public class DeathNotificationSystemTest {
     /**
      * Test the case where the cpu wins.
      */
-    @Test
+    @RepeatedTest(2)
     void cpuWinsTest() throws InterruptedException {
         //Create the player party an add a thief
         gc.setSelectedCharacterFactory(3);
@@ -55,11 +55,11 @@ public class DeathNotificationSystemTest {
         gc.setSelectedCharacterFactoryPower(600);
         //To make sure that enemies will attack the first.
         gc.setSelectedCharacterFactoryWeight(0);
-        gc.addEnemyToCPU("Mishaela");
-        gc.addEnemyToCPU("Ramladu");
-        gc.addEnemyToCPU("Balbazak");
-        gc.addEnemyToCPU("Hindel");
-        gc.addEnemyToCPU("Pyro");
+        gc.selectedCharacterFactoryProduce("Mishaela");
+        gc.selectedCharacterFactoryProduce("Ramladu");
+        gc.selectedCharacterFactoryProduce("Balbazak");
+        gc.selectedCharacterFactoryProduce("Hindel");
+        gc.selectedCharacterFactoryProduce("Pyro");
         assertNull(gc.getWinner());
         //Check that the aliveNumber of each masterminds corresponds with the number of
         //added characters.
@@ -67,18 +67,17 @@ public class DeathNotificationSystemTest {
         assertEquals(gc.getCPUAliveNumber(), 5);
         //Starts the game
         gc.startGame();
-        //Wait for characters in the queue
-        Thread.sleep(3000);
         //Since enemies are the first to attack, and their attacks are automatic,
         // there should be no need to do anything else. The game should end and the winner should be the CPU.
         assertEquals(gc.getWinner().getName(), gc.getCPUName());
+        Thread.sleep(800);
         assertTrue(gc.isFinished());
     }
 
     /**
      * Test the case where the player wins.
      */
-    @Test
+    @RepeatedTest(5)
     void playerWinsTest() throws InterruptedException {
         //Create the player party
         gc.setSelectedCharacterFactory(3);
@@ -87,26 +86,27 @@ public class DeathNotificationSystemTest {
         gc.selectedCharacterFactoryProduce("Kokichi");
         gc.selectedCharacterFactoryProduce("Bleu");
         gc.selectedCharacterFactoryProduce("Jogurt");
-        //Sets the bow factory to create powerful bows
+        //Sets the bow factory to create rapid and powerful bows
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(700);
+        gc.setSelectedWeaponFactoryWeight(0);
         //Equips Lyle
-        gc.addBowToInventory("Bow of Lyle");
+        gc.selectedWeaponFactoryProduce("Bow of Lyle");
         gc.setSelectedCharacterFromPlayerParty(0);
         gc.setSelectedWeapon(0);
         gc.equipSelectedWeaponToSelectedCharacter();
         //Equips Kokichi
-        gc.addBowToInventory("Bow of Kokichi");
+        gc.selectedWeaponFactoryProduce("Bow of Kokichi");
         gc.setSelectedCharacterFromPlayerParty(1);
         gc.setSelectedWeapon(1);
         gc.equipSelectedWeaponToSelectedCharacter();
         //Equips Bleu
-        gc.addBowToInventory("Bow of Bleu");
+        gc.selectedWeaponFactoryProduce("Bow of Bleu");
         gc.setSelectedCharacterFromPlayerParty(2);
         gc.setSelectedWeapon(2);
         gc.equipSelectedWeaponToSelectedCharacter();
         //Equips Jogurt
-        gc.addBowToInventory("Bow of Jogurt");
+        gc.selectedWeaponFactoryProduce("Bow of Jogurt");
         gc.setSelectedCharacterFromPlayerParty(3);
         gc.setSelectedWeapon(3);
         gc.equipSelectedWeaponToSelectedCharacter();
@@ -115,8 +115,8 @@ public class DeathNotificationSystemTest {
         //sure that they wont play before the player characters.
         gc.setSelectedCharacterFactory(5);
         gc.setSelectedWeaponFactoryWeight(0);
-        gc.addEnemyToCPU("Elliot");
-        gc.addEnemyToCPU("Ramladu");
+        gc.selectedCharacterFactoryProduce("Elliot");
+        gc.selectedCharacterFactoryProduce("Ramladu");
         //Start game
         gc.startGame();
         //Give some time to make sure that there will be characters in
@@ -131,6 +131,7 @@ public class DeathNotificationSystemTest {
         gc.setSelectedCharacterFromCPUParty(1);
         gc.activeCharacterNormalAttackSelectedCharacter();
         //Check for game finished status and winner
+        Thread.sleep(300);
         assertTrue(gc.isFinished());
         assertEquals(gc.getWinner().getName(), gc.getPlayerName());
     }

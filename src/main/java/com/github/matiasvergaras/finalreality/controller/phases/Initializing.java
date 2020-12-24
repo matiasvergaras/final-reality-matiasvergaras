@@ -287,11 +287,24 @@ public class Initializing extends GameState {
     }
 
 
+    /**
+     * {@inheritDoc}
+     * @param name      The name of the character to be created.
+     */
     @Override
     public void selectedCharacterFactoryProduce(String name) {
-        gc.getPlayer().addToParty(gc.getSelectedCharacterFactory().create(name));
+        if(!gc.getSelectedCharacterFactory().isCPUFactory()){
+            gc.getPlayer().addToParty(gc.getSelectedCharacterFactory().create(name));
+        }
+        else{
+            gc.getCPU().addToParty(gc.getSelectedCharacterFactory().create(name));
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     * @param name      The name of the weapon to be created.
+     */
     @Override
     public void selectedWeaponFactoryProduce(String name) {
         gc.getPlayerInventory().add(gc.getSelectedWeaponFactory().create(name));
