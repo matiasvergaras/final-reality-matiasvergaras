@@ -3,6 +3,7 @@ package com.github.matiasvergaras.finalreality.gui;
 import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
+import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -68,6 +69,7 @@ public class FinalReality extends Application {
     private Button backWeaponMenuButton;
     private TextField weaponsMagic;
     private final Label weaponNumLabel = new Label();
+    private final Label inInventoryWeaponClass = new Label();
     private final Label inInventoryWeaponName = new Label();
     private final Label inInventoryWeaponPower = new Label();
     private final Label inInventoryWeaponWeight = new Label();
@@ -92,6 +94,25 @@ public class FinalReality extends Application {
     private ComboBox currentCPUCharacters;
     private final ImageView CPUSelectedCharacterMiniSprite = new ImageView();
 
+    //animated variables of toEquipWeapons method (init or active phase).
+    private Button nextEquipWeaponMenuButton;
+    private Button equipButton;
+    private Button backEquipWeaponMenuButton;
+    private final Label equipMenuCharacterClass = new Label();
+    private final Label equipMenuCharacterName = new Label();
+    private final Label equipMenuCharacterHP = new Label();
+    private final Label equipMenuCharacterDP = new Label();
+    private final Label equipMenuCharacterMana = new Label();
+    private final Label equipMenuWeaponClass = new Label();
+    private final Label equipMenuWeaponName = new Label();
+    private final Label equipMenuWeaponOwner = new Label();
+    private final Label equipMenuWeaponPower = new Label();
+    private final Label equipMenuWeaponWeight = new Label();
+    private final Label equipMenuWeaponMagic = new Label();
+    private ComboBox alivePlayerCharacters;
+    private ComboBox equipMenuWeapons;
+    private final ImageView equipMenuCharacterSprite = new ImageView();
+    private final ImageView equipMenuWeaponSprite = new ImageView();
 
     @Override
     public void start(@NotNull Stage primaryStage) throws FileNotFoundException {
@@ -261,7 +282,7 @@ public class FinalReality extends Application {
         playerCurrentCharacters.setOnAction(event -> {
             if(!(playerCurrentCharacters.getValue()==null)){
                 try {
-                    InputStream miniSpriteStream = new FileInputStream(RESOURCE_PATH +getSelectedPlayerCharacterMiniSpritePATH());
+                    InputStream miniSpriteStream = new FileInputStream(RESOURCE_PATH + getSelectedPlayerCharacterModeSpritePATH("mini"));
                     playerSelectedCharacterMiniSprite.setImage(new Image(miniSpriteStream));
                     playerSelectedCharacterMiniSprite.setVisible(true);
 
@@ -341,29 +362,7 @@ public class FinalReality extends Application {
         timer.start();
     }
 
-    private String getSelectedPlayerCharacterMiniSpritePATH(){
-        String thiefMiniSprite = "thiefminisprite.png";
-        String engineerMiniSprite = "engineerminisprite.png";
-        String blackMageMiniSprite = "blackmageminisprite.png";
-        String whiteMageMiniSprite = "whitemageminisprite.png";
-        String knightMiniSprite = "knightminisprite.png";
 
-        if (gc.selectedCharacterIsKnight()){
-            return knightMiniSprite;
-        }
-        if(gc.selectedCharacterIsThief()){
-            return thiefMiniSprite;
-        }
-        if(gc.selectedCharacterIsBlackMage()){
-            return blackMageMiniSprite;
-        }
-        if(gc.selectedCharacterIsWhiteMage()){
-            return whiteMageMiniSprite;
-        }
-        else return engineerMiniSprite;
-
-
-    }
 
     private void toSelectInventory(Stage stage) throws FileNotFoundException {
 
@@ -416,6 +415,10 @@ public class FinalReality extends Application {
         weaponNumLabel.setLayoutX(930);
         weaponNumLabel.setLayoutY(108);
 
+        inInventoryWeaponClass.setFont(new Font("Arial", 20.0));
+        inInventoryWeaponClass.setLayoutX(780);
+        inInventoryWeaponClass.setLayoutY(308);
+
         inInventoryWeaponName.setFont(new Font("Arial", 20.0));
         inInventoryWeaponName.setLayoutX(780);
         inInventoryWeaponName.setLayoutY(345);
@@ -461,6 +464,7 @@ public class FinalReality extends Application {
 
         settingInventoryView.getChildren().add(currentWeapons);
 
+        settingInventoryView.getChildren().add(inInventoryWeaponClass);
         settingInventoryView.getChildren().add(inInventoryWeaponName);
         settingInventoryView.getChildren().add(inInventoryWeaponPower);
         settingInventoryView.getChildren().add(inInventoryWeaponWeight);
@@ -488,6 +492,7 @@ public class FinalReality extends Application {
             usedWeaponNames.remove(gc.getSelectedWeaponName());
             removeWeaponButton.setVisible(false);
             gc.removeSelectedWeaponFromInventory();
+            inInventoryWeaponClass.setText("");
             inInventoryWeaponName.setText("");
             inInventoryWeaponPower.setText("");
             inInventoryWeaponWeight.setText("");
@@ -563,6 +568,7 @@ public class FinalReality extends Application {
                 for(int i=0; i<gc.getInventorySize(); i++){
                     gc.setSelectedWeapon(i);
                     if(gc.getSelectedWeaponName().equals(selectedInInventoryName)){
+                        inInventoryWeaponClass.setText(getSelectedWeaponClassAsString());
                         inInventoryWeaponName.setText(gc.getSelectedWeaponName());
                         inInventoryWeaponName.setVisible(true);
                         inInventoryWeaponPower.setText(String.valueOf(gc.getSelectedWeaponPower()));
@@ -616,6 +622,10 @@ public class FinalReality extends Application {
         CPUCharactersNumLabel.setLayoutX(930);
         CPUCharactersNumLabel.setLayoutY(108);
 
+        inCPUPartyCharacterClass.setFont(new Font("Arial", 20.0));
+        inCPUPartyCharacterClass.setLayoutX(780);
+        inCPUPartyCharacterClass.setLayoutY(308);
+
         inCPUPartyCharacterName.setFont(new Font("Arial", 20.0));
         inCPUPartyCharacterName.setLayoutX(780);
         inCPUPartyCharacterName.setLayoutY(345);
@@ -663,6 +673,7 @@ public class FinalReality extends Application {
 
         settingCPUTeamView.getChildren().add(currentCPUCharacters);
 
+        settingCPUTeamView.getChildren().add(inCPUPartyCharacterClass);
         settingCPUTeamView.getChildren().add(inCPUPartyCharacterName);
         settingCPUTeamView.getChildren().add(inCPUPartyCharacterHP);
         settingCPUTeamView.getChildren().add(inCPUPartyCharacterDP);
@@ -691,6 +702,7 @@ public class FinalReality extends Application {
             CPUNamesAndSkinsID.remove(gc.getSelectedCharacterName());
             removeCPUPartyButton.setVisible(false);
             gc.removeSelectedCharacterFromItsParty();
+            inCPUPartyCharacterClass.setText("");
             inCPUPartyCharacterName.setText("");
             inCPUPartyCharacterHP.setText("");
             inCPUPartyCharacterDP.setText("");
@@ -760,6 +772,8 @@ public class FinalReality extends Application {
                 for(int i=0; i<gc.getCPUPartySize(); i++){
                     gc.setSelectedCharacterFromCPUParty(i);
                     if(gc.getSelectedCharacterName().equals(selectedInPartyName)){
+                        inCPUPartyCharacterClass.setText(getSelectedCharacterClassAsString());
+                        inCPUPartyCharacterClass.setVisible(true);
                         inCPUPartyCharacterName.setText(gc.getSelectedCharacterName());
                         inCPUPartyCharacterName.setVisible(true);
                         inCPUPartyCharacterHP.setText(String.valueOf(gc.getSelectedCharacterMaxHP()));
@@ -778,30 +792,303 @@ public class FinalReality extends Application {
         timer.start();
     }
 
-    private void toEquipWeapons(Stage stage){
+    private void toEquipWeapons(Stage stage) throws FileNotFoundException {
 
+        nextEquipWeaponMenuButton = ButtonWithImage("nextbutton.png", 790, 500);
+        equipButton = ButtonWithImage("equipbutton.png", 740, 320);
+        backEquipWeaponMenuButton = ButtonWithImage("backbutton.png", 660, 500);
+        nextEquipWeaponMenuButton.setVisible(true);
+        equipButton.setVisible(true);
+        backEquipWeaponMenuButton.setVisible(true);
+
+
+        Group equippingView = new Group();
+        Scene equippingScene = new Scene(equippingView, width, height);
+        stage.setScene(equippingScene);
+        ImageView equippingBg = new ImageView(new Image(new FileInputStream(RESOURCE_PATH + "equipbackground.png")));
+
+
+
+        equipMenuWeapons = desplegableWeaponList(gc.getPlayerInventory(), 750, 205);
+        equipMenuWeapons.setVisible(true);
+
+        equipMenuWeaponOwner.setFont(new Font("Arial", 20.0));
+        equipMenuWeaponOwner.setLayoutX(430);
+        equipMenuWeaponOwner.setLayoutY(320);
+
+        equipMenuWeaponClass.setFont(new Font("Arial", 20.0));
+        equipMenuWeaponClass.setLayoutX(430);
+        equipMenuWeaponClass.setLayoutY(355);
+
+        equipMenuWeaponName.setFont(new Font("Arial", 20.0));
+        equipMenuWeaponName.setLayoutX(430);
+        equipMenuWeaponName.setLayoutY(390);
+
+        equipMenuWeaponPower.setFont(new Font("Arial", 20.0));
+        equipMenuWeaponPower.setLayoutX(430);
+        equipMenuWeaponPower.setLayoutY(427);
+
+        equipMenuWeaponWeight.setFont(new Font("Arial", 20.0));
+        equipMenuWeaponWeight.setLayoutX(430);
+        equipMenuWeaponWeight.setLayoutY(463);
+
+        equipMenuWeaponMagic.setFont(new Font("Arial", 20.0));
+        equipMenuWeaponMagic.setLayoutX(430);
+        equipMenuWeaponMagic.setLayoutY(499);
+
+        equipMenuWeaponSprite.setImage(new Image(new FileInputStream(RESOURCE_PATH + "kaneminisprite.png")));
+        equipMenuWeaponSprite.setLayoutX(390);
+        equipMenuWeaponSprite.setLayoutY(180);
+        equipMenuWeaponSprite.setFitWidth(70);
+        equipMenuWeaponSprite.setPreserveRatio(true);
+        equipMenuWeaponSprite.setVisible(false);
+
+        alivePlayerCharacters = desplegableAliveCharacterList(gc.getPlayerParty(), 750, 140);
+        alivePlayerCharacters.setVisible(true);
+
+        equipMenuCharacterClass.setFont(new Font("Arial", 20.0));
+        equipMenuCharacterClass.setLayoutX(130);
+        equipMenuCharacterClass.setLayoutY(320);
+
+        equipMenuCharacterName.setFont(new Font("Arial", 20.0));
+        equipMenuCharacterName.setLayoutX(130);
+        equipMenuCharacterName.setLayoutY(355);
+
+        equipMenuCharacterHP.setFont(new Font("Arial", 20.0));
+        equipMenuCharacterHP.setLayoutX(130);
+        equipMenuCharacterHP.setLayoutY(392);
+
+        equipMenuCharacterDP.setFont(new Font("Arial", 20.0));
+        equipMenuCharacterDP.setLayoutX(130);
+        equipMenuCharacterDP.setLayoutY(428);
+
+        equipMenuCharacterMana.setFont(new Font("Arial", 20.0));
+        equipMenuCharacterMana.setLayoutX(130);
+        equipMenuCharacterMana.setLayoutY(464);
+
+        equipMenuCharacterSprite.setImage(new Image(new FileInputStream(RESOURCE_PATH + "kaneminisprite.png")));
+        equipMenuCharacterSprite.setLayoutX(100);
+        equipMenuCharacterSprite.setLayoutY(150);
+        equipMenuCharacterSprite.setFitWidth(110);
+        equipMenuCharacterSprite.setPreserveRatio(true);
+        equipMenuCharacterSprite.setVisible(false);
+
+        setEquipMenuTimer();
+
+        equippingView.getChildren().add(equippingBg);
+        equippingView.getChildren().add(equipMenuWeapons);
+        equippingView.getChildren().add(equipMenuWeaponClass);
+        equippingView.getChildren().add(equipMenuWeaponOwner);
+        equippingView.getChildren().add(equipMenuWeaponName);
+        equippingView.getChildren().add(equipMenuWeaponPower);
+        equippingView.getChildren().add(equipMenuWeaponWeight);
+        equippingView.getChildren().add(equipMenuWeaponMagic);
+
+        equippingView.getChildren().add(alivePlayerCharacters);
+        equippingView.getChildren().add(equipMenuCharacterClass);
+        equippingView.getChildren().add(equipMenuCharacterName);
+        equippingView.getChildren().add(equipMenuCharacterHP);
+        equippingView.getChildren().add(equipMenuCharacterDP);
+        equippingView.getChildren().add(equipMenuCharacterMana);
+
+        equippingView.getChildren().add(equipMenuWeaponSprite);
+        equippingView.getChildren().add(equipMenuCharacterSprite);
+
+        equippingView.getChildren().add(nextEquipWeaponMenuButton);
+        equippingView.getChildren().add(equipButton);
+        equippingView.getChildren().add(backEquipWeaponMenuButton);
+
+
+        equipButton.setOnAction(
+                event-> {
+                    if (gc.getSelectedCharacter() != null && gc.getSelectedWeapon() != null) {
+                        gc.equipSelectedWeaponToSelectedCharacter();
+                    }
+                });
+
+
+        alivePlayerCharacters.setOnAction(event -> {
+            if(alivePlayerCharacters.getValue()!=null){
+                try {
+                    InputStream chibiSpriteStream = new FileInputStream(RESOURCE_PATH +
+                            getSelectedPlayerCharacterModeSpritePATH("chibi"));
+                    equipMenuCharacterSprite.setImage(new Image(chibiSpriteStream));
+                    equipMenuCharacterSprite.setVisible(true);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        equipMenuWeapons.setOnAction(event -> {
+            if(!(equipMenuWeapons.getValue()==null)){
+                try {
+                    InputStream miniSpriteStream = new FileInputStream(RESOURCE_PATH +
+                            getSelectedWeaponMiniSpritePATH());
+                    equipMenuWeaponSprite.setImage(new Image(miniSpriteStream));
+                    equipMenuWeaponSprite.setVisible(true);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        //Make sure that the player will not bug the game by unequipping every character.
+        nextWeaponMenuButton.setOnAction(event -> {
+            timer.stop();
+            for(int i = 0; i <gc.getPlayerPartySize(); i++){
+                gc.setSelectedCharacterFromPlayerParty(i);
+                if(gc.getSelectedCharacterEquippedWeapon()!=null){
+                    if (gc.isInitializing()) gc.startGame();
+                    if (gc.isActive()) {
+                        //toPlayerTurn(stage);
+                        try {
+                            toEquipWeapons(stage);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+
+        });
+
+        backEquipWeaponMenuButton.setOnAction(event -> {
+            try {
+                timer.stop();
+                toSetCPUTeam(stage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+
+
+    private void setEquipMenuTimer(){
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+
+                if(gc.getPlayerAliveNumber()>0){
+                    ArrayList <String> names = new ArrayList<>();
+                    for(ICharacter c: gc.getPlayerParty()){
+                        if(c.isAlive()) names.add(c.getName());
+                    }
+                    ObservableList<String> oList = FXCollections.observableArrayList(names);
+                    alivePlayerCharacters.setItems(oList);
+                    alivePlayerCharacters.setVisible(true);
+                }
+                else{
+                    alivePlayerCharacters.setVisible(false);
+                }
+
+                String selectedCharacterName = (String)alivePlayerCharacters.getValue();
+                for(int i=0; i<gc.getPlayerPartySize(); i++){
+                    gc.setSelectedCharacterFromPlayerParty(i);
+                    if(gc.getSelectedCharacterName().equals(selectedCharacterName)){
+                        equipMenuCharacterClass.setText(getSelectedCharacterClassAsString());
+                        equipMenuCharacterClass.setVisible(true);
+                        equipMenuCharacterName.setText(gc.getSelectedCharacterName());
+                        equipMenuCharacterName.setVisible(true);
+                        equipMenuCharacterHP.setText(String.valueOf(gc.getSelectedCharacterCurrentHP()));
+                        equipMenuCharacterHP.setVisible(true);
+                        equipMenuCharacterDP.setText(String.valueOf(gc.getSelectedCharacterDP()));
+                        equipMenuCharacterDP.setVisible(true);
+                        equipMenuCharacterMana.setText(String.valueOf(gc.getSelectedCharacterCurrentMana()));
+                        equipMenuCharacterMana.setVisible(true);
+                        break;
+                    }
+                }
+
+                if(gc.getInventorySize()>0){
+                    ArrayList <String> names = new ArrayList<>();
+                    for(IWeapon c: gc.getPlayerInventory()){
+                        names.add(c.getName());
+                    }
+                    ObservableList<String> oList = FXCollections.observableArrayList(names);
+                    equipMenuWeapons.setItems(oList);
+                    equipMenuWeapons.setVisible(true);
+                }
+                else{
+                    equipMenuWeapons.setVisible(false);
+                }
+
+
+                String selectedWeaponName = (String) equipMenuWeapons.getValue();
+                for(int i=0; i<gc.getInventorySize(); i++){
+                    gc.setSelectedWeapon(i);
+                    if(gc.getSelectedWeaponName().equals(selectedWeaponName)){
+                        equipMenuWeaponOwner.setText(gc.getSelectedWeaponOwnersName());
+                        equipMenuWeaponOwner.setVisible(true);
+                        equipMenuWeaponClass.setText(getSelectedWeaponClassAsString());
+                        equipMenuWeaponClass.setVisible(true);
+                        equipMenuWeaponName.setText(gc.getSelectedWeaponName());
+                        equipMenuWeaponName.setVisible(true);
+                        equipMenuWeaponPower.setText(String.valueOf(gc.getSelectedWeaponPower()));
+                        equipMenuWeaponPower.setVisible(true);
+                        equipMenuWeaponWeight.setText(String.valueOf(gc.getSelectedWeaponWeight()));
+                        equipMenuWeaponWeight.setVisible(true);
+                        equipMenuWeaponMagic.setText(String.valueOf(gc.getSelectedWeaponMagicPower()));
+                        equipMenuWeaponMagic.setVisible(true);
+                        break;
+                    }
+                }
+
+
+            }
+        };
+        timer.start();
     }
 
     private String getSelectedCharacterClassAsString(){
         if(gc.selectedCharacterIsEngineer()){
             return "Engineer";
         }
-        if(gc.selectedCharacterIsBlackMage()){
+        else if(gc.selectedCharacterIsBlackMage()){
             return "Black Mage";
         }
-        if(gc.selectedCharacterIsWhiteMage()){
+        else if(gc.selectedCharacterIsWhiteMage()){
             return "White Mage";
         }
-        if(gc.selectedCharacterIsThief()){
+        else if(gc.selectedCharacterIsThief()){
             return "Thief";
         }
-        if(gc.selectedCharacterIsKnight()){
+        else if(gc.selectedCharacterIsKnight()){
             return "Knight";
         }
-        else{
+        else if(gc.selectedCharacterIsEnemy()){
             return "Enemy";
         }
+        else{
+            return "";
+        }
     }
+
+    private String getSelectedWeaponClassAsString(){
+        if(gc.selectedWeaponIsAxe()){
+            return "Axe";
+        }
+        else if(gc.selectedWeaponIsBow()){
+            return "Bow";
+        }
+        else if(gc.selectedWeaponIsStaff()){
+            return "Staff";
+        }
+        else if(gc.selectedWeaponIsSword()){
+            return "Sword";
+        }
+        else if(gc.selectedWeaponIsKnife()){
+            return "Knife";
+        }
+        else{
+            return "";
+        }
+    }
+
 
     private @NotNull TextField nameInput() {
         TextField nameInput = new TextField();
@@ -870,6 +1157,21 @@ public class FinalReality extends Application {
         return optionsBox;
     }
 
+    private @NotNull ComboBox desplegableAliveCharacterList(List<ICharacter> currentCharacters, int x, int y){
+        ArrayList<ICharacter> aliveCharacters = new ArrayList<>();
+        for(ICharacter c: currentCharacters){
+            if(c.isAlive()){
+                aliveCharacters.add(c);
+            };
+        }
+        ObservableList<ICharacter> characters = FXCollections.observableArrayList(aliveCharacters);
+        final ComboBox optionsBox = new ComboBox(characters);
+        optionsBox.setLayoutX(x);
+        optionsBox.setLayoutY(y);
+        return optionsBox;
+    }
+
+
     private @NotNull ComboBox desplegableWeaponList(List<IWeapon> currentWeapons, int x, int y){
         ObservableList<IWeapon> characters = FXCollections.observableArrayList(currentWeapons);
         final ComboBox optionsBox = new ComboBox(characters);
@@ -902,6 +1204,28 @@ public class FinalReality extends Application {
             return knifeMiniSprite;
         }
 
+    }
+
+    private String getSelectedPlayerCharacterModeSpritePATH(String mode){
+        String thiefMiniSprite = "thief"+ mode + "sprite.png";
+        String engineerMiniSprite = "engineer" + mode + "sprite.png";
+        String blackMageMiniSprite = "blackmage" +mode + "sprite.png";
+        String whiteMageMiniSprite = "whitemage" + mode + "sprite.png";
+        String knightMiniSprite = "knight" + mode + "sprite.png";
+
+        if (gc.selectedCharacterIsKnight()){
+            return knightMiniSprite;
+        }
+        if(gc.selectedCharacterIsThief()){
+            return thiefMiniSprite;
+        }
+        if(gc.selectedCharacterIsBlackMage()){
+            return blackMageMiniSprite;
+        }
+        if(gc.selectedCharacterIsWhiteMage()){
+            return whiteMageMiniSprite;
+        }
+        else return engineerMiniSprite;
     }
 
 

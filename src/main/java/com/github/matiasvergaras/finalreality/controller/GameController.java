@@ -825,6 +825,12 @@ public class GameController {
         return selectedWeapon.isStaff();
     }
 
+    public String getSelectedWeaponOwnersName(){
+        if (selectedWeapon.getOwner()!=null){
+            return selectedWeapon.getOwner().getName();
+        }
+        else return "None";
+    }
 
 }
 
