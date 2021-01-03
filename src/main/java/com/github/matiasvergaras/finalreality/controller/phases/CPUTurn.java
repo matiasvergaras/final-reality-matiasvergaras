@@ -1,7 +1,6 @@
-package com.github.matiasvergaras.finalreality.controller.phases.activePhases;
+package com.github.matiasvergaras.finalreality.controller.phases;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
-import com.github.matiasvergaras.finalreality.controller.phases.Active;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -14,7 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Matias Vergara Silva
  * @since Homework 3
  */
-public class CPUTurn extends Active {
+public class CPUTurn extends GameState{
 
     /**
      * Constructor for a new CPUTurn state.
@@ -57,4 +56,11 @@ public class CPUTurn extends Active {
     public boolean isCPUTurn() {
         return true;
     }
+
+    /**
+     * In this state, the game is being played, so it is active.
+     * @return  boolean isActive
+     */
+    @Override
+    public boolean isActive(){ return true; }
 }

@@ -1,10 +1,9 @@
-package com.github.matiasvergaras.finalreality.controller.phases.activePhases;
+package com.github.matiasvergaras.finalreality.controller.phases;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
-import com.github.matiasvergaras.finalreality.controller.phases.Active;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
-public class SettingNewTurn extends Active {
+public class SettingNewTurn extends GameState {
     /**
      * Constructor for a new SettingNewTurn state.
      *
@@ -48,5 +47,13 @@ public class SettingNewTurn extends Active {
     public boolean isSettingNewTurn() {
         return true;
     }
+
+    /**
+     * In this state, the game is being played, so it is active.
+     * @return  boolean isActive
+     */
+    @Override
+    public boolean isActive(){ return true; }
+
 
 }

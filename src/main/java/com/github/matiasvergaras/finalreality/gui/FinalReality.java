@@ -45,10 +45,10 @@ public class FinalReality extends Application {
     private GameController gc;
     final int width = 1000;
     final int height = 570;
-
+    private Group currentGroup = new Group();
     AnimationTimer timer;
 
-    //animated variables of toSetParty method (init phase).
+    //animated variables of SetParty scene (init phase).
     private Button nextPlayerPartyMenuButton;
     private Button createPlayerPartyButton;
     private Button removePlayerPartyButton;
@@ -62,7 +62,7 @@ public class FinalReality extends Application {
     private ComboBox playerCurrentCharacters;
     private final ImageView playerSelectedCharacterMiniSprite = new ImageView();
 
-    //animated variables of toSetInventory method
+    //animated variables of SetInventory scene (init phase).
     private Button nextWeaponMenuButton;
     private Button createWeaponButton;
     private Button removeWeaponButton;
@@ -77,7 +77,7 @@ public class FinalReality extends Application {
     private ComboBox currentWeapons;
     private final ImageView selectedWeaponMiniSprite = new ImageView();
 
-    //animated variables of toSetCPUParty method (init phase).
+    //animated variables of SetCPUParty scene (init phase).
     Map<String, Integer> CPUNamesAndSkinsID = new HashMap<>();
     ArrayList<String> enemiesMiniSprites = new ArrayList<>();
     private Button nextCPUPartyMenuButton;
@@ -94,7 +94,7 @@ public class FinalReality extends Application {
     private ComboBox currentCPUCharacters;
     private final ImageView CPUSelectedCharacterMiniSprite = new ImageView();
 
-    //animated variables of toEquipWeapons method (init or active phase).
+    //animated variables of Equip Weapon scene (init or active phase).
     private Button nextEquipWeaponMenuButton;
     private Button equipButton;
     private Button backEquipWeaponMenuButton;
@@ -114,11 +114,46 @@ public class FinalReality extends Application {
     private final ImageView equipMenuCharacterSprite = new ImageView();
     private final ImageView equipMenuWeaponSprite = new ImageView();
 
+    //animated variables of Battle scene - player turn
+    private Button changeWeaponsButton;
+    private Button startAttackButton;
+    private Button cancelAttackButton;
+    private Button sendAttackButton;
+    private final Label battleActiveCharacterHP = new Label();
+    private final Label battleActiveCharacterDP = new Label();
+    private final Label battleActiveCharacterMana = new Label();
+    private final Label battleEquippedWeaponName = new Label();
+    private final Label battleEquippedWeaponPower = new Label();
+    private final Label battleEquippedWeaponWeight = new Label();
+    private final Label battleEquippedWeaponMagic = new Label();
+    private final ImageView battleActiveCharacterSprite = new ImageView();
+    private final ImageView battleEquippedWeaponSprite = new ImageView();
+
+    //animated variables of Battle scene - select target
+    private ComboBox battleCPUAliveCharacters;
+    private final Label battleTargetCharacterHP = new Label();
+    private final Label battleTargetCharacterDP = new Label();
+    private final Label battleTargetCharacterPower = new Label();
+    private final Label battleTargetCharacterWeight = new Label();
+    private final ImageView battleTargetCharacterSprite = new ImageView();
+
+    //animated variables of Battle scene - attack resume
+    private final ImageView resumeAttackerCharacterSprite = new ImageView();
+    private final ImageView resumeDefenderSprite = new ImageView();
+    private final Label resumeAttackerHP = new Label();
+    private final Label resumeAttackerDP = new Label();
+    private final Label resumeAttackerPower = new Label();
+    private final Label resumeDefenderHP = new Label();
+    private final Label resumeDefenderDP = new Label();
+    private Button resumeOKButton;
+
     @Override
     public void start(@NotNull Stage primaryStage) throws FileNotFoundException {
+        gc.setGUI(this);
         primaryStage.setTitle("Final reality");
-        Group entryView = new Group();
-        Scene scene = new Scene(entryView, width, height);
+        currentGroup = new Group();
+
+        Scene scene = new Scene(currentGroup, width, height);
 
         //In order to have enemies of different aspect, we will set a list with some skins.
         enemiesMiniSprites.add("ruinknightminisprite.png");
@@ -141,10 +176,10 @@ public class FinalReality extends Application {
 
         ImageView background = new ImageView(new Image(new FileInputStream(RESOURCE_PATH + "entrybackground.png")));
 
-        entryView.getChildren().add(background);
-        entryView.getChildren().add(nameInput);
-        entryView.getChildren().add(startButton);
-        entryView.getChildren().add(numberOfCharacters);
+        currentGroup.getChildren().add(background);
+        currentGroup.getChildren().add(nameInput);
+        currentGroup.getChildren().add(startButton);
+        currentGroup.getChildren().add(numberOfCharacters);
 
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -155,8 +190,8 @@ public class FinalReality extends Application {
 
     private void toSetTeam(Stage stage) throws FileNotFoundException {
         List<String> usedCharacterNames = new ArrayList<>();
-        Group settingTeamView = new Group();
-        Scene initializingScene = new Scene(settingTeamView, width, height);
+        currentGroup = new Group();
+        Scene initializingScene = new Scene(currentGroup, width, height);
         stage.setScene(initializingScene);
         var initTeamBg = new ImageView(new Image(new FileInputStream(RESOURCE_PATH + "selectteambg.png")));
         nextPlayerPartyMenuButton = ButtonWithImage("nextbutton.png", 450, 500);
@@ -222,33 +257,33 @@ public class FinalReality extends Application {
 
         setTeamTimer();
 
-        settingTeamView.getChildren().add(initTeamBg);
+        currentGroup.getChildren().add(initTeamBg);
 
-        settingTeamView.getChildren().add(nextPlayerPartyMenuButton);
-        settingTeamView.getChildren().add(createPlayerPartyButton);
-        settingTeamView.getChildren().add(removePlayerPartyButton);
+        currentGroup.getChildren().add(nextPlayerPartyMenuButton);
+        currentGroup.getChildren().add(createPlayerPartyButton);
+        currentGroup.getChildren().add(removePlayerPartyButton);
 
-        settingTeamView.getChildren().add(EngineerFactoryButton);
-        settingTeamView.getChildren().add(KnightFactoryButton);
-        settingTeamView.getChildren().add(BlackMageFactoryButton);
-        settingTeamView.getChildren().add(WhiteMageFactoryButton);
-        settingTeamView.getChildren().add(ThiefFactoryButton);
+        currentGroup.getChildren().add(EngineerFactoryButton);
+        currentGroup.getChildren().add(KnightFactoryButton);
+        currentGroup.getChildren().add(BlackMageFactoryButton);
+        currentGroup.getChildren().add(WhiteMageFactoryButton);
+        currentGroup.getChildren().add(ThiefFactoryButton);
 
-        settingTeamView.getChildren().add(characterName);
-        settingTeamView.getChildren().add(charactersHP);
-        settingTeamView.getChildren().add(charactersDP);
-        settingTeamView.getChildren().add(charactersMana);
-        settingTeamView.getChildren().add(playerCharactersNumLabel);
+        currentGroup.getChildren().add(characterName);
+        currentGroup.getChildren().add(charactersHP);
+        currentGroup.getChildren().add(charactersDP);
+        currentGroup.getChildren().add(charactersMana);
+        currentGroup.getChildren().add(playerCharactersNumLabel);
 
-        settingTeamView.getChildren().add(playerCurrentCharacters);
+        currentGroup.getChildren().add(playerCurrentCharacters);
 
-        settingTeamView.getChildren().add(inPlayerPartyCharacterClass);
-        settingTeamView.getChildren().add(inPlayerPartyCharacterName);
-        settingTeamView.getChildren().add(inPlayerPartyCharacterHP);
-        settingTeamView.getChildren().add(inPlayerPartyCharacterDP);
-        settingTeamView.getChildren().add(inPlayerPartyCharacterMana);
+        currentGroup.getChildren().add(inPlayerPartyCharacterClass);
+        currentGroup.getChildren().add(inPlayerPartyCharacterName);
+        currentGroup.getChildren().add(inPlayerPartyCharacterHP);
+        currentGroup.getChildren().add(inPlayerPartyCharacterDP);
+        currentGroup.getChildren().add(inPlayerPartyCharacterMana);
 
-        settingTeamView.getChildren().add(playerSelectedCharacterMiniSprite);
+        currentGroup.getChildren().add(playerSelectedCharacterMiniSprite);
 
 
         createPlayerPartyButton.setOnAction(
@@ -362,8 +397,6 @@ public class FinalReality extends Application {
         timer.start();
     }
 
-
-
     private void toSelectInventory(Stage stage) throws FileNotFoundException {
 
         List<String> usedWeaponNames = new ArrayList<>();
@@ -379,13 +412,13 @@ public class FinalReality extends Application {
         backWeaponMenuButton.setVisible(true);
 
 
-        Group settingInventoryView = new Group();
-        Scene settingInventoryScene = new Scene(settingInventoryView, width, height);
+        currentGroup = new Group();
+        Scene settingInventoryScene = new Scene(currentGroup, width, height);
         stage.setScene(settingInventoryScene);
         ImageView initTeamBg = new ImageView(new Image(new FileInputStream(RESOURCE_PATH + "selectweaponbg.png")));
 
 
-        settingInventoryView.getChildren().add(initTeamBg);
+        currentGroup.getChildren().add(initTeamBg);
 
         gc.setSelectedWeaponFactory(4);
 
@@ -444,33 +477,33 @@ public class FinalReality extends Application {
 
         setWeaponTimer();
 
-        settingInventoryView.getChildren().add(nextWeaponMenuButton);
-        settingInventoryView.getChildren().add(createWeaponButton);
-        settingInventoryView.getChildren().add(removeWeaponButton);
-        settingInventoryView.getChildren().add(backWeaponMenuButton);
+        currentGroup.getChildren().add(nextWeaponMenuButton);
+        currentGroup.getChildren().add(createWeaponButton);
+        currentGroup.getChildren().add(removeWeaponButton);
+        currentGroup.getChildren().add(backWeaponMenuButton);
 
 
-        settingInventoryView.getChildren().add(AxeFactoryButton);
-        settingInventoryView.getChildren().add(SwordFactoryButton);
-        settingInventoryView.getChildren().add(StaffFactoryButton);
-        settingInventoryView.getChildren().add(KnifeFactoryButton);
-        settingInventoryView.getChildren().add(BowFactoryButton);
+        currentGroup.getChildren().add(AxeFactoryButton);
+        currentGroup.getChildren().add(SwordFactoryButton);
+        currentGroup.getChildren().add(StaffFactoryButton);
+        currentGroup.getChildren().add(KnifeFactoryButton);
+        currentGroup.getChildren().add(BowFactoryButton);
 
-        settingInventoryView.getChildren().add(weaponsName);
-        settingInventoryView.getChildren().add(weaponsPower);
-        settingInventoryView.getChildren().add(weaponsWeight);
-        settingInventoryView.getChildren().add(weaponsMagic);
-        settingInventoryView.getChildren().add(weaponNumLabel);
+        currentGroup.getChildren().add(weaponsName);
+        currentGroup.getChildren().add(weaponsPower);
+        currentGroup.getChildren().add(weaponsWeight);
+        currentGroup.getChildren().add(weaponsMagic);
+        currentGroup.getChildren().add(weaponNumLabel);
 
-        settingInventoryView.getChildren().add(currentWeapons);
+        currentGroup.getChildren().add(currentWeapons);
 
-        settingInventoryView.getChildren().add(inInventoryWeaponClass);
-        settingInventoryView.getChildren().add(inInventoryWeaponName);
-        settingInventoryView.getChildren().add(inInventoryWeaponPower);
-        settingInventoryView.getChildren().add(inInventoryWeaponWeight);
-        settingInventoryView.getChildren().add(inInventoryWeaponMagic);
+        currentGroup.getChildren().add(inInventoryWeaponClass);
+        currentGroup.getChildren().add(inInventoryWeaponName);
+        currentGroup.getChildren().add(inInventoryWeaponPower);
+        currentGroup.getChildren().add(inInventoryWeaponWeight);
+        currentGroup.getChildren().add(inInventoryWeaponMagic);
 
-        settingInventoryView.getChildren().add(selectedWeaponMiniSprite);
+        currentGroup.getChildren().add(selectedWeaponMiniSprite);
 
 
         createWeaponButton.setOnAction(
@@ -540,8 +573,6 @@ public class FinalReality extends Application {
 
     }
 
-
-
     private void setWeaponTimer(){
         timer = new AnimationTimer() {
             @Override
@@ -581,8 +612,8 @@ public class FinalReality extends Application {
     }
 
     private void toSetCPUTeam(Stage stage) throws FileNotFoundException {
-        Group settingCPUTeamView = new Group();
-        Scene initializingScene = new Scene(settingCPUTeamView, width, height);
+        currentGroup = new Group();
+        Scene initializingScene = new Scene(currentGroup, width, height);
         stage.setScene(initializingScene);
         var initCPUTeamBg = new ImageView(new Image(new FileInputStream(RESOURCE_PATH + "setcputeambg.png")));
         nextCPUPartyMenuButton = ButtonWithImage("nextbutton.png", 450, 500);
@@ -645,32 +676,32 @@ public class FinalReality extends Application {
 
         setCPUTeamTimer();
 
-        settingCPUTeamView.getChildren().add(initCPUTeamBg);
+        currentGroup.getChildren().add(initCPUTeamBg);
 
-        settingCPUTeamView.getChildren().add(nextCPUPartyMenuButton);
-        settingCPUTeamView.getChildren().add(createCPUPartyButton);
-        settingCPUTeamView.getChildren().add(removeCPUPartyButton);
-        settingCPUTeamView.getChildren().add(backCPUPartyButton);
+        currentGroup.getChildren().add(nextCPUPartyMenuButton);
+        currentGroup.getChildren().add(createCPUPartyButton);
+        currentGroup.getChildren().add(removeCPUPartyButton);
+        currentGroup.getChildren().add(backCPUPartyButton);
 
-        settingCPUTeamView.getChildren().add(EnemyFactoryButton);
+        currentGroup.getChildren().add(EnemyFactoryButton);
 
-        settingCPUTeamView.getChildren().add(CPUCharacterName);
-        settingCPUTeamView.getChildren().add(CPUCharactersHP);
-        settingCPUTeamView.getChildren().add(CPUCharactersDP);
-        settingCPUTeamView.getChildren().add(CPUCharactersPower);
-        settingCPUTeamView.getChildren().add(CPUCharactersWeight);
-        settingCPUTeamView.getChildren().add(CPUCharactersNumLabel);
+        currentGroup.getChildren().add(CPUCharacterName);
+        currentGroup.getChildren().add(CPUCharactersHP);
+        currentGroup.getChildren().add(CPUCharactersDP);
+        currentGroup.getChildren().add(CPUCharactersPower);
+        currentGroup.getChildren().add(CPUCharactersWeight);
+        currentGroup.getChildren().add(CPUCharactersNumLabel);
 
-        settingCPUTeamView.getChildren().add(currentCPUCharacters);
+        currentGroup.getChildren().add(currentCPUCharacters);
 
-        settingCPUTeamView.getChildren().add(inCPUPartyCharacterClass);
-        settingCPUTeamView.getChildren().add(inCPUPartyCharacterName);
-        settingCPUTeamView.getChildren().add(inCPUPartyCharacterHP);
-        settingCPUTeamView.getChildren().add(inCPUPartyCharacterDP);
-        settingCPUTeamView.getChildren().add(inCPUPartyCharacterPower);
-        settingCPUTeamView.getChildren().add(inCPUPartyCharacterWeight);
+        currentGroup.getChildren().add(inCPUPartyCharacterClass);
+        currentGroup.getChildren().add(inCPUPartyCharacterName);
+        currentGroup.getChildren().add(inCPUPartyCharacterHP);
+        currentGroup.getChildren().add(inCPUPartyCharacterDP);
+        currentGroup.getChildren().add(inCPUPartyCharacterPower);
+        currentGroup.getChildren().add(inCPUPartyCharacterWeight);
 
-        settingCPUTeamView.getChildren().add(CPUSelectedCharacterMiniSprite);
+        currentGroup.getChildren().add(CPUSelectedCharacterMiniSprite);
 
 
         createCPUPartyButton.setOnAction(
@@ -737,8 +768,6 @@ public class FinalReality extends Application {
         });
     }
 
-
-
     private void setCPUTeamTimer(){
         timer = new AnimationTimer() {
             @Override
@@ -792,8 +821,8 @@ public class FinalReality extends Application {
         backEquipWeaponMenuButton.setVisible(true);
 
 
-        Group equippingView = new Group();
-        Scene equippingScene = new Scene(equippingView, width, height);
+        currentGroup = new Group();
+        Scene equippingScene = new Scene(currentGroup, width, height);
         stage.setScene(equippingScene);
         ImageView equippingBg = new ImageView(new Image(new FileInputStream(RESOURCE_PATH + "equipbackground.png")));
 
@@ -865,28 +894,28 @@ public class FinalReality extends Application {
 
         setEquipMenuTimer();
 
-        equippingView.getChildren().add(equippingBg);
-        equippingView.getChildren().add(equipMenuWeapons);
-        equippingView.getChildren().add(equipMenuWeaponClass);
-        equippingView.getChildren().add(equipMenuWeaponOwner);
-        equippingView.getChildren().add(equipMenuWeaponName);
-        equippingView.getChildren().add(equipMenuWeaponPower);
-        equippingView.getChildren().add(equipMenuWeaponWeight);
-        equippingView.getChildren().add(equipMenuWeaponMagic);
+        currentGroup.getChildren().add(equippingBg);
+        currentGroup.getChildren().add(equipMenuWeapons);
+        currentGroup.getChildren().add(equipMenuWeaponClass);
+        currentGroup.getChildren().add(equipMenuWeaponOwner);
+        currentGroup.getChildren().add(equipMenuWeaponName);
+        currentGroup.getChildren().add(equipMenuWeaponPower);
+        currentGroup.getChildren().add(equipMenuWeaponWeight);
+        currentGroup.getChildren().add(equipMenuWeaponMagic);
 
-        equippingView.getChildren().add(alivePlayerCharacters);
-        equippingView.getChildren().add(equipMenuCharacterClass);
-        equippingView.getChildren().add(equipMenuCharacterName);
-        equippingView.getChildren().add(equipMenuCharacterHP);
-        equippingView.getChildren().add(equipMenuCharacterDP);
-        equippingView.getChildren().add(equipMenuCharacterMana);
+        currentGroup.getChildren().add(alivePlayerCharacters);
+        currentGroup.getChildren().add(equipMenuCharacterClass);
+        currentGroup.getChildren().add(equipMenuCharacterName);
+        currentGroup.getChildren().add(equipMenuCharacterHP);
+        currentGroup.getChildren().add(equipMenuCharacterDP);
+        currentGroup.getChildren().add(equipMenuCharacterMana);
 
-        equippingView.getChildren().add(equipMenuWeaponSprite);
-        equippingView.getChildren().add(equipMenuCharacterSprite);
+        currentGroup.getChildren().add(equipMenuWeaponSprite);
+        currentGroup.getChildren().add(equipMenuCharacterSprite);
 
-        equippingView.getChildren().add(nextEquipWeaponMenuButton);
-        equippingView.getChildren().add(equipButton);
-        equippingView.getChildren().add(backEquipWeaponMenuButton);
+        currentGroup.getChildren().add(nextEquipWeaponMenuButton);
+        currentGroup.getChildren().add(equipButton);
+        currentGroup.getChildren().add(backEquipWeaponMenuButton);
 
 
         equipButton.setOnAction(
@@ -963,8 +992,6 @@ public class FinalReality extends Application {
             }
         });
     }
-
-
 
     private void setEquipMenuTimer(){
         timer = new AnimationTimer() {
@@ -1093,7 +1120,6 @@ public class FinalReality extends Application {
         }
     }
 
-
     private @NotNull TextField nameInput() {
         TextField nameInput = new TextField();
         nameInput.setBlendMode(BlendMode.LIGHTEN);
@@ -1175,7 +1201,6 @@ public class FinalReality extends Application {
         return optionsBox;
     }
 
-
     private @NotNull ComboBox desplegableWeaponList(List<IWeapon> currentWeapons, int x, int y){
         ObservableList<IWeapon> characters = FXCollections.observableArrayList(currentWeapons);
         final ComboBox optionsBox = new ComboBox(characters);
@@ -1183,7 +1208,6 @@ public class FinalReality extends Application {
         optionsBox.setLayoutY(y);
         return optionsBox;
     }
-
 
     private String getSelectedWeaponMiniSpritePATH(){
         String axeMiniSprite = "axesprite.png";

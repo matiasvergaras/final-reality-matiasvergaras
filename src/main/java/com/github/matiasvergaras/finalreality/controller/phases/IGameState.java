@@ -100,10 +100,16 @@ public interface IGameState {
     void startGame();
 
     /**
+     * <p> Method that will be called once a turn ends (a character performed an attack).
+     * It will send to the GUI the message of showing the attack resume. </p>
+      */
+    void showTurnResume();
+
+    /**
      * <p> Sends to the character that just ended his turn the wait for re-entry order. </p>
      * <p> Calls to StartTurn, in order to start a new Turn. </p>
      * <p> A character will wait for its turn only if he is alive (new feature in waitTurn). </p>
-      */
+     */
     void endTurn();
 
     /**

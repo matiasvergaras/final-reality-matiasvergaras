@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.controller.phases;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
-import com.github.matiasvergaras.finalreality.controller.phases.activePhases.SettingNewTurn;
 import com.github.matiasvergaras.finalreality.factory.Characters.*;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;

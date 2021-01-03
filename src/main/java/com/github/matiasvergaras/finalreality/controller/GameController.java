@@ -7,6 +7,7 @@ import com.github.matiasvergaras.finalreality.controller.handlers.DeathMMToGCHan
 import com.github.matiasvergaras.finalreality.controller.handlers.EndTurnMMToGCHandler;
 import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
+import com.github.matiasvergaras.finalreality.gui.FinalReality;
 import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.Mastermind.CPUMastermind;
 import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
@@ -35,6 +36,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * @author Matías Vergara Silva
  */
 public class GameController {
+    private FinalReality gui;
     private LinkedBlockingQueue<ICharacter> turns;
     private final PlayerMastermind player;
     private final CPUMastermind cpu;
@@ -86,6 +88,14 @@ public class GameController {
         this.selectedWeapon = new NullWeapon();
         this.winner = null;
         this.gameState = new Initializing(this);
+    }
+
+    /**
+     * Sets-up the GUI of this gameController.
+     * @param gui       The GUI of the game.
+     */
+    public void setGUI(FinalReality gui){
+        this.gui = gui;
     }
 
     /**
@@ -209,7 +219,7 @@ public class GameController {
      * <p> This method will be effective only in Active mode. </p>
      */
     public void endTurn() {
-        gameState.endTurn();
+        gameState.showTurnResume();
     }
 
     /**
@@ -835,6 +845,10 @@ public class GameController {
     public boolean selectedCharacterEquippedWeaponIsNull() {
 
         return getSelectedCharacterEquippedWeapon().isNull();
+    }
+
+    public void showTurnInGUI() {
+        gui.showResume();
     }
 }
 

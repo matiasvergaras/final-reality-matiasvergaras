@@ -1,7 +1,6 @@
-package com.github.matiasvergaras.finalreality.controller.phases.activePhases;
+package com.github.matiasvergaras.finalreality.controller.phases;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
-import com.github.matiasvergaras.finalreality.controller.phases.Active;
 import com.github.matiasvergaras.finalreality.model.character.player.IPlayerCharacter;
 
 /**
@@ -13,7 +12,7 @@ import com.github.matiasvergaras.finalreality.model.character.player.IPlayerChar
  * @author Matias Vergara Silva
  * @since Homework 3
  */
-public class PlayerTurn extends Active {
+public class PlayerTurn extends GameState {
 
     /**
      * Constructor for a new PlayerTurn state.
@@ -58,4 +57,12 @@ public class PlayerTurn extends Active {
     public boolean isPlayerTurn() {
         return true;
     }
+
+    /**
+     * In this state, the game is being played, so it is active.
+     * @return  boolean isActive
+     */
+    @Override
+    public boolean isActive(){ return true; }
+
 }

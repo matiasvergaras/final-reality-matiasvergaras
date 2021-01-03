@@ -1,7 +1,6 @@
-package com.github.matiasvergaras.finalreality.controller.phases.activePhases;
+package com.github.matiasvergaras.finalreality.controller.phases;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
-import com.github.matiasvergaras.finalreality.controller.phases.Active;
 
 /**
  * A SelectingAttackTarget state of the game.
@@ -15,7 +14,7 @@ import com.github.matiasvergaras.finalreality.controller.phases.Active;
  * @author Matias Vergara Silva
  * @since Homework 3
  */
-public class SelectingAttackTarget extends Active {
+public class SelectingAttackTarget extends GameState {
 
     /**
      * Constructor for a new SelectingAttackTarget state.
@@ -50,4 +49,12 @@ public class SelectingAttackTarget extends Active {
     public boolean isSelectingAttackTarget() {
         return true;
     }
+
+    /**
+     * In this state, the game is being played, so it is active.
+     * @return  boolean isActive
+     */
+    @Override
+    public boolean isActive(){ return true; }
+
 }

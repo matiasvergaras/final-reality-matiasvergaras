@@ -139,7 +139,7 @@ public class GameState implements IGameState {
      * {@inheritDoc}
      */
     @Override
-    public void endTurn(){}
+    public void showTurnResume(){}
 
     /**
      * {@inheritDoc}
