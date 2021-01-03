@@ -5,7 +5,8 @@ import com.github.matiasvergaras.finalreality.model.weapon.normal.Knife;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * Class to test all the features of an Staff weapon.
@@ -36,6 +37,18 @@ public class StaffTest extends AbstractWeaponTest {
                 new Knife(KNIFE_NAME, DAMAGE, WEIGHT));
         assertNotEquals(new Staff(STAFF_NAME, DAMAGE, WEIGHT, MAGIC_DAMAGE),
                         new Staff(STAFF_NAME, DAMAGE, WEIGHT, MAGIC_DAMAGE*3));
+    }
+
+    /**
+     * Checks that the is[type] methods of this weapon works properly.
+     */
+    @Test
+    void isTypeTest() {
+        assertFalse(exampleStaff.isAxe());
+        assertFalse(exampleStaff.isBow());
+        assertFalse(exampleStaff.isKnife());
+        assertTrue(exampleStaff.isStaff());
+        assertFalse(exampleStaff.isNull());
     }
 
 

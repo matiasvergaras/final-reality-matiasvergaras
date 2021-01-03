@@ -551,20 +551,10 @@ public class FinalReality extends Application {
                 if(gc.getSelectedWeaponFactory() !=null) {
                     weaponsMagic.setVisible(gc.getSelectedWeaponFactory().isMagic());
                 }
-                if(gc.getInventorySize()>0){
-                    ArrayList <String> names = new ArrayList<>();
-                    for(IWeapon c: gc.getPlayerInventory()){
-                        names.add(c.getName());
-                    }
-                    ObservableList<String> oList = FXCollections.observableArrayList(names);
-                    currentWeapons.setItems(oList);
-                    currentWeapons.setVisible(true);
-                }
-                else{
-                    currentWeapons.setVisible(false);
-                }
+                updateList(currentWeapons);
 
                 String selectedInInventoryName = (String)currentWeapons.getValue();
+
                 for(int i=0; i<gc.getInventorySize(); i++){
                     gc.setSelectedWeapon(i);
                     if(gc.getSelectedWeaponName().equals(selectedInInventoryName)){
@@ -935,21 +925,29 @@ public class FinalReality extends Application {
             }
         });
 
-        //Make sure that the player will not bug the game by unequipping every character.
-        nextWeaponMenuButton.setOnAction(event -> {
+        //Make sure that the player will not bug the game by unequipping every character by checking that
+        //at least one of them is equipped before sending the startGame message.
+        nextEquipWeaponMenuButton.setOnAction(event -> {
             timer.stop();
+            //Check that at least one character is still equipped
             for(int i = 0; i <gc.getPlayerPartySize(); i++){
                 gc.setSelectedCharacterFromPlayerParty(i);
-                if(gc.getSelectedCharacterEquippedWeapon()!=null){
-                    if (gc.isInitializing()) gc.startGame();
-                    if (gc.isActive()) {
+                if(!gc.selectedCharacterEquippedWeaponIsNull()){
+                    //If this is the first time that this scene appears, then start game
+                    if (gc.isInitializing()){
+                        System.out.println("STARTING GAME");
+                        gc.startGame();
+                    }
+                    //Else, it has been called in a player turn, so let's go back there.
+                    else if (gc.isActive()) {
                         //toPlayerTurn(stage);
                         try {
-                            toEquipWeapons(stage);
+                            toSetCPUTeam(stage);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
                     }
+                    break;
                 }
             }
 
@@ -1004,21 +1002,12 @@ public class FinalReality extends Application {
                     }
                 }
 
-                if(gc.getInventorySize()>0){
-                    ArrayList <String> names = new ArrayList<>();
-                    for(IWeapon c: gc.getPlayerInventory()){
-                        names.add(c.getName());
-                    }
-                    ObservableList<String> oList = FXCollections.observableArrayList(names);
-                    equipMenuWeapons.setItems(oList);
-                    equipMenuWeapons.setVisible(true);
-                }
-                else{
-                    equipMenuWeapons.setVisible(false);
-                }
+                updateList(equipMenuWeapons);
 
 
                 String selectedWeaponName = (String) equipMenuWeapons.getValue();
+
+
                 for(int i=0; i<gc.getInventorySize(); i++){
                     gc.setSelectedWeapon(i);
                     if(gc.getSelectedWeaponName().equals(selectedWeaponName)){
@@ -1042,6 +1031,21 @@ public class FinalReality extends Application {
             }
         };
         timer.start();
+    }
+
+    private void updateList(ComboBox equipMenuWeapons) {
+        if(gc.getInventorySize()>0){
+            ArrayList<String> names = new ArrayList<>();
+            for(IWeapon c: gc.getPlayerInventory()){
+                names.add(c.getName());
+            }
+            ObservableList<String> oList = FXCollections.observableArrayList(names);
+            equipMenuWeapons.setItems(oList);
+            equipMenuWeapons.setVisible(true);
+        }
+        else{
+            equipMenuWeapons.setVisible(false);
+        }
     }
 
     private String getSelectedCharacterClassAsString(){

@@ -176,7 +176,10 @@ public abstract class AbstractWeapon implements IWeapon {
         return false;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isNull(){return false;}
 }
 
 

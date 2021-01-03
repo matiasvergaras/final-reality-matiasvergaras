@@ -5,6 +5,9 @@ import com.github.matiasvergaras.finalreality.model.weapon.normal.Bow;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * Class to test all the features of Bow weapon.
  * @since Homework 1
@@ -33,6 +36,19 @@ public class BowTest extends AbstractWeaponTest {
                 new Bow(BOW_NAME, DAMAGE*2, WEIGHT),
                 new Axe(AXE_NAME, DAMAGE, WEIGHT));
     }
+
+    /**
+     * Checks that the is[type] methods of this weapon works properly.
+     */
+    @Test
+    void isTypeTest() {
+        assertFalse(exampleBow.isAxe());
+        assertTrue(exampleBow.isBow());
+        assertFalse(exampleBow.isKnife());
+        assertFalse(exampleBow.isStaff());
+        assertFalse(exampleBow.isNull());
+    }
+
 
     /**
      * Checks that the weapon can be properly equipped an unequipped

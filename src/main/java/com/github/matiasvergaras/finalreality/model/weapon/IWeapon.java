@@ -127,4 +127,10 @@ public interface IWeapon {
      * @return  True if this weapon is a Bow.
      */
     boolean isBow();
+
+    /**
+     * Indicates if this weapon is Null.
+     * @return True if this weapon is Null.
+     */
+    boolean isNull();
 }

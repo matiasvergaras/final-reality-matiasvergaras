@@ -5,6 +5,9 @@ import com.github.matiasvergaras.finalreality.model.weapon.normal.Knife;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * Class to test all the features of an Knife weapon.
  * @since Homework 1
@@ -32,6 +35,19 @@ public class KnifeTest extends AbstractWeaponTest {
                 new Knife(KNIFE_NAME, DAMAGE*2, WEIGHT),
                 new Bow(BOW_NAME, DAMAGE, WEIGHT));
     }
+
+    /**
+     * Checks that the is[type] methods of this weapon works properly.
+     */
+    @Test
+    void isTypeTest() {
+        assertFalse(exampleKnife.isAxe());
+        assertFalse(exampleKnife.isBow());
+        assertTrue(exampleKnife.isKnife());
+        assertFalse(exampleKnife.isStaff());
+        assertFalse(exampleKnife.isNull());
+    }
+
 
     /**
      * Check that the weapon can be properly equipped and unequipped for

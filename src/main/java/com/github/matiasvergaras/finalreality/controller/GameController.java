@@ -832,5 +832,9 @@ public class GameController {
         else return "None";
     }
 
+    public boolean selectedCharacterEquippedWeaponIsNull() {
+
+        return getSelectedCharacterEquippedWeapon().isNull();
+    }
 }
 
