@@ -4,8 +4,6 @@ import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
-import java.io.FileNotFoundException;
-
 /**
  * A PerformingAttack state of the game.
  * <p> PerformingAttack is a kind of Active state. </p>
@@ -48,9 +46,8 @@ public class PerformingAttack extends GameState {
     /**
      * {@inheritDoc}
      */
-    public void showTurnResume() throws FileNotFoundException {
-        gc.showTurnInGUI();
-
+    public void showTurnResume(){
+        gc.setState(new ShowingTurnResume(gc));
     }
 
     /**

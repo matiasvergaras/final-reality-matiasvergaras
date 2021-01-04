@@ -1,7 +1,6 @@
 package com.github.matiasvergaras.finalreality.controller.handlers;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
-import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -15,7 +14,7 @@ import java.beans.PropertyChangeListener;
  * @since Homework 2
  */
 public class AddQueueMMToGCHandler implements PropertyChangeListener{
-    private GameController controller;
+    private final GameController controller;
 
     /**
      * Creates a new handler for Mastermind's character is dead message,

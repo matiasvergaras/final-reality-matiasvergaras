@@ -52,6 +52,12 @@ public interface IGameState {
     boolean isSettingNewTurn();
 
     /**
+     * Returns true if the current state is ShowingTurnResume
+     * @return  boolean isShowingTurnResume
+     */
+    boolean isShowingTurnResume();
+
+    /**
      * Returns true if the current state is a subphase of active
      * @return  boolean isActive
      */
@@ -103,13 +109,12 @@ public interface IGameState {
 
     /**
      * <p> Method that will be called once a turn ends (a character performed an attack).
-     * It will send to the GUI the message of showing the attack resume. </p>
+     * It will put the game in showng turn resume state. </p>
       */
     void showTurnResume() throws FileNotFoundException;
 
     /**
      * <p> Sends to the character that just ended his turn the wait for re-entry order. </p>
-     * <p> Calls to StartTurn, in order to start a new Turn. </p>
      * <p> A character will wait for its turn only if he is alive (new feature in waitTurn). </p>
      */
     void endTurn();
@@ -362,5 +367,5 @@ public interface IGameState {
 
     void selectedCharacterFactoryProduce(String name);
 
-
+    void setNewTurn();
 }

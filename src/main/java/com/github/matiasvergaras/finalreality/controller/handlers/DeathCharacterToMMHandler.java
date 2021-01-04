@@ -14,7 +14,7 @@ import java.beans.PropertyChangeListener;
  * @since Homework 2
  */
 public class DeathCharacterToMMHandler implements PropertyChangeListener {
-    private IMastermind mastermind;
+    private final IMastermind mastermind;
     /**
      * Creates a new handler for Character's death.
      *

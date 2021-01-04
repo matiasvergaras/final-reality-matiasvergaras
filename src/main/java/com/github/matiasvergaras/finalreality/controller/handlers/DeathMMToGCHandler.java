@@ -16,7 +16,7 @@ import java.beans.PropertyChangeListener;
  * @since Homework 2
  */
 public class DeathMMToGCHandler implements PropertyChangeListener{
-    private GameController controller;
+    private final GameController controller;
 
     /**
      * Creates a new handler for Mastermind's character is dead message,

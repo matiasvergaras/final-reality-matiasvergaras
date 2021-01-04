@@ -15,7 +15,7 @@ import java.io.FileNotFoundException;
  * @since Homework 2
  */
 public class EndTurnMMToGCHandler implements PropertyChangeListener {
-    private GameController controller;
+    private final GameController controller;
 
 
     /**
@@ -38,7 +38,6 @@ public class EndTurnMMToGCHandler implements PropertyChangeListener {
     @Override
     public void propertyChange(final PropertyChangeEvent evt) {
         try {
-            System.out.println("CALL TO SHOW TURN RESUME");
             controller.showTurnResume();
         } catch (FileNotFoundException e) {
             e.printStackTrace();

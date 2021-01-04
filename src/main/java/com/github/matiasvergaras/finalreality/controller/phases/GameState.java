@@ -57,6 +57,13 @@ public class GameState implements IGameState {
     /**
      * {@inheritDoc}
      */
+    public boolean isShowingTurnResume(){
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isPerformingAttack() {
         return false;
@@ -342,4 +349,9 @@ public class GameState implements IGameState {
     @Override
     public void selectedWeaponFactoryProduce(String name) {}
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setNewTurn(){};
 }

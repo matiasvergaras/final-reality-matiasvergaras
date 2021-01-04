@@ -738,10 +738,6 @@ public class GameController {
         return weapon.isNull();
     }
 
-    public void showTurnInGUI() throws FileNotFoundException {
-        gui.showResume();
-    }
-
     public String getWeaponName(IWeapon weapon){
         return weapon.getAttributes().getName();
     }
@@ -811,6 +807,16 @@ public class GameController {
     }
 
 
+    public void setNewTurn() {
+        gameState.setNewTurn();
+    }
 
+    public void endTurn() {
+        gameState.endTurn();
+    }
+
+    public boolean isShowingTurnResume() {
+        return gameState.isShowingTurnResume();
+    }
 }
 

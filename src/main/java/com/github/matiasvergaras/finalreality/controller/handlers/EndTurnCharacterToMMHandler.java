@@ -13,7 +13,7 @@ import java.beans.PropertyChangeListener;
  * @since Homework 2
  */
 public class EndTurnCharacterToMMHandler implements PropertyChangeListener {
-    IMastermind mastermind;
+    private final IMastermind mastermind;
 
     /**
      * Creates a new handler for the end of a turn of a Mastermind character.

@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +45,6 @@ public class FinalReality extends Application {
     final int width = 1000;
     final int height = 570;
     private Group currentGroup = new Group();
-    private Group auxiliarGroup = new Group();
     private GameController gc;
     AnimationTimer timer;
 
@@ -136,6 +136,17 @@ public class FinalReality extends Application {
     private final Label battleTargetCharacterPower = new Label();
     private final Label battleTargetCharacterWeight = new Label();
     private final ImageView battleTargetCharacterSprite = new ImageView();
+
+    //animated variables of Battle scene - show attack results
+    private final ImageView resumeBg = new ImageView();
+    private Button resumeOkButton;
+    private final Label resumeAttackerHP = new Label();
+    private final Label resumeAttackerDP = new Label();
+    private final Label resumeAttackerPower = new Label();
+    private final Label resumeDefenderHP = new Label();
+    private final Label resumeDefenderDP = new Label();
+    private final ImageView resumeAttackerSprite = new ImageView();
+    private final ImageView resumeDefenderSprite = new ImageView();
 
 
     @Override
@@ -530,7 +541,8 @@ public class FinalReality extends Application {
         currentWeapons.setOnAction(event -> {
             if(!(currentWeapons.getValue()==null)){
                 try {
-                    InputStream miniSpriteStream = new FileInputStream(RESOURCE_PATH + getWeaponMiniSpritePATH());
+                    InputStream miniSpriteStream = new FileInputStream(RESOURCE_PATH +
+                            getWeaponMiniSpritePATH(gc.getSelectedWeapon()));
                     selectedWeaponMiniSprite.setImage(new Image(miniSpriteStream));
                     selectedWeaponMiniSprite.setVisible(true);
 
@@ -936,7 +948,7 @@ public class FinalReality extends Application {
             if(!(equipMenuWeapons.getValue()==null)){
                 try {
                     InputStream miniSpriteStream = new FileInputStream(RESOURCE_PATH +
-                            getWeaponMiniSpritePATH());
+                            getWeaponMiniSpritePATH(gc.getSelectedWeapon()));
                     equipMenuWeaponSprite.setImage(new Image(miniSpriteStream));
                     equipMenuWeaponSprite.setVisible(true);
 
@@ -984,7 +996,8 @@ public class FinalReality extends Application {
         backEquipWeaponMenuButton.setOnAction(event -> {
             try {
                 timer.stop();
-                toSetCPUTeam(stage);
+                if(gc.isInitializing()) toSetCPUTeam(stage);
+                else toBattleground(stage);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -1052,6 +1065,10 @@ public class FinalReality extends Application {
                     }
                 }
 
+                if(gc.isActive()){
+                    nextWeaponMenuButton.setVisible(false);
+                }
+
 
             }
         };
@@ -1059,25 +1076,172 @@ public class FinalReality extends Application {
     }
 
     private void toBattleground(Stage stage) throws FileNotFoundException {
-        battleStartAttackButton = ButtonWithImage("startattackbutton.png", 790, 500);
-        battleCancelAttackButton = ButtonWithImage("cancelbutton.png",700, 500);
+        battleStartAttackButton = ButtonWithImage("startattackbutton.png", 50, 395);
+        battleCancelAttackButton = ButtonWithImage("cancelbutton.png",500, 500);
         battleSendAttackButton = ButtonWithImage("attackbutton.png", 500, 400);
-        battleChangeWeaponsButton = ButtonWithImage("teamandweaponbutton.png", 400, 400);
+        battleChangeWeaponsButton = ButtonWithImage("teamandweaponbutton.png", 50, 335);
+        resumeOkButton = ButtonWithImage("okbutton.png", 655, 290);
 
-        battleStartAttackButton.setVisible(true);
-        battleChangeWeaponsButton.setVisible(true);
-
+        battleStartAttackButton.setVisible(false);
+        battleChangeWeaponsButton.setVisible(false);
         battleSendAttackButton.setVisible(false);
         battleCancelAttackButton.setVisible(false);
+
+        resumeOkButton.setVisible(false);
 
         currentGroup = new Group();
         Scene battlegroundScene = new Scene(currentGroup, width, height);
         stage.setScene(battlegroundScene);
         ImageView battlegroundBg = new ImageView(new Image(new FileInputStream(RESOURCE_PATH + "attackbackground.png")));
+
+        // The player turn options
+
+        battleActiveCharacterHP.setFont(new Font("Arial", 20.0));
+        battleActiveCharacterHP.setLayoutX(180);
+        battleActiveCharacterHP.setLayoutY(100);
+
+        battleActiveCharacterDP.setFont(new Font("Arial", 20.0));
+        battleActiveCharacterDP.setLayoutX(180);
+        battleActiveCharacterDP.setLayoutY(120);
+
+        battleActiveCharacterMana.setFont(new Font("Arial", 20.0));
+        battleActiveCharacterMana.setLayoutX(180);
+        battleActiveCharacterMana.setLayoutY(143);
+
+        battleEquippedWeaponName.setFont(new Font("Arial", 20.0));
+        battleEquippedWeaponName.setLayoutX(215);
+        battleEquippedWeaponName.setLayoutY(230);
+
+        battleEquippedWeaponPower.setFont(new Font("Arial", 20.0));
+        battleEquippedWeaponPower.setLayoutX(215);
+        battleEquippedWeaponPower.setLayoutY(252);
+
+        battleEquippedWeaponWeight.setFont(new Font("Arial", 20.0));
+        battleEquippedWeaponWeight.setLayoutX(215);
+        battleEquippedWeaponWeight.setLayoutY(275);
+
+        battleEquippedWeaponMagic.setFont(new Font("Arial", 20.0));
+        battleEquippedWeaponMagic.setLayoutX(215);
+        battleEquippedWeaponMagic.setLayoutY(318);
+
+        battleActiveCharacterSprite.setLayoutX(62);
+        battleActiveCharacterSprite.setLayoutY(103);
+
+        battleEquippedWeaponSprite.setLayoutX(58);
+        battleEquippedWeaponSprite.setLayoutY(238);
+        battleEquippedWeaponSprite.setFitWidth(40);
+        battleEquippedWeaponSprite.setPreserveRatio(true);
+
+        // The pick-a-target time
+        battleTargetCharacterHP.setFont(new Font("Arial", 20.0));
+        battleTargetCharacterHP.setLayoutX(400);
+        battleTargetCharacterHP.setLayoutY(100);
+
+        battleTargetCharacterDP.setFont(new Font("Arial", 20.0));
+        battleTargetCharacterDP.setLayoutX(400);
+        battleTargetCharacterDP.setLayoutY(100);
+
+        battleTargetCharacterPower.setFont(new Font("Arial", 20.0));
+        battleTargetCharacterPower.setLayoutX(400);
+        battleTargetCharacterPower.setLayoutY(100);
+
+        battleTargetCharacterWeight.setFont(new Font("Arial", 20.0));
+        battleTargetCharacterWeight.setLayoutX(400);
+        battleTargetCharacterWeight.setLayoutY(100);
+
+        battleTargetCharacterSprite.setLayoutX(400);
+        battleTargetCharacterSprite.setLayoutY(200);
+
+        // The resume
+        resumeBg.setLayoutX(230);
+        resumeBg.setLayoutY(100);
+
+        resumeAttackerSprite.setLayoutX(325);
+        resumeAttackerSprite.setLayoutY(205);
+
+        resumeDefenderSprite.setLayoutX(485);
+        resumeDefenderSprite.setLayoutY(205);
+
+        resumeAttackerHP.setFont(new Font("Arial", 20.0));
+        resumeAttackerHP.setLayoutX(365);
+        resumeAttackerHP.setLayoutY(273);
+
+        resumeAttackerDP.setFont(new Font("Arial", 20.0));
+        resumeAttackerDP.setLayoutX(365);
+        resumeAttackerDP.setLayoutY(295);
+
+        resumeAttackerPower.setFont(new Font("Arial", 20.0));
+        resumeAttackerPower.setLayoutX(365);
+        resumeAttackerPower.setLayoutY(315);
+
+
+        resumeDefenderHP.setFont(new Font("Arial", 20.0));
+        resumeDefenderHP.setLayoutX(508);
+        resumeDefenderHP.setLayoutY(270);
+
+
+        resumeDefenderDP.setFont(new Font("Arial", 20.0));
+        resumeDefenderDP.setLayoutX(508);
+        resumeDefenderDP.setLayoutY(295);
+
         currentGroup.getChildren().add(battlegroundBg);
-        currentGroup.getChildren().add(auxiliarGroup);
+
+        // PLayer turn - decide what to do
+        currentGroup.getChildren().add(battleActiveCharacterHP);
+        currentGroup.getChildren().add(battleActiveCharacterDP);
+        currentGroup.getChildren().add(battleActiveCharacterMana);
+        currentGroup.getChildren().add(battleActiveCharacterSprite);
+        currentGroup.getChildren().add(battleEquippedWeaponName);
+        currentGroup.getChildren().add(battleEquippedWeaponPower);
+        currentGroup.getChildren().add(battleEquippedWeaponWeight);
+        currentGroup.getChildren().add(battleEquippedWeaponSprite);
+        currentGroup.getChildren().add(battleStartAttackButton);
+        currentGroup.getChildren().add(battleChangeWeaponsButton);
+
+        // Player turn - pick a target or cancel attack
+        currentGroup.getChildren().add(battleCPUAliveCharacters);
+        currentGroup.getChildren().add(battleTargetCharacterHP);
+        currentGroup.getChildren().add(battleTargetCharacterDP);
+        currentGroup.getChildren().add(battleTargetCharacterPower);
+        currentGroup.getChildren().add(battleTargetCharacterWeight);
+        currentGroup.getChildren().add(battleTargetCharacterSprite);
+        currentGroup.getChildren().add(battleCancelAttackButton);
+        currentGroup.getChildren().add(battleSendAttackButton);
+
+        // Resume
+        currentGroup.getChildren().add(resumeBg);
+        currentGroup.getChildren().add(resumeAttackerHP);
+        currentGroup.getChildren().add(resumeAttackerDP);
+        currentGroup.getChildren().add(resumeAttackerPower);
+        currentGroup.getChildren().add(resumeAttackerSprite);
+        currentGroup.getChildren().add(resumeDefenderHP);
+        currentGroup.getChildren().add(resumeDefenderDP);
+        currentGroup.getChildren().add(resumeDefenderSprite);
+        currentGroup.getChildren().add(resumeOkButton);
+        currentGroup.getChildren().add(battleCancelAttackButton);
+        currentGroup.getChildren().add(battleSendAttackButton);
+
 
         setBattlegroundTimer();
+
+
+        battleChangeWeaponsButton.setOnAction(event -> {
+            try {
+                toEquipWeapons(stage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
+
+
+        battleStartAttackButton.setOnAction(event -> {
+            gc.initAttackMove();
+        });
+
+        resumeOkButton.setOnAction(event -> {
+            System.out.println("BUTTON");
+            gc.endTurn();
+        });
 
     }
 
@@ -1085,69 +1249,143 @@ public class FinalReality extends Application {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                auxiliarGroup.setVisible(true);
+                //System.out.println("\n");
+                //System.out.println(gc.isShowingTurnResume());
+                //System.out.println(gc.isPerformingAttack());
+                //ystem.out.println(gc.isPlayerTurn());
+                //System.out.println(gc.isCPUTurn());
+                //System.out.println(gc.isSelectingAttackTarget());
+                //System.out.println(gc.isFinished());
+                //System.out.println(gc.isActive());
+                if (gc.isShowingTurnResume()) {
+                    try {
+                        resumeBg.setImage( new Image(new FileInputStream( RESOURCE_PATH + "attackresumebg.png")));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    resumeBg.setVisible(true);
+                    resumeAttackerHP.setText(String.valueOf(gc.getCharacterCurrentHP(gc.getActiveCharacter())));
+                    resumeAttackerHP.setTextFill(Color.web("#ffeb33", 1));
+                    resumeAttackerHP.setVisible(true);
+                    resumeAttackerDP.setText(String.valueOf(gc.getCharacterDP(gc.getActiveCharacter())));
+                    resumeAttackerDP.setTextFill(Color.web("#ffeb33", 1));
+                    resumeAttackerDP.setVisible(true);
+                    resumeDefenderHP.setText(String.valueOf(gc.getCharacterCurrentHP(gc.getSelectedCharacter())));
+                    resumeDefenderHP.setTextFill(Color.web("#ffeb33", 1));
+                    resumeDefenderHP.setVisible(true);
+                    resumeDefenderDP.setText(String.valueOf(gc.getCharacterDP(gc.getSelectedCharacter())));
+                    resumeDefenderDP.setTextFill(Color.web("#ffeb33", 1));
+                    resumeDefenderDP.setVisible(true);
+                    if(gc.characterIsEnemy(gc.getActiveCharacter())){
+                        resumeAttackerPower.setText(String.valueOf(gc.getCharacterPower(gc.getActiveCharacter())));
+                        resumeAttackerPower.setTextFill(Color.web("#ffeb33", 1));
+                        resumeAttackerPower.setVisible(true);
+
+                        try {
+                            resumeAttackerSprite.setImage(new Image(new FileInputStream( RESOURCE_PATH + "darksol.png")));
+                            resumeDefenderSprite.setImage(new Image(new FileInputStream( RESOURCE_PATH +
+                                    getPlayerCharacterModeSpritePATH(gc.getSelectedCharacter(), "face"))));
+                            resumeAttackerSprite.setVisible(true);
+                            resumeDefenderSprite.setVisible(true);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else{
+                        resumeAttackerPower.setText(String.valueOf(gc.getWeaponPower(gc.getCharacterEquippedWeapon(
+                                gc.getSelectedCharacter()))));
+                        resumeAttackerPower.setTextFill(Color.web("#ffeb33", 1));
+                        resumeAttackerPower.setVisible(true);
+                        try {
+                            resumeAttackerSprite.setImage(new Image(new FileInputStream( RESOURCE_PATH +
+                                    getPlayerCharacterModeSpritePATH(gc.getActiveCharacter(), "face"))));
+                            resumeDefenderSprite.setImage(new Image(new FileInputStream( RESOURCE_PATH
+                                    + "darksol.png")));
+                            resumeAttackerSprite.setVisible(true);
+                            resumeDefenderSprite.setVisible(true);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    resumeOkButton.setVisible(true);
+
+                }
+                else{
+                    resumeAttackerHP.setVisible(false);
+                    resumeAttackerDP.setVisible(false);
+                    resumeAttackerPower.setVisible(false);
+                    resumeAttackerSprite.setVisible(false);
+                    resumeDefenderHP.setVisible(false);
+                    resumeDefenderDP.setVisible(false);
+                    resumeDefenderSprite.setVisible(false);
+                    resumeAttackerSprite.setVisible(false);
+                    resumeBg.setVisible(false);
+                    resumeOkButton.setVisible(false);
+                }
+                if(gc.isPlayerTurn()){
+                    battleChangeWeaponsButton.setVisible(true);
+                    battleStartAttackButton.setVisible(true);
+                    battleActiveCharacterHP.setText(String.valueOf(gc.getCharacterCurrentHP(gc.getActiveCharacter())));
+                    battleActiveCharacterHP.setVisible(true);
+                    battleActiveCharacterDP.setText(String.valueOf(gc.getCharacterDP(gc.getActiveCharacter())));
+                    battleActiveCharacterDP.setVisible(true);
+                    if(gc.characterIsMagic(gc.getActiveCharacter())) {
+                        battleActiveCharacterMana.setText(String.valueOf(gc.getCharacterCurrentMana(gc.getActiveCharacter())));
+                        battleActiveCharacterMana.setVisible(true);
+                    }
+                    battleEquippedWeaponName.setText(String.valueOf(gc.getWeaponName
+                            (gc.getCharacterEquippedWeapon(gc.getActiveCharacter()))));
+                    battleEquippedWeaponName.setVisible(true);
+                    battleEquippedWeaponPower.setText(String.valueOf(gc.getWeaponPower
+                            (gc.getCharacterEquippedWeapon(gc.getActiveCharacter()))));
+                    battleEquippedWeaponPower.setVisible(true);
+                    battleEquippedWeaponWeight.setText(String.valueOf(gc.getWeaponWeight
+                            (gc.getCharacterEquippedWeapon(gc.getActiveCharacter()))));
+                    battleEquippedWeaponWeight.setVisible(true);
+                    battleEquippedWeaponMagic.setText(String.valueOf(gc.getWeaponMagicPower(
+                            (gc.getCharacterEquippedWeapon(gc.getActiveCharacter())))));
+                    battleEquippedWeaponMagic.setVisible(true);
+                    try {
+                        battleActiveCharacterSprite.setImage(new Image(new FileInputStream( RESOURCE_PATH +
+                                getPlayerCharacterModeSpritePATH(gc.getActiveCharacter(), "face"))));
+                        battleActiveCharacterSprite.setVisible(true);
+                        battleEquippedWeaponSprite.setImage(new Image(new FileInputStream( RESOURCE_PATH +
+                                getWeaponMiniSpritePATH(gc.getCharacterEquippedWeapon(gc.getActiveCharacter())))));
+                        battleEquippedWeaponSprite.setVisible(true);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    battleActiveCharacterHP.setVisible(false);
+                    battleActiveCharacterDP.setVisible(false);
+                    battleActiveCharacterMana.setVisible(false);
+                    battleActiveCharacterSprite.setVisible(false);
+                    battleEquippedWeaponName.setVisible(false);
+                    battleEquippedWeaponPower.setVisible(false);
+                    battleEquippedWeaponMagic.setVisible(false);
+                    battleEquippedWeaponWeight.setVisible(false);
+                    battleEquippedWeaponSprite.setVisible(false);
+                }
+                if(gc.isSelectingAttackTarget()){
+                    battleCancelAttackButton.setVisible(true);
+                    battleSendAttackButton.setVisible(true);
+                    battleActiveCharacterHP.setVisible(true);
+                    battleActiveCharacterDP.setVisible(true);
+                    battleActiveCharacterMana.setVisible(true);
+                    battleActiveCharacterSprite.setVisible(true);
+                    battleEquippedWeaponName.setVisible(true);
+                    battleEquippedWeaponPower.setVisible(true);
+                    battleEquippedWeaponMagic.setVisible(true);
+                    battleEquippedWeaponWeight.setVisible(true);
+                    battleEquippedWeaponSprite.setVisible(true);
+
+                }
+
+
             }
         };
         timer.start();
-    }
-
-    /**
-     * This method has to be public on order to be able to call it
-     * from the GameController.
-     * <p> It will be called once a turn has ended, and will make the GUI
-     * to show the new status of the characters involved in the attack that
-     * ended the turn. </p>
-     */
-    public void showResume() throws FileNotFoundException {
-        //animated variables of Battle scene - attack resume
-        ImageView resumeBg = new ImageView(new Image(new FileInputStream(RESOURCE_PATH + "attackresumebg.png")));
-
-        final Label resumeAttackerHP = new Label(String.valueOf(gc.getCharacterCurrentHP(gc.getActiveCharacter())));
-        resumeAttackerHP.setLayoutX(200);
-        resumeAttackerHP.setLayoutY(200);
-
-        final Label resumeAttackerDP = new Label(String.valueOf(gc.getCharacterDP(gc.getActiveCharacter())));
-        final Label resumeDefenderHP = new Label(String.valueOf(gc.getCharacterCurrentHP(gc.getActiveCharacter())));
-        final Label resumeDefenderDP = new Label(String.valueOf(gc.getCharacterDP(gc.getActiveCharacter())));
-        Button resumeOKButton = ButtonWithImage("okbutton.png", 300, 300);
-        final Label resumeAttackerPower;
-        final ImageView resumeAttackerSprite;
-        final ImageView resumeDefenderSprite;
-
-        if(gc.characterIsEnemy(gc.getActiveCharacter())){
-            resumeAttackerPower = new Label(String.valueOf(gc.getCharacterPower(gc.getActiveCharacter())));
-
-            InputStream resumeEnemySpriteStream = new FileInputStream(RESOURCE_PATH + "darksol.png");
-            resumeAttackerSprite = new ImageView(
-                    new Image(resumeEnemySpriteStream));
-
-            InputStream resumePlayerSpriteStream = new FileInputStream( RESOURCE_PATH +
-                    getPlayerCharacterModeSpritePATH(gc.getActiveCharacter(), "face"));
-            resumeDefenderSprite = new ImageView(new Image(resumePlayerSpriteStream));
-        }
-        else{
-            resumeAttackerPower = new Label(String.valueOf(gc.getWeaponPower(gc.getCharacterEquippedWeapon(
-                    gc.getSelectedCharacter()))));
-
-            InputStream resumePlayerSpriteStream = new FileInputStream( RESOURCE_PATH +
-                    getPlayerCharacterModeSpritePATH(gc.getActiveCharacter(), "face"));
-            resumeAttackerSprite = new ImageView(new Image(resumePlayerSpriteStream));
-
-            InputStream resumeEnemySpriteStream = new FileInputStream(RESOURCE_PATH + "darksol.png");
-            resumeDefenderSprite = new ImageView(new Image(resumeEnemySpriteStream));
-        }
-        auxiliarGroup.getChildren().add(resumeBg);
-        auxiliarGroup.getChildren().add(resumeAttackerHP);
-        auxiliarGroup.getChildren().add(resumeAttackerDP);
-        auxiliarGroup.getChildren().add(resumeDefenderDP);
-        auxiliarGroup.getChildren().add(resumeDefenderHP);
-        auxiliarGroup.getChildren().add(resumeOKButton);
-        auxiliarGroup.getChildren().add(resumeAttackerSprite);
-        auxiliarGroup.getChildren().add(resumeDefenderSprite);
-        auxiliarGroup.getChildren().add(resumeAttackerPower);
-        currentGroup.getChildren().add(auxiliarGroup);
-
-
     }
 
     private void updateList(ComboBox equipMenuWeapons) {
@@ -1299,23 +1537,23 @@ public class FinalReality extends Application {
         return optionsBox;
     }
 
-    private String getWeaponMiniSpritePATH(){
+    private String getWeaponMiniSpritePATH(IWeapon weapon){
         String axeMiniSprite = "axesprite.png";
         String swordMiniSprite = "swordsprite.png";
         String bowMiniSprite = "bowsprite.png";
         String staffMiniSprite = "staffsprite.png";
         String knifeMiniSprite = "knifesprite.png";
 
-        if (gc.weaponIsAxe(gc.getSelectedWeapon())){
+        if (gc.weaponIsAxe(weapon)){
             return axeMiniSprite;
         }
-        if (gc.weaponIsSword(gc.getSelectedWeapon())){
+        if (gc.weaponIsSword(weapon)){
             return swordMiniSprite;
         }
-        if (gc.weaponIsBow(gc.getSelectedWeapon())){
+        if (gc.weaponIsBow(weapon)){
             return bowMiniSprite;
         }
-        if (gc.weaponIsStaff(gc.getSelectedWeapon())){
+        if (gc.weaponIsStaff(weapon)){
             return staffMiniSprite;
         }
         else{
