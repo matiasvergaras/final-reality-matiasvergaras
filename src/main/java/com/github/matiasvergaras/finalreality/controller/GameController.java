@@ -17,6 +17,7 @@ import com.github.matiasvergaras.finalreality.model.character.player.NullCharact
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -92,12 +93,20 @@ public class GameController {
 
     /**
      * Sets-up the GUI of this gameController.
-     * @param gui       The GUI of the game.
+     * @param GUI       The GUI of the game.
      */
-    public void setGUI(FinalReality gui){
-        this.gui = gui;
+    public void setGUI(FinalReality GUI){
+        this.gui = GUI;
     }
 
+    /**
+     * Returns the GUI associated to this gameController.
+     * <p> Necessary to be able to test GC without the GUI. </p>
+     * @return  GUI
+     */
+    public FinalReality getGUI(){
+        return gui;
+    }
     /**
      * Returns the turns queue
      *
@@ -213,12 +222,11 @@ public class GameController {
 
     /**
      * Method to be called by an EndTurnMMToGCHandler.
-     * <p> Sends to the character that just ended his turn the wait for re-entry order. </p>
-     * <p> Calls to StartTurn, in order to start a new Turn. </p>
-     * <p> A character will wait for its turn only if he is alive (new feature in waitTurn). </p>
-     * <p> This method will be effective only in Active mode. </p>
+     * <p> "Starts the end" of a turn, by sending to the GUI the order to show
+     * the turn resume. Then the GUI will send back the message of end the turn
+     * and start a new one. </p>
      */
-    public void endTurn() {
+    public void showTurnResume() throws FileNotFoundException {
         gameState.showTurnResume();
     }
 
@@ -515,7 +523,7 @@ public class GameController {
      * <p> If so, it sends the attack message in the corresponding direction. Otherwise, it has no effect.</p>
      * <p> In this way, the conditions fulfill a double function: they ensure that the attacking and receiving characters
      * are in the game (to avoid bugs) and at the same time they avoid attacks between the same team. </p>
-     * <p> This method will be available only in Active mode. </p>
+     * <p> This method will be available only in Active - SelectingAttacKTarget mode. </p>
      */
     public void activeCharacterNormalAttackSelectedCharacter(){
         gameState.setAttack();
@@ -533,84 +541,6 @@ public class GameController {
      */
     public CharacterAttributeSet getSelectedCharacterAttributes(){
         return selectedCharacter.getAttributes();
-    }
-
-    /**
-     * Gets the selectedCharacter name.
-     * @return      the name of the selectedCharacter, as a String.
-     */
-    public String getSelectedCharacterName(){
-        return getSelectedCharacterAttributes().getName();
-    }
-
-    /**
-     * Gets the selectedCharacter current HP.
-     * @return      the current HP of the selectedCharacter, as an int.
-     */
-    public int getSelectedCharacterCurrentHP(){
-        return getSelectedCharacterAttributes().getCurrentHP();
-    }
-
-    /**
-     * Gets the selectedCharacter maxHP.
-     * @return      the maxHP of the selectedCharacter, as an int.
-     */
-    public int getSelectedCharacterMaxHP(){
-        return getSelectedCharacterAttributes().getMaxHP();
-    }
-
-
-    /**
-     * Gets the selectedCharacter DP.
-     * @return      the DP of the selectedCharacter, as an int.
-     */
-    public int getSelectedCharacterDP(){
-        return getSelectedCharacterAttributes().getDP();
-    }
-
-    /**
-     * Gets the selectedCharacter equippedWeapon.
-     * <p> If the character does not have the attribute, method returns null. </p>
-     * @return      the selectedCharacter equipped Weapon, as IWeapon.
-     */
-    public IWeapon getSelectedCharacterEquippedWeapon(){
-        return getSelectedCharacterAttributes().getEquippedWeapon();
-    }
-
-    /**
-     * Gets the selectedCharacter CurrentMana.
-     * <p> If the character does not have the attribute, method returns null. </p>
-     * @return      the CurrentMana of the selectedCharacter, as an int.
-     */
-    public int getSelectedCharacterCurrentMana(){
-        return getSelectedCharacterAttributes().getCurrentMana();
-    }
-
-    /**
-     * Gets the selectedCharacter MaxMana.
-     * <p> If the character does not have the attribute, method returns null. </p>
-     * @return      the MaxMana of the selectedCharacter, as an int.
-     */
-    public int getSelectedCharacterMaxMana(){
-        return getSelectedCharacterAttributes().getMaxMana();
-    }
-
-    /**
-     * Gets the selectedCharacter weight.
-     * <p> If the character does not have the attribute, method returns null. </p>
-     * @return      the weight of the selectedCharacter, as an int.
-     */
-    public int getSelectedCharacterWeight(){
-        return getSelectedCharacterAttributes().getWeight();
-    }
-
-    /**
-     * Gets the selectedCharacter power.
-     * <p> If the character does not have the attribute, method returns null. </p>
-     * @return      the power of the selectedCharacter, as an int.
-     */
-    public  int getSelectedCharacterPower(){
-        return getSelectedCharacterAttributes().getPower();
     }
 
     /**
@@ -739,37 +669,6 @@ public class GameController {
         return selectedWeapon;
     }
 
-    /**
-     * Gives the SelectedWeapon name.
-     * @return      The selectedWeapon name String.
-     */
-    public String getSelectedWeaponName(){
-        return getSelectedWeapon().getAttributes().getName();
-    }
-
-    /**
-     * Gives the SelectedWeapon power.
-     * @return      The selectedWeapon power.
-     */
-    public int getSelectedWeaponPower(){
-        return getSelectedWeapon().getAttributes().getPower();
-    }
-
-    /**
-     * Gives the SelectedWeapon weight.
-     * @return      The selectedWeapon weight.
-     */
-    public int getSelectedWeaponWeight(){
-        return getSelectedWeapon().getAttributes().getWeight();
-    }
-
-    /**
-     * Gives the SelectedWeapon magicPower.
-     * @return      The selectedWeapon magicPower.
-     */
-    public int getSelectedWeaponMagicPower(){
-        return getSelectedWeapon().getAttributes().getMagicPower();
-    }
 
     /**
      * Gives the SelectedWeaponFactory IWeaponFactory Object.
@@ -787,68 +686,131 @@ public class GameController {
         return selectedCharacterFactory;
     }
 
-    public boolean selectedCharacterIsMagic() {
-        return selectedCharacter.isMagic();
+    public boolean characterIsMagic(ICharacter character) {
+        return character.isMagic();
     }
 
-    public boolean selectedCharacterIsBlackMage() {
-        return selectedCharacter.isBlackMage();
+    public boolean characterIsBlackMage(ICharacter character){
+        return character.isBlackMage();
     }
 
-    public boolean selectedCharacterIsWhiteMage() {
-        return selectedCharacter.isWhiteMage();
+    public boolean characterIsWhiteMage(ICharacter character){
+        return character.isWhiteMage();
     }
 
-    public boolean selectedCharacterIsEngineer(){
-        return selectedCharacter.isEngineer();
+    public boolean characterIsEngineer(ICharacter character){
+        return character.isEngineer();
     }
 
-    public boolean selectedCharacterIsKnight(){
-        return selectedCharacter.isKnight();
+    public boolean characterIsKnight(ICharacter character){
+        return character.isKnight();
     }
 
-    public boolean selectedCharacterIsThief(){
-        return selectedCharacter.isThief();
+    public boolean characterIsThief(ICharacter character){
+        return character.isThief();
     }
 
-    public boolean selectedCharacterIsEnemy(){
-        return selectedCharacter.isEnemy();
+    public boolean characterIsEnemy(ICharacter character){
+        return character.isEnemy();
     }
 
-    public boolean selectedWeaponIsAxe() {
-        return selectedWeapon.isAxe();
+    public boolean weaponIsAxe(IWeapon weapon){
+        return weapon.isAxe();
     }
 
-    public boolean selectedWeaponIsSword() {
-        return selectedWeapon.isSword();
+    public boolean weaponIsSword(IWeapon weapon){
+        return weapon.isSword();
     }
 
-    public boolean selectedWeaponIsKnife() {
-        return selectedWeapon.isKnife();
+    public boolean weaponIsKnife(IWeapon weapon){
+        return weapon.isKnife();
     }
 
-    public boolean selectedWeaponIsBow() {
-        return selectedWeapon.isBow();
+    public boolean weaponIsBow(IWeapon weapon){
+        return weapon.isBow();
     }
 
-    public boolean selectedWeaponIsStaff() {
-        return selectedWeapon.isStaff();
+    public boolean weaponIsStaff(IWeapon weapon){
+        return weapon.isStaff();
     }
 
-    public String getSelectedWeaponOwnersName(){
-        if (selectedWeapon.getOwner()!=null){
-            return selectedWeapon.getOwner().getName();
-        }
-        else return "None";
+    public boolean weaponIsNull(IWeapon weapon){
+        return weapon.isNull();
     }
 
-    public boolean selectedCharacterEquippedWeaponIsNull() {
-
-        return getSelectedCharacterEquippedWeapon().isNull();
-    }
-
-    public void showTurnInGUI() {
+    public void showTurnInGUI() throws FileNotFoundException {
         gui.showResume();
     }
+
+    public String getWeaponName(IWeapon weapon){
+        return weapon.getAttributes().getName();
+    }
+
+    public int getWeaponPower(IWeapon weapon){
+        return weapon.getAttributes().getPower();
+    }
+
+    public int getWeaponWeight(IWeapon weapon){
+        return weapon.getAttributes().getWeight();
+    }
+
+    public int getWeaponMagicPower(IWeapon weapon){
+        return weapon.getAttributes().getMagicPower();
+    }
+
+    public String getWeaponOwnerName(IWeapon weapon){
+        if(weapon.getOwner()!=null){
+            return weapon.getOwner().getAttributes().getName();
+        }
+        return "None";
+    }
+
+    public String getCharacterName(ICharacter character){
+        return character.getAttributes().getName();
+    }
+
+
+    public int getCharacterCurrentHP(ICharacter character){
+        return character.getAttributes().getCurrentHP();
+    }
+
+
+    public int getCharacterMaxHP(ICharacter character){
+        return character.getAttributes().getMaxHP();
+    }
+
+
+
+    public int getCharacterDP(ICharacter character){
+        return character.getAttributes().getDP();
+    }
+
+
+    public IWeapon getCharacterEquippedWeapon(ICharacter character){
+        return character.getAttributes().getEquippedWeapon();
+    }
+
+
+    public int getCharacterCurrentMana(ICharacter character){
+        return character.getAttributes().getCurrentMana();
+    }
+
+
+    public int getCharacterMaxMana(ICharacter character){
+        return character.getAttributes().getMaxMana();
+    }
+
+
+    public int getCharacterWeight(ICharacter character){
+        return character.getAttributes().getWeight();
+    }
+
+
+    public  int getCharacterPower(ICharacter character){
+        return character.getAttributes().getPower();
+    }
+
+
+
 }
 

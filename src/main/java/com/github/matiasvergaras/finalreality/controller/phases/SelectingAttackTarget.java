@@ -39,7 +39,6 @@ public class SelectingAttackTarget extends GameState {
     @Override
     public void setAttack(){
         gc.setState(new PerformingAttack(gc));
-        gc.activeCharacterNormalAttackSelectedCharacter();
     }
 
     /**

@@ -3,7 +3,6 @@ package com.github.matiasvergaras.finalreality.gui;
 import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
-import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -42,10 +41,11 @@ public class FinalReality extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    private GameController gc;
     final int width = 1000;
     final int height = 570;
     private Group currentGroup = new Group();
+    private Group auxiliarGroup = new Group();
+    private GameController gc;
     AnimationTimer timer;
 
     //animated variables of SetParty scene (init phase).
@@ -115,10 +115,10 @@ public class FinalReality extends Application {
     private final ImageView equipMenuWeaponSprite = new ImageView();
 
     //animated variables of Battle scene - player turn
-    private Button changeWeaponsButton;
-    private Button startAttackButton;
-    private Button cancelAttackButton;
-    private Button sendAttackButton;
+    private Button battleChangeWeaponsButton;
+    private Button battleStartAttackButton;
+    private Button battleCancelAttackButton;
+    private Button battleSendAttackButton;
     private final Label battleActiveCharacterHP = new Label();
     private final Label battleActiveCharacterDP = new Label();
     private final Label battleActiveCharacterMana = new Label();
@@ -137,19 +137,9 @@ public class FinalReality extends Application {
     private final Label battleTargetCharacterWeight = new Label();
     private final ImageView battleTargetCharacterSprite = new ImageView();
 
-    //animated variables of Battle scene - attack resume
-    private final ImageView resumeAttackerCharacterSprite = new ImageView();
-    private final ImageView resumeDefenderSprite = new ImageView();
-    private final Label resumeAttackerHP = new Label();
-    private final Label resumeAttackerDP = new Label();
-    private final Label resumeAttackerPower = new Label();
-    private final Label resumeDefenderHP = new Label();
-    private final Label resumeDefenderDP = new Label();
-    private Button resumeOKButton;
 
     @Override
     public void start(@NotNull Stage primaryStage) throws FileNotFoundException {
-        gc.setGUI(this);
         primaryStage.setTitle("Final reality");
         currentGroup = new Group();
 
@@ -189,6 +179,7 @@ public class FinalReality extends Application {
 
 
     private void toSetTeam(Stage stage) throws FileNotFoundException {
+        gc.setGUI(this);
         List<String> usedCharacterNames = new ArrayList<>();
         currentGroup = new Group();
         Scene initializingScene = new Scene(currentGroup, width, height);
@@ -203,11 +194,11 @@ public class FinalReality extends Application {
 
         gc.setSelectedCharacterFactory(0);
 
-        Button EngineerFactoryButton = SelectFactoryButton("engineerfactorylogo.png", 1, 1);
-        Button KnightFactoryButton = SelectFactoryButton("knightfactorylogo.png", 1, 2);
-        Button BlackMageFactoryButton = SelectFactoryButton("blackmagefactorylogo.png", 2, 1);
-        Button WhiteMageFactoryButton = SelectFactoryButton("whitemagefactorylogo.png", 2, 2);
-        Button ThiefFactoryButton = SelectFactoryButton("thieffactorylogo.png", 1,3);
+        Button EngineerFactoryButton = SelectFactoryButton("engineerfacesprite.png", 1, 1);
+        Button KnightFactoryButton = SelectFactoryButton("knightfacesprite.png", 1, 2);
+        Button BlackMageFactoryButton = SelectFactoryButton("blackmagefacesprite.png", 2, 1);
+        Button WhiteMageFactoryButton = SelectFactoryButton("whitemagefacesprite.png", 2, 2);
+        Button ThiefFactoryButton = SelectFactoryButton("thieffacesprite.png", 1,3);
 
         TextField characterName = textField(360, 175);
         TextField charactersHP = textField(360, 210);
@@ -302,7 +293,7 @@ public class FinalReality extends Application {
         });
 
         removePlayerPartyButton.setOnAction(event -> {
-            usedCharacterNames.remove(gc.getSelectedCharacterName());
+            usedCharacterNames.remove(gc.getCharacterName(gc.getSelectedCharacter()));
             removePlayerPartyButton.setVisible(false);
             gc.removeSelectedCharacterFromItsParty();
             inPlayerPartyCharacterClass.setText("");
@@ -317,7 +308,8 @@ public class FinalReality extends Application {
         playerCurrentCharacters.setOnAction(event -> {
             if(!(playerCurrentCharacters.getValue()==null)){
                 try {
-                    InputStream miniSpriteStream = new FileInputStream(RESOURCE_PATH + getSelectedPlayerCharacterModeSpritePATH("mini"));
+                    InputStream miniSpriteStream = new FileInputStream(RESOURCE_PATH +
+                            getPlayerCharacterModeSpritePATH(gc.getSelectedCharacter(), "mini"));
                     playerSelectedCharacterMiniSprite.setImage(new Image(miniSpriteStream));
                     playerSelectedCharacterMiniSprite.setVisible(true);
 
@@ -373,17 +365,17 @@ public class FinalReality extends Application {
                 for(int i=0; i<gc.getPlayerPartySize(); i++){
                     gc.setSelectedCharacterFromPlayerParty(i);
 
-                    if(gc.getSelectedCharacterName().equals(selectedInPartyName)){
+                    if(gc.getCharacterName(gc.getSelectedCharacter()).equals(selectedInPartyName)){
                         inPlayerPartyCharacterClass.setText(getSelectedCharacterClassAsString());
                         inPlayerPartyCharacterClass.setVisible(true);
-                        inPlayerPartyCharacterName.setText(gc.getSelectedCharacterName());
+                        inPlayerPartyCharacterName.setText(gc.getCharacterName(gc.getSelectedCharacter()));
                         inPlayerPartyCharacterName.setVisible(true);
-                        inPlayerPartyCharacterHP.setText(String.valueOf(gc.getSelectedCharacterMaxHP()));
+                        inPlayerPartyCharacterHP.setText(String.valueOf(gc.getCharacterMaxHP(gc.getSelectedCharacter())));
                         inPlayerPartyCharacterHP.setVisible(true);
-                        inPlayerPartyCharacterDP.setText(String.valueOf(gc.getSelectedCharacterDP()));
+                        inPlayerPartyCharacterDP.setText(String.valueOf(gc.getCharacterDP(gc.getSelectedCharacter())));
                         inPlayerPartyCharacterDP.setVisible(true);
-                        if (gc.selectedCharacterIsMagic()) {
-                            inPlayerPartyCharacterMana.setText(String.valueOf(gc.getSelectedCharacterMaxMana()));
+                        if (gc.characterIsMagic(gc.getSelectedCharacter())) {
+                            inPlayerPartyCharacterMana.setText(String.valueOf(gc.getCharacterMaxMana(gc.getSelectedCharacter())));
                             inPlayerPartyCharacterMana.setVisible(true);
                         }
                         else{
@@ -510,7 +502,7 @@ public class FinalReality extends Application {
                 event -> {if(gc.getSelectedWeaponFactory()!=null){
                     if(!usedWeaponNames.contains(weaponsName.getText()) && !weaponsName.getText().equals("")){
                         gc.setSelectedWeaponFactoryPower(Integer.parseInt(weaponsPower.getText()));
-                        gc.setSelectedWeaponFactoryPower(Integer.parseInt(weaponsWeight.getText()));
+                        gc.setSelectedWeaponFactoryWeight(Integer.parseInt(weaponsWeight.getText()));
                         if(!weaponsMagic.getText().equals("")) {
                             gc.setSelectedWeaponFactoryMagicPower(Integer.parseInt(weaponsMagic.getText()));
                         }
@@ -522,7 +514,7 @@ public class FinalReality extends Application {
                 });
 
         removeWeaponButton.setOnAction(event -> {
-            usedWeaponNames.remove(gc.getSelectedWeaponName());
+            usedWeaponNames.remove(gc.getWeaponName(gc.getSelectedWeapon()));
             removeWeaponButton.setVisible(false);
             gc.removeSelectedWeaponFromInventory();
             inInventoryWeaponClass.setText("");
@@ -538,7 +530,7 @@ public class FinalReality extends Application {
         currentWeapons.setOnAction(event -> {
             if(!(currentWeapons.getValue()==null)){
                 try {
-                    InputStream miniSpriteStream = new FileInputStream(RESOURCE_PATH + getSelectedWeaponMiniSpritePATH());
+                    InputStream miniSpriteStream = new FileInputStream(RESOURCE_PATH + getWeaponMiniSpritePATH());
                     selectedWeaponMiniSprite.setImage(new Image(miniSpriteStream));
                     selectedWeaponMiniSprite.setVisible(true);
 
@@ -588,16 +580,16 @@ public class FinalReality extends Application {
 
                 for(int i=0; i<gc.getInventorySize(); i++){
                     gc.setSelectedWeapon(i);
-                    if(gc.getSelectedWeaponName().equals(selectedInInventoryName)){
+                    if(gc.getWeaponName(gc.getSelectedWeapon()).equals(selectedInInventoryName)){
                         inInventoryWeaponClass.setText(getSelectedWeaponClassAsString());
-                        inInventoryWeaponName.setText(gc.getSelectedWeaponName());
+                        inInventoryWeaponName.setText(gc.getWeaponName(gc.getSelectedWeapon()));
                         inInventoryWeaponName.setVisible(true);
-                        inInventoryWeaponPower.setText(String.valueOf(gc.getSelectedWeaponPower()));
+                        inInventoryWeaponPower.setText(String.valueOf(gc.getWeaponPower(gc.getSelectedWeapon())));
                         inInventoryWeaponPower.setVisible(true);
-                        inInventoryWeaponWeight.setText(String.valueOf(gc.getSelectedWeaponWeight()));
+                        inInventoryWeaponWeight.setText(String.valueOf(gc.getWeaponWeight(gc.getSelectedWeapon())));
                         inInventoryWeaponWeight.setVisible(true);
-                        if (gc.selectedWeaponIsStaff()) {
-                            inInventoryWeaponMagic.setText(String.valueOf(gc.getSelectedWeaponMagicPower()));
+                        if (gc.weaponIsStaff(gc.getSelectedWeapon())) {
+                            inInventoryWeaponMagic.setText(String.valueOf(gc.getWeaponMagicPower(gc.getSelectedWeapon())));
                             inInventoryWeaponMagic.setVisible(true);
                         }
                         else{
@@ -720,7 +712,7 @@ public class FinalReality extends Application {
                 });
 
         removeCPUPartyButton.setOnAction(event -> {
-            CPUNamesAndSkinsID.remove(gc.getSelectedCharacterName());
+            CPUNamesAndSkinsID.remove(gc.getCharacterName(gc.getSelectedCharacter()));
             removeCPUPartyButton.setVisible(false);
             gc.removeSelectedCharacterFromItsParty();
             inCPUPartyCharacterClass.setText("");
@@ -790,18 +782,18 @@ public class FinalReality extends Application {
                 String selectedInPartyName = (String)currentCPUCharacters.getValue();
                 for(int i=0; i<gc.getCPUPartySize(); i++){
                     gc.setSelectedCharacterFromCPUParty(i);
-                    if(gc.getSelectedCharacterName().equals(selectedInPartyName)){
+                    if(gc.getCharacterName(gc.getSelectedCharacter()).equals(selectedInPartyName)){
                         inCPUPartyCharacterClass.setText(getSelectedCharacterClassAsString());
                         inCPUPartyCharacterClass.setVisible(true);
-                        inCPUPartyCharacterName.setText(gc.getSelectedCharacterName());
+                        inCPUPartyCharacterName.setText(gc.getCharacterName(gc.getSelectedCharacter()));
                         inCPUPartyCharacterName.setVisible(true);
-                        inCPUPartyCharacterHP.setText(String.valueOf(gc.getSelectedCharacterMaxHP()));
+                        inCPUPartyCharacterHP.setText(String.valueOf(gc.getCharacterMaxHP(gc.getSelectedCharacter())));
                         inCPUPartyCharacterHP.setVisible(true);
-                        inCPUPartyCharacterDP.setText(String.valueOf(gc.getSelectedCharacterDP()));
+                        inCPUPartyCharacterDP.setText(String.valueOf(gc.getCharacterDP(gc.getSelectedCharacter())));
                         inCPUPartyCharacterDP.setVisible(true);
-                        inCPUPartyCharacterPower.setText(String.valueOf(gc.getSelectedCharacterPower()));
+                        inCPUPartyCharacterPower.setText(String.valueOf(gc.getCharacterPower(gc.getSelectedCharacter())));
                         inCPUPartyCharacterPower.setVisible(true);
-                        inCPUPartyCharacterWeight.setText(String.valueOf(gc.getSelectedCharacterWeight()));
+                        inCPUPartyCharacterWeight.setText(String.valueOf(gc.getCharacterPower(gc.getSelectedCharacter())));
                         inCPUPartyCharacterWeight.setVisible(true);
                         break;
                     }
@@ -930,7 +922,7 @@ public class FinalReality extends Application {
             if(alivePlayerCharacters.getValue()!=null){
                 try {
                     InputStream chibiSpriteStream = new FileInputStream(RESOURCE_PATH +
-                            getSelectedPlayerCharacterModeSpritePATH("chibi"));
+                            getPlayerCharacterModeSpritePATH( gc.getSelectedCharacter(),"chibi"));
                     equipMenuCharacterSprite.setImage(new Image(chibiSpriteStream));
                     equipMenuCharacterSprite.setVisible(true);
 
@@ -944,7 +936,7 @@ public class FinalReality extends Application {
             if(!(equipMenuWeapons.getValue()==null)){
                 try {
                     InputStream miniSpriteStream = new FileInputStream(RESOURCE_PATH +
-                            getSelectedWeaponMiniSpritePATH());
+                            getWeaponMiniSpritePATH());
                     equipMenuWeaponSprite.setImage(new Image(miniSpriteStream));
                     equipMenuWeaponSprite.setVisible(true);
 
@@ -961,17 +953,23 @@ public class FinalReality extends Application {
             //Check that at least one character is still equipped
             for(int i = 0; i <gc.getPlayerPartySize(); i++){
                 gc.setSelectedCharacterFromPlayerParty(i);
-                if(!gc.selectedCharacterEquippedWeaponIsNull()){
+                if(!gc.weaponIsNull(gc.getCharacterEquippedWeapon(gc.getSelectedCharacter()))){
                     //If this is the first time that this scene appears, then start game
                     if (gc.isInitializing()){
                         System.out.println("STARTING GAME");
                         gc.startGame();
+                        try {
+                            toBattleground(stage);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                     //Else, it has been called in a player turn, so let's go back there.
                     else if (gc.isActive()) {
                         //toPlayerTurn(stage);
                         try {
-                            toSetCPUTeam(stage);
+                            toBattleground(stage);
                         } catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
@@ -1014,16 +1012,16 @@ public class FinalReality extends Application {
                 String selectedCharacterName = (String)alivePlayerCharacters.getValue();
                 for(int i=0; i<gc.getPlayerPartySize(); i++){
                     gc.setSelectedCharacterFromPlayerParty(i);
-                    if(gc.getSelectedCharacterName().equals(selectedCharacterName)){
+                    if(gc.getCharacterName(gc.getSelectedCharacter()).equals(selectedCharacterName)){
                         equipMenuCharacterClass.setText(getSelectedCharacterClassAsString());
                         equipMenuCharacterClass.setVisible(true);
-                        equipMenuCharacterName.setText(gc.getSelectedCharacterName());
+                        equipMenuCharacterName.setText(gc.getCharacterName(gc.getSelectedCharacter()));
                         equipMenuCharacterName.setVisible(true);
-                        equipMenuCharacterHP.setText(String.valueOf(gc.getSelectedCharacterCurrentHP()));
+                        equipMenuCharacterHP.setText(String.valueOf(gc.getCharacterCurrentHP(gc.getSelectedCharacter())));
                         equipMenuCharacterHP.setVisible(true);
-                        equipMenuCharacterDP.setText(String.valueOf(gc.getSelectedCharacterDP()));
+                        equipMenuCharacterDP.setText(String.valueOf(gc.getCharacterDP(gc.getSelectedCharacter())));
                         equipMenuCharacterDP.setVisible(true);
-                        equipMenuCharacterMana.setText(String.valueOf(gc.getSelectedCharacterCurrentMana()));
+                        equipMenuCharacterMana.setText(String.valueOf(gc.getCharacterCurrentMana(gc.getSelectedCharacter())));
                         equipMenuCharacterMana.setVisible(true);
                         break;
                     }
@@ -1037,18 +1035,18 @@ public class FinalReality extends Application {
 
                 for(int i=0; i<gc.getInventorySize(); i++){
                     gc.setSelectedWeapon(i);
-                    if(gc.getSelectedWeaponName().equals(selectedWeaponName)){
-                        equipMenuWeaponOwner.setText(gc.getSelectedWeaponOwnersName());
+                    if(gc.getWeaponName(gc.getSelectedWeapon()).equals(selectedWeaponName)){
+                        equipMenuWeaponOwner.setText(gc.getWeaponOwnerName(gc.getSelectedWeapon()));
                         equipMenuWeaponOwner.setVisible(true);
                         equipMenuWeaponClass.setText(getSelectedWeaponClassAsString());
                         equipMenuWeaponClass.setVisible(true);
-                        equipMenuWeaponName.setText(gc.getSelectedWeaponName());
+                        equipMenuWeaponName.setText(gc.getWeaponName(gc.getSelectedWeapon()));
                         equipMenuWeaponName.setVisible(true);
-                        equipMenuWeaponPower.setText(String.valueOf(gc.getSelectedWeaponPower()));
+                        equipMenuWeaponPower.setText(String.valueOf(gc.getWeaponPower(gc.getSelectedWeapon())));
                         equipMenuWeaponPower.setVisible(true);
-                        equipMenuWeaponWeight.setText(String.valueOf(gc.getSelectedWeaponWeight()));
+                        equipMenuWeaponWeight.setText(String.valueOf(gc.getWeaponWeight(gc.getSelectedWeapon())));
                         equipMenuWeaponWeight.setVisible(true);
-                        equipMenuWeaponMagic.setText(String.valueOf(gc.getSelectedWeaponMagicPower()));
+                        equipMenuWeaponMagic.setText(String.valueOf(gc.getWeaponMagicPower(gc.getSelectedWeapon())));
                         equipMenuWeaponMagic.setVisible(true);
                         break;
                     }
@@ -1058,6 +1056,98 @@ public class FinalReality extends Application {
             }
         };
         timer.start();
+    }
+
+    private void toBattleground(Stage stage) throws FileNotFoundException {
+        battleStartAttackButton = ButtonWithImage("startattackbutton.png", 790, 500);
+        battleCancelAttackButton = ButtonWithImage("cancelbutton.png",700, 500);
+        battleSendAttackButton = ButtonWithImage("attackbutton.png", 500, 400);
+        battleChangeWeaponsButton = ButtonWithImage("teamandweaponbutton.png", 400, 400);
+
+        battleStartAttackButton.setVisible(true);
+        battleChangeWeaponsButton.setVisible(true);
+
+        battleSendAttackButton.setVisible(false);
+        battleCancelAttackButton.setVisible(false);
+
+        currentGroup = new Group();
+        Scene battlegroundScene = new Scene(currentGroup, width, height);
+        stage.setScene(battlegroundScene);
+        ImageView battlegroundBg = new ImageView(new Image(new FileInputStream(RESOURCE_PATH + "attackbackground.png")));
+        currentGroup.getChildren().add(battlegroundBg);
+        currentGroup.getChildren().add(auxiliarGroup);
+
+        setBattlegroundTimer();
+
+    }
+
+    private void setBattlegroundTimer() {
+        timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                auxiliarGroup.setVisible(true);
+            }
+        };
+        timer.start();
+    }
+
+    /**
+     * This method has to be public on order to be able to call it
+     * from the GameController.
+     * <p> It will be called once a turn has ended, and will make the GUI
+     * to show the new status of the characters involved in the attack that
+     * ended the turn. </p>
+     */
+    public void showResume() throws FileNotFoundException {
+        //animated variables of Battle scene - attack resume
+        ImageView resumeBg = new ImageView(new Image(new FileInputStream(RESOURCE_PATH + "attackresumebg.png")));
+
+        final Label resumeAttackerHP = new Label(String.valueOf(gc.getCharacterCurrentHP(gc.getActiveCharacter())));
+        resumeAttackerHP.setLayoutX(200);
+        resumeAttackerHP.setLayoutY(200);
+
+        final Label resumeAttackerDP = new Label(String.valueOf(gc.getCharacterDP(gc.getActiveCharacter())));
+        final Label resumeDefenderHP = new Label(String.valueOf(gc.getCharacterCurrentHP(gc.getActiveCharacter())));
+        final Label resumeDefenderDP = new Label(String.valueOf(gc.getCharacterDP(gc.getActiveCharacter())));
+        Button resumeOKButton = ButtonWithImage("okbutton.png", 300, 300);
+        final Label resumeAttackerPower;
+        final ImageView resumeAttackerSprite;
+        final ImageView resumeDefenderSprite;
+
+        if(gc.characterIsEnemy(gc.getActiveCharacter())){
+            resumeAttackerPower = new Label(String.valueOf(gc.getCharacterPower(gc.getActiveCharacter())));
+
+            InputStream resumeEnemySpriteStream = new FileInputStream(RESOURCE_PATH + "darksol.png");
+            resumeAttackerSprite = new ImageView(
+                    new Image(resumeEnemySpriteStream));
+
+            InputStream resumePlayerSpriteStream = new FileInputStream( RESOURCE_PATH +
+                    getPlayerCharacterModeSpritePATH(gc.getActiveCharacter(), "face"));
+            resumeDefenderSprite = new ImageView(new Image(resumePlayerSpriteStream));
+        }
+        else{
+            resumeAttackerPower = new Label(String.valueOf(gc.getWeaponPower(gc.getCharacterEquippedWeapon(
+                    gc.getSelectedCharacter()))));
+
+            InputStream resumePlayerSpriteStream = new FileInputStream( RESOURCE_PATH +
+                    getPlayerCharacterModeSpritePATH(gc.getActiveCharacter(), "face"));
+            resumeAttackerSprite = new ImageView(new Image(resumePlayerSpriteStream));
+
+            InputStream resumeEnemySpriteStream = new FileInputStream(RESOURCE_PATH + "darksol.png");
+            resumeDefenderSprite = new ImageView(new Image(resumeEnemySpriteStream));
+        }
+        auxiliarGroup.getChildren().add(resumeBg);
+        auxiliarGroup.getChildren().add(resumeAttackerHP);
+        auxiliarGroup.getChildren().add(resumeAttackerDP);
+        auxiliarGroup.getChildren().add(resumeDefenderDP);
+        auxiliarGroup.getChildren().add(resumeDefenderHP);
+        auxiliarGroup.getChildren().add(resumeOKButton);
+        auxiliarGroup.getChildren().add(resumeAttackerSprite);
+        auxiliarGroup.getChildren().add(resumeDefenderSprite);
+        auxiliarGroup.getChildren().add(resumeAttackerPower);
+        currentGroup.getChildren().add(auxiliarGroup);
+
+
     }
 
     private void updateList(ComboBox equipMenuWeapons) {
@@ -1076,22 +1166,22 @@ public class FinalReality extends Application {
     }
 
     private String getSelectedCharacterClassAsString(){
-        if(gc.selectedCharacterIsEngineer()){
+        if(gc.characterIsEngineer(gc.getSelectedCharacter())){
             return "Engineer";
         }
-        else if(gc.selectedCharacterIsBlackMage()){
+        else if(gc.characterIsBlackMage(gc.getSelectedCharacter())){
             return "Black Mage";
         }
-        else if(gc.selectedCharacterIsWhiteMage()){
+        else if(gc.characterIsWhiteMage(gc.getSelectedCharacter())){
             return "White Mage";
         }
-        else if(gc.selectedCharacterIsThief()){
+        else if(gc.characterIsThief(gc.getSelectedCharacter())){
             return "Thief";
         }
-        else if(gc.selectedCharacterIsKnight()){
+        else if(gc.characterIsKnight(gc.getSelectedCharacter())){
             return "Knight";
         }
-        else if(gc.selectedCharacterIsEnemy()){
+        else if(gc.characterIsEnemy(gc.getSelectedCharacter())){
             return "Enemy";
         }
         else{
@@ -1100,19 +1190,19 @@ public class FinalReality extends Application {
     }
 
     private String getSelectedWeaponClassAsString(){
-        if(gc.selectedWeaponIsAxe()){
+        if(gc.weaponIsAxe(gc.getSelectedWeapon())){
             return "Axe";
         }
-        else if(gc.selectedWeaponIsBow()){
+        else if(gc.weaponIsBow(gc.getSelectedWeapon())){
             return "Bow";
         }
-        else if(gc.selectedWeaponIsStaff()){
+        else if(gc.weaponIsStaff(gc.getSelectedWeapon())){
             return "Staff";
         }
-        else if(gc.selectedWeaponIsSword()){
+        else if(gc.weaponIsSword(gc.getSelectedWeapon())){
             return "Sword";
         }
-        else if(gc.selectedWeaponIsKnife()){
+        else if(gc.weaponIsKnife(gc.getSelectedWeapon())){
             return "Knife";
         }
         else{
@@ -1209,23 +1299,23 @@ public class FinalReality extends Application {
         return optionsBox;
     }
 
-    private String getSelectedWeaponMiniSpritePATH(){
+    private String getWeaponMiniSpritePATH(){
         String axeMiniSprite = "axesprite.png";
         String swordMiniSprite = "swordsprite.png";
         String bowMiniSprite = "bowsprite.png";
         String staffMiniSprite = "staffsprite.png";
         String knifeMiniSprite = "knifesprite.png";
 
-        if (gc.selectedWeaponIsAxe()){
+        if (gc.weaponIsAxe(gc.getSelectedWeapon())){
             return axeMiniSprite;
         }
-        if (gc.selectedWeaponIsSword()){
+        if (gc.weaponIsSword(gc.getSelectedWeapon())){
             return swordMiniSprite;
         }
-        if (gc.selectedWeaponIsBow()){
+        if (gc.weaponIsBow(gc.getSelectedWeapon())){
             return bowMiniSprite;
         }
-        if (gc.selectedWeaponIsStaff()){
+        if (gc.weaponIsStaff(gc.getSelectedWeapon())){
             return staffMiniSprite;
         }
         else{
@@ -1234,27 +1324,28 @@ public class FinalReality extends Application {
 
     }
 
-    private String getSelectedPlayerCharacterModeSpritePATH(String mode){
+    private String getPlayerCharacterModeSpritePATH(ICharacter character, String mode){
         String thiefMiniSprite = "thief"+ mode + "sprite.png";
         String engineerMiniSprite = "engineer" + mode + "sprite.png";
         String blackMageMiniSprite = "blackmage" +mode + "sprite.png";
         String whiteMageMiniSprite = "whitemage" + mode + "sprite.png";
         String knightMiniSprite = "knight" + mode + "sprite.png";
 
-        if (gc.selectedCharacterIsKnight()){
+        if (gc.characterIsKnight(character)){
             return knightMiniSprite;
         }
-        if(gc.selectedCharacterIsThief()){
+        if(gc.characterIsThief(character)){
             return thiefMiniSprite;
         }
-        if(gc.selectedCharacterIsBlackMage()){
+        if(gc.characterIsBlackMage(character)){
             return blackMageMiniSprite;
         }
-        if(gc.selectedCharacterIsWhiteMage()){
+        if(gc.characterIsWhiteMage(character)){
             return whiteMageMiniSprite;
         }
         else return engineerMiniSprite;
     }
+
 
 
 }

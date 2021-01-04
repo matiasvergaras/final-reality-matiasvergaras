@@ -43,14 +43,14 @@ public class CharacterFactoriesSettingsTest {
      * @param seed      The seed used to configure the factory. Has to be exactly the same.
      */
     void testFactorySettingForMagic(int seed){
-        assertEquals(gc.getSelectedCharacterCurrentHP(), seed*10);
-        assertEquals(gc.getSelectedCharacterMaxHP(), seed*10);
-        assertEquals(gc.getSelectedCharacterDP(), seed*70);
-        assertEquals(gc.getSelectedCharacterMaxMana(), 310/seed);
-        assertEquals(gc.getSelectedCharacterCurrentMana(), 310/seed);
-        assertEquals(gc.getSelectedCharacterWeight(), 0);
-        assertEquals(gc.getSelectedCharacterPower(), 0);
-        assertEquals(gc.getSelectedCharacterEquippedWeapon(), new NullWeapon());
+        assertEquals(gc.getCharacterCurrentHP(gc.getSelectedCharacter()), seed*10);
+        assertEquals(gc.getCharacterMaxHP(gc.getSelectedCharacter()), seed*10);
+        assertEquals(gc.getCharacterDP(gc.getSelectedCharacter()), seed*70);
+        assertEquals(gc.getCharacterMaxMana(gc.getSelectedCharacter()), 310/seed);
+        assertEquals(gc.getCharacterCurrentMana(gc.getSelectedCharacter()), 310/seed);
+        assertEquals(gc.getCharacterWeight(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterPower(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterEquippedWeapon(gc.getSelectedCharacter()), new NullWeapon());
     }
 
     /**
@@ -60,14 +60,14 @@ public class CharacterFactoriesSettingsTest {
      * @param seed      The seed used to configure the factory. Has to be exactly the same.
      */
     void testFactorySettingForNormal(int seed){
-        assertEquals(gc.getSelectedCharacterCurrentHP(), seed*10);
-        assertEquals(gc.getSelectedCharacterMaxHP(), seed*10);
-        assertEquals(gc.getSelectedCharacterDP(), seed*70);
-        assertEquals(gc.getSelectedCharacterMaxMana(), 0);
-        assertEquals(gc.getSelectedCharacterCurrentMana(), 0);
-        assertEquals(gc.getSelectedCharacterWeight(), 0);
-        assertEquals(gc.getSelectedCharacterPower(), 0);
-        assertEquals(gc.getSelectedCharacterEquippedWeapon(), new NullWeapon());
+        assertEquals(gc.getCharacterCurrentHP(gc.getSelectedCharacter()), seed*10);
+        assertEquals(gc.getCharacterMaxHP(gc.getSelectedCharacter()), seed*10);
+        assertEquals(gc.getCharacterDP(gc.getSelectedCharacter()), seed*70);
+        assertEquals(gc.getCharacterMaxMana(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterCurrentMana(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterWeight(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterPower(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterEquippedWeapon(gc.getSelectedCharacter()), new NullWeapon());
     }
 
     /**
@@ -77,14 +77,14 @@ public class CharacterFactoriesSettingsTest {
      * @param seed      The seed used to configure the factory. Has to be exactly the same.
      */
     void testFactorySettingForCPU(int seed){
-        assertEquals(gc.getSelectedCharacterCurrentHP(), seed*10);
-        assertEquals(gc.getSelectedCharacterMaxHP(), seed*10);
-        assertEquals(gc.getSelectedCharacterDP(), seed* 70);
-        assertEquals(gc.getSelectedCharacterMaxMana(), 0);
-        assertEquals(gc.getSelectedCharacterCurrentMana(), 0);
-        assertEquals(gc.getSelectedCharacterWeight(), seed);
-        assertEquals(gc.getSelectedCharacterPower(), seed*5);
-        assertEquals(gc.getSelectedCharacterEquippedWeapon(), new NullWeapon());
+        assertEquals(gc.getCharacterCurrentHP(gc.getSelectedCharacter()), seed*10);
+        assertEquals(gc.getCharacterMaxHP(gc.getSelectedCharacter()), seed*10);
+        assertEquals(gc.getCharacterDP(gc.getSelectedCharacter()), seed* 70);
+        assertEquals(gc.getCharacterMaxMana(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterCurrentMana(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterWeight(gc.getSelectedCharacter()), seed);
+        assertEquals(gc.getCharacterPower(gc.getSelectedCharacter()), seed*5);
+        assertEquals(gc.getCharacterEquippedWeapon(gc.getSelectedCharacter()), new NullWeapon());
     }
 
     /**

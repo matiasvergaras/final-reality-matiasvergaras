@@ -3,6 +3,8 @@ package com.github.matiasvergaras.finalreality.controller.phases;
 import com.github.matiasvergaras.finalreality.controller.GameController;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
+import java.io.FileNotFoundException;
+
 /**
  * State of the game.
  * It can be "Initializing" if the user is configuring the game,
@@ -139,7 +141,15 @@ public class GameState implements IGameState {
      * {@inheritDoc}
      */
     @Override
-    public void showTurnResume(){}
+    public void showTurnResume() throws FileNotFoundException {}
+
+    /**
+     * <p> Sends to the character that just ended his turn the wait for re-entry order. </p>
+     * <p> Calls to StartTurn, in order to start a new Turn. </p>
+     * <p> A character will wait for its turn only if he is alive (new feature in waitTurn). </p>
+     */
+    @Override
+    public void endTurn() {}
 
     /**
      * {@inheritDoc}

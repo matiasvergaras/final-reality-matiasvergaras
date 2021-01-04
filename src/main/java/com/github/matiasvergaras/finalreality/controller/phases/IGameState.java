@@ -5,6 +5,8 @@ import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFacto
 import com.github.matiasvergaras.finalreality.factory.Weapons.IWeaponFactory;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 
+import java.io.FileNotFoundException;
+
 
 /**
  * Interface to hold the common behavior for every single GameState.
@@ -103,7 +105,7 @@ public interface IGameState {
      * <p> Method that will be called once a turn ends (a character performed an attack).
      * It will send to the GUI the message of showing the attack resume. </p>
       */
-    void showTurnResume();
+    void showTurnResume() throws FileNotFoundException;
 
     /**
      * <p> Sends to the character that just ended his turn the wait for re-entry order. </p>

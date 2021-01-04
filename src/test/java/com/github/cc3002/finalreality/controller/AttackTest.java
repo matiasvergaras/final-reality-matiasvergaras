@@ -77,10 +77,10 @@ public class AttackTest {
         gc.setSelectedCharacterFromPlayerParty(0);
         gc.unequipSelectedCharacter();
         assertEquals(gc.getWinner().getName(), gc.getPlayerName());
-        assertNotEquals(gc.getSelectedCharacterEquippedWeapon(), new NullWeapon());
+        assertNotEquals(gc.getCharacterEquippedWeapon(gc.getSelectedCharacter()), new NullWeapon());
         gc.initializeGame();
         gc.unequipSelectedCharacter();
-        assertEquals(gc.getSelectedCharacterEquippedWeapon(), new NullWeapon());
+        assertEquals(gc.getCharacterEquippedWeapon(gc.getSelectedCharacter()), new NullWeapon());
 
     }
 
@@ -121,7 +121,7 @@ public class AttackTest {
         assertTrue(gc.getSelectedCharacter().isAlive());
         //Send the unequip message and check that it is correctly done.
         gc.unequipSelectedCharacter();
-        assertEquals(gc.getSelectedCharacterEquippedWeapon(), new NullWeapon());
+        assertEquals(gc.getCharacterEquippedWeapon(gc.getSelectedCharacter()), new NullWeapon());
     }
 
     /**
@@ -169,7 +169,7 @@ public class AttackTest {
         Thread.sleep(500);
         assertEquals(gc.getWinner().getName(), "Runefaust");
         //Elliot HP should have changed when received the attack (Elliot DP:100, Bow Power:110).
-        assertNotEquals(gc.getSelectedCharacterMaxHP(), gc.getSelectedCharacterCurrentHP());
+        assertNotEquals(gc.getCharacterMaxHP(gc.getSelectedCharacter()), gc.getCharacterCurrentHP(gc.getSelectedCharacter()));
         assertTrue(gc.isFinished());
         assertEquals(gc.getWinner().getName(), "Runefaust");
     }

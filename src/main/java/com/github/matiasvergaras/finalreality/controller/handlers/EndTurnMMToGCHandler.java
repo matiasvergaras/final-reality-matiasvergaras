@@ -4,6 +4,7 @@ import com.github.matiasvergaras.finalreality.controller.GameController;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileNotFoundException;
 
 /**
  * PropertyChangeListener.
@@ -36,7 +37,12 @@ public class EndTurnMMToGCHandler implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(final PropertyChangeEvent evt) {
-        controller.endTurn();
+        try {
+            System.out.println("CALL TO SHOW TURN RESUME");
+            controller.showTurnResume();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
 

@@ -47,7 +47,7 @@ public class PlayerPartyTest {
         gc.selectedCharacterFactoryProduce("Alef");
         gc.setSelectedCharacterFromPlayerParty(gc.getPlayerPartySize()-1);
         BlackMage sameCharacter = new BlackMage(turns, "Alef", 120, 40, 200);
-        assertEquals(gc.getSelectedCharacterName(), "Alef");
+        assertEquals(gc.getCharacterName(gc.getSelectedCharacter()), "Alef");
         assertEquals(gc.getSelectedCharacterAttributes(),sameCharacter.getAttributes());
         assertEquals(gc.getSelectedCharacter(), sameCharacter);
         assertEquals(initSize+1, gc.getPlayerPartySize());
