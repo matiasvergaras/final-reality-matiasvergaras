@@ -27,18 +27,14 @@ public class SettingNewTurn extends GameState {
      * {@inheritDoc}
      */
     public void startTurn(){
-        System.out.println("VERYFING QUEUE");
         if(!gc.getTurns().isEmpty()) {
-            System.out.println("ASSIGNING ACTIVE CHARACTER");
             ICharacter character = gc.getTurns().peek();
             gc.setActiveCharacter(character);
             if( gc.getPlayerParty().contains(character)){
-                System.out.println("PLAYER TURN");
                 gc.setState(new PlayerTurn(gc));
             }
             else if(gc.getCPUParty().contains(character)){
                 gc.setState(new CPUTurn(gc));
-                System.out.println("CPU TURN");
                 gc.initAttackMove();
             }
         }

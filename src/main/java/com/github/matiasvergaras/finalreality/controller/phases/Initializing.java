@@ -67,7 +67,6 @@ public class Initializing extends GameState {
      */
     public void startGame() {
         if(gc.getPlayerPartySize() == gc.getCharactersQuantity()){
-            System.out.println("STARTING WAIT TURNS");
             startWaitTurns();
             setNewTurn();
             gc.startTurn();

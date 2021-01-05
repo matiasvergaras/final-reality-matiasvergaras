@@ -38,9 +38,9 @@ public class WeaponFactoriesSettingsTest {
      * @param seed              The seed used to configure the factory. Has to be exactly the same.
      */
     void testFactorySettingForMagic(int seed){
-        assertEquals(gc.getSelectedWeaponPower(), seed*51);
-        assertEquals(gc.getSelectedWeaponWeight(), seed*2);
-        assertEquals(gc.getSelectedWeaponMagicPower(), seed*11);
+        assertEquals(gc.getWeaponPower(gc.getSelectedWeapon()), seed*51);
+        assertEquals(gc.getWeaponWeight(gc.getSelectedWeapon()), seed*2);
+        assertEquals(gc.getWeaponMagicPower(gc.getSelectedWeapon()), seed*11);
     }
 
     /**
@@ -52,10 +52,10 @@ public class WeaponFactoriesSettingsTest {
      *                          the given special name, if produced with it.
      */
     void testFactorySettingForNormal(int seed, String defaultName){
-        assertEquals(gc.getSelectedWeaponName(), defaultName);
-        assertEquals(gc.getSelectedWeaponPower(), seed*51);
-        assertEquals(gc.getSelectedWeaponWeight(), seed*2);
-        assertEquals(gc.getSelectedWeaponMagicPower(), 0);
+        assertEquals(gc.getWeaponName(gc.getSelectedWeapon()), defaultName);
+        assertEquals(gc.getWeaponPower(gc.getSelectedWeapon()), seed*51);
+        assertEquals(gc.getWeaponWeight(gc.getSelectedWeapon()), seed*2);
+        assertEquals(gc.getWeaponMagicPower(gc.getSelectedWeapon()), 0);
     }
 
 

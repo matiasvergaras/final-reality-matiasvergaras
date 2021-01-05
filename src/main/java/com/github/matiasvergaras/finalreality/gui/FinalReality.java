@@ -59,7 +59,7 @@ public class FinalReality extends Application {
     private final Label inPlayerPartyCharacterMana = new Label();
     private final Label inPlayerPartyCharacterClass = new Label();
     private TextField charactersMana;
-    private ComboBox playerCurrentCharacters;
+    private ComboBox playerCurrentCharacters = new ComboBox();
     private final ImageView playerSelectedCharacterMiniSprite = new ImageView();
 
     //animated variables of SetInventory scene (init phase).
@@ -74,7 +74,7 @@ public class FinalReality extends Application {
     private final Label inInventoryWeaponPower = new Label();
     private final Label inInventoryWeaponWeight = new Label();
     private final Label inInventoryWeaponMagic = new Label();
-    private ComboBox currentWeapons;
+    private ComboBox currentWeapons = new ComboBox();
     private final ImageView selectedWeaponMiniSprite = new ImageView();
 
     //animated variables of SetCPUParty scene (init phase).
@@ -91,7 +91,7 @@ public class FinalReality extends Application {
     private final Label inCPUPartyCharacterPower = new Label();
     private final Label inCPUPartyCharacterWeight = new Label();
     private final Label inCPUPartyCharacterClass = new Label();
-    private ComboBox currentCPUCharacters;
+    private ComboBox currentCPUCharacters = new ComboBox();
     private final ImageView CPUSelectedCharacterMiniSprite = new ImageView();
 
     //animated variables of Equip Weapon scene (init or active phase).
@@ -109,8 +109,8 @@ public class FinalReality extends Application {
     private final Label equipMenuWeaponPower = new Label();
     private final Label equipMenuWeaponWeight = new Label();
     private final Label equipMenuWeaponMagic = new Label();
-    private ComboBox alivePlayerCharacters;
-    private ComboBox equipMenuWeapons;
+    private ComboBox alivePlayerCharacters = new ComboBox();
+    private ComboBox equipMenuWeapons = new ComboBox();
     private final ImageView equipMenuCharacterSprite = new ImageView();
     private final ImageView equipMenuWeaponSprite = new ImageView();
 
@@ -119,6 +119,7 @@ public class FinalReality extends Application {
     private Button battleStartAttackButton;
     private Button battleCancelAttackButton;
     private Button battleSendAttackButton;
+    private final Label battleActiveCharacterName = new Label();
     private final Label battleActiveCharacterHP = new Label();
     private final Label battleActiveCharacterDP = new Label();
     private final Label battleActiveCharacterMana = new Label();
@@ -130,7 +131,7 @@ public class FinalReality extends Application {
     private final ImageView battleEquippedWeaponSprite = new ImageView();
 
     //animated variables of Battle scene - select target
-    private ComboBox battleCPUAliveCharacters;
+    private ComboBox battleCPUAliveCharacters = new ComboBox();
     private final Label battleTargetCharacterHP = new Label();
     private final Label battleTargetCharacterDP = new Label();
     private final Label battleTargetCharacterPower = new Label();
@@ -140,11 +141,14 @@ public class FinalReality extends Application {
     //animated variables of Battle scene - show attack results
     private final ImageView resumeBg = new ImageView();
     private Button resumeOkButton;
+    private final Label resumeAttackerName = new Label();
     private final Label resumeAttackerHP = new Label();
     private final Label resumeAttackerDP = new Label();
     private final Label resumeAttackerPower = new Label();
+    private final Label resumeDefenderName = new Label();
     private final Label resumeDefenderHP = new Label();
     private final Label resumeDefenderDP = new Label();
+    private final Label resumeDeadNotification = new Label();
     private final ImageView resumeAttackerSprite = new ImageView();
     private final ImageView resumeDefenderSprite = new ImageView();
 
@@ -223,7 +227,8 @@ public class FinalReality extends Application {
         ThiefFactoryButton.setOnAction(event -> gc.setSelectedCharacterFactory(3));
         KnightFactoryButton.setOnAction(event -> gc.setSelectedCharacterFactory(4));
 
-        playerCurrentCharacters = desplegableCharacterList(gc.getPlayerParty(), 690, 140);
+        playerCurrentCharacters.setLayoutX(690);
+        playerCurrentCharacters.setLayoutY(140);
         playerCurrentCharacters.setVisible(true);
 
         playerCharactersNumLabel.setFont(new Font("Arial", 25.0));
@@ -444,7 +449,8 @@ public class FinalReality extends Application {
         KnifeFactoryButton.setOnAction(event -> gc.setSelectedWeaponFactory(2));
         BowFactoryButton.setOnAction(event -> gc.setSelectedWeaponFactory(0));
 
-        currentWeapons = desplegableWeaponList(gc.getPlayerInventory(), 690, 140);
+        currentWeapons.setLayoutX(690);
+        currentWeapons.setLayoutY(140);
         currentWeapons.setVisible(true);
 
         weaponNumLabel.setFont(new Font("Arial", 25.0));
@@ -586,7 +592,7 @@ public class FinalReality extends Application {
                 if(gc.getSelectedWeaponFactory() !=null) {
                     weaponsMagic.setVisible(gc.getSelectedWeaponFactory().isMagic());
                 }
-                updateList(currentWeapons);
+                updateWeaponList(currentWeapons);
 
                 String selectedInInventoryName = (String)currentWeapons.getValue();
 
@@ -635,12 +641,13 @@ public class FinalReality extends Application {
         TextField CPUCharacterName = textField(360, 175);
         TextField CPUCharactersHP = textField(360, 210);
         TextField CPUCharactersDP = textField(360, 245);
-        TextField CPUCharactersWeight = textField(360,280);
-        TextField CPUCharactersPower = textField(360, 315);
+        TextField CPUCharactersPower = textField(360,280);
+        TextField CPUCharactersWeight = textField(360, 315);
 
         EnemyFactoryButton.setOnAction(event -> gc.setSelectedCharacterFactory(5));
 
-        currentCPUCharacters = desplegableCharacterList(gc.getCPUParty(), 690, 140);
+        currentCPUCharacters.setLayoutX(690);
+        currentCPUCharacters.setLayoutY(140);
         currentCPUCharacters.setVisible(true);
 
         CPUCharactersNumLabel.setFont(new Font("Arial", 25.0));
@@ -805,7 +812,7 @@ public class FinalReality extends Application {
                         inCPUPartyCharacterDP.setVisible(true);
                         inCPUPartyCharacterPower.setText(String.valueOf(gc.getCharacterPower(gc.getSelectedCharacter())));
                         inCPUPartyCharacterPower.setVisible(true);
-                        inCPUPartyCharacterWeight.setText(String.valueOf(gc.getCharacterPower(gc.getSelectedCharacter())));
+                        inCPUPartyCharacterWeight.setText(String.valueOf(gc.getCharacterWeight(gc.getSelectedCharacter())));
                         inCPUPartyCharacterWeight.setVisible(true);
                         break;
                     }
@@ -830,9 +837,8 @@ public class FinalReality extends Application {
         stage.setScene(equippingScene);
         ImageView equippingBg = new ImageView(new Image(new FileInputStream(RESOURCE_PATH + "equipbackground.png")));
 
-
-
-        equipMenuWeapons = desplegableWeaponList(gc.getPlayerInventory(), 750, 205);
+        equipMenuWeapons.setLayoutX(750);
+        equipMenuWeapons.setLayoutY(205);
         equipMenuWeapons.setVisible(true);
 
         equipMenuWeaponOwner.setFont(new Font("Arial", 20.0));
@@ -866,7 +872,8 @@ public class FinalReality extends Application {
         equipMenuWeaponSprite.setPreserveRatio(true);
         equipMenuWeaponSprite.setVisible(false);
 
-        alivePlayerCharacters = desplegableAliveCharacterList(gc.getPlayerParty(), 750, 140);
+        alivePlayerCharacters.setLayoutX(750);
+        alivePlayerCharacters.setLayoutY(140);
         alivePlayerCharacters.setVisible(true);
 
         equipMenuCharacterClass.setFont(new Font("Arial", 20.0));
@@ -968,7 +975,6 @@ public class FinalReality extends Application {
                 if(!gc.weaponIsNull(gc.getCharacterEquippedWeapon(gc.getSelectedCharacter()))){
                     //If this is the first time that this scene appears, then start game
                     if (gc.isInitializing()){
-                        System.out.println("STARTING GAME");
                         gc.startGame();
                         try {
                             toBattleground(stage);
@@ -1040,7 +1046,7 @@ public class FinalReality extends Application {
                     }
                 }
 
-                updateList(equipMenuWeapons);
+                updateWeaponList(equipMenuWeapons);
 
 
                 String selectedWeaponName = (String) equipMenuWeapons.getValue();
@@ -1066,7 +1072,7 @@ public class FinalReality extends Application {
                 }
 
                 if(gc.isActive()){
-                    nextWeaponMenuButton.setVisible(false);
+                    nextEquipWeaponMenuButton.setVisible(false);
                 }
 
 
@@ -1077,10 +1083,10 @@ public class FinalReality extends Application {
 
     private void toBattleground(Stage stage) throws FileNotFoundException {
         battleStartAttackButton = ButtonWithImage("startattackbutton.png", 50, 395);
-        battleCancelAttackButton = ButtonWithImage("cancelbutton.png",500, 500);
-        battleSendAttackButton = ButtonWithImage("attackbutton.png", 500, 400);
         battleChangeWeaponsButton = ButtonWithImage("teamandweaponbutton.png", 50, 335);
-        resumeOkButton = ButtonWithImage("okbutton.png", 655, 290);
+        resumeOkButton = ButtonWithImage("okbutton.png", 640, 290);
+        battleCancelAttackButton = ButtonWithImage("cancelbutton.png",830, 370);
+        battleSendAttackButton = ButtonWithImage("attackbutton.png", 830, 420);
 
         battleStartAttackButton.setVisible(false);
         battleChangeWeaponsButton.setVisible(false);
@@ -1095,6 +1101,9 @@ public class FinalReality extends Application {
         ImageView battlegroundBg = new ImageView(new Image(new FileInputStream(RESOURCE_PATH + "attackbackground.png")));
 
         // The player turn options
+        battleActiveCharacterName.setFont(new Font("Arial", 60.0));
+        battleActiveCharacterName.setLayoutX(150);
+        battleActiveCharacterName.setLayoutY(80);
 
         battleActiveCharacterHP.setFont(new Font("Arial", 20.0));
         battleActiveCharacterHP.setLayoutX(180);
@@ -1110,7 +1119,7 @@ public class FinalReality extends Application {
 
         battleEquippedWeaponName.setFont(new Font("Arial", 20.0));
         battleEquippedWeaponName.setLayoutX(215);
-        battleEquippedWeaponName.setLayoutY(230);
+        battleEquippedWeaponName.setLayoutY(228);
 
         battleEquippedWeaponPower.setFont(new Font("Arial", 20.0));
         battleEquippedWeaponPower.setLayoutX(215);
@@ -1118,71 +1127,94 @@ public class FinalReality extends Application {
 
         battleEquippedWeaponWeight.setFont(new Font("Arial", 20.0));
         battleEquippedWeaponWeight.setLayoutX(215);
-        battleEquippedWeaponWeight.setLayoutY(275);
+        battleEquippedWeaponWeight.setLayoutY(273.5);
 
         battleEquippedWeaponMagic.setFont(new Font("Arial", 20.0));
         battleEquippedWeaponMagic.setLayoutX(215);
-        battleEquippedWeaponMagic.setLayoutY(318);
+        battleEquippedWeaponMagic.setLayoutY(317);
 
-        battleActiveCharacterSprite.setLayoutX(62);
-        battleActiveCharacterSprite.setLayoutY(103);
+        battleActiveCharacterSprite.setLayoutX(59);
+        battleActiveCharacterSprite.setLayoutY(108);
 
-        battleEquippedWeaponSprite.setLayoutX(58);
+        battleEquippedWeaponSprite.setLayoutX(63.5);
         battleEquippedWeaponSprite.setLayoutY(238);
         battleEquippedWeaponSprite.setFitWidth(40);
         battleEquippedWeaponSprite.setPreserveRatio(true);
 
         // The pick-a-target time
+        battleCPUAliveCharacters.setLayoutX(830);
+        battleCPUAliveCharacters.setLayoutY(162);
+        battleCPUAliveCharacters.setVisible(false);
         battleTargetCharacterHP.setFont(new Font("Arial", 20.0));
-        battleTargetCharacterHP.setLayoutX(400);
-        battleTargetCharacterHP.setLayoutY(100);
+        battleTargetCharacterHP.setLayoutX(890);
+        battleTargetCharacterHP.setLayoutY(280);
 
         battleTargetCharacterDP.setFont(new Font("Arial", 20.0));
-        battleTargetCharacterDP.setLayoutX(400);
-        battleTargetCharacterDP.setLayoutY(100);
+        battleTargetCharacterDP.setLayoutX(890);
+        battleTargetCharacterDP.setLayoutY(300);
 
         battleTargetCharacterPower.setFont(new Font("Arial", 20.0));
-        battleTargetCharacterPower.setLayoutX(400);
-        battleTargetCharacterPower.setLayoutY(100);
+        battleTargetCharacterPower.setLayoutX(890);
+        battleTargetCharacterPower.setLayoutY(322);
 
         battleTargetCharacterWeight.setFont(new Font("Arial", 20.0));
-        battleTargetCharacterWeight.setLayoutX(400);
-        battleTargetCharacterWeight.setLayoutY(100);
+        battleTargetCharacterWeight.setLayoutX(890);
+        battleTargetCharacterWeight.setLayoutY(343);
 
-        battleTargetCharacterSprite.setLayoutX(400);
-        battleTargetCharacterSprite.setLayoutY(200);
+        battleTargetCharacterSprite.setLayoutX(858.5);
+        battleTargetCharacterSprite.setLayoutY(207);
 
         // The resume
         resumeBg.setLayoutX(230);
         resumeBg.setLayoutY(100);
 
+        resumeAttackerName.setFont(new Font("Arial", 20.0));
+        resumeAttackerName.setLayoutX(322);
+        resumeAttackerName.setLayoutY(180);
+        resumeAttackerName.setTextFill(Color.web("#ffeb33", 1));
+
         resumeAttackerSprite.setLayoutX(325);
         resumeAttackerSprite.setLayoutY(205);
+
+        resumeDefenderName.setFont(new Font("Arial", 20.0));
+        resumeDefenderName.setLayoutX(480);
+        resumeDefenderName.setLayoutY(180);
+        resumeDefenderName.setTextFill(Color.web("#ffeb33", 1));
 
         resumeDefenderSprite.setLayoutX(485);
         resumeDefenderSprite.setLayoutY(205);
 
         resumeAttackerHP.setFont(new Font("Arial", 20.0));
         resumeAttackerHP.setLayoutX(365);
-        resumeAttackerHP.setLayoutY(273);
+        resumeAttackerHP.setLayoutY(271);
+        resumeAttackerHP.setTextFill(Color.web("#ffeb33", 1));
 
         resumeAttackerDP.setFont(new Font("Arial", 20.0));
         resumeAttackerDP.setLayoutX(365);
-        resumeAttackerDP.setLayoutY(295);
+        resumeAttackerDP.setLayoutY(293);
+        resumeAttackerDP.setTextFill(Color.web("#ffeb33", 1));
 
         resumeAttackerPower.setFont(new Font("Arial", 20.0));
         resumeAttackerPower.setLayoutX(365);
-        resumeAttackerPower.setLayoutY(315);
+        resumeAttackerPower.setLayoutY(316);
+        resumeAttackerPower.setTextFill(Color.web("#ffeb33", 1));
 
 
         resumeDefenderHP.setFont(new Font("Arial", 20.0));
         resumeDefenderHP.setLayoutX(508);
         resumeDefenderHP.setLayoutY(270);
+        resumeDefenderHP.setTextFill(Color.web("#ffeb33", 1));
 
 
         resumeDefenderDP.setFont(new Font("Arial", 20.0));
         resumeDefenderDP.setLayoutX(508);
-        resumeDefenderDP.setLayoutY(295);
+        resumeDefenderDP.setLayoutY(294);
+        resumeDefenderDP.setTextFill(Color.web("#ffeb33", 1));
+
+        resumeDeadNotification.setFont(new Font("Arial", 20.0));
+        resumeDeadNotification.setLayoutX(600);
+        resumeDeadNotification.setLayoutY(200);
+        resumeDeadNotification.setTextFill(Color.web("#ffeb33", 1));
 
         currentGroup.getChildren().add(battlegroundBg);
 
@@ -1210,16 +1242,17 @@ public class FinalReality extends Application {
 
         // Resume
         currentGroup.getChildren().add(resumeBg);
+        currentGroup.getChildren().add(resumeAttackerName);
         currentGroup.getChildren().add(resumeAttackerHP);
         currentGroup.getChildren().add(resumeAttackerDP);
         currentGroup.getChildren().add(resumeAttackerPower);
         currentGroup.getChildren().add(resumeAttackerSprite);
+        currentGroup.getChildren().add(resumeDefenderName);
         currentGroup.getChildren().add(resumeDefenderHP);
         currentGroup.getChildren().add(resumeDefenderDP);
         currentGroup.getChildren().add(resumeDefenderSprite);
         currentGroup.getChildren().add(resumeOkButton);
-        currentGroup.getChildren().add(battleCancelAttackButton);
-        currentGroup.getChildren().add(battleSendAttackButton);
+        currentGroup.getChildren().add(resumeDeadNotification);
 
 
         setBattlegroundTimer();
@@ -1233,13 +1266,49 @@ public class FinalReality extends Application {
             }
         });
 
+        battleCancelAttackButton.setOnAction(event -> {
+            gc.cancelAttackMove();
+            battleTargetCharacterSprite.setVisible(false);
+            battleTargetCharacterHP.setVisible(false);
+            battleTargetCharacterDP.setVisible(false);
+            battleTargetCharacterPower.setVisible(false);
+            battleTargetCharacterWeight.setVisible(false);
+            battleCPUAliveCharacters.setVisible(false);
+
+        });
 
         battleStartAttackButton.setOnAction(event -> {
             gc.initAttackMove();
+            battleStartAttackButton.setVisible(false);
+            battleChangeWeaponsButton.setVisible(false);
+        });
+
+        battleSendAttackButton.setOnAction(event -> {
+            battleSendAttackButton.setVisible(false);
+            battleCancelAttackButton.setVisible(false);
+            battleTargetCharacterSprite.setVisible(false);
+            battleTargetCharacterPower.setVisible(false);
+            battleTargetCharacterHP.setVisible(false);
+            battleTargetCharacterDP.setVisible(false);
+            battleTargetCharacterWeight.setVisible(false);
+            battleCPUAliveCharacters.setVisible(false);
+            gc.activeCharacterNormalAttackSelectedCharacter();
         });
 
         resumeOkButton.setOnAction(event -> {
-            System.out.println("BUTTON");
+            resumeAttackerName.setVisible(false);
+            resumeAttackerHP.setVisible(false);
+            resumeAttackerDP.setVisible(false);
+            resumeAttackerPower.setVisible(false);
+            resumeAttackerSprite.setVisible(false);
+            resumeDefenderName.setVisible(false);
+            resumeDefenderHP.setVisible(false);
+            resumeDefenderDP.setVisible(false);
+            resumeDeadNotification.setVisible(false);
+            resumeDefenderSprite.setVisible(false);
+            resumeAttackerSprite.setVisible(false);
+            resumeBg.setVisible(false);
+            resumeOkButton.setVisible(false);
             gc.endTurn();
         });
 
@@ -1263,24 +1332,30 @@ public class FinalReality extends Application {
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
+                    battleStartAttackButton.setVisible(false);
+                    battleChangeWeaponsButton.setVisible(false);
+                    battleCancelAttackButton.setVisible(false);
+                    battleSendAttackButton.setVisible(false);
+
                     resumeBg.setVisible(true);
+                    resumeAttackerName.setText(gc.getCharacterName(gc.getActiveCharacter()));
+                    resumeAttackerName.setVisible(true);
+
                     resumeAttackerHP.setText(String.valueOf(gc.getCharacterCurrentHP(gc.getActiveCharacter())));
-                    resumeAttackerHP.setTextFill(Color.web("#ffeb33", 1));
                     resumeAttackerHP.setVisible(true);
                     resumeAttackerDP.setText(String.valueOf(gc.getCharacterDP(gc.getActiveCharacter())));
-                    resumeAttackerDP.setTextFill(Color.web("#ffeb33", 1));
                     resumeAttackerDP.setVisible(true);
+
+                    resumeDefenderName.setText(gc.getCharacterName(gc.getSelectedCharacter()));
+                    resumeDefenderName.setVisible(true);
                     resumeDefenderHP.setText(String.valueOf(gc.getCharacterCurrentHP(gc.getSelectedCharacter())));
-                    resumeDefenderHP.setTextFill(Color.web("#ffeb33", 1));
                     resumeDefenderHP.setVisible(true);
                     resumeDefenderDP.setText(String.valueOf(gc.getCharacterDP(gc.getSelectedCharacter())));
-                    resumeDefenderDP.setTextFill(Color.web("#ffeb33", 1));
                     resumeDefenderDP.setVisible(true);
+
                     if(gc.characterIsEnemy(gc.getActiveCharacter())){
                         resumeAttackerPower.setText(String.valueOf(gc.getCharacterPower(gc.getActiveCharacter())));
-                        resumeAttackerPower.setTextFill(Color.web("#ffeb33", 1));
                         resumeAttackerPower.setVisible(true);
-
                         try {
                             resumeAttackerSprite.setImage(new Image(new FileInputStream( RESOURCE_PATH + "darksol.png")));
                             resumeDefenderSprite.setImage(new Image(new FileInputStream( RESOURCE_PATH +
@@ -1293,8 +1368,7 @@ public class FinalReality extends Application {
                     }
                     else{
                         resumeAttackerPower.setText(String.valueOf(gc.getWeaponPower(gc.getCharacterEquippedWeapon(
-                                gc.getSelectedCharacter()))));
-                        resumeAttackerPower.setTextFill(Color.web("#ffeb33", 1));
+                                gc.getActiveCharacter()))));
                         resumeAttackerPower.setVisible(true);
                         try {
                             resumeAttackerSprite.setImage(new Image(new FileInputStream( RESOURCE_PATH +
@@ -1307,24 +1381,20 @@ public class FinalReality extends Application {
                             e.printStackTrace();
                         }
                     }
+
+                    if(gc.getCharacterCurrentHP(gc.getSelectedCharacter())==0){
+                        resumeDeadNotification.setText(gc.getCharacterName(gc.getSelectedCharacter()) +
+                                "\n is out of game!");
+                        resumeDeadNotification.setVisible(true);
+                    }
                     resumeOkButton.setVisible(true);
 
-                }
-                else{
-                    resumeAttackerHP.setVisible(false);
-                    resumeAttackerDP.setVisible(false);
-                    resumeAttackerPower.setVisible(false);
-                    resumeAttackerSprite.setVisible(false);
-                    resumeDefenderHP.setVisible(false);
-                    resumeDefenderDP.setVisible(false);
-                    resumeDefenderSprite.setVisible(false);
-                    resumeAttackerSprite.setVisible(false);
-                    resumeBg.setVisible(false);
-                    resumeOkButton.setVisible(false);
                 }
                 if(gc.isPlayerTurn()){
                     battleChangeWeaponsButton.setVisible(true);
                     battleStartAttackButton.setVisible(true);
+                    battleActiveCharacterName.setText(gc.getCharacterName(gc.getActiveCharacter()));
+                    battleActiveCharacterName.setVisible(true);
                     battleActiveCharacterHP.setText(String.valueOf(gc.getCharacterCurrentHP(gc.getActiveCharacter())));
                     battleActiveCharacterHP.setVisible(true);
                     battleActiveCharacterDP.setText(String.valueOf(gc.getCharacterDP(gc.getActiveCharacter())));
@@ -1368,6 +1438,8 @@ public class FinalReality extends Application {
                     battleEquippedWeaponSprite.setVisible(false);
                 }
                 if(gc.isSelectingAttackTarget()){
+                    //left side
+                    battleCPUAliveCharacters.setVisible(true);
                     battleCancelAttackButton.setVisible(true);
                     battleSendAttackButton.setVisible(true);
                     battleActiveCharacterHP.setVisible(true);
@@ -1379,16 +1451,57 @@ public class FinalReality extends Application {
                     battleEquippedWeaponMagic.setVisible(true);
                     battleEquippedWeaponWeight.setVisible(true);
                     battleEquippedWeaponSprite.setVisible(true);
+                    //right side
 
+                    if(gc.getCPUAliveNumber()>0){
+                        ArrayList <String> names = new ArrayList<>();
+                        for(ICharacter c: gc.getCPUParty()){
+                            if(c.isAlive()) names.add(c.getName());
+                        }
+                        ObservableList<String> oList = FXCollections.observableArrayList(names);
+                        battleCPUAliveCharacters.setItems(oList);
+                        battleCPUAliveCharacters.setVisible(true);
+                    }
+                    else{
+                        battleCPUAliveCharacters.setVisible(false);
+                    }
+
+                    String battleTargetCharacter = (String)battleCPUAliveCharacters.getValue();
+                    for(int i=0; i<gc.getCPUPartySize(); i++){
+                        gc.setSelectedCharacterFromCPUParty(i);
+                        if(gc.getCharacterName(gc.getSelectedCharacter()).equals(battleTargetCharacter)){
+                            battleTargetCharacterHP.setText(String.valueOf(gc.getCharacterCurrentHP
+                                                            (gc.getSelectedCharacter())));
+                            battleTargetCharacterHP.setVisible(true);
+                            battleTargetCharacterDP.setText(String.valueOf(gc.getCharacterDP
+                                                            (gc.getSelectedCharacter())));
+                            battleTargetCharacterDP.setVisible(true);
+                            battleTargetCharacterPower.setText(String.valueOf(gc.getCharacterPower
+                                                            (gc.getSelectedCharacter())));
+                            battleTargetCharacterPower.setVisible(true);
+                            battleTargetCharacterWeight.setText(String.valueOf(gc.getCharacterWeight
+                                                            (gc.getSelectedCharacter())));
+                            battleTargetCharacterWeight.setVisible(true);
+                            break;
+                        }
+                    }
+                    if(!(battleCPUAliveCharacters.getValue()==null)){
+                        try {
+                            battleTargetCharacterSprite.setImage(new Image(new FileInputStream
+                                    ( RESOURCE_PATH + "darksol.png")));
+                            battleTargetCharacterSprite.setVisible(true);
+
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
-
-
             }
         };
         timer.start();
     }
 
-    private void updateList(ComboBox equipMenuWeapons) {
+    private void updateWeaponList(ComboBox equipMenuWeapons) {
         if(gc.getInventorySize()>0){
             ArrayList<String> names = new ArrayList<>();
             for(IWeapon c: gc.getPlayerInventory()){
@@ -1505,36 +1618,6 @@ public class FinalReality extends Application {
         button.setLayoutX(40*i + 60*(i-1));
         button.setLayoutY(150*j - 40*(j-1));
         return button;
-    }
-
-    private @NotNull ComboBox desplegableCharacterList(List<ICharacter> currentCharacters, int x, int y){
-        ObservableList<ICharacter> characters = FXCollections.observableArrayList(currentCharacters);
-        final ComboBox optionsBox = new ComboBox(characters);
-        optionsBox.setLayoutX(x);
-        optionsBox.setLayoutY(y);
-        return optionsBox;
-    }
-
-    private @NotNull ComboBox desplegableAliveCharacterList(List<ICharacter> currentCharacters, int x, int y){
-        ArrayList<ICharacter> aliveCharacters = new ArrayList<>();
-        for(ICharacter c: currentCharacters){
-            if(c.isAlive()){
-                aliveCharacters.add(c);
-            };
-        }
-        ObservableList<ICharacter> characters = FXCollections.observableArrayList(aliveCharacters);
-        final ComboBox optionsBox = new ComboBox(characters);
-        optionsBox.setLayoutX(x);
-        optionsBox.setLayoutY(y);
-        return optionsBox;
-    }
-
-    private @NotNull ComboBox desplegableWeaponList(List<IWeapon> currentWeapons, int x, int y){
-        ObservableList<IWeapon> characters = FXCollections.observableArrayList(currentWeapons);
-        final ComboBox optionsBox = new ComboBox(characters);
-        optionsBox.setLayoutX(x);
-        optionsBox.setLayoutY(y);
-        return optionsBox;
     }
 
     private String getWeaponMiniSpritePATH(IWeapon weapon){
