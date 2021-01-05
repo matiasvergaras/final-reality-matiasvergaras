@@ -106,15 +106,26 @@ public class QueueBehaviorTest {
         //will be the next active character (should be Gort since he arrived the 2nd)
         gc.setSelectedCharacterFromCPUParty(0);
         gc.activeCharacterNormalAttackSelectedCharacter();
+        //Game should be waiting for user to press ''ok'' button
+        assertTrue(gc.isShowingTurnResume());
+        gc.endTurn();
+        //new turn
         assertEquals(gc.getActiveCharacter().getName(), "Gort");
         //Checks that if an attack is performed, then the next character in the game
         //will be the next active character (should be Balbazak since he arrived the 3rd)
         gc.initAttackMove();
         gc.activeCharacterNormalAttackSelectedCharacter();
+        //Game should be waiting for user to press ''ok'' button
+        assertTrue(gc.isShowingTurnResume());
+        gc.endTurn();
+        //new turn
         assertEquals(gc.getActiveCharacter().getName(), "Balbazak");
         //Make Balbazak attack in order to end his turn.
         gc.setSelectedCharacterFromPlayerParty(0);
         gc.activeCharacterNormalAttackSelectedCharacter();
+        //Game should be waiting for user to press ''ok'' button
+        assertTrue(gc.isShowingTurnResume());
+        gc.endTurn();
         //Now the queue should be empty for some seconds. Let's check that.
         assertTrue(gc.getTurns().isEmpty());
         //Send the thread to sleep for a while, in order to see if a new turn starts

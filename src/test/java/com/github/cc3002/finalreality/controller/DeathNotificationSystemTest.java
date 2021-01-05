@@ -54,7 +54,7 @@ public class DeathNotificationSystemTest {
         gc.setSelectedCharacterFactory(5);
         gc.setSelectedCharacterFactoryPower(600);
         //To make sure that enemies will attack the first.
-        gc.setSelectedCharacterFactoryWeight(0);
+        gc.setSelectedCharacterFactoryWeight(1);
         gc.selectedCharacterFactoryProduce("Mishaela");
         gc.selectedCharacterFactoryProduce("Ramladu");
         gc.selectedCharacterFactoryProduce("Balbazak");
@@ -68,7 +68,22 @@ public class DeathNotificationSystemTest {
         //Starts the game
         gc.startGame();
         //Since enemies are the first to attack, and their attacks are automatic,
-        // there should be no need to do anything else. The game should end and the winner should be the CPU.
+        // there should be no need to do anything else more than press ''ok'' as many times as
+        // battle turns are needed to kill every player character (4 but in the last it is not necessary to press
+        // anything).
+        // We simulate it :
+        Thread.sleep(400);
+
+        assertTrue(gc.isShowingTurnResume());
+        gc.endTurn();
+
+        assertTrue(gc.isShowingTurnResume());
+        gc.endTurn();
+
+        assertTrue(gc.isShowingTurnResume());
+        gc.endTurn();
+
+        // Now the game should have finished and the winner should be the CPU.
         assertEquals(gc.getWinner().getName(), gc.getCPUName());
         Thread.sleep(800);
         assertTrue(gc.isFinished());
@@ -126,10 +141,14 @@ public class DeathNotificationSystemTest {
         //Kill Elliot
         gc.setSelectedCharacterFromCPUParty(0);
         gc.activeCharacterNormalAttackSelectedCharacter();
+        //Check that game is waiting for user to press 'ok' and simulate it.
+        assertTrue(gc.isShowingTurnResume());
+        gc.endTurn();
         //Kill Ramladu
         gc.initAttackMove();
         gc.setSelectedCharacterFromCPUParty(1);
         gc.activeCharacterNormalAttackSelectedCharacter();
+        //Now every enemy is dead so the game should have finished
         //Check for game finished status and winner
         Thread.sleep(300);
         assertTrue(gc.isFinished());

@@ -1,8 +1,10 @@
 package com.github.cc3002.finalreality.controller;
 
 import com.github.matiasvergaras.finalreality.controller.GameController;
+import com.github.matiasvergaras.finalreality.gui.FinalReality;
 import com.github.matiasvergaras.finalreality.model.character.ICharacter;
 import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
+import javafx.scene.control.Button;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -127,7 +129,7 @@ public class AttackTest {
     /**
      * Checks an effective attack from cpu to player.
      */
-    @RepeatedTest(4)
+    @RepeatedTest(5)
     void EffectiveCPUToPlayerAttackTest() throws InterruptedException {
         assertTrue(gc.isInitializing());
         gc.setSelectedCharacterFactory(0);
@@ -167,9 +169,14 @@ public class AttackTest {
         //power 1000, it will end with him. So there should be a winner. We will wait for 500ms in order
         //to give the time to do those things.
         Thread.sleep(500);
+        //game state should be showing turn resume, waiting for user to press '' ok ''.
+        assertTrue(gc.isShowingTurnResume());
+        //to simulate user press ''ok''
+        gc.endTurn();
         assertEquals(gc.getWinner().getName(), "Runefaust");
         //Elliot HP should have changed when received the attack (Elliot DP:100, Bow Power:110).
-        assertNotEquals(gc.getCharacterMaxHP(gc.getSelectedCharacter()), gc.getCharacterCurrentHP(gc.getSelectedCharacter()));
+        assertNotEquals(gc.getCharacterMaxHP(gc.getSelectedCharacter()), gc.getCharacterCurrentHP
+                (gc.getSelectedCharacter()));
         assertTrue(gc.isFinished());
         assertEquals(gc.getWinner().getName(), "Runefaust");
     }

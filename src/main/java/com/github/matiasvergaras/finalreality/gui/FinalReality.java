@@ -39,6 +39,10 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class FinalReality extends Application {
     private static final String RESOURCE_PATH = "src/main/resources/";
+
+    public FinalReality() throws FileNotFoundException {
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -140,7 +144,7 @@ public class FinalReality extends Application {
 
     //animated variables of Battle scene - show attack results
     private final ImageView resumeBg = new ImageView();
-    private Button resumeOkButton;
+    private final Button resumeOkButton = ButtonWithImage("okbutton.png", 640, 290);
     private final Label resumeAttackerName = new Label();
     private final Label resumeAttackerHP = new Label();
     private final Label resumeAttackerDP = new Label();
@@ -152,6 +156,9 @@ public class FinalReality extends Application {
     private final ImageView resumeAttackerSprite = new ImageView();
     private final ImageView resumeDefenderSprite = new ImageView();
 
+    public Button getResumeOkButton(){
+        return resumeOkButton;
+    }
 
     @Override
     public void start(@NotNull Stage primaryStage) throws FileNotFoundException {
@@ -194,7 +201,6 @@ public class FinalReality extends Application {
 
 
     private void toSetTeam(Stage stage) throws FileNotFoundException {
-        gc.setGUI(this);
         List<String> usedCharacterNames = new ArrayList<>();
         currentGroup = new Group();
         Scene initializingScene = new Scene(currentGroup, width, height);
@@ -1084,7 +1090,6 @@ public class FinalReality extends Application {
     private void toBattleground(Stage stage) throws FileNotFoundException {
         battleStartAttackButton = ButtonWithImage("startattackbutton.png", 50, 395);
         battleChangeWeaponsButton = ButtonWithImage("teamandweaponbutton.png", 50, 335);
-        resumeOkButton = ButtonWithImage("okbutton.png", 640, 290);
         battleCancelAttackButton = ButtonWithImage("cancelbutton.png",830, 370);
         battleSendAttackButton = ButtonWithImage("attackbutton.png", 830, 420);
 

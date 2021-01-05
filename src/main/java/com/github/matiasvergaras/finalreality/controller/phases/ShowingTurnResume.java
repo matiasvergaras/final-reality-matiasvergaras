@@ -26,9 +26,21 @@ public class ShowingTurnResume extends GameState {
      * {@inheritDoc}
      */
     public void endTurn(){
-        gc.setState(new PerformingAttack(gc));
-        gc.endTurn();
+        gc.getTurns().poll();
+        gc.getActiveCharacter().waitTurn();
+        setNewTurn();
     }
+
+    /**
+     * Changes to the SettingNewTurn phase, and sends the message of start
+     * a new turn.
+     */
+    public void setNewTurn(){
+        gc.setState(new SettingNewTurn(gc));
+        gc.startTurn();
+
+    }
+
     /**
      * {@inheritDoc}
      */

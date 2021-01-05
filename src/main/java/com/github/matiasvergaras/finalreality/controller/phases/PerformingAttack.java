@@ -50,14 +50,6 @@ public class PerformingAttack extends GameState {
         gc.setState(new ShowingTurnResume(gc));
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void endTurn(){
-        gc.getTurns().poll();
-        gc.getActiveCharacter().waitTurn();
-        setNewTurn();
-    }
 
     /**
      * {@inheritDoc}
@@ -66,16 +58,6 @@ public class PerformingAttack extends GameState {
         IMastermind winner = ((0 == gc.getCPUAliveNumber()) ? gc.getPlayer() : gc.getCPU());
         gc.setWinner(winner);
         setFinished();
-    }
-
-    /**
-     * Changes to the SettingNewTurn phase, and sends the message of start
-     * a new turn.
-     */
-    public void setNewTurn(){
-        gc.setState(new SettingNewTurn(gc));
-        gc.startTurn();
-
     }
 
     /**
