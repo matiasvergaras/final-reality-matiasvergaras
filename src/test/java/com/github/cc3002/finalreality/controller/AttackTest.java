@@ -40,7 +40,8 @@ public class AttackTest {
         //Adds an Engineer to the player party
         gc.selectedCharacterFactoryProduce("Domingo Egg");
         //Adds an Enemy to the CPU party.
-        gc.addEnemyToCPU("Chaos");
+        gc.setSelectedCharacterFactory(5);
+        gc.selectedCharacterFactoryProduce("Chaos");
         //Sets bow factory to create the definitive bow with 10000 power.
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(10000);
@@ -147,7 +148,7 @@ public class AttackTest {
         gc.setSelectedCharacterFactoryPower(1000);
         gc.setSelectedCharacterFactoryWeight(32);
         //Adds an Enemy to the CPU party.
-        gc.addEnemyToCPU("Elliot");
+        gc.selectedCharacterFactoryProduce("Elliot");
         //Starts the game
         gc.startGame();
         gc.unequipSelectedCharacter();

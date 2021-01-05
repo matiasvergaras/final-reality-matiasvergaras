@@ -72,7 +72,8 @@ public class RemoveTest {
      */
     @Test
     void removeCPUCharacterTest(){
-        gc.addEnemyToCPU("Chimera");
+        gc.setSelectedCharacterFactory(5);
+        gc.selectedCharacterFactoryProduce("Chimera");
         assertEquals(gc.getCPUPartySize(), 1);
         gc.setSelectedCharacterFromCPUParty(0);
         gc.removeSelectedCharacterFromItsParty();

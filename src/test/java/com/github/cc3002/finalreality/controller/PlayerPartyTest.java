@@ -169,9 +169,12 @@ public class PlayerPartyTest {
     @Test
     void getCPUPartyTest(){
         ArrayList<ICharacter> copy = new ArrayList<>();
-        gc.addEnemyToCPU("Azelf");
-        gc.addEnemyToCPU("Lowe");
-        gc.addEnemyToCPU("Gort");
+
+        gc.setSelectedCharacterFactory(5);
+        gc.selectedCharacterFactoryProduce("Azelf");
+        gc.selectedCharacterFactoryProduce("Lowe");
+        gc.selectedCharacterFactoryProduce("Gort");
+
         copy.add(new Enemy(turns, "Azelf", 180, 100, 12, 100));
         copy.add(new Enemy(turns, "Lowe", 180, 100, 12, 100));
         copy.add(new Enemy(turns, "Gort", 180, 100, 12, 100));

@@ -28,7 +28,7 @@ public class QueueBehaviorTest {
         //Adds an Thief to the player party and set him as attack target.
         gc.setSelectedCharacterFactory(5);
         gc.setSelectedCharacterFactoryWeight(30);
-        gc.addEnemyToCPU("Balbazak");
+        gc.selectedCharacterFactoryProduce("Balbazak");
         //Sets bow factory to create the definitive bow with 10000 power.
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(10000);
@@ -67,7 +67,7 @@ public class QueueBehaviorTest {
         //Adds an Thief to the player party and set him as attack target.
         gc.setSelectedCharacterFactory(5);
         gc.setSelectedCharacterFactoryWeight(40);
-        gc.addEnemyToCPU("Balbazak");
+        gc.selectedCharacterFactoryProduce("Balbazak");
         //Adds weapons for each character. Bow is faster than axe.
         gc.setSelectedWeaponFactory(0);
         gc.selectedWeaponFactoryProduce("Strong Bow");

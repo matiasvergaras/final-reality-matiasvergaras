@@ -161,7 +161,8 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void EnemyFactorySettingTest(){
         setFactoryForTesting(5, 9);
-        gc.addEnemyToCPU("Darksol");
+        gc.setSelectedCharacterFactory(5);
+        gc.selectedCharacterFactoryProduce("Darksol");
         gc.setSelectedCharacterFromCPUParty(gc.getCPUPartySize()-1);
         testFactorySettingForCPU(9);
     }

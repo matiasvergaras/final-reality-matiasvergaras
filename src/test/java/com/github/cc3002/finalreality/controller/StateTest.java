@@ -36,7 +36,8 @@ public class StateTest {
         gc.setSelectedCharacterFactory(0);
         gc.selectedCharacterFactoryProduce("Domingo Egg");
         //Adds an Enemy to the CPU party.
-        gc.addEnemyToCPU("Chaos");
+        gc.setSelectedCharacterFactory(5);
+        gc.selectedCharacterFactoryProduce("Chaos");
         //Sets bow factory to create the definitive bow with 10000 power.
         gc.setSelectedWeaponFactory(0);
         gc.setSelectedWeaponFactoryPower(10000);

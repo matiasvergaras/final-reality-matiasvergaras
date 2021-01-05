@@ -30,11 +30,18 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Main entry point for the application.
- * <p>
- * <Complete here with the details of the implemented application>
- *
- * @since Homework 1
- * @author Ignacio Slater Muñoz.
+ * <p> This class implements the Grapich User Interface (GUI) of the game, via
+ * JavaFX. There are 6 main scenarios: Start, where the player enters his name
+ * and chooses the number of characters he will play with, SetTeam, where the player
+ * chooses his characters, SetInventory, where the player chooses his weapons,
+ * SetCPUTeam, where the player chooses the CPU team, EquipWeapons, where the player equips
+ * his weapons to his characters (it must equip at least one in order to be able to play),
+ * and the Battleground scene. All the action occurs in this last one.
+ * Once a game finish, the player is asked to re-start a game (but with the same difficulty,
+ * understanding it as the number of characters that he will have) or to close the game. </p>
+ * <p> There are specific conditions to change from an scenario to another, and they
+ * are listened in the README of the game. </p>
+ * @since Homework 3
  * @author Matías Vergara Silva.
  */
 public class FinalReality extends Application {
