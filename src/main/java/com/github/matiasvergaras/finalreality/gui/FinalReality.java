@@ -40,12 +40,10 @@ import java.util.concurrent.ThreadLocalRandom;
 public class FinalReality extends Application {
     private static final String RESOURCE_PATH = "src/main/resources/";
 
-    public FinalReality() throws FileNotFoundException {
-    }
-
     public static void main(String[] args) {
         launch(args);
     }
+
     final int width = 1000;
     final int height = 570;
     private Group currentGroup = new Group();
@@ -144,7 +142,7 @@ public class FinalReality extends Application {
 
     //animated variables of Battle scene - show attack results
     private final ImageView resumeBg = new ImageView();
-    private final Button resumeOkButton = ButtonWithImage("okbutton.png", 640, 290);
+    private Button resumeOkButton;
     private final Label resumeAttackerName = new Label();
     private final Label resumeAttackerHP = new Label();
     private final Label resumeAttackerDP = new Label();
@@ -156,10 +154,13 @@ public class FinalReality extends Application {
     private final ImageView resumeAttackerSprite = new ImageView();
     private final ImageView resumeDefenderSprite = new ImageView();
 
-    public Button getResumeOkButton(){
-        return resumeOkButton;
-    }
-
+    /**
+     * Starts the GUI.
+     * <p> Sets up the first scene of the game, in which the player enters his name and selects
+     * the number of characters he will play with</p>
+     * @param primaryStage          Stage of the game
+     * @throws FileNotFoundException
+     */
     @Override
     public void start(@NotNull Stage primaryStage) throws FileNotFoundException {
         primaryStage.setTitle("Final reality");
@@ -357,6 +358,10 @@ public class FinalReality extends Application {
 
     private void setTeamTimer(){
         timer = new AnimationTimer() {
+            /**
+             * Handler of the selecting team's scene.
+             * Necessary for updating the Labels, Sprites, etc.
+             */
             @Override
             public void handle(long now) {
                 playerCharactersNumLabel.setText(String.valueOf(gc.getPlayerPartySize()));
@@ -591,6 +596,10 @@ public class FinalReality extends Application {
 
     private void setWeaponTimer(){
         timer = new AnimationTimer() {
+            /**
+             * Handler of the selecting weapon's scene.
+             * Necessary for updating the Labels, Sprites, etc.
+             */
             @Override
             public void handle(long now) {
                 weaponNumLabel.setText(String.valueOf(gc.getInventorySize()));
@@ -787,6 +796,10 @@ public class FinalReality extends Application {
 
     private void setCPUTeamTimer(){
         timer = new AnimationTimer() {
+            /**
+             * Handler of the selecting CPU Team's scene.
+             * Necessary for updating the Labels, Sprites, etc.
+             */
             @Override
             public void handle(long now) {
                 CPUCharactersNumLabel.setText(String.valueOf(gc.getCPUPartySize()));
@@ -1018,6 +1031,10 @@ public class FinalReality extends Application {
 
     private void setEquipMenuTimer(){
         timer = new AnimationTimer() {
+            /**
+             * Handler of the equipping team's scene.
+             * Necessary for updating the Labels, Sprites, etc.
+             */
             @Override
             public void handle(long now) {
 
@@ -1092,6 +1109,7 @@ public class FinalReality extends Application {
         battleChangeWeaponsButton = ButtonWithImage("teamandweaponbutton.png", 50, 335);
         battleCancelAttackButton = ButtonWithImage("cancelbutton.png",830, 370);
         battleSendAttackButton = ButtonWithImage("attackbutton.png", 830, 420);
+        resumeOkButton = ButtonWithImage("okbutton.png", 640, 290);
 
         battleStartAttackButton.setVisible(false);
         battleChangeWeaponsButton.setVisible(false);
@@ -1321,6 +1339,10 @@ public class FinalReality extends Application {
 
     private void setBattlegroundTimer() {
         timer = new AnimationTimer() {
+            /**
+             * Handler of the battleground scene.
+             * Necessary for updating the Labels, Sprites, etc.
+             */
             @Override
             public void handle(long now) {
                 //System.out.println("\n");

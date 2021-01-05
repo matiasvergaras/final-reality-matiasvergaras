@@ -68,6 +68,10 @@ public class Knight extends AbstractPlayerCharacter {
         return Objects.hash(this.getName());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isKnight(){
         return true;
     }
