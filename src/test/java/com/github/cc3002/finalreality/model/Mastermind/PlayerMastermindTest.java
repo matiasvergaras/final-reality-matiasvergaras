@@ -202,9 +202,7 @@ public class PlayerMastermindTest extends AbstractMastermindTest{
         player.addToParty(exampleKnight);
         player.addToInventory(exampleAxe);
         player.equipCharacter(exampleAxe, exampleKnight);
-        System.out.println(exampleKnight.getEquippedWeapon());
         player.unequipCharacter(exampleKnight);
-        System.out.println(exampleKnight.getEquippedWeapon());
         assertFalse(exampleKnight.isEquipped());
         assertEquals(exampleAxe.getOwner(), new NullCharacter());
     }

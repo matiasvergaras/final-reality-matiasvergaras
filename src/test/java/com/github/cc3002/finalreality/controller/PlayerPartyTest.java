@@ -121,7 +121,6 @@ public class PlayerPartyTest {
         gc.setSelectedCharacterFromPlayerParty(gc.getPlayerPartySize()-1);
         Thief sameCharacter = new Thief(turns, "Hanzou", 200, 12);
         assertEquals(gc.getSelectedCharacter(), sameCharacter);
-        System.out.println(gc.getPlayerPartySize());
         assertEquals(initSize+1, gc.getPlayerPartySize());
 
     }

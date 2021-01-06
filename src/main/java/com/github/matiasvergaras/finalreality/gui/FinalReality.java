@@ -1386,15 +1386,7 @@ public class FinalReality extends Application {
              */
             @Override
             public void handle(long now) {
-            /**    System.out.println("\n");
-                System.out.println(gc.getCPUAliveNumber());
-                System.out.println(gc.isShowingTurnResume());
-                System.out.println(gc.isPerformingAttack());
-                System.out.println(gc.isPlayerTurn());
-                System.out.println(gc.isCPUTurn());
-                System.out.println(gc.isSelectingAttackTarget());
-                System.out.println(gc.isFinished());
-                System.out.println(gc.isActive());**/
+
                 if (gc.isShowingTurnResume()) {
                     try {
                         resumeBg.setImage( new Image(new FileInputStream( RESOURCE_PATH + "attackresumebg.png")));

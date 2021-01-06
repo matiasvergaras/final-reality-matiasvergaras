@@ -47,7 +47,6 @@ public class PlayerTurn extends GameState {
      */
     @Override
     public void initAttack(){
-        System.out.println("STARTING ATTACK");
         gc.setState(new SelectingAttackTarget(gc));
     }
 

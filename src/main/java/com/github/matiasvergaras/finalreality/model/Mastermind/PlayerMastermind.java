@@ -53,7 +53,6 @@ public class PlayerMastermind extends AbstractMastermind {
      */
     @Override
     public void removeFromParty(ICharacter character){
-        System.out.println(character.getAttributes().getEquippedWeapon());
         if(character.getAttributes().getEquippedWeapon()!=null &&
         !character.getAttributes().getEquippedWeapon().isNull()){
             for(ICharacter c: getParty()){
