@@ -84,7 +84,7 @@ public class DeathNotificationSystemTest {
         gc.endTurn();
 
         // Now the game should have finished and the winner should be the CPU.
-        assertEquals(gc.getWinner().getName(), gc.getCPUName());
+        assertEquals(gc.getWinner().getName(), gc.getMastermindName(gc.getCPU()));
         Thread.sleep(800);
         assertTrue(gc.isFinished());
     }
@@ -152,7 +152,7 @@ public class DeathNotificationSystemTest {
         //Check for game finished status and winner
         Thread.sleep(300);
         assertTrue(gc.isFinished());
-        assertEquals(gc.getWinner().getName(), gc.getPlayerName());
+        assertEquals(gc.getWinner().getName(), gc.getMastermindName(gc.getPlayer()));
     }
 
 

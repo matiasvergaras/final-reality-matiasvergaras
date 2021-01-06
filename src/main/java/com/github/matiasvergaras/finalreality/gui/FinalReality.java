@@ -161,6 +161,11 @@ public class FinalReality extends Application {
     private final ImageView resumeAttackerSprite = new ImageView();
     private final ImageView resumeDefenderSprite = new ImageView();
 
+    //animated variables of the game finished pop-up
+    private final ImageView finishedBg = new ImageView();
+    private final Label finishedWinner = new Label();
+    private Button finishedExitGameButton;
+
     /**
      * Starts the GUI.
      * <p> Sets up the first scene of the game, in which the player enters his name and selects
@@ -1118,10 +1123,14 @@ public class FinalReality extends Application {
         battleSendAttackButton = ButtonWithImage("attackbutton.png", 830, 420);
         resumeOkButton = ButtonWithImage("okbutton.png", 640, 290);
 
+        finishedExitGameButton = ButtonWithImage("exitgame.png", 640, 335);
+
         battleStartAttackButton.setVisible(false);
         battleChangeWeaponsButton.setVisible(false);
         battleSendAttackButton.setVisible(false);
         battleCancelAttackButton.setVisible(false);
+
+        finishedExitGameButton.setVisible(false);
 
         resumeOkButton.setVisible(false);
 
@@ -1194,7 +1203,7 @@ public class FinalReality extends Application {
         battleTargetCharacterSprite.setLayoutX(858.5);
         battleTargetCharacterSprite.setLayoutY(207);
 
-        // The resume
+        // The resume Pop-up
         resumeBg.setLayoutX(230);
         resumeBg.setLayoutY(100);
 
@@ -1246,6 +1255,15 @@ public class FinalReality extends Application {
         resumeDeadNotification.setLayoutY(200);
         resumeDeadNotification.setTextFill(Color.web("#ffeb33", 1));
 
+        // THe game finished Pop-up
+        finishedBg.setLayoutX(230);
+        finishedBg.setLayoutY(160);
+        finishedWinner.setFont(new Font("Arial", 60.0));
+        finishedWinner.setLayoutX(450);
+        finishedWinner.setLayoutY(263);
+        finishedWinner.setTextFill(Color.web("#ffeb33", 1));
+
+
         currentGroup.getChildren().add(battlegroundBg);
 
         // PLayer turn - decide what to do
@@ -1284,6 +1302,10 @@ public class FinalReality extends Application {
         currentGroup.getChildren().add(resumeOkButton);
         currentGroup.getChildren().add(resumeDeadNotification);
 
+        // Finished
+        currentGroup.getChildren().add(finishedBg);
+        currentGroup.getChildren().add(finishedWinner);
+        currentGroup.getChildren().add(finishedExitGameButton);
 
         setBattlegroundTimer();
 
@@ -1304,6 +1326,8 @@ public class FinalReality extends Application {
             battleTargetCharacterPower.setVisible(false);
             battleTargetCharacterWeight.setVisible(false);
             battleCPUAliveCharacters.setVisible(false);
+            battleCancelAttackButton.setVisible(false);
+            battleSendAttackButton.setVisible(false);
 
         });
 
@@ -1311,6 +1335,9 @@ public class FinalReality extends Application {
             gc.initAttackMove();
             battleStartAttackButton.setVisible(false);
             battleChangeWeaponsButton.setVisible(false);
+            battleCPUAliveCharacters.setVisible(true);
+            battleCancelAttackButton.setVisible(true);
+
         });
 
         battleSendAttackButton.setOnAction(event -> {
@@ -1342,6 +1369,13 @@ public class FinalReality extends Application {
             gc.endTurn();
         });
 
+        finishedExitGameButton.setOnAction(event -> {
+            stage.close();
+        });
+
+
+
+
     }
 
     private void setBattlegroundTimer() {
@@ -1352,14 +1386,15 @@ public class FinalReality extends Application {
              */
             @Override
             public void handle(long now) {
-                //System.out.println("\n");
-                //System.out.println(gc.isShowingTurnResume());
-                //System.out.println(gc.isPerformingAttack());
-                //ystem.out.println(gc.isPlayerTurn());
-                //System.out.println(gc.isCPUTurn());
-                //System.out.println(gc.isSelectingAttackTarget());
-                //System.out.println(gc.isFinished());
-                //System.out.println(gc.isActive());
+            /**    System.out.println("\n");
+                System.out.println(gc.getCPUAliveNumber());
+                System.out.println(gc.isShowingTurnResume());
+                System.out.println(gc.isPerformingAttack());
+                System.out.println(gc.isPlayerTurn());
+                System.out.println(gc.isCPUTurn());
+                System.out.println(gc.isSelectingAttackTarget());
+                System.out.println(gc.isFinished());
+                System.out.println(gc.isActive());**/
                 if (gc.isShowingTurnResume()) {
                     try {
                         resumeBg.setImage( new Image(new FileInputStream( RESOURCE_PATH + "attackresumebg.png")));
@@ -1460,31 +1495,8 @@ public class FinalReality extends Application {
                         e.printStackTrace();
                     }
                 }
-                else{
-                    battleActiveCharacterHP.setVisible(false);
-                    battleActiveCharacterDP.setVisible(false);
-                    battleActiveCharacterMana.setVisible(false);
-                    battleActiveCharacterSprite.setVisible(false);
-                    battleEquippedWeaponName.setVisible(false);
-                    battleEquippedWeaponPower.setVisible(false);
-                    battleEquippedWeaponMagic.setVisible(false);
-                    battleEquippedWeaponWeight.setVisible(false);
-                    battleEquippedWeaponSprite.setVisible(false);
-                }
+
                 if(gc.isSelectingAttackTarget()){
-                    //left side
-                    battleCPUAliveCharacters.setVisible(true);
-                    battleCancelAttackButton.setVisible(true);
-                    battleSendAttackButton.setVisible(true);
-                    battleActiveCharacterHP.setVisible(true);
-                    battleActiveCharacterDP.setVisible(true);
-                    battleActiveCharacterMana.setVisible(true);
-                    battleActiveCharacterSprite.setVisible(true);
-                    battleEquippedWeaponName.setVisible(true);
-                    battleEquippedWeaponPower.setVisible(true);
-                    battleEquippedWeaponMagic.setVisible(true);
-                    battleEquippedWeaponWeight.setVisible(true);
-                    battleEquippedWeaponSprite.setVisible(true);
                     //right side
 
                     if(gc.getCPUAliveNumber()>0){
@@ -1494,7 +1506,6 @@ public class FinalReality extends Application {
                         }
                         ObservableList<String> oList = FXCollections.observableArrayList(names);
                         battleCPUAliveCharacters.setItems(oList);
-                        battleCPUAliveCharacters.setVisible(true);
                     }
                     else{
                         battleCPUAliveCharacters.setVisible(false);
@@ -1521,6 +1532,7 @@ public class FinalReality extends Application {
                     }
                     if(!(battleCPUAliveCharacters.getValue()==null)){
                         try {
+                            battleSendAttackButton.setVisible(true);
                             battleTargetCharacterSprite.setImage(new Image(new FileInputStream
                                     ( RESOURCE_PATH + "darksol.png")));
                             battleTargetCharacterSprite.setVisible(true);
@@ -1529,6 +1541,18 @@ public class FinalReality extends Application {
                             e.printStackTrace();
                         }
                     }
+
+                }
+                if(gc.isFinished()){
+                    try {
+                        finishedBg.setImage(new Image(new FileInputStream(RESOURCE_PATH + "gamefinished.png")));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    finishedBg.setVisible(true);
+                    finishedExitGameButton.setVisible(true);
+                    finishedWinner.setVisible(true);
+                    finishedWinner.setText(gc.getWinner().getName());
                 }
             }
         };

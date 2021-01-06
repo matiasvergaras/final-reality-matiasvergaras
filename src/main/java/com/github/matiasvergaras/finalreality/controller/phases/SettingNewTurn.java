@@ -31,9 +31,11 @@ public class SettingNewTurn extends GameState {
             ICharacter character = gc.getTurns().peek();
             gc.setActiveCharacter(character);
             if( gc.getPlayerParty().contains(character)){
+                System.out.println("SETTING PLAYER TURN");
                 gc.setState(new PlayerTurn(gc));
             }
             else if(gc.getCPUParty().contains(character)){
+                System.out.println("SETTING CPU TURN");
                 gc.setState(new CPUTurn(gc));
                 gc.initAttackMove();
             }

@@ -79,7 +79,7 @@ public class AttackTest {
         //Tries to unequip Domingo. Since the game is in Finished state, it should not work.
         gc.setSelectedCharacterFromPlayerParty(0);
         gc.unequipSelectedCharacter();
-        assertEquals(gc.getWinner().getName(), gc.getPlayerName());
+        assertEquals(gc.getWinner().getName(), gc.getMastermindName(gc.getPlayer()));
         assertNotEquals(gc.getCharacterEquippedWeapon(gc.getSelectedCharacter()), new NullWeapon());
         gc.initializeGame();
         gc.unequipSelectedCharacter();

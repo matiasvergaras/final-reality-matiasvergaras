@@ -174,7 +174,9 @@ public class GameState implements IGameState {
      * {@inheritDoc}
      */
     @Override
-    public void removeDeadCharacter(ICharacter deadCharacter, int charactersAlive){}
+    public void removeDeadCharacter(ICharacter deadCharacter, int charactersAlive){
+        System.out.println("REMOVE INUTIL");
+    }
 
     /**
      * {@inheritDoc}

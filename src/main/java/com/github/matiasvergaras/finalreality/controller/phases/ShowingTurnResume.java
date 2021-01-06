@@ -28,7 +28,12 @@ public class ShowingTurnResume extends GameState {
     public void endTurn(){
         gc.getTurns().poll();
         gc.getActiveCharacter().waitTurn();
-        setNewTurn();
+        System.out.println("SETTING NEW TURN");
+        System.out.println(gc.getCPUAliveNumber());
+        System.out.println(gc.getPlayerAliveNumber());
+        if(gc.getCPUAliveNumber()>0 && gc.getPlayerAliveNumber()>0){
+            setNewTurn();
+        }
     }
 
     /**

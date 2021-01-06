@@ -57,11 +57,4 @@ public class NullCharacter extends AbstractPlayerCharacter{
         return Objects.hash(this.getName());
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     */
-    public boolean isMagic(){
-        return false;
-    }
 }

@@ -30,8 +30,8 @@ public class ConstructorTest {
      */
     @Test
     void testParameters(){
-        assertEquals(gc.getPlayerName(), playerName);
-        assertEquals(gc.getCPUName(), CPUName);
+        assertEquals(gc.getMastermindName(gc.getPlayer()), playerName);
+        assertEquals(gc.getMastermindName(gc.getCPU()), CPUName);
         assertEquals(gc.getCharactersQuantity(), charactersQuantity);
     }
 

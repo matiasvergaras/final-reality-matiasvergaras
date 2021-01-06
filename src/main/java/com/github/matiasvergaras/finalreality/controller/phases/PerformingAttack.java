@@ -29,9 +29,11 @@ public class PerformingAttack extends GameState {
     public void activeCharacterNormalAttackSelectedCharacter() {
         if (gc.getPlayerParty().contains(gc.getActiveCharacter()) && gc.getCPUParty().contains(gc.getSelectedCharacter())) {
             gc.getPlayer().makeNormalAttack(gc.getActiveCharacter(), gc.getSelectedCharacter());
+            System.out.println("PLAYER ATTACK CPU");
         }
         else if (gc.getCPUParty().contains(gc.getActiveCharacter()) && gc.getPlayerParty().contains(gc.getSelectedCharacter())) {
             gc.getCPU().makeNormalAttack(gc.getActiveCharacter(), gc.getSelectedCharacter());
+            System.out.println("CPU ATTACK PLAYER");
         }
     }
 
@@ -40,13 +42,16 @@ public class PerformingAttack extends GameState {
      */
     public void removeDeadCharacter(ICharacter deadCharacter, int charactersAlive) {
         gc.getTurns().remove(deadCharacter);
+        System.out.println("REMOVING DEAD CHARACTER");
         if (charactersAlive == 0) setWinner();
+        System.out.println("ASSIGNING WINNER");
     }
 
     /**
      * {@inheritDoc}
      */
     public void showTurnResume(){
+        System.out.println("SHOWING TURN RESUME");
         gc.setState(new ShowingTurnResume(gc));
     }
 

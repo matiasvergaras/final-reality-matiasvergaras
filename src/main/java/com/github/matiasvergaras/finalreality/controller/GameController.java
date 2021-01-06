@@ -345,27 +345,12 @@ public class GameController {
     }
 
     /**
-     * Getter for the name of the player of this GameController
-     * @return      String playerName.
-     */
-    public String getPlayerName(){
-        return player.getName();
-    }
-
-    /**
      * Gives the player party.
      */
     public ArrayList<ICharacter> getPlayerParty(){
         return player.getParty();
     }
 
-    /**
-     * Gives the CPU Name.
-     * @return  String CPUName
-     */
-    public String getCPUName(){
-        return cpu.getName();
-    }
     /**
      * Gives the cpu party.
      */
@@ -953,5 +938,13 @@ public class GameController {
         gameState.endTurn();
     }
 
+    /**
+     * Gives the name of the given mastermind (CPU or Player)
+     * @param mastermind    The mastermind to ask for
+     * @return              Given mastermind's name
+     */
+    public String getMastermindName(IMastermind mastermind){
+        return mastermind.getName();
+    }
 }
 
