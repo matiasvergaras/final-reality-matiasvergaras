@@ -105,6 +105,7 @@ Figure 10. Homework 3 Equip Characters Scene
 
 Figure 11. Homework 3 Battle Scene I 
 ![Figure 11. Homework 3 Battle Scene I](/images/battleframe1.jpg)
+**The idea was to add the mini-sprites of the characters in the yellow area, simulating a chessboard (as in Fire Emblem). But once we tried to implement it, everything got complicated and some essential things stopped working. It is left proposed as a possible improvement of a future project progress.**
 
 - If the player decides to start an attack, a drop-down list will open on the right side of the stage in which he must choose a character to attack and a button to cancel the attack in progress will be enabled. When the player chooses a character (the Target), its data will be displayed and an 'Attack' button will be enabled.
 
