@@ -72,5 +72,11 @@ public class WhiteMage extends AbstractMagicCharacter {
         return Objects.hash(this.getName());
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isWhiteMage(){
+        return true;
+    }
 }

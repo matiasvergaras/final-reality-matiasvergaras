@@ -5,6 +5,8 @@ import com.github.matiasvergaras.finalreality.model.character.player.normal.Thie
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 /**
  * Class to tests the features of the ThiefFactory class.
  *
@@ -31,6 +33,8 @@ public class ThiefFactoryTest extends CharacterFactoryTest {
     @Test
     void factoryCreateTest() {
         checkFactoryCreate(this.factory, this.expectedCharacter);
+        assertFalse(this.factory.isMagicFactory());
+
     }
 
     /**

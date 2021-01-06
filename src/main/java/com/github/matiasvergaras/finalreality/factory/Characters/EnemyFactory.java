@@ -41,4 +41,14 @@ public class EnemyFactory extends CharacterFactory {
         return new Enemy(turns, name, weight, hp, dp, power);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isCPUFactory(){
+        return true;
+
+    }
+
+
 }

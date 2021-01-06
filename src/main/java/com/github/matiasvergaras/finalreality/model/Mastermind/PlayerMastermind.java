@@ -42,6 +42,38 @@ public class PlayerMastermind extends AbstractMastermind {
         }
     }
 
+
+    /**
+     * Removes a character from the mastermind's party.
+     * <p> If the character to remove is equipped with some weapon, it checks if there is any
+     * alive unequipped character in the party, and equips it to him. If there is no unequipped
+     * character in the party that is able to equip this weapon, it will just set the weapon free
+     * and remove the character from the party. </p>
+     * @param character     The ICharacter character to be removed.
+     */
+    @Override
+    public void removeFromParty(ICharacter character){
+        System.out.println(character.getAttributes().getEquippedWeapon());
+        if(character.getAttributes().getEquippedWeapon()!=null &&
+        !character.getAttributes().getEquippedWeapon().isNull()){
+            for(ICharacter c: getParty()){
+                IPlayerCharacter playerCharacter = (IPlayerCharacter) c;
+                if(!(playerCharacter.isEquipped()) && playerCharacter.isAlive()){
+                    playerCharacter.equipWeapon(character.getAttributes().getEquippedWeapon());
+                    if(character.getAttributes().getEquippedWeapon().isNull()){
+                        super.removeFromParty(character);
+                        break;
+                    }
+                }
+            }
+            if(!character.getAttributes().getEquippedWeapon().isNull()){
+                character.getAttributes().getEquippedWeapon().setWeaponFree();
+            }
+        }
+        super.removeFromParty(character);
+    }
+
+
     /**
      * Gives the number of characters that this PlayerMastermind must have at the start of the game.
      * @return      The number of characters that this PlayerMastermind must have at the start of the game.

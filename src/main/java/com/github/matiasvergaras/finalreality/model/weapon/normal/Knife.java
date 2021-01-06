@@ -80,4 +80,14 @@ public class Knife extends AbstractWeapon {
                 this.getWeight());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isKnife(){
+        return true;
+    }
+
+
+
 }

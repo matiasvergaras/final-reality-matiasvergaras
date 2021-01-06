@@ -73,4 +73,12 @@ public class Sword extends AbstractWeapon {
                 this.getWeight());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isSword(){
+        return true;
+    }
+
 }

@@ -93,4 +93,10 @@ public class NullWeapon extends AbstractMagicWeapon {
         return Objects.hash(this.getName());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isNull(){return true;}
+
+
 }

@@ -72,4 +72,12 @@ public class Staff extends AbstractMagicWeapon {
                 this.getWeight(), this.getMagicPower());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isStaff(){
+        return true;
+    }
+
 }

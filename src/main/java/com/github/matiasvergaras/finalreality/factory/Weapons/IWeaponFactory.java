@@ -28,22 +28,16 @@ public interface IWeaponFactory {
     void setMagicPower(int magicPower);
 
     /**
-     * Sets the default name value to the one given as parameter.
-     * @param name      The new name to set as default value.
-     */
-    void setName(String name);
-
-    /**
-     * Produces a new common weapon whose type depends of the Factory that receives the message.
-     * @return      A new Weapon.
-     */
-    IWeapon create();
-
-    /**
-     * Produces a new special named weapon whose type depends of the Factory that receives the message.
-     * <p> This method is useful to create distinguishable weapons. </p>
+     * Produces a new weapon whose type depends of the Factory that receives the message.
+     * <p> Name is useful to create distinguishable weapons. </p>
      * @param name      The new Weapon's name.
      * @return          A new Weapon.
      */
     IWeapon create(String name);
+
+    /**
+     * Indicates if this factory produces magic weapons.
+     * @return  boolean isMagic
+     */
+    boolean isMagic();
 }

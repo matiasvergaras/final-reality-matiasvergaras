@@ -97,4 +97,40 @@ public interface IWeapon {
      * Set this weapon free, if it is being used by a character.
      */
     void setWeaponFree();
+
+    /**
+     * Indicates if this weapon is an Axe.
+     * @return  True if this weapon is an Axe.
+     */
+    boolean isAxe();
+
+    /**
+     * Indicates if this weapon is a Sword.
+     * @return  True if this weapon is a Sword.
+     */
+    boolean isSword();
+
+    /**
+     * Indicates if this weapon is a Knife.
+     * @return  True if this weapon is a Knife.
+     */
+    boolean isKnife();
+
+    /**
+     * Indicates if this weapon is a Staff.
+     * @return  True if this weapon is a Staff.
+     */
+    boolean isStaff();
+
+    /**
+     * Indicates if this weapon is a Bow.
+     * @return  True if this weapon is a Bow.
+     */
+    boolean isBow();
+
+    /**
+     * Indicates if this weapon is Null.
+     * @return True if this weapon is Null.
+     */
+    boolean isNull();
 }

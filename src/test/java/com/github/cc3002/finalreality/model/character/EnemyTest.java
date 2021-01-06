@@ -5,6 +5,8 @@ import com.github.matiasvergaras.finalreality.model.character.player.normal.Engi
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 /**
  * Class to test basics features of a Enemy Character.
  * @since Homework 1
@@ -35,6 +37,7 @@ class EnemyTest extends AbstractCPUCharacterTest {
                 new Enemy(turns, "Another Enemy", 11, 200, 100, 200),
                 new Engineer(turns, ENGINEER_NAME, 200, 100),
                 new Engineer(turns, ENEMY_NAME, 200, 100));
+        assertFalse(exampleEnemy.isMagic());
     }
 
     /**

@@ -61,6 +61,13 @@ public class Enemy extends AbstractCPUCharacter {
         return Objects.hash(this.getName());
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEnemy(){
+        return true;
+    }
 
 }
 

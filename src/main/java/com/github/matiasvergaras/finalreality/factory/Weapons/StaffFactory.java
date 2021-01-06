@@ -18,17 +18,9 @@ public class StaffFactory extends WeaponFactory{
      * @param weight        The default Weight value that the weapons produced by this factory will have.
      * @param magicPower    The default magicPower value that the weapons produced by this factory will have.
      */
-    public StaffFactory(String name, int power, int weight, int magicPower){
-        super(name, power,weight);
+    public StaffFactory(int power, int weight, int magicPower){
+        super(power,weight);
         this.magicPower = magicPower;
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return      a new Staff Object with the default values and name.
-     */
-    public Staff create(){
-        return new Staff(name, power, weight, magicPower);
     }
 
     /**
@@ -39,4 +31,12 @@ public class StaffFactory extends WeaponFactory{
     public Staff create(String name){
         return new Staff(name, power, weight, magicPower);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isMagic(){
+        return true;
+    }
+
 }

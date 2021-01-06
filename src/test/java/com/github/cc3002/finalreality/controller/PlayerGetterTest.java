@@ -20,10 +20,10 @@ public class PlayerGetterTest {
      */
     @Test
     void playerGetterTest(){
-        GameController gameController = new GameController("Chimuelo", "Dragonia",
+        GameController gc = new GameController("Chimuelo", "Dragonia",
                 9);
-        assertEquals(gameController.getPlayerName(), "Chimuelo");
-        assertEquals(gameController.getCPUName(), "Dragonia");
-        assertEquals(gameController.getCharactersQuantity(), 9);
+        assertEquals(gc.getMastermindName(gc.getPlayer()), "Chimuelo");
+        assertEquals(gc.getMastermindName(gc.getCPU()), "Dragonia");
+        assertEquals(gc.getCharactersQuantity(), 9);
     }
 }

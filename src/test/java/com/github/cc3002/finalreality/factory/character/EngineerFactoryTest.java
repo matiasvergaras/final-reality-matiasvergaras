@@ -5,6 +5,8 @@ import com.github.matiasvergaras.finalreality.model.character.player.normal.Engi
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 /**
  * Class to tests the features of the EngineerFactory class.
  *
@@ -32,6 +34,7 @@ public class EngineerFactoryTest extends CharacterFactoryTest {
     @Test
     void factoryCreateTest() {
         checkFactoryCreate(this.factory, this.expectedCharacter);
+        assertFalse(this.factory.isMagicFactory());
     }
 
     /**

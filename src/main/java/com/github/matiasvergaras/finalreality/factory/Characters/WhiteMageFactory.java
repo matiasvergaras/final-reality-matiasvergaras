@@ -37,4 +37,11 @@ public class WhiteMageFactory extends CharacterFactory {
         return new WhiteMage(turns, name, hp, dp, mana);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isMagicFactory(){
+        return true;
+    }
 }

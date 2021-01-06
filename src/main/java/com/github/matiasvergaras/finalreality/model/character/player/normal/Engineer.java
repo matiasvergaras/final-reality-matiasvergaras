@@ -75,6 +75,12 @@ public class Engineer extends AbstractPlayerCharacter {
         return Objects.hash(this.getName());
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEngineer(){
+        return true;
+    }
 }
 

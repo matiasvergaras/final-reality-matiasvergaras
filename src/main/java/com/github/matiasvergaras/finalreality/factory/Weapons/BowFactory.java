@@ -17,16 +17,8 @@ public class BowFactory extends WeaponFactory {
      * @param power     The default Power value that the weapons produced by this factory will have.
      * @param weight    The default Weight value that the weapons produced by this factory will have.
      */
-    public BowFactory(String name, int power, int weight){
-        super(name, power, weight);
-    }
-
-    /**
-     * {@inheritDoc}
-     * @return      a new Bow Object with the default values and name.
-     */
-    public Bow create(){
-        return new Bow(name, power, weight);
+    public BowFactory(int power, int weight){
+        super(power, weight);
     }
 
     /**

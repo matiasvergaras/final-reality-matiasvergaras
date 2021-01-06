@@ -1,6 +1,9 @@
 ChangeLog
 =========
 
+Version 5.0
+-----------
+- (RC.1) Final 2020 version, with GUI. Instructions of how to play in the README. 
 
 Version 4.0
 -----------

@@ -54,6 +54,13 @@ public abstract class AbstractMagicCharacter extends AbstractPlayerCharacter imp
                 this.getCurrentMana(), this.getEquippedWeapon());
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     */
+    public boolean isMagic(){
+        return true;
+    }
 
 
 }

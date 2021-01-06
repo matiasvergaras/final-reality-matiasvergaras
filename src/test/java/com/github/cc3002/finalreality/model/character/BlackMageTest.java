@@ -5,6 +5,8 @@ import com.github.matiasvergaras.finalreality.model.character.player.magic.White
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 /**
  * Class to test basics features of a Black Mage Character.
  * @since Homework 1
@@ -36,6 +38,7 @@ class BlackMageTest extends AbstractMagicCharacterTest {
                 new BlackMage(turns, "Another Black Mage", 110, 200, 250),
                 new WhiteMage(turns, WHITE_MAGE_NAME, 200, 100, 250),
                 new WhiteMage(turns, BLACK_MAGE_NAME, 200, 100, 250));
+        assertTrue(exampleBlackMage.isMagic());
     }
 
     /**

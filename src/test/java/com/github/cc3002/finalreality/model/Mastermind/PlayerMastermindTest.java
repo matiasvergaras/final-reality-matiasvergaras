@@ -142,11 +142,11 @@ public class PlayerMastermindTest extends AbstractMastermindTest{
      */
     @Test
     void inventoryTest(){
-        SwordFactory factory = new SwordFactory("Steel Sword", 70, 11);
+        SwordFactory factory = new SwordFactory( 70, 11);
         ArrayList<IWeapon> inventoryCopy = new ArrayList<>();
         PlayerMastermind player = (PlayerMastermind)this.player;
         for(int i=0; i<5; i++){
-            IWeapon weapon = factory.create();
+            IWeapon weapon = factory.create("Weapon " + i);
             player.addToInventory(weapon);
             inventoryCopy.add(weapon);
             assertEquals(player.getInventorySize(), i+1);

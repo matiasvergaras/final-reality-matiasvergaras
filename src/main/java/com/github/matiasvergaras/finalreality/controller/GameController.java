@@ -1,9 +1,13 @@
 package com.github.matiasvergaras.finalreality.controller;
 
-import com.github.matiasvergaras.finalreality.GameState.IGameState;
-import com.github.matiasvergaras.finalreality.GameState.Initializing;
+import com.github.matiasvergaras.finalreality.controller.phases.IGameState;
+import com.github.matiasvergaras.finalreality.controller.phases.Initializing;
+import com.github.matiasvergaras.finalreality.controller.handlers.AddQueueMMToGCHandler;
+import com.github.matiasvergaras.finalreality.controller.handlers.DeathMMToGCHandler;
+import com.github.matiasvergaras.finalreality.controller.handlers.EndTurnMMToGCHandler;
 import com.github.matiasvergaras.finalreality.factory.Characters.ICharacterFactory;
 import com.github.matiasvergaras.finalreality.factory.Weapons.*;
+import com.github.matiasvergaras.finalreality.gui.FinalReality;
 import com.github.matiasvergaras.finalreality.model.AttributeSet.CharacterAttributeSet;
 import com.github.matiasvergaras.finalreality.model.Mastermind.CPUMastermind;
 import com.github.matiasvergaras.finalreality.model.Mastermind.IMastermind;
@@ -13,6 +17,7 @@ import com.github.matiasvergaras.finalreality.model.character.player.NullCharact
 import com.github.matiasvergaras.finalreality.model.weapon.IWeapon;
 import com.github.matiasvergaras.finalreality.model.weapon.NullWeapon;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -21,15 +26,18 @@ import java.util.concurrent.LinkedBlockingQueue;
  * The controller will be an intermediary between the user and the objects of the model,
  * whose purpose will be to control all the messages that pass through it, manipulating
  * and redirecting those that are necessary.
- * <p> User will communicate with Controller, and Controller will do with the Masterminds
+ * <p> User will communicate with GUI, GUI with Controller,  and Controller will do with the Masterminds
  * CPUMastermind and PlayerMasterminds, which in time will communicate with the rest of the model. </p>
- * <p> GameController will have a 3-States State Pattern. They are "Initializing", that defines
- * the time when the user is setting-up the game, his characters, weapons, etc., "Active",
+ * <p> GameController will have a some phases (State Pattern). They can be divided in 3 main phases: "Initializing",
+ * that defines the time when the user is setting-up the game, his characters, weapons, etc., "Active",
  * that is when the player is fighting against the CPU, and "Finished", that is when the user is
  * able to see the final state of the game and to know who wins. In finished mode the user is also
  * able to config a new game, turning back onto Initializing State. </p>
+ * <p> There are 6 kinds of Active Phase: PlayerTurn, CPUTurn, SelectingAttackTarget, PerformingAttack, SettingNewTurn,
+ * and ShowwingTurnResume. </p>
  * @since Homework 2
  * @author Matías Vergara Silva
+ * @see IGameState
  */
 public class GameController {
     private LinkedBlockingQueue<ICharacter> turns;
@@ -85,6 +93,7 @@ public class GameController {
         this.gameState = new Initializing(this);
     }
 
+
     /**
      * Returns the turns queue
      *
@@ -117,13 +126,6 @@ public class GameController {
         return gameState.isInitializing();
     }
 
-    /**
-     * Returns true if the current state is Active
-     * @return  boolean isActive
-     */
-    public boolean isActive(){
-        return gameState.isActive();
-    }
 
     /**
      * Returns true if the current state is Finished.
@@ -132,6 +134,64 @@ public class GameController {
      */
     public boolean isFinished(){
         return gameState.isFinished();
+    }
+
+    /**
+     * Returns true if the current phase is a CPUTurn.
+     * @return   boolean current phase is CPUTurn
+     */
+    public boolean isCPUTurn() {
+        return gameState.isCPUTurn();
+    }
+
+    /**
+     * Returns true if the current phase is a PlayerTurn.
+     * @return   boolean current phase is PlayerTurn
+     */
+    public boolean isPlayerTurn() {
+        return gameState.isPlayerTurn();
+    }
+
+    /**
+     * Returns true if the current phase is a SelectingAttackTarget.
+     * @return   boolean current phase is SelectingAttackTarget
+     */
+    public boolean isSelectingAttackTarget() {
+        return gameState.isSelectingAttackTarget();
+    }
+
+    /**
+     * Returns true if the current phase is a SettingNewTurn.
+     * @return   boolean current phase is SettingNewTurn
+     */
+    public boolean isSettingNewTurn() {
+        return gameState.isSettingNewTurn();
+    }
+
+    /**
+     * Returns true if the current phase is a PerformingAttack.
+     * @return   boolean current phase is PerformingAttack
+     */
+    public boolean isPerformingAttack(){
+        return gameState.isPerformingAttack();
+    }
+
+    /**
+     * Returns true if the current phase is ShowingTurnResume
+     * @return  boolean current phase is showingTurnResume
+     */
+    public boolean isShowingTurnResume() {
+        return gameState.isShowingTurnResume();
+    }
+
+    /**
+     * Returns true if the current phase is an Active subphase.
+     * <p> Active subphases are CPUTurn, PlayerTurn, PerformingAttack,
+     * SelectingAttackTarget, SettingNewTurn, showingTurnResume </p>
+     * @return   boolean current phase is PlayerTurn
+     */
+    public boolean isActive(){
+        return gameState.isActive();
     }
 
     /**
@@ -154,27 +214,43 @@ public class GameController {
         gameState.startGame();
     }
 
-    /**
-     * Activates the turns.
-     * <p> First, it sets the game status to Active. </p>
-     * <p> Then, sends the message of start WaitTurn to every character in both teams. </p>
-     * <p> Finally, it send the message to start the first turn. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     */
-    public void activateTurns() {
-        gameState.setActive();
-        gameState.startWaitTurns();
-    }
 
     /**
      * Method to be called by an EndTurnMMToGCHandler.
-     * <p> Sends to the character that just ended his turn the wait for re-entry order. </p>
-     * <p> Calls to StartTurn, in order to start a new Turn. </p>
-     * <p> A character will wait for its turn only if he is alive (new feature in waitTurn). </p>
-     * <p> This method will be effective only in Active mode. </p>
+     * <p> "Starts the end" of a turn, by changing the state
+     * to "showing turn resume". There will be an "OK" Button in GUI
+     * that will send back the message of end the turn when fired. </p>
+     * <p> In order to bypass the GUI interaction in tests, simulate the button by calling to gc.endTurn()</p>
      */
-    public void endTurn() {
-        gameState.endTurn();
+    public void showTurnResume() throws FileNotFoundException {
+        gameState.showTurnResume();
+    }
+
+    /**
+     * Starts a new turn.
+     * <p> This method will only have effect in SettingNewTurn phase.</p>
+     */
+    public void startTurn() {
+        gameState.startTurn();
+    }
+
+    /**
+     * Starts an attack movement, by changing the current phase to
+     * selectingAttackTarget.
+     * <p> This method will be effective only in CPUTurn / PlayerTurn</p>
+     */
+    public void initAttackMove() {
+        gameState.initAttack();
+    }
+
+    /**
+     * Cancels an attack movement, by returning from the SelectingAttackTarget phase
+     * to the PlayerTurn phase.
+     * <p> It will only return to PlayerTurn phase because of that is, in fact, the only possibility,
+     * since CPU will never regret of starting an attack (given that it decides automatically). </p>
+     */
+    public void cancelAttackMove() {
+        gameState.cancelAttack();
     }
 
     /**
@@ -188,6 +264,7 @@ public class GameController {
     public void addToQueue(){
         gameState.addToQueue();
     }
+
     /**
      * Gives the activeCharacter.
      * @return ICharacter activeCharacter.
@@ -268,27 +345,12 @@ public class GameController {
     }
 
     /**
-     * Getter for the name of the player of this GameController
-     * @return      String playerName.
-     */
-    public String getPlayerName(){
-        return player.getName();
-    }
-
-    /**
      * Gives the player party.
      */
     public ArrayList<ICharacter> getPlayerParty(){
         return player.getParty();
     }
 
-    /**
-     * Gives the CPU Name.
-     * @return  String CPUName
-     */
-    public String getCPUName(){
-        return cpu.getName();
-    }
     /**
      * Gives the cpu party.
      */
@@ -313,6 +375,13 @@ public class GameController {
     }
 
     /**
+     * Gives the inventory of the player.
+     * @return An ArrayList of IWeapon representing the inventory of the player.
+     */
+    public ArrayList<IWeapon> getPlayerInventory(){
+        return player.getInventory();
+    }
+    /**
      * Gives the player inventory size.
      * return       An int representing the number of elements in the player's inventory.
      */
@@ -321,184 +390,25 @@ public class GameController {
     }
 
     /**
-     * Request a new BlackMage character to the corresponding factory and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
+     * Orders to the selected character factory to produce a new character an add it to the
+     * corresponding team.
+     * <p> This will have effect only in initializing mode. </p>
+     * @param name  The name of the character to be produced.
      */
-    public void addBlackMageToPlayer(String name){
-        gameState.addBlackMageToPlayer(name);
+    public void selectedCharacterFactoryProduce(String name){
+        gameState.selectedCharacterFactoryProduce(name);
     }
 
     /**
-     * Request a new WhiteMage character to the corresponding factory and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
+     * Orders to the seleceted weapon factory to produce a new weapon and add it to
+     * the player's inventory.
+     * <p> This will have effect only in initializing mode. </p>
+     * @param name
      */
-    public void addWhiteMageToPlayer(String name){
-        gameState.addWhiteMageToPlayer(name);
+    public void selectedWeaponFactoryProduce(String name) {
+        gameState.selectedWeaponFactoryProduce(name);
     }
 
-    /**
-     * Request a new Engineer character to the corresponding factory and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    public void addEngineerToPlayer(String name){
-        gameState.addEngineerToPlayer(name);
-    }
-
-    /**
-     * Request a new Thief character to the corresponding factory and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    public void addThiefToPlayer(String name){
-        gameState.addThiefToPlayer(name);
-    }
-
-    /**
-     * Request a new Knight character to the corresponding factory and and tries to add it to the User's party
-     * by calling to addToParty method.
-     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    public void addKnightToPlayer(String name){
-        gameState.addKnightToPlayer(name);
-    }
-
-    /**
-     * Request a new CPU character to the corresponding factory and add it to the CPU's party.
-     * <p> the character will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the character to create.
-     * @see ICharacterFactory
-     */
-    public void addEnemyToCPU(String name){
-        gameState.addEnemyToCPU(name);
-    }
-
-    /**
-     * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @see IWeaponFactory
-     */
-    public void addBowToInventory(){
-        gameState.addBowToInventory();
-    }
-
-    /**
-     * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the weapon to create.
-     * @see IWeaponFactory
-     */
-    public void addBowToInventory(String name){
-        gameState.addBowToInventory(name);
-    }
-
-    /**
-     * Request a new Sword weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @see IWeaponFactory
-     */
-    public void addSwordToInventory(){
-        gameState.addSwordToInventory();
-    }
-
-    /**
-     * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the weapon to create.
-     * @see IWeaponFactory
-     */
-    public void addSwordToInventory(String name){
-        gameState.addSwordToInventory(name);
-    }
-
-    /**
-     * Request a new Axe weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @see IWeaponFactory
-     */
-    public void addAxeToInventory(){
-        gameState.addAxeToInventory();
-    }
-
-    /**
-     * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the weapon to create.
-     * @see IWeaponFactory
-     */
-    public void addAxeToInventory(String name){
-        gameState.addAxeToInventory(name);
-    }
-
-    /**
-     * Request a new Staff weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @see IWeaponFactory
-     */
-    public void addStaffToInventory(){
-        gameState.addStaffToInventory();
-    }
-
-    /**
-     * Request a new Bow weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the weapon to create.
-     * @see IWeaponFactory
-     */
-    public void addStaffToInventory(String name){
-        gameState.addStaffToInventory(name);
-    }
-
-    /**
-     * Request a new Knife weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> the weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @see IWeaponFactory
-     */
-    public void addKnifeToInventory(){
-        gameState.addKnifeToInventory();
-    }
-
-    /**
-     * Request a new Knife weapon to the corresponding factory and add it to the userPlayer inventory.
-     * <p> The weapon will have the default parameters, which can be modified using the set methods. </p>
-     * <p> This add method allow the user to give the name of the weapon, in order to have some special weapons. </p>
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name      The name of the weapon to create.
-     * @see IWeaponFactory
-     */
-    public void addKnifeToInventory(String name){
-        gameState.addKnifeToInventory(name );
-    }
 
     /**
      * Sets the SelectedWeapon at a Weapon in the userPlayer Inventory, given an index representing its position
@@ -595,9 +505,10 @@ public class GameController {
      * <p> If so, it sends the attack message in the corresponding direction. Otherwise, it has no effect.</p>
      * <p> In this way, the conditions fulfill a double function: they ensure that the attacking and receiving characters
      * are in the game (to avoid bugs) and at the same time they avoid attacks between the same team. </p>
-     * <p> This method will be available only in Active mode. </p>
+     * <p> This method will be available only in Active - SelectingAttacKTarget mode. </p>
      */
     public void activeCharacterNormalAttackSelectedCharacter(){
+        gameState.setAttack();
         gameState.activeCharacterNormalAttackSelectedCharacter();
     }
 
@@ -610,84 +521,6 @@ public class GameController {
      */
     public CharacterAttributeSet getSelectedCharacterAttributes(){
         return selectedCharacter.getAttributes();
-    }
-
-    /**
-     * Gets the selectedCharacter name.
-     * @return      the name of the selectedCharacter, as a String.
-     */
-    public String getSelectedCharacterName(){
-        return getSelectedCharacterAttributes().getName();
-    }
-
-    /**
-     * Gets the selectedCharacter current HP.
-     * @return      the current HP of the selectedCharacter, as an int.
-     */
-    public int getSelectedCharacterCurrentHP(){
-        return getSelectedCharacterAttributes().getCurrentHP();
-    }
-
-    /**
-     * Gets the selectedCharacter maxHP.
-     * @return      the maxHP of the selectedCharacter, as an int.
-     */
-    public int getSelectedCharacterMaxHP(){
-        return getSelectedCharacterAttributes().getMaxHP();
-    }
-
-
-    /**
-     * Gets the selectedCharacter DP.
-     * @return      the DP of the selectedCharacter, as an int.
-     */
-    public int getSelectedCharacterDP(){
-        return getSelectedCharacterAttributes().getDP();
-    }
-
-    /**
-     * Gets the selectedCharacter equippedWeapon.
-     * <p> If the character does not have the attribute, method returns null. </p>
-     * @return      the selectedCharacter equipped Weapon, as IWeapon.
-     */
-    public IWeapon getSelectedCharacterEquippedWeapon(){
-        return getSelectedCharacterAttributes().getEquippedWeapon();
-    }
-
-    /**
-     * Gets the selectedCharacter CurrentMana.
-     * <p> If the character does not have the attribute, method returns null. </p>
-     * @return      the CurrentMana of the selectedCharacter, as an int.
-     */
-    public int getSelectedCharacterCurrentMana(){
-        return getSelectedCharacterAttributes().getCurrentMana();
-    }
-
-    /**
-     * Gets the selectedCharacter MaxMana.
-     * <p> If the character does not have the attribute, method returns null. </p>
-     * @return      the MaxMana of the selectedCharacter, as an int.
-     */
-    public int getSelectedCharacterMaxMana(){
-        return getSelectedCharacterAttributes().getMaxMana();
-    }
-
-    /**
-     * Gets the selectedCharacter weight.
-     * <p> If the character does not have the attribute, method returns null. </p>
-     * @return      the weight of the selectedCharacter, as an int.
-     */
-    public int getSelectedCharacterWeight(){
-        return getSelectedCharacterAttributes().getWeight();
-    }
-
-    /**
-     * Gets the selectedCharacter power.
-     * <p> If the character does not have the attribute, method returns null. </p>
-     * @return      the power of the selectedCharacter, as an int.
-     */
-    public  int getSelectedCharacterPower(){
-        return getSelectedCharacterAttributes().getPower();
     }
 
     /**
@@ -728,15 +561,6 @@ public class GameController {
         gameState.setSelectedWeaponFactoryWeight(weight);
     }
 
-
-    /**
-     * Sets the selectedWeaponFactory default's name value.
-     * <p> This method will be effective only in Initializing mode. </p>
-     * @param name        The value to be set as the default weapon name
-     */
-    public void setSelectedWeaponFactoryName(String name){
-        gameState.setSelectedWeaponFactoryName(name);
-    }
 
     /**
      * Sets the selectedWeaponFactory default's power value.
@@ -825,37 +649,6 @@ public class GameController {
         return selectedWeapon;
     }
 
-    /**
-     * Gives the SelectedWeapon name.
-     * @return      The selectedWeapon name String.
-     */
-    public String getSelectedWeaponName(){
-        return getSelectedWeapon().getAttributes().getName();
-    }
-
-    /**
-     * Gives the SelectedWeapon power.
-     * @return      The selectedWeapon power.
-     */
-    public int getSelectedWeaponPower(){
-        return getSelectedWeapon().getAttributes().getPower();
-    }
-
-    /**
-     * Gives the SelectedWeapon weight.
-     * @return      The selectedWeapon weight.
-     */
-    public int getSelectedWeaponWeight(){
-        return getSelectedWeapon().getAttributes().getWeight();
-    }
-
-    /**
-     * Gives the SelectedWeapon magicPower.
-     * @return      The selectedWeapon magicPower.
-     */
-    public int getSelectedWeaponMagicPower(){
-        return getSelectedWeapon().getAttributes().getMagicPower();
-    }
 
     /**
      * Gives the SelectedWeaponFactory IWeaponFactory Object.
@@ -871,6 +664,287 @@ public class GameController {
      */
     public ICharacterFactory getSelectedCharacterFactory(){
         return selectedCharacterFactory;
+    }
+
+    /**
+     * Returns true if the given character is a Magic Character (Black or White Mage, this far).
+     * @param character The character to ask for
+     * @return boolean indicating if the character is magic or not.
+     * <p> This method will be useful for the GUI, in order to be able to know if there should
+     * exist a mana field for this character, of what kind of sprite use. </p>
+     */
+    public boolean characterIsMagic(ICharacter character) {
+        return character.isMagic();
+    }
+
+    /**
+     * Returns true if the given character is a BlackMage
+     * @param character The character to ask for
+     * @return boolean indicating if the character is BlackMage.
+     * <p> This method will be useful for the GUI, in order to be able to know what kind of sprite use. </p>
+     */
+    public boolean characterIsBlackMage(ICharacter character){
+        return character.isBlackMage();
+    }
+
+    /**
+     * Returns true if the given character is a BlackMage
+     * @param character The character to ask for
+     * @return boolean indicating if the character is WhiteMage.
+     * <p> This method will be useful for the GUI, in order to be able to know what kind of sprite use. </p>
+     */
+    public boolean characterIsWhiteMage(ICharacter character){
+        return character.isWhiteMage();
+    }
+
+    /**
+     * Returns true if the given character is a EngineerMage
+     * @param character The character to ask for
+     * @return boolean indicating if the character is Engineer.
+     * <p> This method will be useful for the GUI, in order to be able to know what kind of sprite use. </p>
+     */
+    public boolean characterIsEngineer(ICharacter character){
+        return character.isEngineer();
+    }
+
+    /**
+     * Returns true if the given character is a Knight
+     * @param character The character to ask for
+     * @return boolean indicating if the character is Knight.
+     * <p> This method will be useful for the GUI, in order to be able to know what kind of sprite use. </p>
+     */
+    public boolean characterIsKnight(ICharacter character){
+        return character.isKnight();
+    }
+
+    /**
+     * Returns true if the given character is a Thief
+     * @param character The character to ask for
+     * @return boolean indicating if the character is Thief.
+     * <p> This method will be useful for the GUI, in order to be able to know what kind of sprite use. </p>
+     */
+    public boolean characterIsThief(ICharacter character){
+        return character.isThief();
+    }
+
+    /**
+     * Returns true if the given character is an Enemy.
+     * @param character The character to ask for
+     * @return boolean indicating if the character is Enemy.
+     * <p> This method will be useful for the GUI, in order to be able to know what kind of sprite use. </p>
+     */
+    public boolean characterIsEnemy(ICharacter character){
+        return character.isEnemy();
+    }
+
+    /**
+     * Returns true if the given weapon is an Axe.
+     * @param weapon The weapon to ask for
+     * @return boolean indicating if the given weapon is an Axe.
+     * <p> This method will be useful for the GUI, in order to be able to know what kind of sprite use. </p>
+     */
+    public boolean weaponIsAxe(IWeapon weapon){
+        return weapon.isAxe();
+    }
+
+    /**
+     * Returns true if the given weapon is a Sword.
+     * @param weapon The weapon to ask for
+     * @return boolean indicating if the given weapon is a Sword.
+     * <p> This method will be useful for the GUI, in order to be able to know what kind of sprite use. </p>
+     */
+    public boolean weaponIsSword(IWeapon weapon){
+        return weapon.isSword();
+    }
+
+    /**
+     * Returns true if the given weapon is a Knife.
+     * @param weapon The weapon to ask for
+     * @return boolean indicating if the given weapon is a Knife.
+     * <p> This method will be useful for the GUI, in order to be able to know what kind of sprite use. </p>
+     */
+    public boolean weaponIsKnife(IWeapon weapon){
+        return weapon.isKnife();
+    }
+
+    /**
+     * Returns true if the given weapon is a Bow.
+     * @param weapon The weapon to ask for
+     * @return boolean indicating if the given weapon is a Bow.
+     * <p> This method will be useful for the GUI, in order to be able to know what kind of sprite use. </p>
+     */
+    public boolean weaponIsBow(IWeapon weapon){
+        return weapon.isBow();
+    }
+
+    /**
+     * Returns true if the given weapon is a Staff.
+     * @param weapon The weapon to ask for
+     * @return boolean indicating if the given weapon is a Staff.
+     * <p> This method will be useful for the GUI, in order to be able to know what kind of sprite use. </p>
+     */
+    public boolean weaponIsStaff(IWeapon weapon){
+        return weapon.isStaff();
+    }
+
+    /**
+     * Returns true if the given weapon is Null
+     * @param weapon The weapon to ask for
+     * @return boolean indicating if the given weapon is Null
+     * <p> This method will be useful for the GUI, in order to be able to know what kind of sprite use. </p>
+     */
+    public boolean weaponIsNull(IWeapon weapon){
+        return weapon.isNull();
+    }
+
+    /**
+     * Gives the name of a given weapon.
+     * @param weapon        The weapon to ask for
+     * @return              The name of the given weapon.
+     */
+    public String getWeaponName(IWeapon weapon){
+        return weapon.getAttributes().getName();
+    }
+
+    /**
+     * Gives the power of a given weapon.
+     * @param weapon        The weapon to ask for
+     * @return              The power of the given weapon.
+     */
+    public int getWeaponPower(IWeapon weapon){
+        return weapon.getAttributes().getPower();
+    }
+
+    /**
+     * Gives the weight of a given weapon.
+     * @param weapon        The weapon to ask for
+     * @return              The weight of the given weapon.
+     */
+    public int getWeaponWeight(IWeapon weapon){
+        return weapon.getAttributes().getWeight();
+    }
+
+    /**
+     * Gives the magicPower of a given weapon.
+     * @param weapon        The weapon to ask for
+     * @return              The magicPower of the given weapon.
+     */
+    public int getWeaponMagicPower(IWeapon weapon){
+        return weapon.getAttributes().getMagicPower();
+    }
+
+    /**
+     * Gives the owner's name of a given weapon.
+     * @param weapon        The weapon to ask for
+     * @return              The name of the owner of the given weapon.
+     */
+    public String getWeaponOwnerName(IWeapon weapon){
+        if(weapon.getOwner()!=null){
+            return weapon.getOwner().getAttributes().getName();
+        }
+        return "None";
+    }
+
+    /**
+     * Gives the name of the given character.
+     * @param character     The character to ask for.
+     * @return              The name of the given character.
+     */
+    public String getCharacterName(ICharacter character){
+        return character.getAttributes().getName();
+    }
+
+    /**
+     * Gives the current HP of the given character.
+     * @param character     The character to ask for.
+     * @return              The currentHP of the given character.
+     */
+    public int getCharacterCurrentHP(ICharacter character){
+        return character.getAttributes().getCurrentHP();
+    }
+
+    /**
+     * Gives the maxHP of the given character.
+     * @param character     The character to ask for.
+     * @return              The maxHP of the given character.
+     */
+    public int getCharacterMaxHP(ICharacter character){
+        return character.getAttributes().getMaxHP();
+    }
+
+
+    /**
+     * Gives the DP of the given character.
+     * @param character     The character to ask for.
+     * @return              The DP of the given character.
+     */
+    public int getCharacterDP(ICharacter character){
+        return character.getAttributes().getDP();
+    }
+
+    /**
+     * Gives the equipped weapon of the given character.
+     * @param character     The character to ask for.
+     * @return              The equipped weapon of the given character.
+     */
+    public IWeapon getCharacterEquippedWeapon(ICharacter character){
+        return character.getAttributes().getEquippedWeapon();
+    }
+
+    /**
+     * Gives the current mana of the given character.
+     * @param character     The character to ask for.
+     * @return              The current mana of the given character.
+     */
+    public int getCharacterCurrentMana(ICharacter character){
+        return character.getAttributes().getCurrentMana();
+    }
+
+    /**
+     * Gives the max mana of the given character.
+     * @param character     The character to ask for.
+     * @return              The max mana of the given character.
+     */
+    public int getCharacterMaxMana(ICharacter character){
+        return character.getAttributes().getMaxMana();
+    }
+
+    /**
+     * Gives the weight of the given character.
+     * @param character     The character to ask for.
+     * @return              The weight of the given character.
+     */
+    public int getCharacterWeight(ICharacter character){
+        return character.getAttributes().getWeight();
+    }
+
+    /**
+     * Gives the power of the given character.
+     * @param character     The character to ask for.
+     * @return              The power of the given character.
+     */
+    public  int getCharacterPower(ICharacter character){
+        return character.getAttributes().getPower();
+    }
+
+    /**
+     * Finish the process of "end a turn", after showing results.
+     * This method will be called from the GUI when the "OK" button of the turn summary is pressed,
+     * or from the tests when simulating the GUI.
+     * <p> This method will only have effect in ShowingTurnResume phase. </p>
+     * <p> This method will fire a new turn, if possible.  </p>
+     */
+    public void endTurn() {
+        gameState.endTurn();
+    }
+
+    /**
+     * Gives the name of the given mastermind (CPU or Player)
+     * @param mastermind    The mastermind to ask for
+     * @return              Given mastermind's name
+     */
+    public String getMastermindName(IMastermind mastermind){
+        return mastermind.getName();
     }
 }
 

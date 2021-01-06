@@ -80,6 +80,24 @@ public abstract class CharacterFactory implements ICharacterFactory{
         this.mana = mana;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p> Base behavior, to be overwritten by Magic Factories. </p>
+     */
+    @Override
+    public boolean isMagicFactory(){
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p> Base behavior, to be overwritten by CPU Factories. </p>
+     */
+    @Override
+    public boolean isCPUFactory(){
+        return false;
+
+    }
 
 
 }

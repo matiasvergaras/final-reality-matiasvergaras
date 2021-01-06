@@ -70,5 +70,11 @@ public class Thief extends AbstractPlayerCharacter {
         return Objects.hash(this.getName());
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isThief(){
+        return true;
+    }
 }

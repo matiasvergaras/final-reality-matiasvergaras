@@ -2,8 +2,10 @@ package com.github.cc3002.finalreality.factory.character;
 
 import com.github.matiasvergaras.finalreality.factory.Characters.WhiteMageFactory;
 import com.github.matiasvergaras.finalreality.model.character.player.magic.WhiteMage;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 /**
  * Class to tests the features of the WhiteMageFactory class.
@@ -32,6 +34,8 @@ public class WhiteMageFactoryTest extends CharacterFactoryTest {
     @Test
     void factoryCreateTest() {
         checkFactoryCreate(this.factory, this.expectedCharacter);
+        assertTrue(this.factory.isMagicFactory());
+
     }
 
     /**

@@ -27,4 +27,16 @@ public class NullWeaponTest extends AbstractWeaponTest {
         assertNotEquals(nullWeapon.hashCode(), exampleAxe.hashCode());
     }
 
+    /**
+     * Checks that the is[type] methods of this weapon works properly.
+     */
+    @Test
+    void isTypeTest() {
+        assertFalse(nullWeapon.isAxe());
+        assertFalse(nullWeapon.isBow());
+        assertFalse(nullWeapon.isKnife());
+        assertFalse(nullWeapon.isStaff());
+        assertTrue(nullWeapon.isNull());
+    }
+
 }

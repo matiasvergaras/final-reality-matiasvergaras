@@ -111,6 +111,47 @@ public interface ICharacter {
      */
     public PropertyChangeSupport getAddQueue();
 
+    /**
+     * Returns true if this character is magic (i.e. a black mage or white mage).
+     * @return  boolean isMagic
+     */
+    boolean isMagic();
+
+    /**
+     * Indicates if this unit is a BlackMage
+     * @return  True if this unit is a BlackMage.
+     */
+    boolean isBlackMage();
+
+    /**
+     * Indicates if this unit is a WhiteMage
+     * @return  True if this unit is a WhiteMage.
+     */
+    boolean isWhiteMage();
+
+    /**
+     * Indicates if this unit is an Engineer.
+     * @return  True if this unit is an Engineer.
+     */
+    boolean isEngineer();
+
+    /**
+     * Indicates if this unit is a Knight.
+     * @return  True if this unit is a Knight.
+     */
+    boolean isKnight();
+
+    /**
+     * Indicates if this unit is a Thief
+     * @return  True if this unit is a Thief.
+     */
+    boolean isThief();
+
+    /**
+     * Indicates if this unit is an Enemy
+     * @return  True if this unit is a Enemy.
+     */
+    boolean isEnemy();
 }
 
 

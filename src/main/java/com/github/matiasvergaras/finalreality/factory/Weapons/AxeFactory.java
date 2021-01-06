@@ -17,17 +17,10 @@ public class AxeFactory extends WeaponFactory {
      * @param power     The default Power value that the weapons produced by this factory will have.
      * @param weight    The default Weight value that the weapons produced by this factory will have.
      */
-    public AxeFactory(String name, int power, int weight){
-        super(name, power, weight);
+    public AxeFactory(int power, int weight){
+        super(power, weight);
     }
 
-    /**
-     * {@inheritDoc}
-     * @return      a new Axe Object with the default values and name.
-     */
-    public Axe create(){
-        return new Axe(name, power, weight);
-    }
 
     /**
      * {@inheritDoc}

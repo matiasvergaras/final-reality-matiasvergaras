@@ -37,6 +37,4 @@ public interface IMagicCharacter extends IPlayerCharacter {
     CharacterAttributeSet getAttributes();
 
 
-    //Magic attacks not implemented yet.
-    //void reduceMana(int diff);
 }

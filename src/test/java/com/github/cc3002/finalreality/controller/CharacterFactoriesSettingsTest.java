@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Matías Vergara Silva
  */
 public class CharacterFactoriesSettingsTest {
-    private GameController gameController;
+    private GameController gc;
 
 
 
@@ -28,12 +28,12 @@ public class CharacterFactoriesSettingsTest {
      * @param seed      An int that will be used to set new values.
      */
     void setFactoryForTesting(int index, int seed){
-        gameController.setSelectedCharacterFactory(index);
-        gameController.setSelectedCharacterFactoryHP(seed*10);
-        gameController.setSelectedCharacterFactoryDP(seed*70);
-        gameController.setSelectedCharacterFactoryMana(310/seed);
-        gameController.setSelectedCharacterFactoryWeight(seed);
-        gameController.setSelectedCharacterFactoryPower(seed*5);
+        gc.setSelectedCharacterFactory(index);
+        gc.setSelectedCharacterFactoryHP(seed*10);
+        gc.setSelectedCharacterFactoryDP(seed*70);
+        gc.setSelectedCharacterFactoryMana(310/seed);
+        gc.setSelectedCharacterFactoryWeight(seed);
+        gc.setSelectedCharacterFactoryPower(seed*5);
     }
 
     /**
@@ -43,14 +43,14 @@ public class CharacterFactoriesSettingsTest {
      * @param seed      The seed used to configure the factory. Has to be exactly the same.
      */
     void testFactorySettingForMagic(int seed){
-        assertEquals(gameController.getSelectedCharacterCurrentHP(), seed*10);
-        assertEquals(gameController.getSelectedCharacterMaxHP(), seed*10);
-        assertEquals(gameController.getSelectedCharacterDP(), seed*70);
-        assertEquals(gameController.getSelectedCharacterMaxMana(), 310/seed);
-        assertEquals(gameController.getSelectedCharacterCurrentMana(), 310/seed);
-        assertEquals(gameController.getSelectedCharacterWeight(), 0);
-        assertEquals(gameController.getSelectedCharacterPower(), 0);
-        assertEquals(gameController.getSelectedCharacterEquippedWeapon(), new NullWeapon());
+        assertEquals(gc.getCharacterCurrentHP(gc.getSelectedCharacter()), seed*10);
+        assertEquals(gc.getCharacterMaxHP(gc.getSelectedCharacter()), seed*10);
+        assertEquals(gc.getCharacterDP(gc.getSelectedCharacter()), seed*70);
+        assertEquals(gc.getCharacterMaxMana(gc.getSelectedCharacter()), 310/seed);
+        assertEquals(gc.getCharacterCurrentMana(gc.getSelectedCharacter()), 310/seed);
+        assertEquals(gc.getCharacterWeight(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterPower(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterEquippedWeapon(gc.getSelectedCharacter()), new NullWeapon());
     }
 
     /**
@@ -60,14 +60,14 @@ public class CharacterFactoriesSettingsTest {
      * @param seed      The seed used to configure the factory. Has to be exactly the same.
      */
     void testFactorySettingForNormal(int seed){
-        assertEquals(gameController.getSelectedCharacterCurrentHP(), seed*10);
-        assertEquals(gameController.getSelectedCharacterMaxHP(), seed*10);
-        assertEquals(gameController.getSelectedCharacterDP(), seed*70);
-        assertEquals(gameController.getSelectedCharacterMaxMana(), 0);
-        assertEquals(gameController.getSelectedCharacterCurrentMana(), 0);
-        assertEquals(gameController.getSelectedCharacterWeight(), 0);
-        assertEquals(gameController.getSelectedCharacterPower(), 0);
-        assertEquals(gameController.getSelectedCharacterEquippedWeapon(), new NullWeapon());
+        assertEquals(gc.getCharacterCurrentHP(gc.getSelectedCharacter()), seed*10);
+        assertEquals(gc.getCharacterMaxHP(gc.getSelectedCharacter()), seed*10);
+        assertEquals(gc.getCharacterDP(gc.getSelectedCharacter()), seed*70);
+        assertEquals(gc.getCharacterMaxMana(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterCurrentMana(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterWeight(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterPower(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterEquippedWeapon(gc.getSelectedCharacter()), new NullWeapon());
     }
 
     /**
@@ -77,14 +77,14 @@ public class CharacterFactoriesSettingsTest {
      * @param seed      The seed used to configure the factory. Has to be exactly the same.
      */
     void testFactorySettingForCPU(int seed){
-        assertEquals(gameController.getSelectedCharacterCurrentHP(), seed*10);
-        assertEquals(gameController.getSelectedCharacterMaxHP(), seed*10);
-        assertEquals(gameController.getSelectedCharacterDP(), seed* 70);
-        assertEquals(gameController.getSelectedCharacterMaxMana(), 0);
-        assertEquals(gameController.getSelectedCharacterCurrentMana(), 0);
-        assertEquals(gameController.getSelectedCharacterWeight(), seed);
-        assertEquals(gameController.getSelectedCharacterPower(), seed*5);
-        assertEquals(gameController.getSelectedCharacterEquippedWeapon(), new NullWeapon());
+        assertEquals(gc.getCharacterCurrentHP(gc.getSelectedCharacter()), seed*10);
+        assertEquals(gc.getCharacterMaxHP(gc.getSelectedCharacter()), seed*10);
+        assertEquals(gc.getCharacterDP(gc.getSelectedCharacter()), seed* 70);
+        assertEquals(gc.getCharacterMaxMana(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterCurrentMana(gc.getSelectedCharacter()), 0);
+        assertEquals(gc.getCharacterWeight(gc.getSelectedCharacter()), seed);
+        assertEquals(gc.getCharacterPower(gc.getSelectedCharacter()), seed*5);
+        assertEquals(gc.getCharacterEquippedWeapon(gc.getSelectedCharacter()), new NullWeapon());
     }
 
     /**
@@ -92,7 +92,7 @@ public class CharacterFactoriesSettingsTest {
      */
     @BeforeEach
     void setUp(){
-        gameController = new GameController("Cuddy", "Metapha", 4);
+        gc = new GameController("Cuddy", "Metapha", 4);
     }
 
     /**
@@ -101,8 +101,9 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void EngineerFactorySettingTest(){
         setFactoryForTesting(0, 3);
-        gameController.addEngineerToPlayer("Vankar");
-        gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
+        gc.setSelectedCharacterFactory(0);
+        gc.selectedCharacterFactoryProduce("Vankar");
+        gc.setSelectedCharacterFromPlayerParty(gc.getPlayerPartySize()-1);
         testFactorySettingForNormal(3);
     }
 
@@ -112,8 +113,9 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void BlackMageFactorySettingTest(){
         setFactoryForTesting(1,6);
-        gameController.addBlackMageToPlayer("Azelf");
-        gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
+        gc.setSelectedCharacterFactory(1);
+        gc.selectedCharacterFactoryProduce("Azelf");
+        gc.setSelectedCharacterFromPlayerParty(gc.getPlayerPartySize()-1);
         testFactorySettingForMagic(6);
     }
 
@@ -123,8 +125,9 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void WhiteMageFactorySettingTest(){
         setFactoryForTesting(2, 7);
-        gameController.addWhiteMageToPlayer("Tao");
-        gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
+        gc.setSelectedCharacterFactory(2);
+        gc.selectedCharacterFactoryProduce("Tao");
+        gc.setSelectedCharacterFromPlayerParty(gc.getPlayerPartySize()-1);
         testFactorySettingForMagic(7);
     }
 
@@ -134,8 +137,9 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void ThiefFactorySettingTest(){
         setFactoryForTesting(3, 2);
-        gameController.addThiefToPlayer("Hanzou");
-        gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
+        gc.setSelectedCharacterFactory(3);
+        gc.selectedCharacterFactoryProduce("Hanzou");
+        gc.setSelectedCharacterFromPlayerParty(gc.getPlayerPartySize()-1);
         testFactorySettingForNormal(2);
     }
 
@@ -145,8 +149,9 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void KnightFactorySettingTest(){
         setFactoryForTesting(4,12);
-        gameController.addKnightToPlayer("Gort");
-        gameController.setSelectedCharacterFromPlayerParty(gameController.getPlayerPartySize()-1);
+        gc.setSelectedCharacterFactory(4);
+        gc.selectedCharacterFactoryProduce("Gort");
+        gc.setSelectedCharacterFromPlayerParty(gc.getPlayerPartySize()-1);
         testFactorySettingForNormal(12);
     }
 
@@ -156,8 +161,9 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void EnemyFactorySettingTest(){
         setFactoryForTesting(5, 9);
-        gameController.addEnemyToCPU("Darksol");
-        gameController.setSelectedCharacterFromCPUParty(gameController.getCPUPartySize()-1);
+        gc.setSelectedCharacterFactory(5);
+        gc.selectedCharacterFactoryProduce("Darksol");
+        gc.setSelectedCharacterFromCPUParty(gc.getCPUPartySize()-1);
         testFactorySettingForCPU(9);
     }
 
@@ -167,8 +173,8 @@ public class CharacterFactoriesSettingsTest {
     @Test
     void equalHashCodeAttributeTest(){
         setFactoryForTesting(1, 5);
-        ICharacter character = gameController.getSelectedCharacterFactory().create("Zylo");
-        ICharacter copy = gameController.getSelectedCharacterFactory().create("Zylo");
+        ICharacter character = gc.getSelectedCharacterFactory().create("Zylo");
+        ICharacter copy = gc.getSelectedCharacterFactory().create("Zylo");
         assertEquals(character.getAttributes(), copy.getAttributes());
         assertEquals(character.getAttributes().hashCode(), copy.getAttributes().hashCode());
 

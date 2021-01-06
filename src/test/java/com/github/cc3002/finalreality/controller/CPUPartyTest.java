@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @since Homework 2
  */
 public class CPUPartyTest {
-    private GameController gameController;
+    private GameController gc;
     private LinkedBlockingQueue<ICharacter> turns;
 
     /**
@@ -26,7 +26,7 @@ public class CPUPartyTest {
     @BeforeEach
     void setUp() {
         turns = new LinkedBlockingQueue<>();
-        gameController = new GameController("Chase", "Alterone", 5);
+        gc = new GameController("Chase", "Alterone", 5);
 
     }
 
@@ -38,12 +38,13 @@ public class CPUPartyTest {
      */
     @Test
     void addEnemyTest() {
-        int initSize = gameController.getCPUPartySize();
-        gameController.addEnemyToCPU("Darksol");
-        gameController.setSelectedCharacterFromCPUParty(gameController.getCPUPartySize() - 1);
+        int initSize = gc.getCPUPartySize();
+        gc.setSelectedCharacterFactory(5);
+        gc.selectedCharacterFactoryProduce("Darksol");
+        gc.setSelectedCharacterFromCPUParty(gc.getCPUPartySize() - 1);
         Enemy sameCharacter = new Enemy(turns, "Darksol", 130, 100, 12, 100);
-        assertEquals(gameController.getSelectedCharacter(), sameCharacter);
-        assertEquals(initSize + 1, gameController.getCPUPartySize());
+        assertEquals(gc.getSelectedCharacter(), sameCharacter);
+        assertEquals(initSize + 1, gc.getCPUPartySize());
     }
 
 
@@ -53,7 +54,7 @@ public class CPUPartyTest {
      */
     @AfterEach
     void testRivalPartySize(){
-        assertEquals(gameController.getPlayerPartySize(), 0);
+        assertEquals(gc.getPlayerPartySize(), 0);
     }
 
 }

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @author Matías Vergara Silva
  */
 public class WeaponFactoriesSettingsTest {
-    private GameController gameController;
+    private GameController gc;
 
     /**
      * Sets a new configuration for the SelectedWeaponFactory.
@@ -25,11 +25,10 @@ public class WeaponFactoriesSettingsTest {
      * @param seed      An int that will be used to set new values.
      */
     void setFactoryForTesting(int index, int seed){
-        gameController.setSelectedWeaponFactory(index);
-        gameController.setSelectedWeaponFactoryName("New Name");
-        gameController.setSelectedWeaponFactoryPower(seed*51);
-        gameController.setSelectedWeaponFactoryWeight(seed*2);
-        gameController.setSelectedWeaponFactoryMagicPower(seed*11);
+        gc.setSelectedWeaponFactory(index);
+        gc.setSelectedWeaponFactoryPower(seed*51);
+        gc.setSelectedWeaponFactoryWeight(seed*2);
+        gc.setSelectedWeaponFactoryMagicPower(seed*11);
     }
 
     /**
@@ -37,14 +36,11 @@ public class WeaponFactoriesSettingsTest {
      * given by the seed that was used to configure its factory.
      * <p> This test is specific to the Magic Weapons. </p>
      * @param seed              The seed used to configure the factory. Has to be exactly the same.
-     * @param defaultName       The default name that the factory keeps for its products or
-     *                          the given special name, if produced with it.
      */
-    void testFactorySettingForMagic(int seed, String defaultName){
-        assertEquals(gameController.getSelectedWeaponName(), defaultName);
-        assertEquals(gameController.getSelectedWeaponPower(), seed*51);
-        assertEquals(gameController.getSelectedWeaponWeight(), seed*2);
-        assertEquals(gameController.getSelectedWeaponMagicPower(), seed*11);
+    void testFactorySettingForMagic(int seed){
+        assertEquals(gc.getWeaponPower(gc.getSelectedWeapon()), seed*51);
+        assertEquals(gc.getWeaponWeight(gc.getSelectedWeapon()), seed*2);
+        assertEquals(gc.getWeaponMagicPower(gc.getSelectedWeapon()), seed*11);
     }
 
     /**
@@ -56,10 +52,10 @@ public class WeaponFactoriesSettingsTest {
      *                          the given special name, if produced with it.
      */
     void testFactorySettingForNormal(int seed, String defaultName){
-        assertEquals(gameController.getSelectedWeaponName(), defaultName);
-        assertEquals(gameController.getSelectedWeaponPower(), seed*51);
-        assertEquals(gameController.getSelectedWeaponWeight(), seed*2);
-        assertEquals(gameController.getSelectedWeaponMagicPower(), 0);
+        assertEquals(gc.getWeaponName(gc.getSelectedWeapon()), defaultName);
+        assertEquals(gc.getWeaponPower(gc.getSelectedWeapon()), seed*51);
+        assertEquals(gc.getWeaponWeight(gc.getSelectedWeapon()), seed*2);
+        assertEquals(gc.getWeaponMagicPower(gc.getSelectedWeapon()), 0);
     }
 
 
@@ -68,7 +64,7 @@ public class WeaponFactoriesSettingsTest {
      */
     @BeforeEach
     void setUp(){
-        gameController = new GameController("Foreman",
+        gc = new GameController("Foreman",
                 "Urabantol", 3);
     }
 
@@ -79,8 +75,8 @@ public class WeaponFactoriesSettingsTest {
     @Test
     void BowFactorySettingTest(){
         setFactoryForTesting(0, 3);
-        gameController.addBowToInventory("Assault Shell");
-        gameController.setSelectedWeapon(gameController.getInventorySize()-1);
+        gc.selectedWeaponFactoryProduce("Assault Shell");
+        gc.setSelectedWeapon(gc.getInventorySize()-1);
         testFactorySettingForNormal(3, "Assault Shell");
     }
 
@@ -91,8 +87,8 @@ public class WeaponFactoriesSettingsTest {
     @Test
     void SwordFactorySettingTest(){
         setFactoryForTesting(3, 5);
-        gameController.addSwordToInventory("Sword of Light");
-        gameController.setSelectedWeapon(gameController.getInventorySize()-1);
+        gc.selectedWeaponFactoryProduce("Sword of Light");
+        gc.setSelectedWeapon(gc.getInventorySize()-1);
         testFactorySettingForNormal(5, "Sword of Light");
     }
 
@@ -102,8 +98,8 @@ public class WeaponFactoriesSettingsTest {
     @Test
     void KnifeFactorySettingTest(){
         setFactoryForTesting(2, 5);
-        gameController.addKnifeToInventory("MiniSpear");
-        gameController.setSelectedWeapon(gameController.getInventorySize()-1);
+        gc.selectedWeaponFactoryProduce("MiniSpear");
+        gc.setSelectedWeapon(gc.getInventorySize()-1);
         testFactorySettingForNormal(5, "MiniSpear");
     }
 
@@ -113,8 +109,8 @@ public class WeaponFactoriesSettingsTest {
     @Test
     void AxeFactorySettingTest(){
         setFactoryForTesting(4, 5);
-        gameController.addAxeToInventory("Heavy Ax");
-        gameController.setSelectedWeapon(gameController.getInventorySize()-1);
+        gc.selectedWeaponFactoryProduce("Heavy Ax");
+        gc.setSelectedWeapon(gc.getInventorySize()-1);
         testFactorySettingForNormal(5, "Heavy Ax");
     }
 
@@ -125,9 +121,9 @@ public class WeaponFactoriesSettingsTest {
     @Test
     void StaffFactorySettingTest(){
         setFactoryForTesting(1, 5);
-        gameController.addStaffToInventory("Guardian Staff");
-        gameController.setSelectedWeapon(gameController.getInventorySize()-1);
-        testFactorySettingForMagic(5, "Guardian Staff");
+        gc.selectedWeaponFactoryProduce("Guardian Staff");
+        gc.setSelectedWeapon(gc.getInventorySize()-1);
+        testFactorySettingForMagic(5);
     }
 
     /**
@@ -136,8 +132,8 @@ public class WeaponFactoriesSettingsTest {
     @Test
     void equalHashCodeAttributeTest(){
         setFactoryForTesting(1, 5);
-        IWeapon weapon = gameController.getSelectedWeaponFactory().create();
-        IWeapon copy = gameController.getSelectedWeaponFactory().create();
+        IWeapon weapon = gc.getSelectedWeaponFactory().create("A weapon");
+        IWeapon copy = gc.getSelectedWeaponFactory().create("A weapon");
         assertEquals(weapon, copy);
         assertEquals(weapon.hashCode(), copy.hashCode());
 

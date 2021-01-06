@@ -15,7 +15,6 @@ package com.github.matiasvergaras.finalreality.factory.Weapons;
  * @author Matías Vergara Silva
  */
 public abstract class WeaponFactory implements IWeaponFactory {
-    String name;
     int weight;
     int power;
     int magicPower;
@@ -26,8 +25,7 @@ public abstract class WeaponFactory implements IWeaponFactory {
      * @param power     The default Power value that the weapons produced by this factory will have.
      * @param weight    The default Weight value that the weapons produced by this factory will have.
      */
-    public WeaponFactory(String name, int power, int weight){
-        this.name = name;
+    public WeaponFactory(int power, int weight){
         this.weight = weight;
         this.power = power;
     }
@@ -57,11 +55,10 @@ public abstract class WeaponFactory implements IWeaponFactory {
     }
 
     /**
-     * Sets the default name to another one, given as parameter.
-     * @param name    New name default value
+     * {@inheritDoc}
+     * <p> Base behavior to be overwritten by magic weapons factories. </p>
      */
-    public void setName(String name){
-        this.name = name;
+    public boolean isMagic(){
+        return false;
     }
-
 }
