@@ -47,9 +47,131 @@ enemies controlled by the computer.
 # #Homework 2 
 
 ---
+### Final Delivery (Partial Delivery 6 - 7)
+The Partial Delivery 7 is the final delivery of the entire project. First we will introduce the logic of the program, implemented in the Partial 6: Phases, and then we will refer to partial delivery 7: GUI.
+
+### Logic and operation of the program
+The goal of Partial Delivery 6 was to implement game phases using the State Pattern, to be able to differentiate the different situations in which the game could be. Given that part of this work was already done as an extra for Homework 2 (Initializing, Active and Finishing states), continuing was easy. The approach taken was to remove the Active state and replace it with a series of more specific states:
+
+- **SettingNewTurn**: State that represents the situation in which the GameController is assigning a new turn to a Mastermind. It can move to CPUTurn or PlayerTurn depending on the type of the character that gets the new turn.
+- **PlayerTurn**: State that represents a player's turn. In it, the player can view their equipment and inventory information, equip and unequip characters at will, and start an attack. It moves to SelectingAttackTarget once the player decides to initiate an attack.
+- **CPUTurn**: State that represents the turn of the CPU. The CPU works automatically, but this state is necessary to be able to differentiate the output of 'SettingNewTurn' and order random attacks. Moves to SelectingAttackTarget immediately.
+- **SelectingAttackTarget**: State in which a Mastermind is choosing the character it will attack (for the CPU the passing through this state is automatic, while for the Player this state is closely related to the input received through the GUI). From this state it is possible to return to PlayerTurn (exclusively playerTurn, as the CPU will never regret its movement) when canceling the attack in progress or advancing towards PerformingAttack when sending the attack order (after choosing the target).
+- **PerformingAttack**: State that represents the execution of an attack and the determination of its possible consequences: remove a character, end the game, etc.From this state you can go to ShowingTurnResume, if there are still characters alive on both teams, or to Finished, if the game ended with the last attack.
+- **ShowingTurnResume**: State created especially for user interaction through GUI. It will allow  the user to know the result of an attack. User will have to press 'OK' to allow the GameController to exit this state, which is reached immediately after an attack is made. After this state the controller returns to the SettingNewTurn state.
+- **Initializing and Finished**, already described in Homework 2. 
+
+It is important to note hat the decision to create so many phases corresponds to the need to delegate GameController functionalities, which up to now were too many. In this way, the receipt of a message in the GameController will only take effect if it is in the correct state.
+
+An important decision made in this part of the work was to remove the possibility of creating 'common weapons' (with a default name) as it involved using overloading, which is, in general, a risky practice. 
+
+It is also important to mention that we decided to remove the possibility for the user to stay 'studying the scenario' once the game has ended (for simplicity reasons). We decided that the only option the user will have in this case will be to be informed who the winner is and exit the game.
+
+We also decided that if a character dies while equipped, his weapon will not only remain in the inventory, but will also be tried to equip to some other character immediately, if there is a compatible one without a weapon. This is to avoid to hve alive characters without weapons and therefore the possibility of entrying in a deadlock. And even with this new feature, the problem may persist if there is a character for whom no compatible weapon was created. This introduces one of the necessary new assumptions: **The player will always create at least one compatible weapon for each character, even if this weapon is initially in the hands of another character**.
+
+Other minor changes were also made, which are not directly related to what was requested, but correspond to improvements of what was implemented for Homework 2. Specifically, all the methods that asked for an attribute of a specific object (for example, `` getSelectedCharacterHP () ``)  were replaced by methods that ask for the same attribute for a given object (`` getCharacterHP (character) ``). This is not a problem, since we have the methods to obtain the objects of interest - such as `` getSelectedCharacter()`` or ``getSelectedWeapon()`` - and yet it provides a great advantage, because eventually we will be interested in obtaining attributes of both the selected character and of the active character, and in this way it is not necessary to create specific methods for each one.
+
+
+With these changes in mind, we now move on to explain the work done for Partial Release 7: GUI.
+
+For the GUI, it was decided to work as follows:
+- Use Sprites from the game **Shining Force: Resurrection of the Dark Dragon**. This is a Visualboy Advance game published in 2004, of which the author of this work is a fan. It's a great, great game.
+- Work with 5 main scenarios: a **Welcome** scenario, where the player enters their name and chooses the number of characters they will play with (between 1, 5, 10 and 12):
+
+Figure 7. Homework 3 Welcome Scene
+![Figure 7. Homework 3 Welcome Scene](/images/startgame.png)
+
+- A **Team choice** scenario, where the player chooses the type of character he wants to create from a menu on the left, then configures his attributes using text fields, and finally gives the order to add the character using a button. Once at least one character has been added, the user can choose from a drop-down list on the right side of the screen to view their attributes and to remove them from the team. To unlock the button that allows the player to advance to the next scenario, it is necessary to have the correct number of characters (equal to the number of characters to be played with):
+
+Figure 8. Homework 3 Set Team Scene
+![Figure 8. Homework 3 Set Team Scene](/images/selectteam.png)
+
+- An **Inventory selection** scenario, whose operation is analogous to the character selection scenario. To go to the next scenario it is required to have at least one weapon in inventory.
+
+Figure 9. Homework 3 Set Inventory Scene
+![Figure 9. Homework 3 Set Inventory Scene](/images/selectinventory.png)
+
+- A **CPU Team choice** scenario,  where the player configures the CPU team, that is, the team against which he will fight. It works similar to the player's team choice, but with only one type: Enemy. However, different types of sprites were added to make the game a little less monotonous (this only for aesthetic purposes, the characters keep the same properties. The 'face' sprite of enemies will always be the same as well).
+
+Figure 9. Homework 3 Select CPU Team Scene
+![Figure 9. Homework 3 Set CPU Team](/images/selectcputeam.png)
+
+- A stage **to equip characters**. It shows all the characters in the player's team and the weapons in their inventory, and can be "matched" using buttons. We will not allow the player to disarm a character, but we will allow them to pass from one character to another (with which the first one is left unequipped). This scenario will be used as an in-game menu of information about the equipment and the inventory, since it shows all the important information. To proceed to the next scenario, it is necessary to have at least one character equipped.
+
+Figure 10. Homework 3 Equip Characters Scene
+![Figure 10. Homework 3 Equip Characters](/images/equipparty.png)
+
+- Finally, the **battle scene**. In it the fight between characters takes place. The player starts with two options: see his inventory and characters (which shows the equipment scenario) or use the active character to start an attack:
+
+Figure 11. Homework 3 Battle Scene I 
+![Figure 11. Homework 3 Battle Scene I](/images/battleframe1.png)
+
+- If the player decides to start an attack, a drop-down list will open on the right side of the stage in which he must choose a character to attack and a button to cancel the attack in progress will be enabled. When the player chooses a character (the Target), its data will be displayed and an 'Attack' button will be enabled.
+
+Figure 12. Homework 3 Battle Scene II
+![Figure 12. Homework 3 Battle Scene II](/images/battleframe2.png)
+
+Figure 13. Homework 3 Battle Scene III
+![Figure 13. Homework 3 Battle Scene III](/images/battleframe3.png)
+
+- If the player decides to launch the attack (using the Attack button), the damage will be deducted accordingly to the attacker's weapon and the defender's DP, and a virtual pop-up will be displayed with the summary of the turn. The new life points of the attacked character will be displayed on it. To continue with the game it will be necessary to press "Ok", which will assign a new turn and will continue the same logic (taking into account that the CPU turns are automatic).
+
+Figure 14. Homework 3 Battle Scene IV
+![Figure 14. Homework 3 Battle Scene IV](/images/battleframe4.png)
+
+- Finally, once the player or the CPU run out of live characters, the GUI will detect that the controller has entered the Finished state and will show the following pop-up with the information corresponding to the winner of the game and a button to exit the game:
+
+Figure 15. Homework 3 Battle Scene V
+![Figure 15. Homework 3 Battle Scene V](/images/battleframe5.png)
+
+### Execution Instructions
+The program is run by running the script ``FinalReality.java``, available in the GUI package. This will open a new window for the game, where you must interact as explained below to have a successful game: 
+- In the opening scene, enter the player's name and choose a number of characters. It was decided to leave the options as 1, 5, 10 or 12.
+- In the scene to choose characters, select a type of character in the boxes on the left (by default the chosen type is Engineer), then fill in the fields with their attributes and finally press the "Add" button to add them to the team. If you want to delete it, choose it from the drop-down list on the right, which will display its attributes and enable a "Remove" button. To go to the next scenario, you must have as many characters as the number you decided to play with. Otherwise the "Next" button will remain invisible.
+- At the scene of choosing weapons, proceed in a similar way to the previous one (the default chosen weapon type is Axe). To go to the next scenario, you must have at least one weapon in your inventory. You can also go back to the previous menu without losing the weapons you have added so far.
+- At the scene of choosing the CPU team, proceed in exactly the same way when choosing characters. To advance to the next menu it is necessary to add at least one enemy.
+- In the character equipping scene, choose a character and weapon from the drop-down lists on the right, which will show their attributes on the left side To try to equip the weapon to the character shown, use the "Try to equip" button. If the weapon is compatible with the character, then it will be equipped, and its "Owner" field should be equal to the character's name. Otherwise, the button will have no effect. From this scene you can go back to the previous ones without loss of information, or advance to the game as such, if you have at least one character equipped. Remember that it will be assumed that you will have at least one weapon compatible with each type of character used equipped on some character (there may be characters without weapons, but there must be at least one who wears a weapon that is compatible with them when starting the game).
+- In the battle scene, use the buttons to guide the attack and the drop-down list that will be enabled once "Start Attack" is pressed to choose the target CPU character. To view detailed information about equipment and weapons (only information about the active character and his equipped weapon will be displayed), use the weapon equipment menu.
+- When an attack is completed, a '' Pop-Up '' will be displayed showing the summary of the attack, including the new life points of the attacked character and a warning about whether any character died. This is the way in which the game indicates the damage done and its consequences (as the original health points can be seen in the player's equipment menu or in the target character menu before attacking).
+- When all CPU or Player characters are out of combat, a new pop-up will be displayed indicating the name of the winning player and a button to exit the game. Press it.
+
+### Assumptions made
+The assumptions are all those made in Homework 2, except for modifications to those already mentioned. For reasons of text economy, we will not copy all of them, but we will only mention those that have changed / those that are new:
+- If a character dies while equipped, it will be verified if there is any living unequipped character that the deceased's weapon could serve. In such case, said weapon will be equipped.
+- Once the game ends, no information about the final state of the game (remaining characters, turns, etc) will be displayed. The player will only be allowed to know who won and exit the game (decision for simplicity, time was not enough to implement all that).
+- A character can win the turn without being equipped, if he was unequipped on another's turn while he was already in the queue. However, a character cannot enter the queue without having a weapon. If a character without a weapon tries to attack, it will have no effect other than losing a turn. 
+- Finally, the most important assumption is that we will assume that **the user will be a good user**, entering the **parameters in the correct format as appropriate**. In particular, we will assume that he will not put words or characters in fields that are intended to receive integers (DP, HP, Mana, Power, Weight, etc) and that he will not use disproportionately large numbers (such that they exceed the maximum allowed by an Integer in Java). With this we will also assume that the game packages will not be modified in content or structure, and especially that the resources package will remain in its original location.
+
+### UML Diagrams
+
+To date the UML diagrams of the model looks like this (showing only class names):
+
+Figure 16. Homework 3 Final Delivery Model UML Diagram
+
+![Figure 16. Homework 3 Final Delivery Model UML Diagram](/images/UML_T3_Model.png)
+
+Figure 17. Homework 3 Final Delivery Factory UML Diagram
+
+![Figure 17. Homework 3 Final Delivery Factory UML Diagram](/images/UML_T3_Factory.png)
+
+Figure 18. Homework 3 Final Delivery Controller UML Diagram
+
+![Figure 19. Homework 3 Final Delivery Controller UML Diagram](/images/UML_T3_Controller.png)
+
+
+Figure 20. Homework 3 Final Delivery GUI UML Diagram
+
+![Figure 20. Homework 3 Final Delivery GUI  UML Diagram](/images/UML_T3_GUI.png)
+
+To see the complet UML Diagram, check for **UML_Model.pdf**, **UML_Factory.pdf**, **UML_Controller.pdf**, **UML_GUI.pdf**, in the root folder.
+
+
+# #Homework 2 
+
+---
 ### Final Delivery (Partial Delivery 5)
 
-The Partial Delviery 5 is the final delivery of the Homework 2. The goal is to implement the Game Controller, which will be an intermediary between the user and the model objects, and whose purpose will be to controll all the messages that pass trough him, manipulating and redirecting those that are necessary. More specifically, the controller has to be able to:
+The Partial Delivery 5 is the final delivery of the Homework 2. The goal is to implement the Game Controller, which will be an intermediary between the user and the model objects, and whose purpose will be to controll all the messages that pass trough him, manipulating and redirecting those that are necessary. More specifically, the controller has to be able to:
 - Create and assign objects of the model (characters, enemies, weapons, etc.),
 - Know which are the player characters and what are their attributes,
 - Know which are the CPU characters and what are their attributes,
