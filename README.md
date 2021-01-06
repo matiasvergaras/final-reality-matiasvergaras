@@ -79,50 +79,50 @@ For the GUI, it was decided to work as follows:
 - Work with 5 main scenarios: a **Welcome** scenario, where the player enters their name and chooses the number of characters they will play with (between 1, 5, 10 and 12):
 
 Figure 7. Homework 3 Welcome Scene
-![Figure 7. Homework 3 Welcome Scene](/images/startgame.png)
+![Figure 7. Homework 3 Welcome Scene](/images/startgame.jpg)
 
 - A **Team choice** scenario, where the player chooses the type of character he wants to create from a menu on the left, then configures his attributes using text fields, and finally gives the order to add the character using a button. Once at least one character has been added, the user can choose from a drop-down list on the right side of the screen to view their attributes and to remove them from the team. To unlock the button that allows the player to advance to the next scenario, it is necessary to have the correct number of characters (equal to the number of characters to be played with):
 
 Figure 8. Homework 3 Set Team Scene
-![Figure 8. Homework 3 Set Team Scene](/images/selectteam.png)
+![Figure 8. Homework 3 Set Team Scene](/images/selectteam.jpg)
 
 - An **Inventory selection** scenario, whose operation is analogous to the character selection scenario. To go to the next scenario it is required to have at least one weapon in inventory.
 
 Figure 9. Homework 3 Set Inventory Scene
-![Figure 9. Homework 3 Set Inventory Scene](/images/selectinventory.png)
+![Figure 9. Homework 3 Set Inventory Scene](/images/selectinventory.jpg)
 
 - A **CPU Team choice** scenario,  where the player configures the CPU team, that is, the team against which he will fight. It works similar to the player's team choice, but with only one type: Enemy. However, different types of sprites were added to make the game a little less monotonous (this only for aesthetic purposes, the characters keep the same properties. The 'face' sprite of enemies will always be the same as well).
 
 Figure 9. Homework 3 Select CPU Team Scene
-![Figure 9. Homework 3 Set CPU Team](/images/selectcputeam.png)
+![Figure 9. Homework 3 Set CPU Team](/images/selectcputeam.jpg)
 
 - A stage **to equip characters**. It shows all the characters in the player's team and the weapons in their inventory, and can be "matched" using buttons. We will not allow the player to disarm a character, but we will allow them to pass from one character to another (with which the first one is left unequipped). This scenario will be used as an in-game menu of information about the equipment and the inventory, since it shows all the important information. To proceed to the next scenario, it is necessary to have at least one character equipped.
 
 Figure 10. Homework 3 Equip Characters Scene
-![Figure 10. Homework 3 Equip Characters](/images/equipparty.png)
+![Figure 10. Homework 3 Equip Characters](/images/equipparty.jpg)
 
 - Finally, the **battle scene**. In it the fight between characters takes place. The player starts with two options: see his inventory and characters (which shows the equipment scenario) or use the active character to start an attack:
 
 Figure 11. Homework 3 Battle Scene I 
-![Figure 11. Homework 3 Battle Scene I](/images/battleframe1.png)
+![Figure 11. Homework 3 Battle Scene I](/images/battleframe1.jpg)
 
 - If the player decides to start an attack, a drop-down list will open on the right side of the stage in which he must choose a character to attack and a button to cancel the attack in progress will be enabled. When the player chooses a character (the Target), its data will be displayed and an 'Attack' button will be enabled.
 
 Figure 12. Homework 3 Battle Scene II
-![Figure 12. Homework 3 Battle Scene II](/images/battleframe2.png)
+![Figure 12. Homework 3 Battle Scene II](/images/battleframe2.jpg)
 
 Figure 13. Homework 3 Battle Scene III
-![Figure 13. Homework 3 Battle Scene III](/images/battleframe3.png)
+![Figure 13. Homework 3 Battle Scene III](/images/battleframe3.jpg)
 
 - If the player decides to launch the attack (using the Attack button), the damage will be deducted accordingly to the attacker's weapon and the defender's DP, and a virtual pop-up will be displayed with the summary of the turn. The new life points of the attacked character will be displayed on it. To continue with the game it will be necessary to press "Ok", which will assign a new turn and will continue the same logic (taking into account that the CPU turns are automatic).
 
 Figure 14. Homework 3 Battle Scene IV
-![Figure 14. Homework 3 Battle Scene IV](/images/battleframe4.png)
+![Figure 14. Homework 3 Battle Scene IV](/images/battleframe4.jpg)
 
 - Finally, once the player or the CPU run out of live characters, the GUI will detect that the controller has entered the Finished state and will show the following pop-up with the information corresponding to the winner of the game and a button to exit the game:
 
 Figure 15. Homework 3 Battle Scene V
-![Figure 15. Homework 3 Battle Scene V](/images/battleframe5.png)
+![Figure 15. Homework 3 Battle Scene V](/images/battleframe5.jpg)
 
 ### Execution Instructions
 The program is run by running the script ``FinalReality.java``, available in the GUI package. This will open a new window for the game, where you must interact as explained below to have a successful game: 
